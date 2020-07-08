@@ -3,6 +3,8 @@ import { hash } from 'bcryptjs';
 
 import User from '../models/Users';
 
+import AppError from '../errors/AppError';
+
 // [x] Recebimento de informações
 // [x] Tratativa de erros/exceções
 // [x] Acesso ao repositório
@@ -24,7 +26,9 @@ class CreateUserService {
     });
 
     if (checkUserExits) {
-      throw new Error('This e-mail is already registered to another account!');
+      throw new AppError(
+        'This e-mail is already registered to another account!',
+      );
     }
 
     const hashedPassword = await hash(password, 8);
