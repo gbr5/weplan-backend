@@ -1,9 +1,9 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
-import User from '../models/Users';
+import User from '@modules/users/infra/typeorm/entities/Users';
 
-import AppError from '../errors/AppError';
+import AppError from '@shared/errors/AppError';
 
 // [x] Recebimento de informações
 // [x] Tratativa de erros/exceções
