@@ -1,39 +1,22 @@
-/* eslint-disable camelcase */
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
-import { parseISO } from 'date-fns';
 
-import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepositories';
-import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
+import AppointmentsController from '@modules/appointments/infra/http/controllers/AppointmentsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
-
-// Rota: Aqui só pode ter funções para receber a requisição,
-// chamar outro arquivo, devolver uma resposta
+const appointmentsController = new AppointmentsController();
 
 appointmentsRouter.use(ensureAuthenticated);
 
-appointmentsRouter.get('/', async (req, res) => {
-  const appointmentsRepository = getCustomRepository(AppointmentsRepository);
-  const appointments = await appointmentsRepository.find();
+// appointmentsRouter.get('/', async (req, res) => {
+//   const appointments = await appointmentsRepository.find();
 
-  return res.json(appointments);
-});
+//   return res.json(appointments);
+// });
 
-appointmentsRouter.post('/', async (req, res) => {
-  const { provider_id, date } = req.body;
-
-  const parsedDate = parseISO(date);
-
-  const createAppointment = new CreateAppointmentService();
-
-  const appointment = await createAppointment.execute({
-    date: parsedDate,
-    provider_id,
-  });
-
-  return res.json(appointment);
-});
+appointmentsRouter.post('/', appointmentsController.create);
 
 export default appointmentsRouter;
+
+// Rota: Aqui só pode ter funções para receber a requisição,
+// chamar outro arquivo, devolver uma resposta
