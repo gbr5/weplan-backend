@@ -1,13 +1,10 @@
-import { hash } from 'bcryptjs';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import User from '@modules/users/infra/typeorm/entities/User';
+import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 
-// [x] Recebimento de informações
-// [x] Tratativa de erros/exceções
-// [x] Acesso ao repositório
+import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   name: string;
@@ -15,12 +12,13 @@ interface IRequest {
   password: string;
 }
 
-// Dependency Inversion (SOLID principles)
 @injectable()
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
@@ -32,7 +30,7 @@ class CreateUserService {
       );
     }
 
-    const hashedPassword = await hash(password, 8);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,
