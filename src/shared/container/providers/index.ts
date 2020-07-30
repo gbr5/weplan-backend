@@ -1,9 +1,4 @@
-import { container } from 'tsyringe';
-
-import IStorageProvider from '@shared/container/providers/StorageProvider/modules/IStorageProvider';
-import DiskStorageProvider from '@shared/container/providers/StorageProvider/implementations/DiskStorageProvider';
-
-container.registerSingleton<IStorageProvider>(
-  'StorageProvider',
-  DiskStorageProvider,
-);
+import './MailTemplateProvider';
+import './MailProvider';
+import './StorageProvider';
+import './CacheProvider';

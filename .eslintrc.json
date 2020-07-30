@@ -1,11 +1,11 @@
 {
   "env": {
-      "browser": true,
+      "node": true,
       "es6": true,
       "jest": true
   },
   "extends": [
-      "airbnb",
+      "airbnb-base",
       "plugin:@typescript-eslint/recommended",
       "prettier/@typescript-eslint",
       "plugin:prettier/recommended"
@@ -28,22 +28,30 @@
     "prettier/prettier": "error",
     "no-underscore-dangle": "off",
     "no-useless-constructor": "off",
-    // "react-hooks/rules-of-hooks": "error",
-    // "react-hooks/exhaustive-deps": "warn",
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-unused-vars": ["error", {
       "argsIgnorePattern": "_"
     }],
-    // "@typescript-eslint/interface-name-prefix": ["error", {"prefixWithI": "always"}],
+    "ban-types": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
       {
-        "ts": "never",
-        "tsx": "never"
+        "ts": "never"
       }
     ],
+    "no-console": "off",
     "camelcase": "off",
     "class-methods-use-this": "off"
   },
