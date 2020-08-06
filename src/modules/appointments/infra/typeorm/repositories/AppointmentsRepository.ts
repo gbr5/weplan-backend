@@ -1,4 +1,5 @@
 import { getRepository, Repository, Raw } from 'typeorm';
+import { classToClass } from 'class-transformer';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
@@ -65,7 +66,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
       relations: ['user'],
     });
 
-    return appointments;
+    return classToClass(appointments);
   }
 
   public async create({
