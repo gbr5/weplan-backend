@@ -15,6 +15,18 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
 
+import ICompanyInfoRepository from '@modules/users/repositories/ICompanyInfoRepository';
+import CompanyInfoRepository from '@modules/users/infra/typeorm/repositories/CompanyInfoRepository';
+
+import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
+import PersonInfoRepository from '@modules/users/infra/typeorm/repositories/PersonInfoRepository';
+
+import IUserBirthdateRepository from '@modules/users/repositories/IUserBirthdateRepository';
+import UserBirthdateRepository from '@modules/users/infra/typeorm/repositories/UserBirthdateRepository';
+
+import IEventsRepository from '@modules/events/repositories/IEventsRepository';
+import EventsRepository from '@modules/events/infra/typeorm/repositories/EventsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -33,4 +45,23 @@ container.registerSingleton<IUserTokensRepository>(
 container.registerSingleton<INotificationsRepository>(
   'NotificationsRepository',
   NotificationsRepository,
+);
+container.registerSingleton<ICompanyInfoRepository>(
+  'CompanyInfoRepository',
+  CompanyInfoRepository,
+);
+
+container.registerSingleton<IPersonInfoRepository>(
+  'PersonInfoRepository',
+  PersonInfoRepository,
+);
+
+container.registerSingleton<IUserBirthdateRepository>(
+  'UserBirthdateRepository',
+  UserBirthdateRepository,
+);
+
+container.registerSingleton<IEventsRepository>(
+  'EventsRepository',
+  EventsRepository,
 );

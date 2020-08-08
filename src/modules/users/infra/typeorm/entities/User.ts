@@ -24,6 +24,9 @@ class Users {
   @Exclude()
   password: string;
 
+  @Column('boolean')
+  isCompany: boolean;
+
   @Column()
   avatar: string;
 

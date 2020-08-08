@@ -7,10 +7,6 @@ import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;
-  name?: string;
-  email?: string;
-  old_password?: string;
-  password?: string;
 }
 @injectable()
 class ShowProfileService {

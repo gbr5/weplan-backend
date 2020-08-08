@@ -1,25 +1,25 @@
-/* eslint-disable camelcase */
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Generated,
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
-@Entity('user_tokens')
-class UserToken {
+@Entity('events')
+class Event {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  @Generated('uuid')
-  token: string;
+  name: string;
+
+  @Column()
+  trimmed_name: string;
 
   @Column()
   user_id: string;
@@ -28,6 +28,12 @@ class UserToken {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
+  @Column()
+  event_type: string;
+
+  @Column('timestamp with time zone')
+  date: Date;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -35,4 +41,4 @@ class UserToken {
   updated_at: Date;
 }
 
-export default UserToken;
+export default Event;

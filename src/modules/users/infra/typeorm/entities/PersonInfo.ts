@@ -1,32 +1,35 @@
-/* eslint-disable camelcase */
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Generated,
-  ManyToOne,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
-@Entity('user_tokens')
-class UserToken {
+@Entity('person_info')
+class PersonInfo {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  @Generated('uuid')
-  token: string;
+  person_id: string;
 
-  @Column()
+  @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User)
+  @OneToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @Column()
+  first_name: string;
+
+  @Column()
+  last_name: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -35,4 +38,4 @@ class UserToken {
   updated_at: Date;
 }
 
-export default UserToken;
+export default PersonInfo;
