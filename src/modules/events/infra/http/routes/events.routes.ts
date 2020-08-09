@@ -15,7 +15,6 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      user_id: Joi.string().uuid().required(),
       event_type: Joi.string().required(),
       date: Joi.date(),
     },
@@ -23,6 +22,7 @@ eventsRouter.post(
   eventsController.create,
 );
 eventsRouter.get('/:trimmed_name', eventsController.show);
+
 eventsRouter.put(
   '/:trimmed_name',
   celebrate({

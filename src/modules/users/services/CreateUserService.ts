@@ -8,6 +8,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   name: string;
+  trimmed_name: string;
   email: string;
   password: string;
   isCompany: boolean;
@@ -42,8 +43,25 @@ class CreateUserService {
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
+    const userName = name
+      .toLowerCase()
+      .split(' ')
+      .map(word => {
+        return word[0].toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+
+    const trimmed_name = name
+      .toLowerCase()
+      .split(' ')
+      .map(word => {
+        return word[0].toUpperCase() + word.slice(1);
+      })
+      .join('');
+
     const user = await this.usersRepository.create({
-      name,
+      name: userName,
+      trimmed_name,
       email,
       password: hashedPassword,
       isCompany,

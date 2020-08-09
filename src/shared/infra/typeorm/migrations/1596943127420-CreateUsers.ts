@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserTokens1596817995684
-  implements MigrationInterface {
+export default class CreateUsers1596943127420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_token',
+        name: 'users',
         columns: [
           {
             name: 'id',
@@ -15,14 +14,32 @@ export default class CreateUserTokens1596817995684
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'token',
-            type: 'uuid',
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            name: 'name',
+            type: 'varchar',
+            isUnique: true,
           },
           {
-            name: 'user_id',
-            type: 'uuid',
+            name: 'trimmed_name',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+          },
+          {
+            name: 'isCompany',
+            type: 'boolean',
+          },
+          {
+            name: 'avatar',
+            type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'created_at',
@@ -35,21 +52,11 @@ export default class CreateUserTokens1596817995684
             default: 'now()',
           },
         ],
-        foreignKeys: [
-          {
-            name: 'TokenUser',
-            referencedTableName: 'users',
-            referencedColumnNames: ['id'],
-            columnNames: ['user_id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_token');
+    await queryRunner.dropTable('users');
   }
 }

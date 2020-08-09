@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateCompanyInfo1596818244342
-  implements MigrationInterface {
+export default class CreateEvents1596943223830 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'company_info',
+        name: 'events',
         columns: [
           {
             name: 'id',
@@ -15,19 +14,26 @@ export default class CreateCompanyInfo1596818244342
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'company_id',
+            name: 'name',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'trimmed_name',
             type: 'varchar',
             isUnique: true,
           },
           {
             name: 'user_id',
             type: 'uuid',
-            isUnique: true,
           },
           {
-            name: 'name',
+            name: 'event_type',
             type: 'varchar',
-            isUnique: true,
+          },
+          {
+            name: 'date',
+            type: 'timestamp',
           },
           {
             name: 'created_at',
@@ -42,11 +48,11 @@ export default class CreateCompanyInfo1596818244342
         ],
         foreignKeys: [
           {
-            name: 'PersonUser',
+            name: 'EventUser',
             columnNames: ['user_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
+            onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
           },
         ],
@@ -55,6 +61,6 @@ export default class CreateCompanyInfo1596818244342
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('company_info');
+    await queryRunner.dropTable('events');
   }
 }

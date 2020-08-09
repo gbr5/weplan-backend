@@ -36,6 +36,22 @@ class UpdateProfileService {
       throw new AppError('User not found.');
     }
 
+    const userName = name
+      .toLowerCase()
+      .split(' ')
+      .map(word => {
+        return word[0].toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+
+    const trimmed_name = name
+      .toLowerCase()
+      .split(' ')
+      .map(word => {
+        return word[0].toUpperCase() + word.slice(1);
+      })
+      .join('');
+
     const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
@@ -63,7 +79,8 @@ class UpdateProfileService {
       user.password = await this.hashProvider.generateHash(password);
     }
 
-    user.name = name;
+    user.name = userName;
+    user.trimmed_name = trimmed_name;
     user.email = email;
 
     const updatedUser = await this.usersRepository.save(user);

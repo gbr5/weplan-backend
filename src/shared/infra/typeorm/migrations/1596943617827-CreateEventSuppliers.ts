@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEvent1596907955094 implements MigrationInterface {
+export default class CreateEventSuppliers1596943617827
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'events',
+        name: 'event_suppliers',
         columns: [
           {
             name: 'id',
@@ -14,26 +15,12 @@ export default class CreateEvent1596907955094 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
-            isUnique: true,
-          },
-          {
-            name: 'trimmed_name',
-            type: 'varchar',
-            isUnique: true,
-          },
-          {
-            name: 'user_id',
+            name: 'supplier_id',
             type: 'uuid',
           },
           {
-            name: 'event_type',
+            name: 'event_name',
             type: 'varchar',
-          },
-          {
-            name: 'date',
-            type: 'timestamp',
           },
           {
             name: 'created_at',
@@ -48,11 +35,19 @@ export default class CreateEvent1596907955094 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'EventUser',
-            columnNames: ['user_id'],
+            name: 'UserSupplier',
+            columnNames: ['supplier_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            onDelete: 'NO ACTION',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'EventName',
+            columnNames: ['event_name'],
+            referencedTableName: 'events',
+            referencedColumnNames: ['name'],
+            onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
         ],
@@ -61,6 +56,6 @@ export default class CreateEvent1596907955094 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('events');
+    await queryRunner.dropTable('event_suppliers');
   }
 }

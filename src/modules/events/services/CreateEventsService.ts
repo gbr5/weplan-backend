@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
-import IEventRepository from '@modules/events/repositories/IEventsRepository';
+import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 
@@ -19,7 +19,7 @@ interface IRequest {
 class CreateEventService {
   constructor(
     @inject('EventsRepository')
-    private eventsRepository: IEventRepository,
+    private eventsRepository: IEventsRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,

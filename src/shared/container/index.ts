@@ -27,6 +27,15 @@ import UserBirthdateRepository from '@modules/users/infra/typeorm/repositories/U
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import EventsRepository from '@modules/events/infra/typeorm/repositories/EventsRepository';
 
+import IEventTypesRepository from '@modules/events/repositories/IEventTypesRepository';
+import EventTypesRepository from '@modules/events/infra/typeorm/repositories/EventTypesRepository';
+
+import IEventTypeSuppliersRepository from '@modules/events/repositories/IEventTypeSuppliersRepository';
+import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventTypeSuppliersRepository';
+
+import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
+import EventSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventSuppliersRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -64,4 +73,19 @@ container.registerSingleton<IUserBirthdateRepository>(
 container.registerSingleton<IEventsRepository>(
   'EventsRepository',
   EventsRepository,
+);
+
+container.registerSingleton<IEventTypesRepository>(
+  'EventTypesRepository',
+  EventTypesRepository,
+);
+
+container.registerSingleton<IEventTypeSuppliersRepository>(
+  'EventTypeSupplierRepository',
+  EventTypeSuppliersRepository,
+);
+
+container.registerSingleton<IEventSuppliersRepository>(
+  'EventSupplierRepository',
+  EventSuppliersRepository,
 );
