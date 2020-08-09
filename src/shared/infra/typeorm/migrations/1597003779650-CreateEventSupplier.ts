@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventSuppliers1596943617827
+export default class CreateEventSupplier1597003779650
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -46,7 +46,7 @@ export default class CreateEventSuppliers1596943617827
             name: 'EventName',
             columnNames: ['event_name'],
             referencedTableName: 'events',
-            referencedColumnNames: ['name'],
+            referencedColumnNames: ['trimmed_name'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },

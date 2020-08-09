@@ -8,25 +8,17 @@ import DeleteEventTypeSupplierService from '@modules/events/services/DeleteEvent
 
 export default class EventTypeSupplierController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { event_type } = req.body;
+    const event_type = req.params;
     const user_id = req.user.id;
 
     const createEventTypeSupplier = container.resolve(
       CreateEventTypeSupplierService,
     );
 
-    console.log('teste - EventTypeSupplier Controller', event_type, user_id);
-
     const eventTypeSupplier = await createEventTypeSupplier.execute({
-      event_type,
+      event_type: event_type.event_type,
       user_id,
     });
-    console.log(
-      'teste - EventTypeSupplier Controller',
-      event_type,
-      user_id,
-      eventTypeSupplier,
-    );
 
     return res.json(eventTypeSupplier);
   }
@@ -60,18 +52,19 @@ export default class EventTypeSupplierController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
-    const { event_type } = req.params;
+    const event_type = req.params;
     const user_id = req.user.id;
+    console.log(event_type.event_type, user_id);
 
     const deleteEventTypeSupplier = container.resolve(
       DeleteEventTypeSupplierService,
     );
 
     await deleteEventTypeSupplier.execute({
-      event_type,
       user_id,
+      event_type: event_type.event_type,
     });
 
-    return res.status(200).json();
+    return res.status(200).send();
   }
 }

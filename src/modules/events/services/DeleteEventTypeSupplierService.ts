@@ -16,11 +16,10 @@ class UpdateEventTypeSupplierService {
 
   public async execute({ user_id, event_type }: IRequest): Promise<void> {
     const eventTypeSupplier = await this.eventTypeSuppliersRepository.findByIdAndEventType(
-      {
-        user_id,
-        event_type,
-      },
+      user_id,
+      event_type,
     );
+    console.log('inicio', eventTypeSupplier, 'fim');
 
     if (!eventTypeSupplier) {
       throw new AppError('No supplier found, within this event type.');

@@ -81,11 +81,11 @@ container.registerSingleton<IEventTypesRepository>(
 );
 
 container.registerSingleton<IEventTypeSuppliersRepository>(
-  'EventTypeSupplierRepository',
+  'EventTypeSuppliersRepository',
   EventTypeSuppliersRepository,
 );
 
 container.registerSingleton<IEventSuppliersRepository>(
-  'EventSupplierRepository',
+  'EventSuppliersRepository',
   EventSuppliersRepository,
 );

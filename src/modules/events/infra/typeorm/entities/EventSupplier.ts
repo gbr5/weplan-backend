@@ -1,17 +1,17 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  Column,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from '@modules/events/infra/typeorm/entities/Event';
 
-@Entity('event_supplier')
+@Entity('event_suppliers')
 class EventSupplier {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -19,14 +19,14 @@ class EventSupplier {
   @Column()
   supplier_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
-  eventSupplier: User;
+  supplierId: User;
 
   @Column()
   event_name: string;
 
-  @ManyToOne(() => Event)
+  @ManyToOne(() => Event, event => event.trimmed_name)
   @JoinColumn({ name: 'event_name' })
   eventName: Event;
 

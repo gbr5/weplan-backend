@@ -25,7 +25,6 @@ export default class EventsController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const user_id = req.user.id;
-    console.log(user_id, typeof user_id);
 
     const listEvents = container.resolve(ListUserEventsService);
 
@@ -35,17 +34,17 @@ export default class EventsController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
-    const { trimmed_name } = req.params;
+    const trimmed_name = req.params;
 
     const showEvents = container.resolve(ShowEventsService);
 
-    const event = await showEvents.execute(trimmed_name);
+    const event = await showEvents.execute(trimmed_name.event_name);
 
     return res.json(event);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { trimmed_name } = req.params;
+    const trimmed_name = req.params;
     const user_id = req.user.id;
     const { event_type, name, date } = req.body;
 
@@ -54,7 +53,7 @@ export default class EventsController {
     const event = await updateEvent.execute({
       event_type,
       name,
-      trimmed_name,
+      trimmed_name: trimmed_name.event_name,
       date,
       user_id,
     });

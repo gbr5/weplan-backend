@@ -6,12 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventType from './EventType';
-import EventSupplier from './EventTypeSupplier';
+import EventSupplier from './EventSupplier';
 
 @Entity('events')
 class Event {
@@ -27,16 +27,16 @@ class Event {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  users: User;
+  userId: User;
 
   @Column()
   event_type: string;
 
-  @ManyToOne(() => EventType)
+  @ManyToOne(() => EventType, event_type => event_type.name)
   @JoinColumn({ name: 'event_type' })
-  event_types: EventType;
+  eventType: EventType;
 
   @Column('timestamp with time zone')
   date: Date;
@@ -47,29 +47,8 @@ class Event {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => EventSupplier, eventName => eventName)
-  event_suppliers: EventSupplier;
+  @OneToOne(() => EventSupplier, event_supplier => event_supplier.event_name)
+  event_suppliers: string;
 }
 
 export default Event;
-// //                                 // //
-//                                       //
-// // //                           // // //
-//                                       //
-// // // //                     // // // //
-//                                       //
-// // // // //               // // // // //
-//                                       //
-// // // // // //         // // // // // //
-//                                       //
-// Parei tentando estabelecer as relations entre as tabelas, estudar no site do próprio typeorm para ver ao certo cono fazer e o que podereu utilizar mais para frente
-//                                       //
-// // // // // //         // // // // // //
-//                                       //
-// // // // //               // // // // //
-//                                       //
-// // // //                     // // // //
-//                                       //
-// // //                           // // //
-//                                       //
-// //                                 // // https://www.youtube.com/watch?v=S4Z5iMZpDmU&t=1743s 23:58

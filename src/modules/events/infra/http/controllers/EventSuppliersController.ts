@@ -7,30 +7,34 @@ import ListEventSuppliersService from '@modules/events/services/ListEventSupplie
 
 export default class EventSupplierController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { supplier_id, event_name } = req.body;
+    const { supplier_id } = req.body;
+    const event_name = req.params;
 
     const createEventSupplier = container.resolve(CreateEventSupplierService);
 
     const eventSupplier = await createEventSupplier.execute({
       supplier_id,
-      event_name,
+      event_name: event_name.event_name,
     });
 
     return res.json(eventSupplier);
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
-    const { event_name } = req.params;
+    const event_name = req.params;
 
     const listEventSuppliers = container.resolve(ListEventSuppliersService);
 
-    const eventSupplier = await listEventSuppliers.execute(event_name);
+    const eventSupplier = await listEventSuppliers.execute(
+      event_name.event_name,
+    );
 
     return res.json(eventSupplier);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { event_name, supplier_id } = req.params;
+    console.log(event_name);
 
     const deleteEventSupplier = container.resolve(DeleteEventSupplierService);
 

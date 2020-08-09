@@ -10,8 +10,9 @@ import {
 import uploadConfig from '@config/upload';
 
 import { Exclude, Expose } from 'class-transformer';
-import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
 import Event from '@modules/events/infra/typeorm/entities/Event';
+import EventTypeSupplier from '@modules/events/infra/typeorm/entities/EventTypeSupplier';
+import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
 
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
@@ -63,23 +64,29 @@ class Users {
     }
   }
 
-  @OneToOne(() => CompanyInfo)
+  @OneToOne(() => CompanyInfo, company_info => company_info.user_id)
   company_info: CompanyInfo;
 
-  @OneToOne(() => PersonInfo)
+  @OneToOne(() => PersonInfo, person_info => person_info.user_id)
   person_info: PersonInfo;
 
-  @OneToOne(() => UserBirthdate)
+  @OneToOne(() => UserBirthdate, user_birthdate => user_birthdate.user_id)
   user_birthdate: UserBirthdate;
 
   @OneToMany(() => UserToken, user_token => user_token.token)
-  user_tokens: UserToken[];
+  user_tokens: UserToken;
 
-  @OneToMany(() => Event, users => users)
-  events: Event[];
+  @OneToOne(() => Event, event => event.user_id)
+  events: Event;
 
-  @OneToMany(() => EventSupplier, eventSupplier => eventSupplier)
-  event_suppliers: EventSupplier[];
+  @OneToMany(() => EventSupplier, event_supplier => event_supplier.supplier_id)
+  event_suppliers: EventSupplier;
+
+  @OneToMany(
+    () => EventTypeSupplier,
+    event_type_supplier => event_type_supplier.user_id,
+  )
+  event_type_suppliers: EventTypeSupplier;
 }
 
 export default Users;

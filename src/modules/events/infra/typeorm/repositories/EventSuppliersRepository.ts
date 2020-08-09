@@ -17,10 +17,12 @@ class EventSupplierRepository implements IEventSuppliersRepository {
     this.ormRepository = getRepository(EventSupplier);
   }
 
-  public async findByEvent(name: string): Promise<EventSupplier[]> {
+  public async findByEvent(event_name: string): Promise<EventSupplier[]> {
+    console.log(event_name);
     const findEventSupplier = await this.ormRepository.find({
-      where: { name },
+      where: { event_name },
     });
+    console.log(findEventSupplier);
 
     return findEventSupplier;
   }

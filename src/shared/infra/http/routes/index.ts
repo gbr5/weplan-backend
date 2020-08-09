@@ -9,11 +9,9 @@ import profileRouter from '@modules/users/infra/http/routes/profile.routes';
 import companyInfoRouter from '@modules/users/infra/http/routes/companyInfo.routes';
 import personInfoRouter from '@modules/users/infra/http/routes/personInfo.routes';
 import userBirthdateRouter from '@modules/users/infra/http/routes/userBirthdate.routes';
-import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 
+import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.routes';
-import eventTypeSuppliersRouter from '@modules/events/infra/http/routes/eventTypeSuppliers.routes';
-import eventSuppliersRouter from '@modules/events/infra/http/routes/eventSuppliers.routes';
 
 const routes = Router();
 
@@ -30,8 +28,5 @@ routes.use('/user-birthdate', userBirthdateRouter);
 
 routes.use('/events', eventsRouter);
 routes.use('/event-types', eventTypesRouter);
-routes.use('/suppliers', eventTypeSuppliersRouter);
-
-routes.use('/event-suppliers/', eventSuppliersRouter);
 
 export default routes;

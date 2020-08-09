@@ -15,8 +15,10 @@ class ListUserEventSupplierService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(name: string): Promise<EventSupplier[]> {
-    const eventSupplier = await this.eventSuppliersRepository.findByEvent(name);
+  public async execute(event_name: string): Promise<EventSupplier[]> {
+    const eventSupplier = await this.eventSuppliersRepository.findByEvent(
+      event_name,
+    );
 
     return eventSupplier;
   }

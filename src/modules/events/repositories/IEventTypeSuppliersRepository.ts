@@ -4,7 +4,8 @@ import ICreateEventTypeSupplierDTO from '@modules/events/dtos/ICreateEventTypeSu
 export default interface IEventTypeSuppliersRepository {
   create(data: ICreateEventTypeSupplierDTO): Promise<EventTypeSupplier>;
   findByIdAndEventType(
-    data: ICreateEventTypeSupplierDTO,
+    user_id: string,
+    event_type: string,
   ): Promise<EventTypeSupplier | undefined>;
   findByEventType(event_type: string): Promise<EventTypeSupplier[]>;
   save(event: EventTypeSupplier): Promise<EventTypeSupplier>;

@@ -1,14 +1,17 @@
 import { getRepository, Repository } from 'typeorm';
-// Falta fazer um findAllEventsByTypeFromProvider
-// Falta fazer um findAllEventsFromProvider
-// Falta fazer um findAllEventsInYearFromProvider
-// Falta fazer um findAllEventsInMonthFromProvider
-// Falta fazer um findAllEventsInDayFromProvider
 
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
-import ICreateEventDTO from '@modules/events/dtos/ICreateEventDTO';
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
+// import ICreateEventDTO from '@modules/events/dtos/ICreateEventDTO';
+
+interface IRequest {
+  name: string;
+  trimmed_name: string;
+  user_id: string;
+  event_type: string;
+  date: Date;
+}
 
 class EventsRepository implements IEventsRepository {
   private ormRepository: Repository<Event>;
@@ -44,8 +47,20 @@ class EventsRepository implements IEventsRepository {
     return findEvent;
   }
 
-  public async create(userData: ICreateEventDTO): Promise<Event> {
-    const event = this.ormRepository.create(userData);
+  public async create({
+    name,
+    trimmed_name,
+    event_type,
+    user_id,
+    date,
+  }: IRequest): Promise<Event> {
+    const event = await this.ormRepository.create({
+      trimmed_name,
+      name,
+      event_type,
+      user_id,
+      date,
+    });
 
     await this.ormRepository.save(event);
 

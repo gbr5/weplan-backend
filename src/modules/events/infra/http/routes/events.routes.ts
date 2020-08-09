@@ -3,9 +3,11 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import EventsController from '@modules/events/infra/http/controllers/EventsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import EventSuppliersController from '@modules/events/infra/http/controllers/EventSuppliersController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
+const eventSuppliersController = new EventSuppliersController();
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -21,10 +23,10 @@ eventsRouter.post(
   }),
   eventsController.create,
 );
-eventsRouter.get('/:trimmed_name', eventsController.show);
+eventsRouter.get('/:event_name', eventsController.show);
 
 eventsRouter.put(
-  '/:trimmed_name',
+  '/:event_name',
   celebrate({
     [Segments.BODY]: {
       user_id: Joi.string().required(),
@@ -34,6 +36,23 @@ eventsRouter.put(
     },
   }),
   eventsController.update,
+);
+
+eventsRouter.post(
+  '/:event_name',
+  celebrate({
+    [Segments.BODY]: {
+      supplier_id: Joi.string().uuid().required(),
+    },
+  }),
+  eventSuppliersController.create,
+);
+
+eventsRouter.get('/:event_name/suppliers', eventSuppliersController.index);
+
+eventsRouter.delete(
+  '/:event_name/:supplier_id',
+  eventSuppliersController.delete,
 );
 
 export default eventsRouter;

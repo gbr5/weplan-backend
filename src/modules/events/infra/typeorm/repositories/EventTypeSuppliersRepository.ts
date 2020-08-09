@@ -4,6 +4,7 @@ import IEventTypeSuppliersRepository from '@modules/events/repositories/IEventTy
 import ICreateEventTypeSupplierDTO from '@modules/events/dtos/ICreateEventTypeSupplierDTO';
 
 import EventTypeSupplier from '@modules/events/infra/typeorm/entities/EventTypeSupplier';
+import AppError from '@shared/errors/AppError';
 
 interface IRequest {
   user_id: string;
@@ -27,40 +28,60 @@ class EventTypeSupplierRepository implements IEventTypeSuppliersRepository {
     return findEventTypeSupplier;
   }
 
-  public async findByIdAndEventType({
-    user_id,
-    event_type,
-  }: IRequest): Promise<EventTypeSupplier | undefined> {
-    const findEventTypeSupplier = await this.ormRepository.findOne({
-      where: {
-        user_id,
-        event_type,
-      },
-    });
-
-    return findEventTypeSupplier;
+  public async findByIdAndEventType(
+    user_id: string,
+    event_type: string,
+  ): Promise<EventTypeSupplier | undefined> {
+    try {
+      const findEventTypeSupplier = await this.ormRepository.findOne({
+        where: {
+          user_id,
+          event_type,
+        },
+      });
+      return findEventTypeSupplier;
+    } catch (err) {
+      return undefined; // throw new AppError(
+      //   'Algo deu errado, EventTypeSupplierRepository.findById',
+      // );
+    }
   }
 
-  public async create(
-    userData: ICreateEventTypeSupplierDTO,
-  ): Promise<EventTypeSupplier> {
-    console.log('EventTypeSupplierRepository', userData);
-    const event = this.ormRepository.create(userData);
+  public async create({
+    user_id,
+    event_type,
+  }: ICreateEventTypeSupplierDTO): Promise<EventTypeSupplier> {
+    try {
+      const eventTypeSupplier = this.ormRepository.create({
+        user_id,
+        event_type,
+      });
 
-    await this.ormRepository.save(event);
+      await this.ormRepository.save(eventTypeSupplier);
 
-    return event;
+      return eventTypeSupplier;
+    } catch (err) {
+      throw new AppError('Algo deu errado, EventTypeSupplierRepository.create');
+    }
   }
 
   public async save(event: EventTypeSupplier): Promise<EventTypeSupplier> {
-    return this.ormRepository.save(event);
+    try {
+      return this.ormRepository.save(event);
+    } catch (err) {
+      throw new AppError('Algo deu errado, EventTypeSupplierRepository.save');
+    }
   }
 
   public async delete({ user_id, event_type }: IRequest): Promise<void> {
-    await this.ormRepository.delete({
-      user_id,
-      event_type,
-    });
+    try {
+      await this.ormRepository.delete({
+        user_id,
+        event_type,
+      });
+    } catch (err) {
+      throw new AppError('Algo deu errado, EventTypeSupplierRepository.delete');
+    }
   }
 }
 
