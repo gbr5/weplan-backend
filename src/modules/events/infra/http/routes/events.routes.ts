@@ -3,11 +3,13 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import EventsController from '@modules/events/infra/http/controllers/EventsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import EventSuppliersController from '@modules/events/infra/http/controllers/EventSuppliersController';
+import SelectedSuppliersController from '@modules/events/infra/http/controllers/SelectedSuppliersController';
+import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
-const eventSuppliersController = new EventSuppliersController();
+const selectedSuppliersController = new SelectedSuppliersController();
+const hiredSuppliersController = new HiredSuppliersController();
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -39,20 +41,40 @@ eventsRouter.put(
 );
 
 eventsRouter.post(
-  '/:event_name',
+  '/suppliers',
   celebrate({
     [Segments.BODY]: {
       supplier_id: Joi.string().uuid().required(),
+      event_name: Joi.string().required(),
+      supplier_sub_category: Joi.string().required(),
+      isHired: Joi.boolean().required(),
     },
   }),
-  eventSuppliersController.create,
+  selectedSuppliersController.create,
 );
 
-eventsRouter.get('/:event_name/suppliers', eventSuppliersController.index);
+eventsRouter.put(
+  '/:event_name/:supplier_id',
+  celebrate({
+    [Segments.BODY]: {
+      supplier_sub_category: Joi.string().required(),
+      isHired: Joi.boolean().required(),
+    },
+  }),
+  selectedSuppliersController.update,
+);
 
 eventsRouter.delete(
   '/:event_name/:supplier_id',
-  eventSuppliersController.delete,
+  selectedSuppliersController.delete,
+);
+eventsRouter.get(
+  '/:event_name/selected_suppliers',
+  selectedSuppliersController.index,
+);
+eventsRouter.get(
+  '/:event_name/hired_suppliers',
+  hiredSuppliersController.index,
 );
 
 export default eventsRouter;

@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventSupplier1597003779650
+export default class CreateSelectedSuppliers1597075099768
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_suppliers',
+        name: 'selected_suppliers',
         columns: [
           {
             name: 'id',
@@ -21,6 +21,14 @@ export default class CreateEventSupplier1597003779650
           {
             name: 'event_name',
             type: 'varchar',
+          },
+          {
+            name: 'supplier_sub_category',
+            type: 'varchar',
+          },
+          {
+            name: 'isHired',
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -50,12 +58,20 @@ export default class CreateEventSupplier1597003779650
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
+          {
+            name: 'EventSupplierCategory',
+            columnNames: ['supplier_sub_category'],
+            referencedTableName: 'supplier_sub_categories',
+            referencedColumnNames: ['sub_category'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
         ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_suppliers');
+    await queryRunner.dropTable('selected_suppliers');
   }
 }

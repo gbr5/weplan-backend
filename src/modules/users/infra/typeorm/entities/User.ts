@@ -12,7 +12,7 @@ import uploadConfig from '@config/upload';
 import { Exclude, Expose } from 'class-transformer';
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import EventTypeSupplier from '@modules/events/infra/typeorm/entities/EventTypeSupplier';
-import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
+import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSupplier';
 
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
@@ -20,7 +20,7 @@ import UserToken from './UserToken';
 import UserBirthdate from './UserBirthdate';
 
 @Entity('users')
-class Users {
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -79,8 +79,11 @@ class Users {
   @OneToOne(() => Event, event => event.user_id)
   events: Event;
 
-  @OneToMany(() => EventSupplier, event_supplier => event_supplier.supplier_id)
-  event_suppliers: EventSupplier;
+  @OneToMany(
+    () => SelectedSupplier,
+    selected_supplier => selected_supplier.supplier_id,
+  )
+  selected_suppliers: SelectedSupplier;
 
   @OneToMany(
     () => EventTypeSupplier,
@@ -89,4 +92,4 @@ class Users {
   event_type_suppliers: EventTypeSupplier;
 }
 
-export default Users;
+export default User;

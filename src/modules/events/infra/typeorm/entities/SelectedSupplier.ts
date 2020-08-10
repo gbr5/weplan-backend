@@ -10,8 +10,9 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from '@modules/events/infra/typeorm/entities/Event';
+import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
 
-@Entity('event_suppliers')
+@Entity('selected_suppliers')
 class EventSupplier {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -29,6 +30,16 @@ class EventSupplier {
   @ManyToOne(() => Event, event => event.trimmed_name)
   @JoinColumn({ name: 'event_name' })
   eventName: Event;
+
+  @Column()
+  supplier_sub_category: string;
+
+  @ManyToOne(() => SupplierSubCategory, subCategory => subCategory.sub_category)
+  @JoinColumn({ name: 'supplier_sub_category' })
+  supplierSubCategory: SupplierSubCategory;
+
+  @Column('boolean')
+  isHired: boolean;
 
   @CreateDateColumn()
   created_at: Date;

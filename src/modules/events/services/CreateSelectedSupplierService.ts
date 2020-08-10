@@ -2,21 +2,23 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
-import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
+import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSupplier';
+import ISelectedSuppliersRepository from '@modules/events/repositories/ISelectedSuppliersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 
 interface IRequest {
   supplier_id: string;
   event_name: string;
+  supplier_sub_category: string;
+  isHired: boolean;
 }
 
 @injectable()
-class CreateEventSupplierService {
+class CreateSelectedSupplierService {
   constructor(
-    @inject('EventSuppliersRepository')
-    private eventSuppliersRepository: IEventSuppliersRepository,
+    @inject('SelectedSuppliersRepository')
+    private eventSuppliersRepository: ISelectedSuppliersRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
@@ -26,25 +28,27 @@ class CreateEventSupplierService {
   ) {}
 
   public async execute({
-    event_name,
     supplier_id,
-  }: IRequest): Promise<EventSupplier> {
+    event_name,
+    supplier_sub_category,
+    isHired,
+  }: IRequest): Promise<SelectedSupplier> {
     const eventSupplierExists = await this.eventSuppliersRepository.findByIdAndEvent(
-      {
-        event_name,
-        supplier_id,
-      },
+      supplier_id,
+      event_name,
     );
 
     if (eventSupplierExists) {
       throw new AppError(
-        'The event name that you have chosen, already exists.',
+        'The provider that you have chosen, is already selected.',
       );
     }
 
     const event = await this.eventSuppliersRepository.create({
-      event_name,
       supplier_id,
+      event_name,
+      supplier_sub_category,
+      isHired,
     });
 
     await this.notificationsRepository.create({
@@ -56,4 +60,4 @@ class CreateEventSupplierService {
   }
 }
 
-export default CreateEventSupplierService;
+export default CreateSelectedSupplierService;

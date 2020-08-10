@@ -11,7 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventType from './EventType';
-import EventSupplier from './EventSupplier';
+import SelectedSupplier from './SelectedSupplier';
 
 @Entity('events')
 class Event {
@@ -47,8 +47,11 @@ class Event {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => EventSupplier, event_supplier => event_supplier.event_name)
-  event_suppliers: string;
+  @OneToOne(
+    () => SelectedSupplier,
+    selected_supplier => selected_supplier.event_name,
+  )
+  selected_suppliers: string;
 }
 
 export default Event;

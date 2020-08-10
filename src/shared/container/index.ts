@@ -33,8 +33,8 @@ import EventTypesRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventTypeSuppliersRepository from '@modules/events/repositories/IEventTypeSuppliersRepository';
 import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventTypeSuppliersRepository';
 
-import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
-import EventSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventSuppliersRepository';
+import ISelectedSuppliersRepository from '@modules/events/repositories/ISelectedSuppliersRepository';
+import SelectedSuppliersRepository from '@modules/events/infra/typeorm/repositories/SelectedSuppliersRepository';
 
 import ISupplierCategoriesRepository from '@modules/suppliers/repositories/ISupplierCategoriesRepository';
 import SupplierCategoriesRepository from '@modules/suppliers/infra/typeorm/repositories/SupplierCategoriesRepository';
@@ -94,9 +94,9 @@ container.registerSingleton<IEventTypeSuppliersRepository>(
   EventTypeSuppliersRepository,
 );
 
-container.registerSingleton<IEventSuppliersRepository>(
-  'EventSuppliersRepository',
-  EventSuppliersRepository,
+container.registerSingleton<ISelectedSuppliersRepository>(
+  'SelectedSuppliersRepository',
+  SelectedSuppliersRepository,
 );
 
 container.registerSingleton<ISupplierCategoriesRepository>(
