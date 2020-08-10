@@ -10,7 +10,7 @@ interface IRequest {
   event_name: string;
 }
 
-class SelectedSupplierRepository implements ISelectedSuppliersRepository {
+class SelectedSuppliersRepository implements ISelectedSuppliersRepository {
   private ormRepository: Repository<SelectedSupplier>;
 
   constructor() {
@@ -63,4 +63,4 @@ class SelectedSupplierRepository implements ISelectedSuppliersRepository {
   }
 }
 
-export default SelectedSupplierRepository;
+export default SelectedSuppliersRepository;

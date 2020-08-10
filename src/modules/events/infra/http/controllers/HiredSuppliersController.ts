@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import ListSelectedSuppliersIsHiredService from '@modules/events/services/ListSelectedSuppliersIsHiredService';
-import AppError from '@shared/errors/AppError';
 
 export default class HiredSuppliersController {
   public async index(req: Request, res: Response): Promise<Response> {

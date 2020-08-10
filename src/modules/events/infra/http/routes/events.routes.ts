@@ -5,11 +5,13 @@ import EventsController from '@modules/events/infra/http/controllers/EventsContr
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import SelectedSuppliersController from '@modules/events/infra/http/controllers/SelectedSuppliersController';
 import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
+import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
 const selectedSuppliersController = new SelectedSuppliersController();
 const hiredSuppliersController = new HiredSuppliersController();
+const userCheckListsController = new UserCheckListsController();
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -39,6 +41,8 @@ eventsRouter.put(
   }),
   eventsController.update,
 );
+
+// === Selected & Hired Suppliers === //
 
 eventsRouter.post(
   '/suppliers',
@@ -75,6 +79,38 @@ eventsRouter.get(
 eventsRouter.get(
   '/:event_name/hired_suppliers',
   hiredSuppliersController.index,
+);
+
+// === User Check List === //
+
+eventsRouter.post(
+  '/check-list/:event_name',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      priority_level: Joi.number(),
+      checked: Joi.boolean(),
+    },
+  }),
+  userCheckListsController.create,
+);
+eventsRouter.get('/check-list/:event_name', userCheckListsController.index);
+
+eventsRouter.put(
+  '/check-list/:event_name/:id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      priority_level: Joi.number(),
+      checked: Joi.boolean(),
+    },
+  }),
+  userCheckListsController.update,
+);
+
+eventsRouter.delete(
+  '/check-list/:event_name/:id',
+  userCheckListsController.delete,
 );
 
 export default eventsRouter;

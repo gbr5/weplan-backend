@@ -7,11 +7,13 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventType from './EventType';
 import SelectedSupplier from './SelectedSupplier';
+import UserCheckList from './UserCheckList';
 
 @Entity('events')
 class Event {
@@ -52,6 +54,9 @@ class Event {
     selected_supplier => selected_supplier.event_name,
   )
   selected_suppliers: string;
+
+  @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_name)
+  user_check_lists: string;
 }
 
 export default Event;
