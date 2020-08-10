@@ -21,10 +21,10 @@ class ShowEventTypeSupplierService {
     user_id,
     event_type,
   }: IRequest): Promise<EventTypeSupplier> {
-    const event = await this.eventTypeSuppliersRepository.findByIdAndEventType({
+    const event = await this.eventTypeSuppliersRepository.findByIdAndEventType(
       user_id,
       event_type,
-    });
+    );
 
     if (!event) {
       throw new AppError('Event not found.');

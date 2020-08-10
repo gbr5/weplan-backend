@@ -19,7 +19,6 @@ class UpdateEventSupplierService {
       supplier_id,
       event_name,
     });
-    console.log('inicio', eventSupplier, 'fim');
 
     if (!eventSupplier) {
       throw new AppError('Event supplier not found.');

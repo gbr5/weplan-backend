@@ -19,7 +19,6 @@ class UpdateEventTypeSupplierService {
       user_id,
       event_type,
     );
-    console.log('inicio', eventTypeSupplier, 'fim');
 
     if (!eventTypeSupplier) {
       throw new AppError('No supplier found, within this event type.');

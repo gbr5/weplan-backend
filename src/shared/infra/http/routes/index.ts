@@ -13,6 +13,8 @@ import userBirthdateRouter from '@modules/users/infra/http/routes/userBirthdate.
 import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.routes';
 
+import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
+
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
@@ -28,5 +30,7 @@ routes.use('/user-birthdate', userBirthdateRouter);
 
 routes.use('/events', eventsRouter);
 routes.use('/event-types', eventTypesRouter);
+
+routes.use('/suppliers/categories', supplierCategoriesRouter);
 
 export default routes;

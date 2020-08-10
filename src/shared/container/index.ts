@@ -36,6 +36,15 @@ import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/reposito
 import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
 import EventSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventSuppliersRepository';
 
+import ISupplierCategoriesRepository from '@modules/suppliers/repositories/ISupplierCategoriesRepository';
+import SupplierCategoriesRepository from '@modules/suppliers/infra/typeorm/repositories/SupplierCategoriesRepository';
+
+import ISupplierSubCategoriesRepository from '@modules/suppliers/repositories/ISupplierSubCategoriesRepository';
+import SupplierSubCategoriesRepository from '@modules/suppliers/infra/typeorm/repositories/SupplierSubCategoriesRepository';
+
+import IUserSupplierCategoriesRepository from '@modules/suppliers/repositories/IUserSupplierCategoriesRepository';
+import UserSupplierCategoriesRepository from '@modules/suppliers/infra/typeorm/repositories/UserSupplierCategoriesRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -88,4 +97,19 @@ container.registerSingleton<IEventTypeSuppliersRepository>(
 container.registerSingleton<IEventSuppliersRepository>(
   'EventSuppliersRepository',
   EventSuppliersRepository,
+);
+
+container.registerSingleton<ISupplierCategoriesRepository>(
+  'SupplierCategoriesRepository',
+  SupplierCategoriesRepository,
+);
+
+container.registerSingleton<ISupplierSubCategoriesRepository>(
+  'SupplierSubCategoriesRepository',
+  SupplierSubCategoriesRepository,
+);
+
+container.registerSingleton<IUserSupplierCategoriesRepository>(
+  'UserSupplierCategoriesRepository',
+  UserSupplierCategoriesRepository,
 );
