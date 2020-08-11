@@ -9,14 +9,14 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 class ListGuestsService {
   constructor(
     @inject('GuestsRepository')
-    private GuestsRepository: IGuestsRepository,
+    private guestsRepository: IGuestsRepository,
 
     @inject('CacheProvider')
     private cacheUser: ICacheProvider,
   ) {}
 
   public async execute(event_name: string): Promise<Guest[]> {
-    const Guests = await this.GuestsRepository.findByEvent(event_name);
+    const Guests = await this.guestsRepository.findByEvent(event_name);
 
     return Guests;
   }

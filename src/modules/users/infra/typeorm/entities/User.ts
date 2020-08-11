@@ -14,6 +14,7 @@ import Event from '@modules/events/infra/typeorm/entities/Event';
 import EventTypeSupplier from '@modules/events/infra/typeorm/entities/EventTypeSupplier';
 import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSupplier';
 
+import EventPlanner from '@modules/events/infra/typeorm/entities/EventPlanner';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -90,6 +91,9 @@ class User {
     event_type_supplier => event_type_supplier.user_id,
   )
   event_type_suppliers: EventTypeSupplier;
+
+  @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
+  event_planners: string;
 }
 
 export default User;

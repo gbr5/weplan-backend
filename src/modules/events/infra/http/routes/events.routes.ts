@@ -8,6 +8,7 @@ import HiredSuppliersController from '@modules/events/infra/http/controllers/Hir
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
 import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
 import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
+import EventPlannersController from '@modules/events/infra/http/controllers/EventPlannersController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
@@ -15,6 +16,7 @@ const selectedSuppliersController = new SelectedSuppliersController();
 const hiredSuppliersController = new HiredSuppliersController();
 const userCheckListsController = new UserCheckListsController();
 const guestsController = new GuestsController();
+const eventPlannersController = new EventPlannersController();
 const hostGuestsController = new HostGuestsController();
 
 eventsRouter.use(ensureAuthenticated);
@@ -153,5 +155,23 @@ eventsRouter.delete(
 );
 eventsRouter.get('/:event_name/guests/', guestsController.index);
 eventsRouter.get('/:event_name/guests/:host_id', hostGuestsController.index);
+
+// === Event Planners === //
+
+eventsRouter.post(
+  '/:event_name/event-planner',
+  celebrate({
+    [Segments.BODY]: {
+      planner_id: Joi.string().required(),
+    },
+  }),
+  eventPlannersController.create,
+);
+
+eventsRouter.delete(
+  '/:event_name/event-planner/:planner_id',
+  eventPlannersController.delete,
+);
+eventsRouter.get('/:event_name/event-planner/', eventPlannersController.index);
 
 export default eventsRouter;

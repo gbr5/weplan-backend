@@ -14,6 +14,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import EventType from './EventType';
 import SelectedSupplier from './SelectedSupplier';
 import UserCheckList from './UserCheckList';
+import EventPlanner from './EventPlanner';
 
 @Entity('events')
 class Event {
@@ -57,6 +58,9 @@ class Event {
 
   @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_name)
   user_check_lists: string;
+
+  @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
+  event_planners: string;
 }
 
 export default Event;

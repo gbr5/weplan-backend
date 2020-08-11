@@ -51,6 +51,9 @@ import UserCheckListsRepository from '@modules/events/infra/typeorm/repositories
 import IGuestsRepository from '@modules/events/repositories/IGuestsRepository';
 import GuestsRepository from '@modules/events/infra/typeorm/repositories/GuestsRepository';
 
+import IEventPlannersRepository from '@modules/events/repositories/IEventPlannersRepository';
+import EventPlannersRepository from '@modules/events/infra/typeorm/repositories/EventPlannersRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -123,6 +126,11 @@ container.registerSingleton<IUserSupplierCategoriesRepository>(
 container.registerSingleton<IUserCheckListsRepository>(
   'UserCheckListsRepository',
   UserCheckListsRepository,
+);
+
+container.registerSingleton<IEventPlannersRepository>(
+  'EventPlannersRepository',
+  EventPlannersRepository,
 );
 
 container.registerSingleton<IGuestsRepository>(

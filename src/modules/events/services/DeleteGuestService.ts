@@ -12,7 +12,7 @@ interface IRequest {
 class DeleteGuestService {
   constructor(
     @inject('GuestsRepository')
-    private userCheckListsRepository: IGuestsRepository,
+    private guestsRepository: IGuestsRepository,
   ) {}
 
   public async execute({
@@ -20,7 +20,7 @@ class DeleteGuestService {
     first_name,
     last_name,
   }: IRequest): Promise<void> {
-    const checkList = await this.userCheckListsRepository.findByEventFirstNameAndLastName(
+    const checkList = await this.guestsRepository.findByEventFirstNameAndLastName(
       event_name,
       first_name,
       last_name,
@@ -30,7 +30,7 @@ class DeleteGuestService {
       throw new AppError('Selected supplier not found.');
     }
 
-    await this.userCheckListsRepository.delete(checkList);
+    await this.guestsRepository.delete(checkList);
   }
 }
 
