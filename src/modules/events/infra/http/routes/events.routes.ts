@@ -6,12 +6,16 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import SelectedSuppliersController from '@modules/events/infra/http/controllers/SelectedSuppliersController';
 import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
+import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
+import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
 const selectedSuppliersController = new SelectedSuppliersController();
 const hiredSuppliersController = new HiredSuppliersController();
 const userCheckListsController = new UserCheckListsController();
+const guestsController = new GuestsController();
+const hostGuestsController = new HostGuestsController();
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -84,7 +88,7 @@ eventsRouter.get(
 // === User Check List === //
 
 eventsRouter.post(
-  '/check-list/:event_name',
+  '/:event_name/check-list',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -94,10 +98,10 @@ eventsRouter.post(
   }),
   userCheckListsController.create,
 );
-eventsRouter.get('/check-list/:event_name', userCheckListsController.index);
+eventsRouter.get('/:event_name/check-list', userCheckListsController.index);
 
 eventsRouter.put(
-  '/check-list/:event_name/:id',
+  '/:event_name/check-list/:id',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -109,11 +113,45 @@ eventsRouter.put(
 );
 
 eventsRouter.delete(
-  '/check-list/:event_name/:id',
+  '/:event_name/check-list/:id',
   userCheckListsController.delete,
 );
 
-export default eventsRouter;
+// === Guests & Hosts Guests === //
 
-// Rota: Aqui só pode ter funções para receber a requisição,
-// chamar outro arquivo, devolver uma resposta
+eventsRouter.post(
+  '/:event_name/guests',
+  celebrate({
+    [Segments.BODY]: {
+      first_name: Joi.string().required(),
+      last_name: Joi.string().required(),
+      description: Joi.string().required(),
+      host_id: Joi.string().required(),
+      confirmed: Joi.boolean().required(),
+    },
+  }),
+  guestsController.create,
+);
+
+eventsRouter.put(
+  '/:event_name/guests/:first_name-:last_name',
+  celebrate({
+    [Segments.BODY]: {
+      first_name: Joi.string().uuid().required(),
+      last_name: Joi.string().required(),
+      description: Joi.string().required(),
+      host_id: Joi.string().required(),
+      confirmed: Joi.boolean().required(),
+    },
+  }),
+  guestsController.update,
+);
+
+eventsRouter.delete(
+  '/:event_name/guests/:first_name-:last_name',
+  guestsController.delete,
+);
+eventsRouter.get('/:event_name/guests/', guestsController.index);
+eventsRouter.get('/:event_name/guests/:host_id', hostGuestsController.index);
+
+export default eventsRouter;

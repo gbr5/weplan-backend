@@ -1,0 +1,84 @@
+import { getRepository, Repository } from 'typeorm';
+
+import IGuestsRepository from '@modules/events/repositories/IGuestsRepository';
+import ICreateGuestDTO from '@modules/events/dtos/ICreateGuestDTO';
+import Guest from '@modules/events/infra/typeorm/entities/Guest';
+
+class GuestRepository implements IGuestsRepository {
+  private ormRepository: Repository<Guest>;
+
+  constructor() {
+    this.ormRepository = getRepository(Guest);
+  }
+
+  public async findByEventFirstNameAndLastName(
+    event_name: string,
+    first_name: string,
+    last_name: string,
+  ): Promise<Guest | undefined> {
+    const findGuest = await this.ormRepository.findOne({
+      where: { event_name, first_name, last_name },
+    });
+
+    return findGuest;
+  }
+
+  public async findByHostIdAndEvent(
+    event_name: string,
+    host_id: string,
+  ): Promise<Guest[]> {
+    const findGuest = await this.ormRepository.find({
+      where: { event_name, host_id },
+    });
+
+    return findGuest;
+  }
+
+  public async findByEvent(event_name: string): Promise<Guest[]> {
+    const findGuest = await this.ormRepository.find({
+      where: { event_name },
+    });
+
+    return findGuest;
+  }
+
+  public async create({
+    first_name,
+    last_name,
+    description,
+    event_name,
+    host_id,
+    confirmed,
+  }: ICreateGuestDTO): Promise<Guest> {
+    const guest = this.ormRepository.create({
+      first_name,
+      last_name,
+      description,
+      event_name,
+      host_id,
+      confirmed,
+    });
+
+    await this.ormRepository.save(guest);
+
+    return guest;
+  }
+
+  public async save(guest: Guest): Promise<Guest> {
+    return this.ormRepository.save(guest);
+  }
+
+  public async delete({
+    event_name,
+    first_name,
+    last_name,
+  }: Guest): Promise<void> {
+    await this.ormRepository.delete({
+      event_name,
+      first_name,
+      last_name,
+    });
+  }
+}
+
+export default GuestRepository;

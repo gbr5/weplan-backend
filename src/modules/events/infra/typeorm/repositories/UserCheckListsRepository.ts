@@ -9,7 +9,7 @@ interface IRequest {
   id: string;
 }
 
-class UserCheckListRepository implements IUserCheckListsRepository {
+class UserCheckListsRepository implements IUserCheckListsRepository {
   private ormRepository: Repository<UserCheckList>;
 
   constructor() {
@@ -62,4 +62,4 @@ class UserCheckListRepository implements IUserCheckListsRepository {
   }
 }
 
-export default UserCheckListRepository;
+export default UserCheckListsRepository;

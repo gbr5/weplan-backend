@@ -1,0 +1,25 @@
+import 'reflect-metadata';
+import { injectable, inject } from 'tsyringe';
+
+import Guest from '@modules/events/infra/typeorm/entities/Guest';
+import IGuestsRepository from '@modules/events/repositories/IGuestsRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+
+@injectable()
+class ListGuestsService {
+  constructor(
+    @inject('GuestsRepository')
+    private GuestsRepository: IGuestsRepository,
+
+    @inject('CacheProvider')
+    private cacheUser: ICacheProvider,
+  ) {}
+
+  public async execute(event_name: string): Promise<Guest[]> {
+    const Guests = await this.GuestsRepository.findByEvent(event_name);
+
+    return Guests;
+  }
+}
+
+export default ListGuestsService;
