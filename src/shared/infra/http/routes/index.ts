@@ -9,6 +9,7 @@ import profileRouter from '@modules/users/infra/http/routes/profile.routes';
 import companyInfoRouter from '@modules/users/infra/http/routes/companyInfo.routes';
 import personInfoRouter from '@modules/users/infra/http/routes/personInfo.routes';
 import userBirthdateRouter from '@modules/users/infra/http/routes/userBirthdate.routes';
+import contactTypesRouter from '@modules/users/infra/http/routes/contactTypes.routes';
 
 import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.routes';
@@ -27,6 +28,7 @@ routes.use('/profile', profileRouter);
 routes.use('/company-info', companyInfoRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
+routes.use('/contact-types', contactTypesRouter);
 
 routes.use('/events', eventsRouter);
 routes.use('/event-types', eventTypesRouter);

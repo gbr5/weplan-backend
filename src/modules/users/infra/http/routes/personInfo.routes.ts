@@ -10,7 +10,7 @@ const companyInfoController = new PersonInfoController();
 companyInfoRouter.use(ensureAuthenticated);
 
 companyInfoRouter.post('/', companyInfoController.create);
-companyInfoRouter.get('/', companyInfoController.show);
+companyInfoRouter.get('/:user_id', companyInfoController.show);
 companyInfoRouter.put(
   '/',
   celebrate({
