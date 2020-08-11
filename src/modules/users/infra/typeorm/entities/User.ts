@@ -19,6 +19,7 @@ import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
 import UserBirthdate from './UserBirthdate';
+import UserContactInfo from './UserContactInfo';
 
 @Entity('users')
 class User {
@@ -94,6 +95,9 @@ class User {
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
   event_planners: string;
+
+  @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
+  contact_infos: string;
 }
 
 export default User;

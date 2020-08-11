@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import UserContactInfo from './UserContactInfo';
 
 @Entity('contact_types')
 class ContactType {
@@ -19,6 +21,9 @@ class ContactType {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
+  contact_infos: string;
 }
 
 export default ContactType;

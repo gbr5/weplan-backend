@@ -2,10 +2,12 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import ProfileController from '@modules/users/infra/http/controllers/ProfileController';
+import UserContactInfosController from '@modules/users/infra/http/controllers/UserContactInfosController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const profileRouter = Router();
 const userscontroller = new ProfileController();
+const userContactInfosController = new UserContactInfosController();
 
 profileRouter.use(ensureAuthenticated);
 
@@ -22,6 +24,35 @@ profileRouter.put(
     },
   }),
   userscontroller.update,
+);
+
+// === User Contact Info === //
+
+profileRouter.post(
+  '/contact-info',
+  celebrate({
+    [Segments.BODY]: {
+      contact_info: Joi.string().required(),
+      contact_type: Joi.string().required(),
+    },
+  }),
+  userContactInfosController.create,
+);
+
+profileRouter.put(
+  '/contact-info/:user_id/:contact_type',
+  celebrate({
+    [Segments.BODY]: {
+      contact_info: Joi.string().required(),
+    },
+  }),
+  userContactInfosController.update,
+);
+
+profileRouter.get('/contact-info/:user_id/', userContactInfosController.index);
+profileRouter.get(
+  '/contact-info/:user_id/:contact_type',
+  userContactInfosController.show,
 );
 
 export default profileRouter;

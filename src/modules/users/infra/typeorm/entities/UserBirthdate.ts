@@ -19,9 +19,9 @@ class UserBirthdate {
   @Column('uuid')
   user_id: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, user => user.id)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  users: User;
 }
 
 export default UserBirthdate;
