@@ -13,14 +13,14 @@ export default class UserCheckListsController {
 
     const createUserCheckList = container.resolve(CreateUserCheckListService);
 
-    const selectedSupplier = await createUserCheckList.execute({
+    const checkList = await createUserCheckList.execute({
       name,
       priority_level,
       checked,
       event_name: dataParams.event_name,
     });
 
-    return res.json(selectedSupplier);
+    return res.json(checkList);
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -44,7 +44,7 @@ export default class UserCheckListsController {
 
     const updateUserCheckList = container.resolve(UpdateUserCheckListService);
 
-    const selectedSupplier = await updateUserCheckList.execute({
+    const checkList = await updateUserCheckList.execute({
       name,
       priority_level,
       checked,
@@ -52,7 +52,7 @@ export default class UserCheckListsController {
       id,
     });
 
-    return res.json(selectedSupplier);
+    return res.json(checkList);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

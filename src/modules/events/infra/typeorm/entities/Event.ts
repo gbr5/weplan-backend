@@ -15,6 +15,9 @@ import EventType from './EventType';
 import SelectedSupplier from './SelectedSupplier';
 import UserCheckList from './UserCheckList';
 import EventPlanner from './EventPlanner';
+import EventOwner from './EventOwner';
+import EventMember from './EventMember';
+import EventInfo from './EventInfo';
 
 @Entity('events')
 class Event {
@@ -50,7 +53,7 @@ class Event {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(
+  @OneToMany(
     () => SelectedSupplier,
     selected_supplier => selected_supplier.event_name,
   )
@@ -61,6 +64,15 @@ class Event {
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
   event_planners: string;
+
+  @OneToMany(() => EventOwner, event_owner => event_owner.event_name)
+  event_owners: string;
+
+  @OneToMany(() => EventMember, event_member => event_member.event_name)
+  event_members: string;
+
+  @OneToOne(() => EventInfo, event_info => event_info.event_name)
+  event_infos: string;
 }
 
 export default Event;

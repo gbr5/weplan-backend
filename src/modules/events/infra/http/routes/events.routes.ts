@@ -11,6 +11,7 @@ import HostGuestsController from '@modules/events/infra/http/controllers/HostGue
 import EventPlannersController from '@modules/events/infra/http/controllers/EventPlannersController';
 import EventOwnersController from '@modules/events/infra/http/controllers/EventOwnersController';
 import EventMembersController from '@modules/events/infra/http/controllers/EventMembersController';
+import EventInfosController from '@modules/events/infra/http/controllers/EventInfosController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
@@ -22,6 +23,7 @@ const hostGuestsController = new HostGuestsController();
 const eventPlannersController = new EventPlannersController();
 const eventOwnersController = new EventOwnersController();
 const eventMembersController = new EventMembersController();
+const eventInfosController = new EventInfosController();
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -68,7 +70,7 @@ eventsRouter.post(
 );
 
 eventsRouter.put(
-  '/:event_name/:supplier_id',
+  '/:event_name/suppliers/:supplier_id',
   celebrate({
     [Segments.BODY]: {
       supplier_sub_category: Joi.string().required(),
@@ -79,7 +81,7 @@ eventsRouter.put(
 );
 
 eventsRouter.delete(
-  '/:event_name/:supplier_id',
+  '/:event_name/suppliers/:supplier_id',
   selectedSuppliersController.delete,
 );
 eventsRouter.get(
@@ -213,5 +215,42 @@ eventsRouter.delete(
   eventMembersController.delete,
 );
 eventsRouter.get('/:event_name/event-members/', eventMembersController.index);
+
+// === Event Info === //
+
+eventsRouter.post(
+  '/:event_name/event-info',
+  celebrate({
+    [Segments.BODY]: {
+      number_of_guests: Joi.number().required(),
+      start_hour: Joi.number().required(),
+      duration: Joi.number().required(),
+      budget: Joi.number().required(),
+      description: Joi.string().required(),
+      country: Joi.string().required(),
+      local_state: Joi.string().required(),
+      city: Joi.string().required(),
+    },
+  }),
+  eventInfosController.create,
+);
+eventsRouter.get('/:event_name/event-info', eventInfosController.show);
+
+eventsRouter.put(
+  '/:event_name/event-info',
+  celebrate({
+    [Segments.BODY]: {
+      number_of_guests: Joi.number().required(),
+      start_hour: Joi.number().required(),
+      duration: Joi.number().required(),
+      budget: Joi.number().required(),
+      description: Joi.string().required(),
+      country: Joi.string().required(),
+      local_state: Joi.string().required(),
+      city: Joi.string().required(),
+    },
+  }),
+  eventInfosController.update,
+);
 
 export default eventsRouter;
