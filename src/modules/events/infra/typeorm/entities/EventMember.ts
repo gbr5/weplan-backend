@@ -11,8 +11,8 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
 
-@Entity('event_owners')
-class EventOwner {
+@Entity('event_members')
+class EventMember {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,10 +24,10 @@ class EventOwner {
   events: Event;
 
   @Column()
-  owner_id: string;
+  member_id: string;
 
   @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'owner_id' })
+  @JoinColumn({ name: 'member_id' })
   userId: User;
 
   @CreateDateColumn()
@@ -37,4 +37,4 @@ class EventOwner {
   updated_at: Date;
 }
 
-export default EventOwner;
+export default EventMember;

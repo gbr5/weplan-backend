@@ -63,6 +63,9 @@ import UserContactInfosRepository from '@modules/users/infra/typeorm/repositorie
 import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRepository';
 import EventOwnersRepository from '@modules/events/infra/typeorm/repositories/EventOwnersRepository';
 
+import IEventMembersRepository from '@modules/events/repositories/IEventMembersRepository';
+import EventMembersRepository from '@modules/events/infra/typeorm/repositories/EventMembersRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -152,12 +155,17 @@ container.registerSingleton<IContactTypesRepository>(
   ContactTypesRepository,
 );
 
+container.registerSingleton<IUserContactInfosRepository>(
+  'UserContactInfosRepository',
+  UserContactInfosRepository,
+);
+
 container.registerSingleton<IEventOwnersRepository>(
   'EventOwnersRepository',
   EventOwnersRepository,
 );
 
-container.registerSingleton<IUserContactInfosRepository>(
-  'UserContactInfosRepository',
-  UserContactInfosRepository,
+container.registerSingleton<IEventMembersRepository>(
+  'EventMembersRepository',
+  EventMembersRepository,
 );
