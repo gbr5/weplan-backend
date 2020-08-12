@@ -69,6 +69,9 @@ import EventMembersRepository from '@modules/events/infra/typeorm/repositories/E
 import IEventInfosRepository from '@modules/events/repositories/IEventInfosRepository';
 import EventInfosRepository from '@modules/events/infra/typeorm/repositories/EventInfosRepository';
 
+import IFunnelTypesRepository from '@modules/events/repositories/IFunnelTypesRepository';
+import FunnelTypesRepository from '@modules/events/infra/typeorm/repositories/FunnelTypesRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -176,4 +179,9 @@ container.registerSingleton<IEventMembersRepository>(
 container.registerSingleton<IEventInfosRepository>(
   'EventInfosRepository',
   EventInfosRepository,
+);
+
+container.registerSingleton<IFunnelTypesRepository>(
+  'FunnelTypesRepository',
+  FunnelTypesRepository,
 );
