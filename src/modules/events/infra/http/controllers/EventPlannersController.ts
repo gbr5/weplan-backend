@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import CreateEventPlannersService from '@modules/events/services/CreateEventPlannersService';
+import CreateEventPlannerService from '@modules/events/services/CreateEventPlannerService';
 import ListEventPlannersService from '@modules/events/services/ListEventPlannersService';
 import DeleteEventPlannerService from '@modules/events/services/DeleteEventPlannerService';
 
@@ -14,7 +14,7 @@ export default class EventPlannersController {
 
     const { event_name } = dataParams;
 
-    const createEventPlanners = container.resolve(CreateEventPlannersService);
+    const createEventPlanners = container.resolve(CreateEventPlannerService);
 
     const planner = await createEventPlanners.execute({
       user_id,

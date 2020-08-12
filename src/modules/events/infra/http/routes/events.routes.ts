@@ -9,6 +9,7 @@ import UserCheckListsController from '@modules/events/infra/http/controllers/Use
 import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
 import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
 import EventPlannersController from '@modules/events/infra/http/controllers/EventPlannersController';
+import EventOwnersController from '@modules/events/infra/http/controllers/EventOwnersController';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
@@ -16,8 +17,9 @@ const selectedSuppliersController = new SelectedSuppliersController();
 const hiredSuppliersController = new HiredSuppliersController();
 const userCheckListsController = new UserCheckListsController();
 const guestsController = new GuestsController();
-const eventPlannersController = new EventPlannersController();
 const hostGuestsController = new HostGuestsController();
+const eventPlannersController = new EventPlannersController();
+const eventOwnersController = new EventOwnersController();
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -173,5 +175,23 @@ eventsRouter.delete(
   eventPlannersController.delete,
 );
 eventsRouter.get('/:event_name/event-planner/', eventPlannersController.index);
+
+// === Event Owners === //
+
+eventsRouter.post(
+  '/:event_name/event-owners',
+  celebrate({
+    [Segments.BODY]: {
+      owner_id: Joi.string().required(),
+    },
+  }),
+  eventOwnersController.create,
+);
+
+eventsRouter.delete(
+  '/:event_name/event-owners/:owner_id',
+  eventOwnersController.delete,
+);
+eventsRouter.get('/:event_name/event-owners/', eventOwnersController.index);
 
 export default eventsRouter;
