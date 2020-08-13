@@ -75,6 +75,9 @@ import FunnelTypesRepository from '@modules/suppliers/infra/typeorm/repositories
 import IFunnelsRepository from '@modules/suppliers/repositories/IFunnelsRepository';
 import FunnelsRepository from '@modules/suppliers/infra/typeorm/repositories/FunnelsRepository';
 
+import IFunnelStagesRepository from '@modules/suppliers/repositories/IFunnelStagesRepository';
+import FunnelStagesRepository from '@modules/suppliers/infra/typeorm/repositories/FunnelStagesRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -192,4 +195,9 @@ container.registerSingleton<IFunnelTypesRepository>(
 container.registerSingleton<IFunnelsRepository>(
   'FunnelsRepository',
   FunnelsRepository,
+);
+
+container.registerSingleton<IFunnelStagesRepository>(
+  'FunnelStagesRepository',
+  FunnelStagesRepository,
 );
