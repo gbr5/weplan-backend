@@ -119,7 +119,10 @@ supplierFunnelsRouter.post(
   eventCardsController.create,
 );
 
-supplierFunnelsRouter.get('/cards/event/:event_id', eventCardsController.index);
+supplierFunnelsRouter.get(
+  '/cards/events/:event_id',
+  eventCardsController.index,
+);
 supplierFunnelsRouter.get(
   '/cards/event/:card_unique_name/',
   eventCardsController.show,
@@ -131,7 +134,7 @@ supplierFunnelsRouter.put(
 );
 
 supplierFunnelsRouter.delete(
-  '/cards/event/:/:card_unique_name/:event_id',
+  '/cards/event/:card_unique_name/:event_id',
   eventCardsController.delete,
 );
 

@@ -1,7 +1,5 @@
 import { injectable, inject } from 'tsyringe';
 
-import AppError from '@shared/errors/AppError';
-
 import EventCard from '@modules/suppliers/infra/typeorm/entities/EventCard';
 import IEventCardsRepository from '@modules/suppliers/repositories/IEventCardsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';

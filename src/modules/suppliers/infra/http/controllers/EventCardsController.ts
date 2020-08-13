@@ -28,6 +28,7 @@ export default class EventCardsController {
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { card_unique_name } = dataParams;
+    console.log(card_unique_name);
 
     const showEventCard = container.resolve(ShowEventCardService);
 
@@ -39,6 +40,7 @@ export default class EventCardsController {
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { event_id } = dataParams;
+    console.log(event_id, 'index -> Event Card Controller');
 
     const listEventCards = container.resolve(ListEventCardsService);
 

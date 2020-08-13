@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventCards1597301172882
+export default class CreateEventCards1597341438567
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -17,6 +17,7 @@ export default class CreateEventCards1597301172882
           {
             name: 'card_unique_name',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'event_id',

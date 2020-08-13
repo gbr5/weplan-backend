@@ -14,6 +14,7 @@ class EventCardRepository implements IEventCardsRepository {
   public async findByCard(
     card_unique_name: string,
   ): Promise<EventCard | undefined> {
+    console.log(card_unique_name, ' => finByCard - Event Card Repository');
     const findEventCard = await this.ormRepository.findOne({
       where: { card_unique_name },
     });

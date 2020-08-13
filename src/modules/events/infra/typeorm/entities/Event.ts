@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EventCard from '@modules/suppliers/infra/typeorm/entities/EventCard';
 import EventType from './EventType';
 import SelectedSupplier from './SelectedSupplier';
 import UserCheckList from './UserCheckList';
@@ -57,22 +58,25 @@ class Event {
     () => SelectedSupplier,
     selected_supplier => selected_supplier.event_name,
   )
-  selected_suppliers: string;
+  selectedSupplier: SelectedSupplier;
 
   @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_name)
-  user_check_lists: string;
+  UserEventCheckList: UserCheckList;
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
-  event_planners: string;
+  eventPlanner: EventPlanner;
 
   @OneToMany(() => EventOwner, event_owner => event_owner.event_name)
-  event_owners: string;
+  eventOwner: EventOwner;
 
   @OneToMany(() => EventMember, event_member => event_member.event_name)
-  event_members: string;
+  eventMember: EventMember;
 
   @OneToOne(() => EventInfo, event_info => event_info.event_name)
-  event_infos: string;
+  eventInfo: EventInfo;
+
+  @OneToOne(() => EventCard, card => card.event_id)
+  supplierCard: EventCard;
 }
 
 export default Event;

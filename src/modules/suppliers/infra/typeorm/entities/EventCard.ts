@@ -20,9 +20,9 @@ class EventCard {
   @Column()
   card_unique_name: string;
 
-  @OneToOne(() => StageCard, { eager: true })
+  @OneToOne(() => StageCard, card => card.unique_name)
   @JoinColumn({ name: 'card_unique_name' })
-  card: StageCard;
+  stageCard: StageCard;
 
   @Column('uuid')
   event_id: string;

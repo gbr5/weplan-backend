@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import FunnelStage from './FunnelStage';
+import EventCard from './EventCard';
 
 @Entity('stage_cards')
 class StageCard {
@@ -48,6 +49,9 @@ class StageCard {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToOne(() => EventCard, card => card.card_unique_name)
+  event: EventCard;
 }
 
 export default StageCard;
