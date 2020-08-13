@@ -14,7 +14,7 @@ export default class StageCardController {
 
     const isActive = true;
     const now = new Date();
-    const uniqueName = `${name}-#$#-${now}`;
+    const uniqueName = `${name}-${now.getFullYear()}${now.getMonth()}${now.getDate()}${now.getHours()}${now.getMinutes()}${now.getSeconds()}`;
     const unique_name = uniqueName
       .split(' ')
       .map(word => {

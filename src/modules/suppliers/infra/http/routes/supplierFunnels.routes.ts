@@ -4,6 +4,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import FunnelsController from '@modules/suppliers/infra/http/controllers/FunnelsController';
 import FunnelStagesController from '@modules/suppliers/infra/http/controllers/FunnelStagesController';
 import StageCardsController from '@modules/suppliers/infra/http/controllers/StageCardsController';
+import EventCardsController from '@modules/suppliers/infra/http/controllers/EventCardsController';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
@@ -11,6 +12,7 @@ const supplierFunnelsRouter = Router();
 const funnelsController = new FunnelsController();
 const funnelStagesController = new FunnelStagesController();
 const stageCardsController = new StageCardsController();
+const eventCardsController = new EventCardsController();
 
 supplierFunnelsRouter.use(ensureAuthenticated);
 
@@ -103,6 +105,34 @@ supplierFunnelsRouter.put(
 supplierFunnelsRouter.delete(
   '/:stage_id/cards/:id',
   stageCardsController.delete,
+);
+
+// === Event Cards === //
+
+supplierFunnelsRouter.post(
+  '/cards/event/:card_unique_name',
+  celebrate({
+    [Segments.BODY]: {
+      event_id: Joi.string().required(),
+    },
+  }),
+  eventCardsController.create,
+);
+
+supplierFunnelsRouter.get('/cards/event/:event_id', eventCardsController.index);
+supplierFunnelsRouter.get(
+  '/cards/event/:card_unique_name/',
+  eventCardsController.show,
+);
+
+supplierFunnelsRouter.put(
+  '/cards/event/:card_unique_name/:event_id',
+  eventCardsController.update,
+);
+
+supplierFunnelsRouter.delete(
+  '/cards/event/:/:card_unique_name/:event_id',
+  eventCardsController.delete,
 );
 
 export default supplierFunnelsRouter;

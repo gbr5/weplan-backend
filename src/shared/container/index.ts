@@ -81,6 +81,9 @@ import FunnelStagesRepository from '@modules/suppliers/infra/typeorm/repositorie
 import IStageCardsRepository from '@modules/suppliers/repositories/IStageCardsRepository';
 import StageCardsRepository from '@modules/suppliers/infra/typeorm/repositories/StageCardsRepository';
 
+import IEventCardsRepository from '@modules/suppliers/repositories/IEventCardsRepository';
+import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/EventCardsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -208,4 +211,9 @@ container.registerSingleton<IFunnelStagesRepository>(
 container.registerSingleton<IStageCardsRepository>(
   'StageCardsRepository',
   StageCardsRepository,
+);
+
+container.registerSingleton<IEventCardsRepository>(
+  'EventCardsRepository',
+  EventCardsRepository,
 );
