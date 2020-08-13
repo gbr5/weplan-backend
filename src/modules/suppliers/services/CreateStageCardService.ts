@@ -20,12 +20,18 @@ class CreateStageCardService {
   ) {}
 
   public async execute({
+    weplanEvent,
     name,
+    unique_name,
+    isActive,
     stage_id,
     card_owner,
   }: ICreateStageCardDTO): Promise<StageCard> {
     const stageCard = await this.stageCardsRepository.create({
+      weplanEvent,
       name,
+      unique_name,
+      isActive,
       stage_id,
       card_owner,
     });

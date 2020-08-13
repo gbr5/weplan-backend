@@ -8,14 +8,27 @@ import DeleteStageCardService from '@modules/suppliers/services/DeleteStageCardS
 
 export default class StageCardController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, card_owner } = req.body;
+    const { weplanEvent, name, card_owner } = req.body;
     const dataParams = req.params;
     const { stage_id } = dataParams;
+
+    const isActive = true;
+    const now = new Date();
+    const uniqueName = `${name}-#$#-${now}`;
+    const unique_name = uniqueName
+      .split(' ')
+      .map(word => {
+        return word[0].toUpperCase() + word.slice(1);
+      })
+      .join('');
 
     const createStageCard = container.resolve(CreateStageCardService);
 
     const stageCard = await createStageCard.execute({
+      weplanEvent,
       name,
+      unique_name,
+      isActive,
       stage_id,
       card_owner,
     });
@@ -34,18 +47,25 @@ export default class StageCardController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { name, card_owner, new_stage_id } = req.body;
+    const {
+      weplanEvent,
+      name,
+      isActive,
+      new_stage_id,
+      new_card_owner,
+    } = req.body;
     const dataParams = req.params;
-    const { id, stage_id } = dataParams;
+    const { id } = dataParams;
 
     const updateStageCard = container.resolve(UpdateStageCardService);
 
     const stageCard = await updateStageCard.execute(
-      name,
       id,
-      stage_id,
+      weplanEvent,
+      name,
+      isActive,
       new_stage_id,
-      card_owner,
+      new_card_owner,
     );
 
     return res.json(stageCard);

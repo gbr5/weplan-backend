@@ -76,6 +76,7 @@ supplierFunnelsRouter.post(
   '/:stage_id/cards',
   celebrate({
     [Segments.BODY]: {
+      weplanEvent: Joi.boolean(),
       name: Joi.string().required(),
       card_owner: Joi.string().required(),
     },
@@ -89,9 +90,11 @@ supplierFunnelsRouter.put(
   '/:stage_id/cards/:id',
   celebrate({
     [Segments.BODY]: {
+      weplanEvent: Joi.boolean(),
       name: Joi.string().required(),
-      card_owner: Joi.string().required(),
+      isActive: Joi.boolean(),
       new_stage_id: Joi.string().required(),
+      new_card_owner: Joi.string().required(),
     },
   }),
   stageCardsController.update,

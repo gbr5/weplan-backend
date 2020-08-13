@@ -17,8 +17,17 @@ class StageCard {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('boolean')
+  weplanEvent: boolean;
+
   @Column()
   name: string;
+
+  @Column()
+  unique_name: string;
+
+  @Column('boolean')
+  isActive: boolean;
 
   @Column()
   stage_id: string;

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateStageCards1597283890625
+export default class CreateStageCards1597297077689
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -15,8 +15,21 @@ export default class CreateStageCards1597283890625
             default: 'uuid_generate_v4()',
           },
           {
+            name: 'weplanEvent',
+            type: 'boolean',
+          },
+          {
             name: 'name',
             type: 'varchar',
+          },
+          {
+            name: 'unique_name',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'isActive',
+            type: 'boolean',
           },
           {
             name: 'stage_id',

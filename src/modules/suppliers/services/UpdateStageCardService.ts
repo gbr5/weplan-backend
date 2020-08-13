@@ -15,11 +15,12 @@ class UpdateStageCardService {
   ) {}
 
   public async execute(
-    name: string,
     id: string,
-    stage_id: string,
+    weplanEvent: boolean,
+    name: string,
+    isActive: boolean,
     new_stage_id: string,
-    card_owner: string,
+    new_card_owner: string,
   ): Promise<StageCard> {
     const stageCard = await this.stageCardsRepository.findById(id);
     const createStageCard = container.resolve(CreateStageCardService);
@@ -28,26 +29,29 @@ class UpdateStageCardService {
     if (!stageCard) {
       throw new AppError('Card not found.');
     }
-    console.log(new_stage_id, ' essa ', id);
 
-    if (new_stage_id !== stage_id) {
+    if (
+      new_stage_id !== stageCard.stage_id ||
+      new_card_owner !== stageCard.card_owner
+    ) {
       await deleteStageCard.execute(id);
       const updatedStageCard = await createStageCard.execute({
+        weplanEvent,
         name,
+        unique_name: stageCard.unique_name,
+        isActive,
         stage_id: new_stage_id,
-        card_owner,
+        card_owner: new_card_owner,
       });
       return updatedStageCard;
     }
 
     stageCard.name = name;
-    stageCard.stage_id = stage_id;
-    stageCard.card_owner = card_owner;
-    console.log('stageCard.stage_id', stageCard.stage_id, 'stage_id', stage_id);
+    stageCard.weplanEvent = weplanEvent;
+    stageCard.isActive = isActive;
 
     const updatedStageCard = await this.stageCardsRepository.save(stageCard);
 
-    console.log(updatedStageCard.stage_id, stage_id);
     return updatedStageCard;
   }
 }
