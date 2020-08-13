@@ -4,9 +4,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
-// import FunnelTypeSupplier from './FunnelTypeSupplier';
-// import Event from './Event';
+import Funnel from './Funnel';
 
 @Entity('funnel_types')
 class FunnelTypes {
@@ -16,14 +16,8 @@ class FunnelTypes {
   @Column()
   name: string;
 
-  // @OneToMany(() => Event, event => event.event_type)
-  // events: Event;
-
-  // @OneToMany(
-  //   () => FunnelTypeSupplier,
-  //   funnel_type_supplier => funnel_type_supplier.funnel_type,
-  // )
-  // funnel_type_suppliers: string;
+  @OneToMany(() => Funnel, funnel => funnel.funnel_type)
+  funnels: string;
 
   @CreateDateColumn()
   created_at: Date;

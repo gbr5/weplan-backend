@@ -15,6 +15,7 @@ import EventTypeSupplier from '@modules/events/infra/typeorm/entities/EventTypeS
 import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSupplier';
 
 import EventPlanner from '@modules/events/infra/typeorm/entities/EventPlanner';
+import Funnel from '@modules/suppliers/infra/typeorm/entities/Funnel';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -98,6 +99,9 @@ class User {
 
   @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
   contact_infos: string;
+
+  @OneToMany(() => Funnel, funnel => funnel.supplier_id)
+  funnels: string;
 }
 
 export default User;

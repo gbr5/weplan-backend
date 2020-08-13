@@ -2,8 +2,8 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import FunnelType from '@modules/events/infra/typeorm/entities/FunnelType';
-import IFunnelTypesRepository from '@modules/events/repositories/IFunnelTypesRepository';
+import FunnelType from '@modules/suppliers/infra/typeorm/entities/FunnelType';
+import IFunnelTypesRepository from '@modules/suppliers/repositories/IFunnelTypesRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 

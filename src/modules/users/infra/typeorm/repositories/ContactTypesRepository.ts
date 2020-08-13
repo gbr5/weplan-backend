@@ -39,7 +39,6 @@ class ContactTypesRepository implements IContactTypesRepository {
   }
 
   public async delete({ name }: ContactType): Promise<void> {
-    console.log(name);
     await this.ormRepository.delete({ name });
   }
 }

@@ -1,9 +1,9 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IFunnelTypesRepository from '@modules/events/repositories/IFunnelTypesRepository';
-import ICreateFunnelTypeDTO from '@modules/events/dtos/ICreateFunnelTypeDTO';
+import IFunnelTypesRepository from '@modules/suppliers/repositories/IFunnelTypesRepository';
+import ICreateFunnelTypeDTO from '@modules/suppliers/dtos/ICreateFunnelTypeDTO';
 
-import FunnelType from '@modules/events/infra/typeorm/entities/FunnelType';
+import FunnelType from '@modules/suppliers/infra/typeorm/entities/FunnelType';
 
 class FunnelTypesRepository implements IFunnelTypesRepository {
   private ormRepository: Repository<FunnelType>;

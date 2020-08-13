@@ -15,7 +15,8 @@ import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.routes';
 
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
-import funnelTypesRouter from '@modules/events/infra/http/routes/funnelTypes.routes';
+import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
+import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
 
 const routes = Router();
 
@@ -36,5 +37,6 @@ routes.use('/event-types', eventTypesRouter);
 
 routes.use('/suppliers/categories', supplierCategoriesRouter);
 routes.use('/funnel-types', funnelTypesRouter);
+routes.use('/funnels', supplierFunnelsRouter);
 
 export default routes;

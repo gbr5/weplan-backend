@@ -26,7 +26,6 @@ class CreateUserContactInfoService {
       user_id,
       contact_type,
     );
-    console.log(checkIfUserContactInfoExists);
 
     if (checkIfUserContactInfoExists) {
       throw new AppError(

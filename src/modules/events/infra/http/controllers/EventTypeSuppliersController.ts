@@ -54,7 +54,6 @@ export default class EventTypeSupplierController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const event_type = req.params;
     const user_id = req.user.id;
-    console.log(event_type.event_type, user_id);
 
     const deleteEventTypeSupplier = container.resolve(
       DeleteEventTypeSupplierService,

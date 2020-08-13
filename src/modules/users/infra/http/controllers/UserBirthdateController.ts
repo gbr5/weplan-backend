@@ -32,11 +32,9 @@ export default class UserBirthdateController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    console.log('oi');
     const user_id = req.user.id;
 
     const { date } = req.body;
-    console.log('user birthdate controller line 38', user_id, date);
 
     const updateUserBirthdate = container.resolve(UpdateUserBirthdateService);
 
@@ -44,7 +42,6 @@ export default class UserBirthdateController {
       user_id,
       date,
     });
-    console.log('user birthdate controller line 46', userBirthdate);
 
     return res.json(userBirthdate);
   }

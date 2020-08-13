@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
-import FunnelType from '@modules/events/infra/typeorm/entities/FunnelType';
-import IFunnelTypesRepository from '@modules/events/repositories/IFunnelTypesRepository';
+import FunnelType from '@modules/suppliers/infra/typeorm/entities/FunnelType';
+import IFunnelTypesRepository from '@modules/suppliers/repositories/IFunnelTypesRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 @injectable()

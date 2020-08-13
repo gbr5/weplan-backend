@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import IFunnelTypesRepository from '@modules/events/repositories/IFunnelTypesRepository';
+import IFunnelTypesRepository from '@modules/suppliers/repositories/IFunnelTypesRepository';
 
-import FunnelType from '@modules/events/infra/typeorm/entities/FunnelType';
+import FunnelType from '@modules/suppliers/infra/typeorm/entities/FunnelType';
 
 interface IRequest {
   name: string;

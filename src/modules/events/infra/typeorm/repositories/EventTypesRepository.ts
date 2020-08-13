@@ -22,7 +22,6 @@ class EventTypesRepository implements IEventTypesRepository {
 
   public async findAll(): Promise<EventType[]> {
     const findEventTypes = await this.ormRepository.find();
-    console.log(findEventTypes, 'teste - EventType get all with find()');
 
     return findEventTypes;
   }

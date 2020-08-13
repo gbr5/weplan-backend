@@ -21,8 +21,6 @@ class CreateUserBirthdateService {
   ) {}
 
   public async execute({ user_id, date }: IRequest): Promise<UserBirthdate> {
-    console.log('CreateUserBirthdateService - linha 24', user_id, date);
-
     const checkIfUserExists = await this.usersRepository.findById(user_id);
 
     if (!checkIfUserExists) {

@@ -17,8 +17,6 @@ class UpdateUserBirthdateService {
   ) {}
 
   public async execute({ user_id, date }: IRequest): Promise<UserBirthdate> {
-    console.log('update birthdate line 20', user_id, date);
-
     const user_birthdate = await this.userBirthdateRepository.findByUserId(
       user_id,
     );
@@ -32,7 +30,6 @@ class UpdateUserBirthdateService {
     const updatedUserBirthdate = await this.userBirthdateRepository.save(
       user_birthdate,
     );
-    console.log('update birthdate line 33', updatedUserBirthdate);
 
     return updatedUserBirthdate;
   }
