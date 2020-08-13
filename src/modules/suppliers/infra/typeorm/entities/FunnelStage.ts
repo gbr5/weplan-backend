@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import Funnel from './Funnel';
+import StageCard from './StageCard';
 
 @Entity('funnel_stages')
 class FunnelStage {
@@ -33,6 +35,9 @@ class FunnelStage {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => StageCard, card => card.stage_id)
+  card: string;
 }
 
 export default FunnelStage;

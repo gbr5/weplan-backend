@@ -16,6 +16,7 @@ import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSup
 
 import EventPlanner from '@modules/events/infra/typeorm/entities/EventPlanner';
 import Funnel from '@modules/suppliers/infra/typeorm/entities/Funnel';
+import StageCard from '@modules/suppliers/infra/typeorm/entities/StageCard';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -77,31 +78,34 @@ class User {
   user_birthdate: UserBirthdate;
 
   @OneToMany(() => UserToken, user_token => user_token.token)
-  user_tokens: UserToken;
+  user_token: UserToken;
 
   @OneToOne(() => Event, event => event.user_id)
-  events: Event;
+  event: Event;
 
   @OneToMany(
     () => SelectedSupplier,
     selected_supplier => selected_supplier.supplier_id,
   )
-  selected_suppliers: SelectedSupplier;
+  selected_supplier: SelectedSupplier;
 
   @OneToMany(
     () => EventTypeSupplier,
     event_type_supplier => event_type_supplier.user_id,
   )
-  event_type_suppliers: EventTypeSupplier;
+  event_type_supplier: EventTypeSupplier;
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
-  event_planners: string;
+  event_planner: EventPlanner;
 
   @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
-  contact_infos: string;
+  contact_info: UserContactInfo;
 
   @OneToMany(() => Funnel, funnel => funnel.supplier_id)
-  funnels: string;
+  funnel: Funnel;
+
+  @OneToOne(() => StageCard, card => card.card_owner)
+  card: StageCard;
 }
 
 export default User;
