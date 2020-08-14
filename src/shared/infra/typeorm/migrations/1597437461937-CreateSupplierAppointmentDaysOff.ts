@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateSupplierWeekDayAppointments1597429384163
+export default class CreateSupplierAppointmentDaysOff1597437461937
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'supplier_week_day_appointments',
+        name: 'supplier_appointment_days_off',
         columns: [
           {
             name: 'id',
@@ -15,9 +15,8 @@ export default class CreateSupplierWeekDayAppointments1597429384163
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'week_day',
-            type: 'varchar',
-            isUnique: true,
+            name: 'day_off',
+            type: 'timestamp',
           },
           {
             name: 'supplier_id',
@@ -49,6 +48,6 @@ export default class CreateSupplierWeekDayAppointments1597429384163
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('supplier_week_day_appointments');
+    await queryRunner.dropTable('supplier_appointment_days_off');
   }
 }

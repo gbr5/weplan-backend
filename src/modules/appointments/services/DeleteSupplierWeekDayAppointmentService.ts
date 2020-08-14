@@ -20,8 +20,6 @@ class DeleteSupplierWeekDayAppointmentService {
       throw new AppError('Week day appointment not found.');
     }
 
-    console.log(findSupplierWeekDayAppointment);
-
     await this.appointmentsRepository.delete(findSupplierWeekDayAppointment);
   }
 }
