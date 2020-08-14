@@ -84,6 +84,9 @@ import StageCardsRepository from '@modules/suppliers/infra/typeorm/repositories/
 import IEventCardsRepository from '@modules/suppliers/repositories/IEventCardsRepository';
 import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/EventCardsRepository';
 
+import ISupplierWeekDayAppointmentsRepository from '@modules/appointments/repositories/ISupplierWeekDayAppointmentsRepository';
+import SupplierWeekDayAppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/SupplierWeekDayAppointmentsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -216,4 +219,9 @@ container.registerSingleton<IStageCardsRepository>(
 container.registerSingleton<IEventCardsRepository>(
   'EventCardsRepository',
   EventCardsRepository,
+);
+
+container.registerSingleton<ISupplierWeekDayAppointmentsRepository>(
+  'SupplierWeekDayAppointmentsRepository',
+  SupplierWeekDayAppointmentsRepository,
 );
