@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateSupplierAppointmentDayScheduleService from '@modules/appointments/services/CreateSupplierAppointmentDayScheduleService';
 import ListSupplierAppointmentDaySchedulesService from '@modules/appointments/services/ListSupplierAppointmentDaySchedulesService';
@@ -31,7 +32,7 @@ export default class WeekDayAppointmentsController {
       },
     );
 
-    return res.json(supplierAppointmentDaySchedule);
+    return res.json(classToClass(supplierAppointmentDaySchedule));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -45,7 +46,7 @@ export default class WeekDayAppointmentsController {
       supplier_id,
     );
 
-    return res.json(supplierAppointmentDaySchedule);
+    return res.json(classToClass(supplierAppointmentDaySchedule));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
