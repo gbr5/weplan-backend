@@ -7,7 +7,7 @@ import SupplierAppointmentDaysOffController from '@modules/appointments/infra/ht
 import SupplierAppointmentDaySchedulesController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaySchedulesController';
 import SupplierAppointmentDayIntervalsController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDayIntervalsController';
 
-// import ProviderAppointmentController from '@modules/appointments/infra/http/controllers/ProviderAppointmentController';
+import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
@@ -17,24 +17,28 @@ const supplierAppointmentDaysOffController = new SupplierAppointmentDaysOffContr
 const supplierAppointmentDaySchedulesController = new SupplierAppointmentDaySchedulesController();
 const supplierAppointmentDayIntervalsController = new SupplierAppointmentDayIntervalsController();
 
-// const providerAppointmentController = new ProviderAppointmentController();
+const supplierAppointmentController = new SupplierAppointmentController();
 appointmentsRouter.use(ensureAuthenticated);
 
 appointmentsRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      provider_id: Joi.string().uuid().required(),
+      subject: Joi.string().required(),
       date: Joi.date(),
+      address: Joi.string().required(),
+      host_id: Joi.string().uuid().required(),
     },
   }),
   appointmentsController.create,
 );
 
-// appointmentsRouter.get(
-//   '/my-daily-appointments',
-//   providerAppointmentController.index,
-// );
+appointmentsRouter.delete('/:id', appointmentsController.delete);
+
+appointmentsRouter.get(
+  '/my-daily-appointments',
+  supplierAppointmentController.index,
+);
 
 // === Supplier Week Day Appointments === //
 

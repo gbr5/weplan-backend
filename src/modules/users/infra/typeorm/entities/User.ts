@@ -19,6 +19,7 @@ import Funnel from '@modules/suppliers/infra/typeorm/entities/Funnel';
 import StageCard from '@modules/suppliers/infra/typeorm/entities/StageCard';
 import SupplierAppointmentDaySchedule from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDaySchedule';
 import SupplierAppointmentDayInterval from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDayInterval';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -120,6 +121,12 @@ class User {
     appointmentDayInterval => appointmentDayInterval.supplier_id,
   )
   appointmentDayInterval: SupplierAppointmentDayInterval;
+
+  @OneToMany(() => Appointment, appointment => appointment.guess_id)
+  guessAppointment: Appointment;
+
+  @OneToMany(() => Appointment, appointment => appointment.host_id)
+  hostAppointment: Appointment;
 }
 
 export default User;

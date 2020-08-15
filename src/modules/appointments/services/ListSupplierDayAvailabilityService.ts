@@ -5,7 +5,7 @@ import { getHours, isAfter } from 'date-fns';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 interface IRequest {
-  supplier_id: string;
+  host_id: string;
   day: number;
   month: number;
   year: number;
@@ -24,14 +24,14 @@ class ListSupplierDayAvailabilityService {
   ) {}
 
   public async execute({
-    supplier_id,
+    host_id,
     month,
     year,
     day,
   }: IRequest): Promise<IResponse> {
     const appointments = await this.appointmentsRepository.findAllInDayFromSupplier(
       {
-        supplier_id,
+        host_id,
         month,
         year,
         day,

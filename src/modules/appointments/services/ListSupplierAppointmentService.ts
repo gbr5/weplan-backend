@@ -7,7 +7,7 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import { classToClass } from 'class-transformer';
 
 interface IRequest {
-  supplier_id: string;
+  host_id: string;
   day: number;
   month: number;
   year: number;
@@ -24,12 +24,12 @@ class ListSupplierAppointmentService {
   ) {}
 
   public async execute({
-    supplier_id,
+    host_id,
     day,
     month,
     year,
   }: IRequest): Promise<Appointment[]> {
-    const cacheKey = `supplier-appointments:${supplier_id}:${year}-${month}-${day}`;
+    const cacheKey = `supplier-appointments:${host_id}:${year}-${month}-${day}`;
 
     let appointments = await this.cacheProvider.recover<Appointment[]>(
       cacheKey,
@@ -38,7 +38,7 @@ class ListSupplierAppointmentService {
     if (!appointments) {
       appointments = await this.appointmentsRepository.findAllInDayFromSupplier(
         {
-          supplier_id,
+          host_id,
           day,
           month,
           year,

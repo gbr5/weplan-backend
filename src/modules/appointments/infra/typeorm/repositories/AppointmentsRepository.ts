@@ -15,19 +15,26 @@ class AppointmentsRepository implements IAppointmentsRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
-  public async findByDate(
+  public async findById(id: string): Promise<Appointment | undefined> {
+    const findAppointment = await this.ormRepository.findOne({ id });
+
+    return findAppointment;
+  }
+
+  public async findByDateAndUsers(
     date: Date,
-    supplier_id: string,
+    host_id: string,
+    guess_id: string,
   ): Promise<Appointment | undefined> {
     const findAppointment = await this.ormRepository.findOne({
-      where: { date, supplier_id },
+      where: { date, host_id, guess_id },
     });
 
     return findAppointment;
   }
 
   public async findAllInMonthFromSupplier({
-    supplier_id,
+    host_id,
     month,
     year,
   }: IFindAllInMonthSupplierDTO): Promise<Appointment[]> {
@@ -35,7 +42,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
     const appointments = await this.ormRepository.find({
       where: {
-        supplier_id,
+        host_id,
         date: Raw(
           dateFieldName =>
             `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
@@ -47,7 +54,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async findAllInDayFromSupplier({
-    supplier_id,
+    host_id,
     day,
     month,
     year,
@@ -57,7 +64,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
     const appointments = await this.ormRepository.find({
       where: {
-        supplier_id,
+        host_id,
         date: Raw(
           dateFieldName =>
             `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
@@ -70,19 +77,29 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async create({
-    supplier_id,
-    user_id,
+    subject,
     date,
+    address,
+    host_id,
+    guess_id,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointment = this.ormRepository.create({
-      supplier_id,
-      user_id,
+      subject,
       date,
+      address,
+      host_id,
+      guess_id,
     });
 
     await this.ormRepository.save(appointment);
 
     return appointment;
+  }
+
+  public async delete({ id }: Appointment): Promise<void> {
+    await this.ormRepository.delete({
+      id,
+    });
   }
 }
 

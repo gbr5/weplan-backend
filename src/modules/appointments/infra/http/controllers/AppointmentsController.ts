@@ -2,20 +2,37 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
+import DeleteAppointmentService from '@modules/appointments/services/DeleteAppointmentService';
+
 import { classToClass } from 'class-transformer';
 
 export default class AppointmentsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { supplier_id, date } = req.body;
-    const user_id = req.user.id;
+    const { subject, address, host_id, date } = req.body;
+    const guess_id = req.user.id;
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
     const appointment = await createAppointment.execute({
+      subject,
+      address,
       date,
-      supplier_id,
-      user_id,
+      host_id,
+      guess_id,
     });
+
+    return res.json(classToClass(appointment));
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+    const { id } = dataParams;
+
+    const deleteAppointmentService = container.resolve(
+      DeleteAppointmentService,
+    );
+
+    const appointment = await deleteAppointmentService.execute(id);
 
     return res.json(classToClass(appointment));
   }

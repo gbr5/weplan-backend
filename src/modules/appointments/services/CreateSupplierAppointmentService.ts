@@ -1,4 +1,4 @@
-import { startOfHour, isBefore, format } from 'date-fns';
+import { startOfHour, isBefore, getHours, format } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -12,7 +12,7 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 // Dependency Inversion (SOLID principles)
 @injectable()
-class CreateAppointmentService {
+class CreateSupplierAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentRepository,
@@ -50,6 +50,13 @@ class CreateAppointmentService {
       throw new AppError("You can't create an appointment with yourself.");
     }
 
+    // Corrigir, Fazer dois services de create, um automático, com definição de parâmetros, autómatico para fornecedores utilizarem em suas redes e site.
+    if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 17) {
+      throw new AppError(
+        'You can only create an appointment between 8am and 5pm.',
+      );
+    }
+
     if (findAppointmentInSameDate) {
       throw new AppError('This appointments is already booked');
     }
@@ -62,24 +69,23 @@ class CreateAppointmentService {
       guess_id,
     });
 
-    const guess = await this.usersRepository.findById(guess_id);
-    const host = await this.usersRepository.findById(host_id);
-
-    if (!guess) {
-      throw new AppError('User not found.');
-    }
-    if (!host) {
-      throw new AppError('User not found.');
-    }
+    const user = await this.usersRepository.findById(guess_id);
+    let name;
 
     const dateFormatted = format(
       appointmentDate,
       "dd/MM/yyyy 'às' HH:mm 'horas",
     );
 
+    if (!user) {
+      name = 'Cliente';
+    } else {
+      name = user.name;
+    }
+
     await this.notificationsRepository.create({
       recipient_id: host_id,
-      content: `Novo agendamento com ${guess.name} no dia ${dateFormatted}`,
+      content: `Novo agendamento com ${name} no dia ${dateFormatted}`,
     });
 
     await this.cacheProvider.invalidate(
@@ -90,4 +96,4 @@ class CreateAppointmentService {
   }
 }
 
-export default CreateAppointmentService;
+export default CreateSupplierAppointmentService;

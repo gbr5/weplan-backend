@@ -16,21 +16,27 @@ class Appointment {
   id: string;
 
   @Column()
-  supplier_id: string;
+  subject: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'supplier_id' })
-  supplier: User;
+  @Column('timestamp')
+  date: Date;
 
   @Column()
-  user_id: string;
+  address: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column()
+  guess_id: string;
 
-  @Column('timestamp with time zone')
-  date: Date;
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'guess_id' })
+  appointmentGues: User;
+
+  @Column()
+  host_id: string;
+
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'host_id' })
+  appointmentHost: User;
 
   @CreateDateColumn()
   created_at: Date;

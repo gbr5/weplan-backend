@@ -13,5 +13,11 @@ export default interface IAppointmentsRepository {
   ): Promise<Appointment[]>;
   // find(): Promise<void>;
   // startOfHour(data: ICreateAppointmentDTO): Promise<>;
-  findByDate(date: Date, supplier_id: string): Promise<Appointment | undefined>;
+  findByDateAndUsers(
+    date: Date,
+    guess_id: string,
+    host_id: string,
+  ): Promise<Appointment | undefined>;
+  findById(id: string): Promise<Appointment | undefined>;
+  delete(data: ICreateAppointmentDTO): Promise<void>;
 }

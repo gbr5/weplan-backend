@@ -5,7 +5,7 @@ import { getDaysInMonth, getDate, isAfter } from 'date-fns';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 interface IRequest {
-  supplier_id: string;
+  host_id: string;
   month: number;
   year: number;
 }
@@ -22,14 +22,10 @@ class ListSupplierMonthlyAvailabilityService {
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
-  public async execute({
-    supplier_id,
-    month,
-    year,
-  }: IRequest): Promise<IResponse> {
+  public async execute({ host_id, month, year }: IRequest): Promise<IResponse> {
     const appointments = await this.appointmentsRepository.findAllInMonthFromSupplier(
       {
-        supplier_id,
+        host_id,
         month,
         year,
       },

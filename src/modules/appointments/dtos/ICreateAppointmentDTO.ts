@@ -1,5 +1,7 @@
 export default interface ICreatAppointmentDTO {
-  supplier_id: string;
-  user_id: string;
+  subject: string;
   date: Date;
+  address: string;
+  guess_id: string;
+  host_id: string;
 }

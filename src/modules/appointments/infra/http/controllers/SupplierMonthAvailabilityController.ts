@@ -6,7 +6,7 @@ import { classToClass } from 'class-transformer';
 
 export default class SupplierMonthAvailabilityController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const supplier_id = req.params.id;
+    const host_id = req.params.id;
     const { month, year } = req.query;
 
     const listSupplierMonthAvailability = container.resolve(
@@ -14,7 +14,7 @@ export default class SupplierMonthAvailabilityController {
     );
 
     const availability = await listSupplierMonthAvailability.execute({
-      supplier_id,
+      host_id,
       month: Number(month),
       year: Number(year),
     });

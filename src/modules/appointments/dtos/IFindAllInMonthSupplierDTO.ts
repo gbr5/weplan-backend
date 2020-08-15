@@ -1,5 +1,5 @@
 export default interface IFindAllInMonthSupplierDTO {
-  supplier_id: string;
+  host_id: string;
   month: number;
   year: number;
 }
