@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateEventInfoService from '@modules/events/services/CreateEventInfoService';
 import ShowEventInfoService from '@modules/events/services/ShowEventInfoService';
@@ -44,7 +45,7 @@ export default class EventInfosController {
       city,
     });
 
-    return res.json(eventInfo);
+    return res.json(classToClass(eventInfo));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -56,7 +57,7 @@ export default class EventInfosController {
 
     const eventInfo = await showEventInfo.execute(event_name);
 
-    return res.json(eventInfo);
+    return res.json(classToClass(eventInfo));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -89,6 +90,6 @@ export default class EventInfosController {
       city,
     });
 
-    return res.json(eventInfo);
+    return res.json(classToClass(eventInfo));
   }
 }

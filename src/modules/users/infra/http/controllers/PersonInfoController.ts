@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import CreatePersonInfoService from '@modules/users/services/CreatePersonInfoService';
 import UpdatePersonInfoService from '@modules/users/services/UpdatePersonInfoService';
 import ShowPersonInfoService from '@modules/users/services/ShowPersonInfoService';
+import { classToClass } from 'class-transformer';
 
 export default class PersonInfoController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -20,7 +21,7 @@ export default class PersonInfoController {
       last_name,
     });
 
-    return res.json(personInfo);
+    return res.json(classToClass(personInfo));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -31,7 +32,7 @@ export default class PersonInfoController {
 
     const personInfo = await showPersonInfo.execute({ user_id });
 
-    return res.json(personInfo);
+    return res.json(classToClass(personInfo));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -48,6 +49,6 @@ export default class PersonInfoController {
       last_name,
     });
 
-    return res.json(personInfo);
+    return res.json(classToClass(personInfo));
   }
 }

@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import SupplierAppointmentDaySchedule from './SupplierAppointmentDaySchedule';
+import SupplierAppointmentDayInterval from './SupplierAppointmentDayInterval';
 
 @Entity('supplier_week_day_appointments')
 class SupplierWeekDayAppointment {
@@ -23,7 +24,7 @@ class SupplierWeekDayAppointment {
   @Column()
   supplier_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
   supplier: User;
 
@@ -38,6 +39,12 @@ class SupplierWeekDayAppointment {
     appointmentDaySchedule => appointmentDaySchedule.week_day_id,
   )
   appointmentDaySchedule: SupplierAppointmentDaySchedule;
+
+  @OneToMany(
+    () => SupplierAppointmentDayInterval,
+    appointmentDayInterval => appointmentDayInterval.week_day_id,
+  )
+  appointmentDayInterval: SupplierAppointmentDayInterval;
 }
 
 export default SupplierWeekDayAppointment;

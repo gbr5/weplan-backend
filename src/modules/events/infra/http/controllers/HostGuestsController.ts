@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ListHostGuestsService from '@modules/events/services/ListHostGuestsService';
 
@@ -12,6 +13,6 @@ export default class GuestsController {
 
     const guests = await listHostGuests.execute(event_name, host_id);
 
-    return res.json(guests);
+    return res.json(classToClass(guests));
   }
 }

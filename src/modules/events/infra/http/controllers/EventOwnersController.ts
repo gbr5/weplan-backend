@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateEventOwnerService from '@modules/events/services/CreateEventOwnerService';
 import ListEventOwnersService from '@modules/events/services/ListEventOwnersService';
@@ -22,7 +23,7 @@ export default class EventOwnersController {
       owner_id,
     });
 
-    return res.json(owner);
+    return res.json(classToClass(owner));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class EventOwnersController {
 
     const owners = await listEventOwners.execute(event_name);
 
-    return res.json(owners);
+    return res.json(classToClass(owners));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

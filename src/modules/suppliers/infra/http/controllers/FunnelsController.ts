@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateFunnelService from '@modules/suppliers/services/CreateFunnelService';
 import UpdateFunnelService from '@modules/suppliers/services/UpdateFunnelService';
@@ -16,7 +17,7 @@ export default class FunnelController {
 
     const funnel = await createFunnel.execute(name, supplier_id, funnel_type);
 
-    return res.json(funnel);
+    return res.json(classToClass(funnel));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -26,7 +27,7 @@ export default class FunnelController {
 
     const funnel = await listFunnels.execute(supplier_id);
 
-    return res.json(funnel);
+    return res.json(classToClass(funnel));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -38,7 +39,7 @@ export default class FunnelController {
 
     const funnel = await updateFunnel.execute(name, id);
 
-    return res.json(funnel);
+    return res.json(classToClass(funnel));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

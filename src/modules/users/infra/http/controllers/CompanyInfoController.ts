@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateCompanyInfoService from '@modules/users/services/CreateCompanyInfoService';
 import UpdateCompanyInfoService from '@modules/users/services/UpdateCompanyInfoService';
@@ -19,7 +20,7 @@ export default class CompanyInfoController {
       name,
     });
 
-    return res.json(companyInfo);
+    return res.json(classToClass(companyInfo));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -29,7 +30,7 @@ export default class CompanyInfoController {
 
     const companyInfo = await showCompanyInfo.execute({ user_id });
 
-    return res.json(companyInfo);
+    return res.json(classToClass(companyInfo));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -45,6 +46,6 @@ export default class CompanyInfoController {
       name,
     });
 
-    return res.json(companyInfo);
+    return res.json(classToClass(companyInfo));
   }
 }

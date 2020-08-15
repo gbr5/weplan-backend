@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateSelectedSupplierService from '@modules/events/services/CreateSelectedSupplierService';
 import ListSelectedSuppliersIsHiredService from '@modules/events/services/ListSelectedSuppliersIsHiredService';
@@ -26,7 +27,7 @@ export default class SelectedSuppliersController {
       isHired,
     });
 
-    return res.json(selectedSupplier);
+    return res.json(classToClass(selectedSupplier));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -43,7 +44,7 @@ export default class SelectedSuppliersController {
       isHired,
     });
 
-    return res.json(selectedSuppliers);
+    return res.json(classToClass(selectedSuppliers));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -62,7 +63,7 @@ export default class SelectedSuppliersController {
       isHired,
     });
 
-    return res.json(selectedSupplier);
+    return res.json(classToClass(selectedSupplier));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

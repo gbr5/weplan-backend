@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateUserSupplierCategoriesService from '@modules/suppliers/services/CreateUserSupplierCategoriesService';
 import ShowUserSupplierCategoriesService from '@modules/suppliers/services/ShowUserSupplierCategoriesService';
@@ -20,7 +21,7 @@ export default class UserSupplierCategoriesController {
       user_id,
     });
 
-    return res.json(userSupplierCategories);
+    return res.json(classToClass(userSupplierCategories));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class UserSupplierCategoriesController {
       sub_category_name.sub_category,
     );
 
-    return res.json(userSupplierCategories);
+    return res.json(classToClass(userSupplierCategories));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -48,7 +49,7 @@ export default class UserSupplierCategoriesController {
       user_id: supplier.user_id,
     });
 
-    return res.json(userSupplierCategories);
+    return res.json(classToClass(userSupplierCategories));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

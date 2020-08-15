@@ -17,7 +17,7 @@ class DeleteSupplierAppointmentDayOffService {
     );
 
     if (!findSupplierAppointmentDayOff) {
-      throw new AppError('Week day appointment not found.');
+      throw new AppError('Appointment day off not found.');
     }
 
     await this.appointmentsRepository.delete(findSupplierAppointmentDayOff);

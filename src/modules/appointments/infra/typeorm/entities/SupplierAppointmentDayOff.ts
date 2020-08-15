@@ -21,7 +21,7 @@ class SupplierAppointmentDayOff {
   @Column()
   supplier_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
   supplier: User;
 

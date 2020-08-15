@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateUserBirthdateService from '@modules/users/services/CreateUserBirthdateService';
 import UpdateUserBirthdateService from '@modules/users/services/UpdateUserBirthdateService';
@@ -18,7 +19,7 @@ export default class UserBirthdateController {
       date,
     });
 
-    return res.json(userBirthdate);
+    return res.json(classToClass(userBirthdate));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -28,7 +29,7 @@ export default class UserBirthdateController {
 
     const userBirthdate = await showUserBirthdate.execute({ user_id });
 
-    return res.json(userBirthdate);
+    return res.json(classToClass(userBirthdate));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -43,6 +44,6 @@ export default class UserBirthdateController {
       date,
     });
 
-    return res.json(userBirthdate);
+    return res.json(classToClass(userBirthdate));
   }
 }

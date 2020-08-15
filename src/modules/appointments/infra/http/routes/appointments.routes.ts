@@ -5,6 +5,7 @@ import AppointmentsController from '@modules/appointments/infra/http/controllers
 import SupplierWeekDayAppointmentsController from '@modules/appointments/infra/http/controllers/SupplierWeekDayAppointmentsController';
 import SupplierAppointmentDaysOffController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaysOffController';
 import SupplierAppointmentDaySchedulesController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaySchedulesController';
+import SupplierAppointmentDayIntervalsController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDayIntervalsController';
 
 // import ProviderAppointmentController from '@modules/appointments/infra/http/controllers/ProviderAppointmentController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
@@ -14,6 +15,7 @@ const appointmentsController = new AppointmentsController();
 const supplierWeekDayAppointmentsController = new SupplierWeekDayAppointmentsController();
 const supplierAppointmentDaysOffController = new SupplierAppointmentDaysOffController();
 const supplierAppointmentDaySchedulesController = new SupplierAppointmentDaySchedulesController();
+const supplierAppointmentDayIntervalsController = new SupplierAppointmentDayIntervalsController();
 
 // const providerAppointmentController = new ProviderAppointmentController();
 appointmentsRouter.use(ensureAuthenticated);
@@ -75,7 +77,7 @@ appointmentsRouter.delete(
   supplierAppointmentDaysOffController.delete,
 );
 
-// === Supplier Appointment Days Off === //
+// === Supplier Appointment Day Schedule === //
 
 appointmentsRouter.post(
   '/day-schedule/',
@@ -99,6 +101,43 @@ appointmentsRouter.get(
 appointmentsRouter.delete(
   '/day-schedule/:id',
   supplierAppointmentDaySchedulesController.delete,
+);
+
+// === Supplier Appointment Day Intervals === //
+
+appointmentsRouter.post(
+  '/day-interval/',
+  celebrate({
+    [Segments.BODY]: {
+      start_hour: Joi.number().required(),
+      start_minutes: Joi.number().required(),
+      duration_minutes: Joi.number().required(),
+      week_day_id: Joi.string().required(),
+    },
+  }),
+  supplierAppointmentDayIntervalsController.create,
+);
+
+appointmentsRouter.put(
+  '/day-interval/:id',
+  celebrate({
+    [Segments.BODY]: {
+      start_hour: Joi.number().required(),
+      start_minutes: Joi.number().required(),
+      duration_minutes: Joi.number().required(),
+    },
+  }),
+  supplierAppointmentDayIntervalsController.update,
+);
+
+appointmentsRouter.get(
+  '/day-interval/',
+  supplierAppointmentDayIntervalsController.index,
+);
+
+appointmentsRouter.delete(
+  '/day-interval/:id',
+  supplierAppointmentDayIntervalsController.delete,
 );
 
 export default appointmentsRouter;

@@ -93,6 +93,9 @@ import SupplierAppointmentDaysOffRepository from '@modules/appointments/infra/ty
 import ISupplierAppointmentDaySchedulesRepository from '@modules/appointments/repositories/ISupplierAppointmentDaySchedulesRepository';
 import SupplierAppointmentDaySchedulesRepository from '@modules/appointments/infra/typeorm/repositories/SupplierAppointmentDaySchedulesRepository';
 
+import ISupplierAppointmentDayIntervalsRepository from '@modules/appointments/repositories/ISupplierAppointmentDayIntervalsRepository';
+import SupplierAppointmentDayIntervalsRepository from '@modules/appointments/infra/typeorm/repositories/SupplierAppointmentDayIntervalsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -240,4 +243,9 @@ container.registerSingleton<ISupplierAppointmentDaysOffRepository>(
 container.registerSingleton<ISupplierAppointmentDaySchedulesRepository>(
   'SupplierAppointmentDaySchedulesRepository',
   SupplierAppointmentDaySchedulesRepository,
+);
+
+container.registerSingleton<ISupplierAppointmentDayIntervalsRepository>(
+  'SupplierAppointmentDayIntervalsRepository',
+  SupplierAppointmentDayIntervalsRepository,
 );

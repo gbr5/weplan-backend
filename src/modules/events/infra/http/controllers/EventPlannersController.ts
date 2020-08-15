@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateEventPlannerService from '@modules/events/services/CreateEventPlannerService';
 import ListEventPlannersService from '@modules/events/services/ListEventPlannersService';
@@ -22,7 +23,7 @@ export default class EventPlannersController {
       planner_id,
     });
 
-    return res.json(planner);
+    return res.json(classToClass(planner));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class EventPlannersController {
 
     const planners = await listEventPlanners.execute(event_name);
 
-    return res.json(planners);
+    return res.json(classToClass(planners));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

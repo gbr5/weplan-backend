@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateUserCheckListService from '@modules/events/services/CreateUserCheckListService';
 import ListUserCheckListsService from '@modules/events/services/ListUserCheckListsService';
@@ -20,7 +21,7 @@ export default class UserCheckListsController {
       event_name: dataParams.event_name,
     });
 
-    return res.json(checkList);
+    return res.json(classToClass(checkList));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -52,7 +53,7 @@ export default class UserCheckListsController {
       id,
     });
 
-    return res.json(checkList);
+    return res.json(classToClass(checkList));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

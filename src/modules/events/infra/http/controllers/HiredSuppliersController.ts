@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ListSelectedSuppliersIsHiredService from '@modules/events/services/ListSelectedSuppliersIsHiredService';
 
@@ -18,6 +19,6 @@ export default class HiredSuppliersController {
       isHired,
     });
 
-    return res.json(selectedSuppliers);
+    return res.json(classToClass(selectedSuppliers));
   }
 }

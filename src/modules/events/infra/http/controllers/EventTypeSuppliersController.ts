@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateEventTypeSupplierService from '@modules/events/services/CreateEventTypeSupplierService';
 import ShowEventTypeSupplierService from '@modules/events/services/ShowEventTypeSupplierService';
@@ -20,7 +21,7 @@ export default class EventTypeSupplierController {
       user_id,
     });
 
-    return res.json(eventTypeSupplier);
+    return res.json(classToClass(eventTypeSupplier));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class EventTypeSupplierController {
       event_type,
     });
 
-    return res.json(eventTypeSupplier);
+    return res.json(classToClass(eventTypeSupplier));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -48,7 +49,7 @@ export default class EventTypeSupplierController {
       user_id,
     });
 
-    return res.json(eventTypeSupplier);
+    return res.json(classToClass(eventTypeSupplier));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

@@ -8,7 +8,6 @@ import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   name: string;
-  trimmed_name: string;
   email: string;
   password: string;
   isCompany: boolean;

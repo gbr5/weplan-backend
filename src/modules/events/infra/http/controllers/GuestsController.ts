@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateGuestsService from '@modules/events/services/CreateGuestsService';
 import UpdateGuestService from '@modules/events/services/UpdateGuestService';
@@ -28,7 +29,7 @@ export default class GuestsController {
       confirmed,
     });
 
-    return res.json(guest);
+    return res.json(classToClass(guest));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -39,7 +40,7 @@ export default class GuestsController {
 
     const guests = await listGuests.execute(event_name);
 
-    return res.json(guests);
+    return res.json(classToClass(guests));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -50,7 +51,7 @@ export default class GuestsController {
 
     const guest = await showGuest.execute(event_name, first_name, last_name);
 
-    return res.json(guest);
+    return res.json(classToClass(guest));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateStageCardService from '@modules/suppliers/services/CreateStageCardService';
 import UpdateStageCardService from '@modules/suppliers/services/UpdateStageCardService';
@@ -33,7 +34,7 @@ export default class StageCardController {
       card_owner,
     });
 
-    return res.json(stageCard);
+    return res.json(classToClass(stageCard));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -43,7 +44,7 @@ export default class StageCardController {
 
     const stageCard = await listStageCards.execute(stage_id);
 
-    return res.json(stageCard);
+    return res.json(classToClass(stageCard));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -68,7 +69,7 @@ export default class StageCardController {
       new_card_owner,
     );
 
-    return res.json(stageCard);
+    return res.json(classToClass(stageCard));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

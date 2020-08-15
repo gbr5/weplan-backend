@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateSupplierCategoriesService from '@modules/suppliers/services/CreateSupplierCategoriesService';
 import UpdateSupplierCategoriesService from '@modules/suppliers/services/UpdateSupplierCategoriesService';
@@ -15,7 +16,7 @@ export default class SupplierCategoriesController {
 
     const supplierCategories = await createSupplierCategories.execute(category);
 
-    return res.json(supplierCategories);
+    return res.json(classToClass(supplierCategories));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -25,7 +26,7 @@ export default class SupplierCategoriesController {
 
     const supplierCategories = await listSupplierCategories.execute();
 
-    return res.json(supplierCategories);
+    return res.json(classToClass(supplierCategories));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -41,6 +42,6 @@ export default class SupplierCategoriesController {
       oldCategoryName: oldCategoryName.category,
     });
 
-    return res.json(supplierCategories);
+    return res.json(classToClass(supplierCategories));
   }
 }

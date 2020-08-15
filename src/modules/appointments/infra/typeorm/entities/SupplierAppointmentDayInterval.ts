@@ -11,8 +11,8 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import SupplierWeekDayAppointment from './SupplierWeekDayAppointment';
 
-@Entity('supplier_appointment_day_schedules')
-class SupplierAppointmentDaySchedule {
+@Entity('supplier_appointment_day_intervals')
+class SupplierAppointmentDayInterval {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,13 +20,10 @@ class SupplierAppointmentDaySchedule {
   start_hour: number;
 
   @Column('numeric')
-  end_hour: number;
+  start_minutes: number;
 
   @Column('numeric')
   duration_minutes: number;
-
-  @Column('boolean')
-  interval: boolean;
 
   @Column('uuid')
   supplier_id: string;
@@ -40,7 +37,7 @@ class SupplierAppointmentDaySchedule {
 
   @ManyToOne(() => SupplierWeekDayAppointment, { eager: true })
   @JoinColumn({ name: 'week_day_id' })
-  weekDay: SupplierWeekDayAppointment;
+  weekDayInterval: SupplierWeekDayAppointment;
 
   @CreateDateColumn()
   created_at: Date;
@@ -49,4 +46,4 @@ class SupplierAppointmentDaySchedule {
   updated_at: Date;
 }
 
-export default SupplierAppointmentDaySchedule;
+export default SupplierAppointmentDayInterval;

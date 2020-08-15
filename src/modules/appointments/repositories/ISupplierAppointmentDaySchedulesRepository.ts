@@ -12,6 +12,6 @@ export default interface ISupplierAppointmentDaySchedulesRepository {
     supplier_id: string,
   ): Promise<SupplierAppointmentDaySchedule[]>;
   delete(
-    supplier_week_day_appointment: SupplierAppointmentDaySchedule,
+    supplierAppointmentDaySchedule: SupplierAppointmentDaySchedule,
   ): Promise<void>;
 }

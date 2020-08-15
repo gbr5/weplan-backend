@@ -17,9 +17,6 @@ class ListSupplierSupplierAppointmentDayScheduleService {
     const supplierAppointmentDaySchedules = await this.appointmentsRepository.findBySupplierId(
       supplier_id,
     );
-    supplierAppointmentDaySchedules.map(day =>
-      console.log(typeof day.start_hour, typeof day.end_hour),
-    );
 
     return supplierAppointmentDaySchedules;
   }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateUserContactInfoService from '@modules/users/services/CreateUserContactInfoService';
 import UpdateUserContactInfoService from '@modules/users/services/UpdateUserContactInfoService';
@@ -22,7 +23,7 @@ export default class UserContactInfoController {
       contact_type,
     });
 
-    return res.json(userContactInfo);
+    return res.json(classToClass(userContactInfo));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class UserContactInfoController {
 
     const userContactInfo = await listUserContactInfo.execute(user_id);
 
-    return res.json(userContactInfo);
+    return res.json(classToClass(userContactInfo));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -47,7 +48,7 @@ export default class UserContactInfoController {
       contact_type,
     );
 
-    return res.json(userContactInfo);
+    return res.json(classToClass(userContactInfo));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -66,6 +67,6 @@ export default class UserContactInfoController {
       contact_type,
     });
 
-    return res.json(userContactInfo);
+    return res.json(classToClass(userContactInfo));
   }
 }

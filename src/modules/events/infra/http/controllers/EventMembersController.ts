@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreateEventMemberService from '@modules/events/services/CreateEventMemberService';
 import ListEventMembersService from '@modules/events/services/ListEventMembersService';
@@ -22,7 +23,7 @@ export default class EventMembersController {
       member_id,
     });
 
-    return res.json(member);
+    return res.json(classToClass(member));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
@@ -33,7 +34,7 @@ export default class EventMembersController {
 
     const members = await listEventMembers.execute(event_name);
 
-    return res.json(members);
+    return res.json(classToClass(members));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
