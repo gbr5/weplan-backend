@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateAppointments1597477993763
+export default class CreateAppointmentGuests1597531130752
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'appointments',
+        name: 'appointment_guests',
         columns: [
           {
             name: 'id',
@@ -15,23 +15,27 @@ export default class CreateAppointments1597477993763
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'subject',
+            name: 'name',
             type: 'varchar',
           },
           {
-            name: 'date',
-            type: 'timestamp',
-          },
-          {
-            name: 'address',
+            name: 'phone',
             type: 'varchar',
           },
           {
-            name: 'guess_id',
+            name: 'email',
+            type: 'varchar',
+          },
+          {
+            name: 'description',
+            type: 'varchar',
+          },
+          {
+            name: 'appointment_id',
             type: 'uuid',
           },
           {
-            name: 'host_id',
+            name: 'supplier_id',
             type: 'uuid',
           },
           {
@@ -47,19 +51,19 @@ export default class CreateAppointments1597477993763
         ],
         foreignKeys: [
           {
-            name: 'AppointmentGuess',
-            columnNames: ['guess_id'],
-            referencedTableName: 'users',
+            name: 'SupplierGuestAppointment',
+            columnNames: ['appointment_id'],
+            referencedTableName: 'appointments',
             referencedColumnNames: ['id'],
             onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'AppointmentHost',
-            columnNames: ['host_id'],
+            name: 'SupplierAppointmentGuest',
+            columnNames: ['supplier_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            onDelete: 'NO ACTION',
+            onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
         ],
@@ -68,6 +72,6 @@ export default class CreateAppointments1597477993763
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('appointments');
+    await queryRunner.dropTable('appointment_guests');
   }
 }

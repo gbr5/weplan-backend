@@ -6,6 +6,7 @@ import SupplierWeekDayAppointmentsController from '@modules/appointments/infra/h
 import SupplierAppointmentDaysOffController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaysOffController';
 import SupplierAppointmentDaySchedulesController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaySchedulesController';
 import SupplierAppointmentDayIntervalsController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDayIntervalsController';
+import AppointmentTypesController from '@modules/appointments/infra/http/controllers/AppointmentTypesController';
 
 import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
@@ -16,9 +17,24 @@ const supplierWeekDayAppointmentsController = new SupplierWeekDayAppointmentsCon
 const supplierAppointmentDaysOffController = new SupplierAppointmentDaysOffController();
 const supplierAppointmentDaySchedulesController = new SupplierAppointmentDaySchedulesController();
 const supplierAppointmentDayIntervalsController = new SupplierAppointmentDayIntervalsController();
+const appointmentTypesController = new AppointmentTypesController();
 
 const supplierAppointmentController = new SupplierAppointmentController();
 appointmentsRouter.use(ensureAuthenticated);
+
+// === Appointment Types === //
+
+appointmentsRouter.post(
+  '/types',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+    },
+  }),
+  appointmentTypesController.create,
+);
+
+// === Appointment === //
 
 appointmentsRouter.post(
   '/',
