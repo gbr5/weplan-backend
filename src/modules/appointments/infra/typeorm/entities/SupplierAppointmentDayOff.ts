@@ -23,7 +23,7 @@ class SupplierAppointmentDayOff {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'supplier_id' })
-  provider: User;
+  supplier: User;
 
   @CreateDateColumn()
   created_at: Date;

@@ -5,7 +5,7 @@ import { getHours, isAfter } from 'date-fns';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 interface IRequest {
-  provider_id: string;
+  supplier_id: string;
   day: number;
   month: number;
   year: number;
@@ -17,21 +17,21 @@ type IResponse = Array<{
 }>;
 
 @injectable()
-class ListProviderDayAvailabilityService {
+class ListSupplierDayAvailabilityService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
   public async execute({
-    provider_id,
+    supplier_id,
     month,
     year,
     day,
   }: IRequest): Promise<IResponse> {
-    const appointments = await this.appointmentsRepository.findAllInDayFromProvider(
+    const appointments = await this.appointmentsRepository.findAllInDayFromSupplier(
       {
-        provider_id,
+        supplier_id,
         month,
         year,
         day,
@@ -63,4 +63,4 @@ class ListProviderDayAvailabilityService {
   }
 }
 
-export default ListProviderDayAvailabilityService;
+export default ListSupplierDayAvailabilityService;

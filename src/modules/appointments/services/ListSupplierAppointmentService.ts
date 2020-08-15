@@ -7,14 +7,14 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import { classToClass } from 'class-transformer';
 
 interface IRequest {
-  provider_id: string;
+  supplier_id: string;
   day: number;
   month: number;
   year: number;
 }
 
 @injectable()
-class ListProviderAppointmentService {
+class ListSupplierAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
@@ -24,21 +24,21 @@ class ListProviderAppointmentService {
   ) {}
 
   public async execute({
-    provider_id,
+    supplier_id,
     day,
     month,
     year,
   }: IRequest): Promise<Appointment[]> {
-    const cacheKey = `provider-appointments:${provider_id}:${year}-${month}-${day}`;
+    const cacheKey = `supplier-appointments:${supplier_id}:${year}-${month}-${day}`;
 
     let appointments = await this.cacheProvider.recover<Appointment[]>(
       cacheKey,
     );
 
     if (!appointments) {
-      appointments = await this.appointmentsRepository.findAllInDayFromProvider(
+      appointments = await this.appointmentsRepository.findAllInDayFromSupplier(
         {
-          provider_id,
+          supplier_id,
           day,
           month,
           year,
@@ -52,4 +52,4 @@ class ListProviderAppointmentService {
   }
 }
 
-export default ListProviderAppointmentService;
+export default ListSupplierAppointmentService;

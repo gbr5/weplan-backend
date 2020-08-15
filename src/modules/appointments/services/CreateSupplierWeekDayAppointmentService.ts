@@ -30,7 +30,7 @@ class CreateSupplierWeekDayAppointmentService {
       weekDay => weekDay.week_day === week_day,
     );
 
-    if (findSupplierWeekDayAppointment) {
+    if (findSupplierWeekDayAppointment === []) {
       throw new AppError('This supplier already registered this week day.');
     }
 

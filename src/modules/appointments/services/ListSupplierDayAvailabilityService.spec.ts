@@ -1,26 +1,26 @@
-import ListProviderDayAvailabilityService from '@modules/appointments/services/ListProviderDayAvailabilityService';
+import ListSupplierDayAvailabilityService from '@modules/appointments/services/ListSupplierDayAvailabilityService';
 import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 
-let listProviderDayAvailability: ListProviderDayAvailabilityService;
+let listSupplierDayAvailability: ListSupplierDayAvailabilityService;
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 
-describe('ListProviderDayAvailability', () => {
+describe('ListSupplierDayAvailability', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    listProviderDayAvailability = new ListProviderDayAvailabilityService(
+    listSupplierDayAvailability = new ListSupplierDayAvailabilityService(
       fakeAppointmentsRepository,
     );
   });
 
-  it('should be able to list the dayly availability of providers', async () => {
+  it('should be able to list the dayly availability of suppliers', async () => {
     await fakeAppointmentsRepository.create({
-      provider_id: 'provider-id',
+      supplier_id: 'supplier-id',
       user_id: 'user-id',
       date: new Date(2020, 4, 20, 14, 0, 0),
     }); // dia 20 as 8 = 1
 
     await fakeAppointmentsRepository.create({
-      provider_id: 'provider-id',
+      supplier_id: 'supplier-id',
       user_id: 'user-id',
       date: new Date(2020, 4, 20, 15, 0, 0),
     }); // dia 20 as 10 = 3
@@ -29,8 +29,8 @@ describe('ListProviderDayAvailability', () => {
       return new Date(2020, 4, 20, 11).getTime();
     });
 
-    const availability = await listProviderDayAvailability.execute({
-      provider_id: 'provider-id',
+    const availability = await listSupplierDayAvailability.execute({
+      supplier_id: 'supplier-id',
       year: 2020,
       month: 5,
       day: 20,

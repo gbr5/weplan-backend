@@ -5,7 +5,7 @@ import SupplierWeekDayAppointment from '@modules/appointments/infra/typeorm/enti
 import ISupplierWeekDayAppointmentsRepository from '@modules/appointments/repositories/ISupplierWeekDayAppointmentsRepository';
 
 @injectable()
-class ListProviderSupplierWeekDayAppointmentService {
+class ListSupplierSupplierWeekDayAppointmentService {
   constructor(
     @inject('SupplierWeekDayAppointmentsRepository')
     private appointmentsRepository: ISupplierWeekDayAppointmentsRepository,
@@ -22,4 +22,4 @@ class ListProviderSupplierWeekDayAppointmentService {
   }
 }
 
-export default ListProviderSupplierWeekDayAppointmentService;
+export default ListSupplierSupplierWeekDayAppointmentService;

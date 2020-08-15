@@ -40,7 +40,7 @@ class CreateSelectedSupplierService {
 
     if (eventSupplierExists) {
       throw new AppError(
-        'The provider that you have chosen, is already selected.',
+        'The supplier that you have chosen, is already selected.',
       );
     }
 

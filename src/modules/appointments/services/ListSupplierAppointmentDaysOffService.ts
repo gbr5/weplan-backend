@@ -5,7 +5,7 @@ import SupplierAppointmentDayOff from '@modules/appointments/infra/typeorm/entit
 import ISupplierAppointmentDaysOffRepository from '@modules/appointments/repositories/ISupplierAppointmentDaysOffRepository';
 
 @injectable()
-class ListProviderSupplierAppointmentDayOffService {
+class ListSupplierSupplierAppointmentDayOffService {
   constructor(
     @inject('SupplierAppointmentDaysOffRepository')
     private appointmentsRepository: ISupplierAppointmentDaysOffRepository,
@@ -22,4 +22,4 @@ class ListProviderSupplierAppointmentDayOffService {
   }
 }
 
-export default ListProviderSupplierAppointmentDayOffService;
+export default ListSupplierSupplierAppointmentDayOffService;

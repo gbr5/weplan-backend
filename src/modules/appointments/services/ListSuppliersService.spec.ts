@@ -1,22 +1,22 @@
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
-import ListProvidersService from '@modules/appointments/services/ListProvidersService';
+import ListSuppliersService from '@modules/appointments/services/ListSuppliersService';
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 
 let fakeUsersRepository: FakeUsersRepository;
-let listProviders: ListProvidersService;
+let listSuppliers: ListSuppliersService;
 let fakeCacheProvider: FakeCacheProvider;
 
-describe('ListProviders', () => {
+describe('ListSuppliers', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeCacheProvider = new FakeCacheProvider();
-    listProviders = new ListProvidersService(
+    listSuppliers = new ListSuppliersService(
       fakeUsersRepository,
       fakeCacheProvider,
     );
   });
 
-  it('should be able to show the providers', async () => {
+  it('should be able to show the suppliers', async () => {
     const user1 = await fakeUsersRepository.create({
       name: 'Bob Doe',
       email: 'bob@doe.com',
@@ -35,7 +35,7 @@ describe('ListProviders', () => {
       password: '123456',
     });
 
-    const providers = await listProviders.execute({
+    const providers = await listSuppliers.execute({
       user_id: loggedUser.id,
     });
 

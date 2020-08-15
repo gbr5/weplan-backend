@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import SupplierAppointmentDaySchedule from './SupplierAppointmentDaySchedule';
 
 @Entity('supplier_week_day_appointments')
 class SupplierWeekDayAppointment {
@@ -23,13 +25,19 @@ class SupplierWeekDayAppointment {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'supplier_id' })
-  provider: User;
+  supplier: User;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => SupplierAppointmentDaySchedule,
+    appointmentDaySchedule => appointmentDaySchedule.week_day_id,
+  )
+  appointmentDaySchedule: SupplierAppointmentDaySchedule;
 }
 
 export default SupplierWeekDayAppointment;

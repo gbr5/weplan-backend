@@ -7,8 +7,3 @@ export default interface IEventsRepository {
   findByUserId(id: string): Promise<Event[]>;
   save(event: Event): Promise<Event>;
 }
-// Falta fazer um findAllEventsByTypeFromProvider
-// Falta fazer um findAllEventsFromProvider
-// Falta fazer um findAllEventsInYearFromProvider
-// Falta fazer um findAllEventsInMonthFromProvider
-// Falta fazer um findAllEventsInDayFromProvider

@@ -16,11 +16,11 @@ class Appointment {
   id: string;
 
   @Column()
-  provider_id: string;
+  supplier_id: string;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'provider_id' })
-  provider: User;
+  @JoinColumn({ name: 'supplier_id' })
+  supplier: User;
 
   @Column()
   user_id: string;

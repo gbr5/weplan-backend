@@ -10,7 +10,7 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 interface IRequest {
-  provider_id: string;
+  supplier_id: string;
   user_id: string;
   date: Date;
 }
@@ -34,21 +34,21 @@ class CreateAppointmentService {
 
   public async execute({
     date,
-    provider_id,
+    supplier_id,
     user_id,
   }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
-      provider_id,
+      supplier_id,
     );
 
     if (isBefore(appointmentDate, Date.now())) {
       throw new AppError("You can't create an appointment on a past date.");
     }
 
-    if (user_id === provider_id) {
+    if (user_id === supplier_id) {
       throw new AppError("You can't create an appointment with yourself.");
     }
 
@@ -63,7 +63,7 @@ class CreateAppointmentService {
     }
 
     const appointment = await this.appointmentsRepository.create({
-      provider_id,
+      supplier_id,
       user_id,
       date: appointmentDate,
     });
@@ -83,12 +83,12 @@ class CreateAppointmentService {
     }
 
     await this.notificationsRepository.create({
-      recipient_id: provider_id,
+      recipient_id: supplier_id,
       content: `Novo agendamento com ${name} no dia ${dateFormatted}`,
     });
 
     await this.cacheProvider.invalidate(
-      `provider-appointments:${provider_id}:${format(
+      `supplier-appointments:${supplier_id}:${format(
         appointmentDate,
         'yyyy-M-d',
       )}`,

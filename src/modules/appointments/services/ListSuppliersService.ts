@@ -13,7 +13,7 @@ interface IRequest {
   password?: string;
 }
 @injectable()
-class ListProvidersService {
+class ListSuppliersService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -24,16 +24,16 @@ class ListProvidersService {
 
   public async execute({ user_id }: IRequest): Promise<User[]> {
     let users = await this.cacheProvider.recover<User[]>(
-      `providers-list:${user_id}`,
+      `suppliers-list:${user_id}`,
     );
 
     if (!users) {
-      users = await this.usersRepository.findAllProviders({
+      users = await this.usersRepository.findAllSuppliers({
         except_user_id: user_id,
       });
 
       await this.cacheProvider.save(
-        `providers-list:${user_id}`,
+        `suppliers-list:${user_id}`,
         classToClass(users),
       );
     }
@@ -42,4 +42,4 @@ class ListProvidersService {
   }
 }
 
-export default ListProvidersService;
+export default ListSuppliersService;

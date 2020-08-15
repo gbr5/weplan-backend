@@ -17,6 +17,7 @@ import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSup
 import EventPlanner from '@modules/events/infra/typeorm/entities/EventPlanner';
 import Funnel from '@modules/suppliers/infra/typeorm/entities/Funnel';
 import StageCard from '@modules/suppliers/infra/typeorm/entities/StageCard';
+import SupplierAppointmentDaySchedule from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDaySchedule';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -106,6 +107,12 @@ class User {
 
   @OneToOne(() => StageCard, card => card.card_owner)
   card: StageCard;
+
+  @OneToMany(
+    () => SupplierAppointmentDaySchedule,
+    appointmentDaySchedule => appointmentDaySchedule.supplier_id,
+  )
+  appointmentDaySchedule: SupplierAppointmentDaySchedule;
 }
 
 export default User;

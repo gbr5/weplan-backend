@@ -34,12 +34,12 @@ describe('CreateAppointment', () => {
 
     const appointment = await createAppointment.execute({
       date: new Date(2020, 5, 27, 14),
-      provider_id: 'provider_id',
+      supplier_id: 'supplier_id',
       user_id: 'user_id',
     });
 
     await expect(appointment).toHaveProperty('id');
-    await expect(appointment.provider_id).toBe('provider_id');
+    await expect(appointment.supplier_id).toBe('supplier_id');
   });
 
   it('should not be able to create two appointments on the same time', async () => {
@@ -47,14 +47,14 @@ describe('CreateAppointment', () => {
 
     await createAppointment.execute({
       date: appointmentDate,
-      provider_id: '123456',
+      supplier_id: '123456',
       user_id: '123455',
     });
 
     await expect(
       createAppointment.execute({
         date: appointmentDate,
-        provider_id: 'provider_id',
+        supplier_id: 'supplier_id',
         user_id: 'user_id',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -68,13 +68,13 @@ describe('CreateAppointment', () => {
     await expect(
       createAppointment.execute({
         date: new Date(2020, 7, 26, 13),
-        provider_id: 'provider_id',
+        supplier_id: 'supplier_id',
         user_id: 'user_id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to create an appointment with same same user as provider', async () => {
+  it('should not be able to create an appointment with same same user as supplier', async () => {
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
       return new Date(2020, 7, 27, 12).getTime();
     });
@@ -82,7 +82,7 @@ describe('CreateAppointment', () => {
     await expect(
       createAppointment.execute({
         date: new Date(2020, 7, 27, 13),
-        provider_id: 'user_id',
+        supplier_id: 'user_id',
         user_id: 'user_id',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -96,7 +96,7 @@ describe('CreateAppointment', () => {
     await expect(
       createAppointment.execute({
         date: new Date(2020, 7, 28, 7),
-        provider_id: 'provider_id',
+        supplier_id: 'supplier_id',
         user_id: 'user_id',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -104,7 +104,7 @@ describe('CreateAppointment', () => {
     await expect(
       createAppointment.execute({
         date: new Date(2020, 7, 28, 18),
-        provider_id: 'provider_id',
+        supplier_id: 'supplier_id',
         user_id: 'user_id',
       }),
     ).rejects.toBeInstanceOf(AppError);
