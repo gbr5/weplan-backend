@@ -6,10 +6,7 @@ import AppError from '@shared/errors/AppError';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import INonUserAppointmentGuestsRepository from '@modules/appointments/repositories/INonUserAppointmentGuestsRepository';
-import IWeplanAppointmentGuestsRepository from '@modules/appointments/repositories/IWeplanAppointmentGuestsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 // Dependency Inversion (SOLID principles)
@@ -18,15 +15,6 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
-
-    @inject('NonUserAppointmentGuestsRepository')
-    private nonUserAppointmentGuestsRepository: INonUserAppointmentGuestsRepository,
-
-    @inject('WeplanAppointmentGuestsRepository')
-    private weplanAppointmentGuestsRepository: IWeplanAppointmentGuestsRepository,
-
-    @inject('NotificationsRepository')
-    private notificationsRepository: INotificationRepository,
 
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,

@@ -9,7 +9,7 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 
 interface IRequest {
   supplier_id: string;
-  event_name: string;
+  event_id: string;
   supplier_sub_category: string;
   isHired: boolean;
 }
@@ -29,13 +29,13 @@ class CreateSelectedSupplierService {
 
   public async execute({
     supplier_id,
-    event_name,
+    event_id,
     supplier_sub_category,
     isHired,
   }: IRequest): Promise<SelectedSupplier> {
     const eventSupplierExists = await this.eventSuppliersRepository.findByIdAndEvent(
       supplier_id,
-      event_name,
+      event_id,
     );
 
     if (eventSupplierExists) {
@@ -46,14 +46,14 @@ class CreateSelectedSupplierService {
 
     const event = await this.eventSuppliersRepository.create({
       supplier_id,
-      event_name,
+      event_id,
       supplier_sub_category,
       isHired,
     });
 
     await this.notificationsRepository.create({
       recipient_id: supplier_id,
-      content: `${supplier_id} adicionado ao ${event_name}.`,
+      content: `${supplier_id} adicionado ao ${event_id}.`,
     });
 
     return event;

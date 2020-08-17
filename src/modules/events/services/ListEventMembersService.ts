@@ -15,9 +15,9 @@ class ListEventMembersService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(event_name: string): Promise<EventMember[]> {
+  public async execute(event_id: string): Promise<EventMember[]> {
     const EventMembers = await this.eventMembersRepository.findByEvent(
-      event_name,
+      event_id,
     );
 
     return EventMembers;

@@ -15,7 +15,7 @@ export default class HiredSuppliersController {
     const isHired = true;
 
     const selectedSuppliers = await listSelectedSuppliersIsHired.execute({
-      event_name: dataParams.event_name,
+      event_id: dataParams.event_id,
       isHired,
     });
 

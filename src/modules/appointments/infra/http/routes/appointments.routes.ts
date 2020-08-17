@@ -74,6 +74,7 @@ appointmentsRouter.post(
     [Segments.BODY]: {
       subject: Joi.string().required(),
       date: Joi.date(),
+      duration_minutes: Joi.number().required(),
       address: Joi.string().required(),
       appointment_type: Joi.string().required(),
       name: Joi.string().required(),
@@ -93,6 +94,7 @@ appointmentsRouter.post(
     [Segments.BODY]: {
       subject: Joi.string().required(),
       date: Joi.date(),
+      duration_minutes: Joi.number().required(),
       address: Joi.string().required(),
       appointment_type: Joi.string().required(),
       guest_id: Joi.string().required(),

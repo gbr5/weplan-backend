@@ -11,9 +11,9 @@ class EventInfosRepository implements IEventInfosRepository {
     this.ormRepository = getRepository(EventInfo);
   }
 
-  public async findByEvent(event_name: string): Promise<EventInfo | undefined> {
+  public async findByEvent(event_id: string): Promise<EventInfo | undefined> {
     const findEventInfo = await this.ormRepository.findOne({
-      where: { event_name },
+      where: { event_id },
     });
 
     return findEventInfo;

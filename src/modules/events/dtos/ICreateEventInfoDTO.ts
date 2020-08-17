@@ -1,5 +1,5 @@
 export default interface ICreateEventInfoDTO {
-  event_name: string;
+  event_id: string;
   number_of_guests: number;
   start_hour: number;
   duration: number;

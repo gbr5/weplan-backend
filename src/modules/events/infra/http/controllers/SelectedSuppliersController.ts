@@ -9,12 +9,7 @@ import DeleteSelectedSupplierService from '@modules/events/services/DeleteSelect
 
 export default class SelectedSuppliersController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const {
-      supplier_id,
-      event_name,
-      supplier_sub_category,
-      isHired,
-    } = req.body;
+    const { supplier_id, event_id, supplier_sub_category, isHired } = req.body;
 
     const createSelectedSupplier = container.resolve(
       CreateSelectedSupplierService,
@@ -22,7 +17,7 @@ export default class SelectedSuppliersController {
 
     const selectedSupplier = await createSelectedSupplier.execute({
       supplier_id,
-      event_name,
+      event_id,
       supplier_sub_category,
       isHired,
     });
@@ -40,7 +35,7 @@ export default class SelectedSuppliersController {
     const isHired = false;
 
     const selectedSuppliers = await listSelectedSuppliersIsHired.execute({
-      event_name: dataParams.event_name,
+      event_id: dataParams.event_id,
       isHired,
     });
 
@@ -58,7 +53,7 @@ export default class SelectedSuppliersController {
 
     const selectedSupplier = await updateSelectedSupplier.execute({
       supplier_id: dataParams.supplier_id,
-      event_name: dataParams.event_name,
+      event_id: dataParams.event_id,
       supplier_sub_category,
       isHired,
     });
@@ -75,7 +70,7 @@ export default class SelectedSuppliersController {
 
     await deleteSelectedSupplier.execute({
       supplier_id: dataParams.supplier_id,
-      event_name: dataParams.event_name,
+      event_id: dataParams.event_id,
     });
 
     return res.status(200).send();

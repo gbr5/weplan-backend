@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserCheckLists1597091798227
+export default class CreateEventAppointments1597688629798
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_check_lists',
+        name: 'event_appointments',
         columns: [
           {
             name: 'id',
@@ -15,20 +15,12 @@ export default class CreateUserCheckLists1597091798227
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: 'appointment_id',
+            type: 'uuid',
           },
           {
-            name: 'priority_level',
-            type: 'numeric',
-          },
-          {
-            name: 'checked',
-            type: 'boolean',
-          },
-          {
-            name: 'event_name',
-            type: 'varchar',
+            name: 'event_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -43,10 +35,18 @@ export default class CreateUserCheckLists1597091798227
         ],
         foreignKeys: [
           {
-            name: 'UserEventCheckList',
-            columnNames: ['event_name'],
+            name: 'EventAppointment',
+            columnNames: ['appointment_id'],
+            referencedTableName: 'appointments',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'AppointmentEvent',
+            columnNames: ['event_id'],
             referencedTableName: 'events',
-            referencedColumnNames: ['trimmed_name'],
+            referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -56,6 +56,6 @@ export default class CreateUserCheckLists1597091798227
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_check_lists');
+    await queryRunner.dropTable('event_appointments');
   }
 }

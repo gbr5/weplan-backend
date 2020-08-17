@@ -9,7 +9,7 @@ interface IRequest {
   name: string;
   priority_level: number;
   checked: boolean;
-  event_name: string;
+  event_id: string;
 }
 
 @injectable()
@@ -29,13 +29,13 @@ class CreateUserCheckListService {
     name,
     priority_level,
     checked,
-    event_name,
+    event_id,
   }: IRequest): Promise<UserCheckList> {
     const checkList = await this.userCheckListsRepository.create({
       name,
       priority_level,
       checked,
-      event_name,
+      event_id,
     });
 
     return checkList;

@@ -13,13 +13,13 @@ export default class EventPlannersController {
 
     const dataParams = req.params;
 
-    const { event_name } = dataParams;
+    const { event_id } = dataParams;
 
     const createEventPlanners = container.resolve(CreateEventPlannerService);
 
     const planner = await createEventPlanners.execute({
       user_id,
-      event_name,
+      event_id,
       planner_id,
     });
 
@@ -28,11 +28,11 @@ export default class EventPlannersController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_name } = dataParams;
+    const { event_id } = dataParams;
 
     const listEventPlanners = container.resolve(ListEventPlannersService);
 
-    const planners = await listEventPlanners.execute(event_name);
+    const planners = await listEventPlanners.execute(event_id);
 
     return res.json(classToClass(planners));
   }
@@ -40,12 +40,12 @@ export default class EventPlannersController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_name, planner_id } = dataParams;
+    const { event_id, planner_id } = dataParams;
 
     const deleteEventPlanner = container.resolve(DeleteEventPlannerService);
 
     await deleteEventPlanner.execute({
-      event_name,
+      event_id,
       planner_id,
     });
 

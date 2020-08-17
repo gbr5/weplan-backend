@@ -9,6 +9,7 @@ export default interface ISupplierNonUserAppointmentsRepository {
     id: string;
     subject: string;
     date: Date;
+    duration_minutes: number;
     address: string;
     appointment_type: string;
     host: User;

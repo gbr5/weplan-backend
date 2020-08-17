@@ -1,6 +1,5 @@
 import ICreateWeplanUsersAppointmentDTO from '@modules/appointments/dtos/ICreateWeplanUsersAppointmentDTO';
 import User from '@modules/users/infra/typeorm/entities/User';
-import WeplanAppointmentGuest from '../infra/typeorm/entities/WeplanAppointmentGuest';
 
 export default interface ISupplierNonUserAppointmentsRepository {
   create(
@@ -9,10 +8,11 @@ export default interface ISupplierNonUserAppointmentsRepository {
     id: string;
     subject: string;
     date: Date;
+    duration_minutes: number;
     address: string;
     appointment_type: string;
     host: User;
-    guest: WeplanAppointmentGuest;
+    guest: User;
   }>;
   delete(data: ICreateWeplanUsersAppointmentDTO): Promise<void>;
 }

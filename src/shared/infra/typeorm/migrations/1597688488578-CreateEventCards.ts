@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventOwners1597189440344
+export default class CreateEventCards1597688488578
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_owners',
+        name: 'event_cards',
         columns: [
           {
             name: 'id',
@@ -15,11 +15,12 @@ export default class CreateEventOwners1597189440344
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_name',
+            name: 'card_unique_name',
             type: 'varchar',
+            isUnique: true,
           },
           {
-            name: 'owner_id',
+            name: 'event_id',
             type: 'uuid',
           },
           {
@@ -35,19 +36,19 @@ export default class CreateEventOwners1597189440344
         ],
         foreignKeys: [
           {
-            name: 'EventOwner',
-            columnNames: ['event_name'],
-            referencedTableName: 'events',
-            referencedColumnNames: ['trimmed_name'],
+            name: 'CardName',
+            columnNames: ['card_unique_name'],
+            referencedTableName: 'stage_cards',
+            referencedColumnNames: ['unique_name'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'UserEventOwner',
-            columnNames: ['owner_id'],
-            referencedTableName: 'users',
+            name: 'EventId',
+            columnNames: ['event_id'],
+            referencedTableName: 'events',
             referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
+            onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
           },
         ],
@@ -56,6 +57,6 @@ export default class CreateEventOwners1597189440344
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_owners');
+    await queryRunner.dropTable('event_cards');
   }
 }

@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventInfos1597203417586
-  implements MigrationInterface {
+export default class CreateGuests1597687827337 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_infos',
+        name: 'guests',
         columns: [
           {
             name: 'id',
@@ -15,40 +14,28 @@ export default class CreateEventInfos1597203417586
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_name',
+            name: 'first_name',
             type: 'varchar',
           },
           {
-            name: 'number_of_guests',
-            type: 'numeric',
-          },
-          {
-            name: 'start_hour',
-            type: 'numeric',
-          },
-          {
-            name: 'duration',
-            type: 'numeric',
-          },
-          {
-            name: 'budget',
-            type: 'numeric',
+            name: 'last_name',
+            type: 'varchar',
           },
           {
             name: 'description',
-            type: 'text',
-          },
-          {
-            name: 'country',
             type: 'varchar',
           },
           {
-            name: 'local_state',
-            type: 'varchar',
+            name: 'event_id',
+            type: 'uuid',
           },
           {
-            name: 'city',
-            type: 'varchar',
+            name: 'host_id',
+            type: 'uuid',
+          },
+          {
+            name: 'confirmed',
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -63,10 +50,18 @@ export default class CreateEventInfos1597203417586
         ],
         foreignKeys: [
           {
-            name: 'EventName',
-            columnNames: ['event_name'],
+            name: 'EventGuest',
+            columnNames: ['event_id'],
             referencedTableName: 'events',
-            referencedColumnNames: ['trimmed_name'],
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'UserHost',
+            columnNames: ['host_id'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -76,6 +71,6 @@ export default class CreateEventInfos1597203417586
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_infos');
+    await queryRunner.dropTable('guests');
   }
 }

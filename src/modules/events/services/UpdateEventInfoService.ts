@@ -14,7 +14,7 @@ class UpdateEventInfoService {
   ) {}
 
   public async execute({
-    event_name,
+    event_id,
     number_of_guests,
     start_hour,
     duration,
@@ -24,7 +24,7 @@ class UpdateEventInfoService {
     local_state,
     city,
   }: ICreateEventInfoDTO): Promise<EventInfo> {
-    const eventInfo = await this.eventInfosRepository.findByEvent(event_name);
+    const eventInfo = await this.eventInfosRepository.findByEvent(event_id);
 
     if (!eventInfo) {
       throw new AppError('Event informations not found.');

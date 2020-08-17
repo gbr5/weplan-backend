@@ -6,4 +6,5 @@ export default interface ICreateWeplanUsersAppointmentDTO {
   weplanGuest: boolean;
   host_id: string;
   guest_id: string;
+  duration_minutes: number;
 }

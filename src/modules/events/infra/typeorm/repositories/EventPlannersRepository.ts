@@ -12,30 +12,30 @@ class EventPlannerRepository implements IEventPlannersRepository {
   }
 
   public async findByEventAndPlannerId(
-    event_name: string,
+    event_id: string,
     planner_id: string,
   ): Promise<EventPlanner | undefined> {
     const findEventPlanner = await this.ormRepository.findOne({
-      where: { event_name, planner_id },
+      where: { event_id, planner_id },
     });
 
     return findEventPlanner;
   }
 
-  public async findByEvent(event_name: string): Promise<EventPlanner[]> {
+  public async findByEvent(event_id: string): Promise<EventPlanner[]> {
     const findEventPlanner = await this.ormRepository.find({
-      where: { event_name },
+      where: { event_id },
     });
 
     return findEventPlanner;
   }
 
   public async create({
-    event_name,
+    event_id,
     planner_id,
   }: ICreateEventPlannerDTO): Promise<EventPlanner> {
     const planner = this.ormRepository.create({
-      event_name,
+      event_id,
       planner_id,
     });
 
@@ -48,9 +48,9 @@ class EventPlannerRepository implements IEventPlannersRepository {
     return this.ormRepository.save(planner);
   }
 
-  public async delete({ event_name, planner_id }: EventPlanner): Promise<void> {
+  public async delete({ event_id, planner_id }: EventPlanner): Promise<void> {
     await this.ormRepository.delete({
-      event_name,
+      event_id,
       planner_id,
     });
   }

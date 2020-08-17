@@ -5,7 +5,7 @@ import ISelectedSuppliersRepository from '@modules/events/repositories/ISelected
 
 interface IRequest {
   supplier_id: string;
-  event_name: string;
+  event_id: string;
 }
 @injectable()
 class DeleteSelectedSupplierService {
@@ -14,10 +14,10 @@ class DeleteSelectedSupplierService {
     private selectedSuppliersRepository: ISelectedSuppliersRepository,
   ) {}
 
-  public async execute({ supplier_id, event_name }: IRequest): Promise<void> {
+  public async execute({ supplier_id, event_id }: IRequest): Promise<void> {
     const eventSupplier = await this.selectedSuppliersRepository.findByIdAndEvent(
       supplier_id,
-      event_name,
+      event_id,
     );
 
     if (!eventSupplier) {

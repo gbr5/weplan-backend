@@ -5,7 +5,7 @@ import ICreateUserCheckListDTO from '@modules/events/dtos/ICreateUserCheckListDT
 import UserCheckList from '@modules/events/infra/typeorm/entities/UserCheckList';
 
 interface IRequest {
-  event_name: string;
+  event_id: string;
   id: string;
 }
 
@@ -17,19 +17,19 @@ class UserCheckListsRepository implements IUserCheckListsRepository {
   }
 
   public async findByIdAndEvent(
-    event_name: string,
+    event_id: string,
     id: string,
   ): Promise<UserCheckList | undefined> {
     const findUserCheckList = await this.ormRepository.findOne({
-      where: { event_name, id },
+      where: { event_id, id },
     });
 
     return findUserCheckList;
   }
 
-  public async findByEvent(event_name: string): Promise<UserCheckList[]> {
+  public async findByEvent(event_id: string): Promise<UserCheckList[]> {
     const findUserCheckList = await this.ormRepository.find({
-      where: { event_name },
+      where: { event_id },
     });
 
     return findUserCheckList;
@@ -39,13 +39,13 @@ class UserCheckListsRepository implements IUserCheckListsRepository {
     name,
     priority_level,
     checked,
-    event_name,
+    event_id,
   }: ICreateUserCheckListDTO): Promise<UserCheckList> {
     const userCheckList = this.ormRepository.create({
       name,
       priority_level,
       checked,
-      event_name,
+      event_id,
     });
 
     await this.ormRepository.save(userCheckList);
@@ -57,8 +57,8 @@ class UserCheckListsRepository implements IUserCheckListsRepository {
     return this.ormRepository.save(userCheckList);
   }
 
-  public async delete({ id, event_name }: UserCheckList): Promise<void> {
-    await this.ormRepository.delete({ id, event_name });
+  public async delete({ id, event_id }: UserCheckList): Promise<void> {
+    await this.ormRepository.delete({ id, event_id });
   }
 }
 

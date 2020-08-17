@@ -9,7 +9,7 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 
 interface IRequest {
   user_id: string;
-  event_name: string;
+  event_id: string;
   owner_id: string;
 }
 
@@ -28,11 +28,11 @@ class CreateEventOwnerService {
 
   public async execute({
     user_id,
-    event_name,
+    event_id,
     owner_id,
   }: IRequest): Promise<EventOwner> {
     const ownerExists = await this.ownersRepository.findByEventAndOwnerId(
-      event_name,
+      event_id,
       owner_id,
     );
 
@@ -41,7 +41,7 @@ class CreateEventOwnerService {
     }
 
     const owner = await this.ownersRepository.create({
-      event_name,
+      event_id,
       owner_id,
     });
 

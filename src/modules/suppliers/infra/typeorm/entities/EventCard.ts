@@ -24,7 +24,7 @@ class EventCard {
   @JoinColumn({ name: 'card_unique_name' })
   SupplierCard: StageCard;
 
-  @Column('uuid')
+  @Column()
   event_id: string;
 
   @ManyToOne(() => Event, { eager: true })

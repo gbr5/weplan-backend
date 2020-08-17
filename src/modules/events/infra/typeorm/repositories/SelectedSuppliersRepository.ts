@@ -7,7 +7,7 @@ import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSup
 
 interface IRequest {
   supplier_id: string;
-  event_name: string;
+  event_id: string;
 }
 
 class SelectedSuppliersRepository implements ISelectedSuppliersRepository {
@@ -19,21 +19,21 @@ class SelectedSuppliersRepository implements ISelectedSuppliersRepository {
 
   public async findByIdAndEvent(
     supplier_id: string,
-    event_name: string,
+    event_id: string,
   ): Promise<SelectedSupplier | undefined> {
     const findSelectedSupplier = await this.ormRepository.findOne({
-      where: { supplier_id, event_name },
+      where: { supplier_id, event_id },
     });
 
     return findSelectedSupplier;
   }
 
   public async findByIdAndEventAndIsHired({
-    event_name,
+    event_id,
     isHired,
   }: IFindSelectedSupplierIsHiredDTO): Promise<SelectedSupplier[]> {
     const findSelectedSupplier = await this.ormRepository.find({
-      where: { event_name, isHired },
+      where: { event_id, isHired },
     });
 
     return findSelectedSupplier;
@@ -55,10 +55,10 @@ class SelectedSuppliersRepository implements ISelectedSuppliersRepository {
     return this.ormRepository.save(eventSupplier);
   }
 
-  public async delete({ supplier_id, event_name }: IRequest): Promise<void> {
+  public async delete({ supplier_id, event_id }: IRequest): Promise<void> {
     await this.ormRepository.delete({
       supplier_id,
-      event_name,
+      event_id,
     });
   }
 }

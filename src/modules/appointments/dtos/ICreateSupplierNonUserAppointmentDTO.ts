@@ -9,4 +9,5 @@ export default interface ICreateSupplierNonUserAppointmentDTO {
   email: string;
   phone: string;
   description: string;
+  duration_minutes: number;
 }

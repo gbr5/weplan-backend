@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventCards1597341438567
-  implements MigrationInterface {
+export default class CreateEvents1597687350752 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_cards',
+        name: 'events',
         columns: [
           {
             name: 'id',
@@ -15,13 +14,26 @@ export default class CreateEventCards1597341438567
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'card_unique_name',
+            name: 'name',
             type: 'varchar',
             isUnique: true,
           },
           {
-            name: 'event_id',
+            name: 'trimmed_name',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'user_id',
             type: 'uuid',
+          },
+          {
+            name: 'event_type',
+            type: 'varchar',
+          },
+          {
+            name: 'date',
+            type: 'timestamp',
           },
           {
             name: 'created_at',
@@ -36,17 +48,9 @@ export default class CreateEventCards1597341438567
         ],
         foreignKeys: [
           {
-            name: 'CardName',
-            columnNames: ['card_unique_name'],
-            referencedTableName: 'stage_cards',
-            referencedColumnNames: ['unique_name'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'EventId',
-            columnNames: ['event_id'],
-            referencedTableName: 'events',
+            name: 'EventUser',
+            columnNames: ['user_id'],
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
@@ -57,6 +61,6 @@ export default class CreateEventCards1597341438567
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_cards');
+    await queryRunner.dropTable('events');
   }
 }

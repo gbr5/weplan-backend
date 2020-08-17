@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateGuests1597096330288 implements MigrationInterface {
+export default class CreateEventPlanners1597687915095
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'guests',
+        name: 'event_planners',
         columns: [
           {
             name: 'id',
@@ -14,28 +15,12 @@ export default class CreateGuests1597096330288 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'first_name',
-            type: 'varchar',
-          },
-          {
-            name: 'last_name',
-            type: 'varchar',
-          },
-          {
-            name: 'description',
-            type: 'varchar',
-          },
-          {
-            name: 'event_name',
-            type: 'varchar',
-          },
-          {
-            name: 'host_id',
+            name: 'event_id',
             type: 'uuid',
           },
           {
-            name: 'confirmed',
-            type: 'boolean',
+            name: 'planner_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -50,16 +35,16 @@ export default class CreateGuests1597096330288 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'EventGuest',
-            columnNames: ['event_name'],
+            name: 'EventPlanner',
+            columnNames: ['event_id'],
             referencedTableName: 'events',
-            referencedColumnNames: ['trimmed_name'],
+            referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'UserHost',
-            columnNames: ['host_id'],
+            name: 'UserEventPlanner',
+            columnNames: ['planner_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
@@ -71,6 +56,6 @@ export default class CreateGuests1597096330288 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('guests');
+    await queryRunner.dropTable('event_planners');
   }
 }

@@ -12,30 +12,30 @@ class EventMemberRepository implements IEventMembersRepository {
   }
 
   public async findByEventAndMemberId(
-    event_name: string,
+    event_id: string,
     member_id: string,
   ): Promise<EventMember | undefined> {
     const findEventMember = await this.ormRepository.findOne({
-      where: { event_name, member_id },
+      where: { event_id, member_id },
     });
 
     return findEventMember;
   }
 
-  public async findByEvent(event_name: string): Promise<EventMember[]> {
+  public async findByEvent(event_id: string): Promise<EventMember[]> {
     const findEventMember = await this.ormRepository.find({
-      where: { event_name },
+      where: { event_id },
     });
 
     return findEventMember;
   }
 
   public async create({
-    event_name,
+    event_id,
     member_id,
   }: ICreateEventMemberDTO): Promise<EventMember> {
     const member = this.ormRepository.create({
-      event_name,
+      event_id,
       member_id,
     });
 
@@ -48,9 +48,9 @@ class EventMemberRepository implements IEventMembersRepository {
     return this.ormRepository.save(member);
   }
 
-  public async delete({ event_name, member_id }: EventMember): Promise<void> {
+  public async delete({ event_id, member_id }: EventMember): Promise<void> {
     await this.ormRepository.delete({
-      event_name,
+      event_id,
       member_id,
     });
   }

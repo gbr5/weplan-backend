@@ -57,23 +57,23 @@ class Event {
 
   @OneToMany(
     () => SelectedSupplier,
-    selected_supplier => selected_supplier.event_name,
+    selected_supplier => selected_supplier.event_id,
   )
   Supplier: SelectedSupplier;
 
-  @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_name)
+  @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_id)
   CheckList: UserCheckList;
 
-  @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
+  @OneToMany(() => EventPlanner, event_planner => event_planner.event_id)
   Planner: EventPlanner;
 
-  @OneToMany(() => EventOwner, event_owner => event_owner.event_name)
+  @OneToMany(() => EventOwner, event_owner => event_owner.event_id)
   Owner: EventOwner;
 
-  @OneToMany(() => EventMember, event_member => event_member.event_name)
+  @OneToMany(() => EventMember, event_member => event_member.event_id)
   Member: EventMember;
 
-  @OneToOne(() => EventInfo, event_info => event_info.event_name)
+  @OneToOne(() => EventInfo, event_info => event_info.event_id)
   Info: EventInfo;
 
   @OneToOne(() => EventCard, card => card.event_id)

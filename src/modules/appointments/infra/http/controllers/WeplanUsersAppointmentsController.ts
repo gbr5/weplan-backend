@@ -7,7 +7,14 @@ import { classToClass } from 'class-transformer';
 
 export default class WeplanUsersAppointmentsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { subject, date, address, appointment_type, guest_id } = req.body;
+    const {
+      subject,
+      date,
+      address,
+      appointment_type,
+      guest_id,
+      duration_minutes,
+    } = req.body;
     const host_id = req.user.id;
 
     const weplanGuest = true;
@@ -17,6 +24,7 @@ export default class WeplanUsersAppointmentsController {
 
     const appointment = await createWeplanUsersAppointment.execute({
       subject,
+      duration_minutes,
       address,
       date,
       host_id,

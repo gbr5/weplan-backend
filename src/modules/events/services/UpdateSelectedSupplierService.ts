@@ -7,7 +7,7 @@ import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSup
 
 interface IRequest {
   supplier_id: string;
-  event_name: string;
+  event_id: string;
   supplier_sub_category: string;
   isHired: boolean;
 }
@@ -20,13 +20,13 @@ class UpdateSelectedService {
 
   public async execute({
     supplier_id,
-    event_name,
+    event_id,
     supplier_sub_category,
     isHired,
   }: IRequest): Promise<SelectedSupplier> {
     const selectedSupplier = await this.selectedSuppliersRepository.findByIdAndEvent(
       supplier_id,
-      event_name,
+      event_id,
     );
 
     if (!selectedSupplier) {

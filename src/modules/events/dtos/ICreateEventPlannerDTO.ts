@@ -1,4 +1,4 @@
 export default interface ICreateEventPlannerDTO {
-  event_name: string;
+  event_id: string;
   planner_id: string;
 }

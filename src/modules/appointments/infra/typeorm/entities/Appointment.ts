@@ -27,6 +27,9 @@ class Appointment {
   @Column('timestamp')
   date: Date;
 
+  @Column('numeric')
+  duration_minutes: number;
+
   @Column()
   address: string;
 

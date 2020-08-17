@@ -9,7 +9,7 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 
 interface IRequest {
   user_id: string;
-  event_name: string;
+  event_id: string;
   member_id: string;
 }
 
@@ -28,11 +28,11 @@ class CreateEventMemberService {
 
   public async execute({
     user_id,
-    event_name,
+    event_id,
     member_id,
   }: IRequest): Promise<EventMember> {
     const memberExists = await this.membersRepository.findByEventAndMemberId(
-      event_name,
+      event_id,
       member_id,
     );
 
@@ -41,7 +41,7 @@ class CreateEventMemberService {
     }
 
     const member = await this.membersRepository.create({
-      event_name,
+      event_id,
       member_id,
     });
 

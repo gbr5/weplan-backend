@@ -1,4 +1,4 @@
 export default interface IFindSelectedSupplierIsHiredDTO {
-  event_name: string;
+  event_id: string;
   isHired: boolean;
 }

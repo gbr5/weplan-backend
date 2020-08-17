@@ -15,10 +15,8 @@ class ListEventOwnersService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(event_name: string): Promise<EventOwner[]> {
-    const EventOwners = await this.eventOwnersRepository.findByEvent(
-      event_name,
-    );
+  public async execute(event_id: string): Promise<EventOwner[]> {
+    const EventOwners = await this.eventOwnersRepository.findByEvent(event_id);
 
     return EventOwners;
   }

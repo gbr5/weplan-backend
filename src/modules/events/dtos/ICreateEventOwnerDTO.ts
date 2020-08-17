@@ -1,4 +1,4 @@
 export default interface ICreateEventOwnerDTO {
-  event_name: string;
+  event_id: string;
   owner_id: string;
 }

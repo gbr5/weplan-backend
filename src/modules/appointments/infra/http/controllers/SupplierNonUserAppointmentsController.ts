@@ -16,6 +16,7 @@ export default class SupplierNonUserAppointmentsController {
       email,
       phone,
       description,
+      duration_minutes,
     } = req.body;
     const host_id = req.user.id;
 
@@ -26,6 +27,7 @@ export default class SupplierNonUserAppointmentsController {
 
     const appointment = await createSupplierNonUserAppointment.execute({
       subject,
+      duration_minutes,
       address,
       date,
       host_id,

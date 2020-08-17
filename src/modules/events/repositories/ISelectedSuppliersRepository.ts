@@ -5,7 +5,7 @@ import IFindSelectedSupplierIsHiredDTO from '@modules/events/dtos/IFindSelectedS
 export default interface ISelectedSupplierRepository {
   findByIdAndEvent(
     supplier_id: string,
-    event_name: string,
+    event_id: string,
   ): Promise<SelectedSupplier | undefined>;
   findByIdAndEventAndIsHired(
     data: IFindSelectedSupplierIsHiredDTO,

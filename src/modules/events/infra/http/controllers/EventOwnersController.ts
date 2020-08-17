@@ -13,13 +13,13 @@ export default class EventOwnersController {
 
     const dataParams = req.params;
 
-    const { event_name } = dataParams;
+    const { event_id } = dataParams;
 
     const createEventOwners = container.resolve(CreateEventOwnerService);
 
     const owner = await createEventOwners.execute({
       user_id,
-      event_name,
+      event_id,
       owner_id,
     });
 
@@ -28,11 +28,11 @@ export default class EventOwnersController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_name } = dataParams;
+    const { event_id } = dataParams;
 
     const listEventOwners = container.resolve(ListEventOwnersService);
 
-    const owners = await listEventOwners.execute(event_name);
+    const owners = await listEventOwners.execute(event_id);
 
     return res.json(classToClass(owners));
   }
@@ -40,12 +40,12 @@ export default class EventOwnersController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_name, owner_id } = dataParams;
+    const { event_id, owner_id } = dataParams;
 
     const deleteEventOwner = container.resolve(DeleteEventOwnerService);
 
     await deleteEventOwner.execute({
-      event_name,
+      event_id,
       owner_id,
     });
 

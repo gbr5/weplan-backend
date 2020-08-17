@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRepository';
 
 interface IRequest {
-  event_name: string;
+  event_id: string;
   owner_id: string;
 }
 @injectable()
@@ -14,9 +14,9 @@ class DeleteEventOwnerService {
     private eventOwnersRepository: IEventOwnersRepository,
   ) {}
 
-  public async execute({ event_name, owner_id }: IRequest): Promise<void> {
+  public async execute({ event_id, owner_id }: IRequest): Promise<void> {
     const checkList = await this.eventOwnersRepository.findByEventAndOwnerId(
-      event_name,
+      event_id,
       owner_id,
     );
 

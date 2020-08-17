@@ -25,10 +25,10 @@ class UserCheckList {
   checked: boolean;
 
   @Column()
-  event_name: string;
+  event_id: string;
 
-  @ManyToOne(() => Event, event => event.trimmed_name)
-  @JoinColumn({ name: 'event_name' })
+  @ManyToOne(() => Event, { eager: true })
+  @JoinColumn({ name: 'event_id' })
   Event: Event;
 
   @CreateDateColumn()

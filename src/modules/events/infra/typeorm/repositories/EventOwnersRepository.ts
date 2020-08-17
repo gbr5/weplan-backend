@@ -12,30 +12,30 @@ class EventOwnerRepository implements IEventOwnersRepository {
   }
 
   public async findByEventAndOwnerId(
-    event_name: string,
+    event_id: string,
     owner_id: string,
   ): Promise<EventOwner | undefined> {
     const findEventOwner = await this.ormRepository.findOne({
-      where: { event_name, owner_id },
+      where: { event_id, owner_id },
     });
 
     return findEventOwner;
   }
 
-  public async findByEvent(event_name: string): Promise<EventOwner[]> {
+  public async findByEvent(event_id: string): Promise<EventOwner[]> {
     const findEventOwner = await this.ormRepository.find({
-      where: { event_name },
+      where: { event_id },
     });
 
     return findEventOwner;
   }
 
   public async create({
-    event_name,
+    event_id,
     owner_id,
   }: ICreateEventOwnerDTO): Promise<EventOwner> {
     const owner = this.ormRepository.create({
-      event_name,
+      event_id,
       owner_id,
     });
 
@@ -48,9 +48,9 @@ class EventOwnerRepository implements IEventOwnersRepository {
     return this.ormRepository.save(owner);
   }
 
-  public async delete({ event_name, owner_id }: EventOwner): Promise<void> {
+  public async delete({ event_id, owner_id }: EventOwner): Promise<void> {
     await this.ormRepository.delete({
-      event_name,
+      event_id,
       owner_id,
     });
   }

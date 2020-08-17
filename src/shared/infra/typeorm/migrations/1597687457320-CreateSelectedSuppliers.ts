@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventMembers1597193897354
+export default class CreateSelectedSuppliers1597687457320
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_members',
+        name: 'selected_suppliers',
         columns: [
           {
             name: 'id',
@@ -15,12 +15,20 @@ export default class CreateEventMembers1597193897354
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_name',
+            name: 'supplier_id',
+            type: 'uuid',
+          },
+          {
+            name: 'event_id',
+            type: 'uuid',
+          },
+          {
+            name: 'supplier_sub_category',
             type: 'varchar',
           },
           {
-            name: 'member_id',
-            type: 'uuid',
+            name: 'isHired',
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -35,18 +43,26 @@ export default class CreateEventMembers1597193897354
         ],
         foreignKeys: [
           {
-            name: 'EventPlanner',
-            columnNames: ['event_name'],
-            referencedTableName: 'events',
-            referencedColumnNames: ['trimmed_name'],
+            name: 'UserSupplier',
+            columnNames: ['supplier_id'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'UserEventPlanner',
-            columnNames: ['member_id'],
-            referencedTableName: 'users',
+            name: 'EventSupplier',
+            columnNames: ['event_id'],
+            referencedTableName: 'events',
             referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'EventSupplierCategory',
+            columnNames: ['supplier_sub_category'],
+            referencedTableName: 'supplier_sub_categories',
+            referencedColumnNames: ['sub_category'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -56,6 +72,6 @@ export default class CreateEventMembers1597193897354
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_members');
+    await queryRunner.dropTable('selected_suppliers');
   }
 }

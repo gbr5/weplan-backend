@@ -13,7 +13,7 @@ interface IRequest {
   last_name: string;
   new_last_name: string;
   description: string;
-  event_name: string;
+  event_id: string;
   host_id: string;
   confirmed: boolean;
 }
@@ -37,12 +37,12 @@ class UpdateGuestService {
     last_name,
     new_last_name,
     description,
-    event_name,
+    event_id,
     host_id,
     confirmed,
   }: IRequest): Promise<Guest> {
     const guest = await this.guestsRepository.findByEventFirstNameAndLastName(
-      event_name,
+      event_id,
       first_name,
       last_name,
     );
@@ -54,7 +54,7 @@ class UpdateGuestService {
     guest.first_name = new_first_name;
     guest.last_name = new_last_name;
     guest.description = description;
-    guest.event_name = event_name;
+    guest.event_id = event_id;
     guest.host_id = host_id;
     guest.confirmed = confirmed;
 

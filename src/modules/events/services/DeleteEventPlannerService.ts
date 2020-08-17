@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IEventPlannersRepository from '@modules/events/repositories/IEventPlannersRepository';
 
 interface IRequest {
-  event_name: string;
+  event_id: string;
   planner_id: string;
 }
 @injectable()
@@ -14,9 +14,9 @@ class DeleteEventPlannerService {
     private eventPlannersRepository: IEventPlannersRepository,
   ) {}
 
-  public async execute({ event_name, planner_id }: IRequest): Promise<void> {
+  public async execute({ event_id, planner_id }: IRequest): Promise<void> {
     const checkList = await this.eventPlannersRepository.findByEventAndPlannerId(
-      event_name,
+      event_id,
       planner_id,
     );
 

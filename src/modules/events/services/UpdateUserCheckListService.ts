@@ -9,7 +9,7 @@ interface IRequest {
   name: string;
   priority_level: number;
   checked: boolean;
-  event_name: string;
+  event_id: string;
   id: string;
 }
 @injectable()
@@ -23,11 +23,11 @@ class UpdateUserCheckListService {
     name,
     priority_level,
     checked,
-    event_name,
+    event_id,
     id,
   }: IRequest): Promise<UserCheckList> {
     const checkList = await this.checkListsRepository.findByIdAndEvent(
-      event_name,
+      event_id,
       id,
     );
 

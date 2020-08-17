@@ -26,10 +26,10 @@ class Guest {
   description: string;
 
   @Column()
-  event_name: string;
+  event_id: string;
 
-  @ManyToOne(() => Event, event => event.name)
-  @JoinColumn({ name: 'event_name' })
+  @ManyToOne(() => Event, { eager: true })
+  @JoinColumn({ name: 'event_id' })
   Event: Event;
 
   @Column()

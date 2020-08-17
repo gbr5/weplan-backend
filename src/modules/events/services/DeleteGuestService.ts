@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IGuestsRepository from '@modules/events/repositories/IGuestsRepository';
 
 interface IRequest {
-  event_name: string;
+  event_id: string;
   first_name: string;
   last_name: string;
 }
@@ -16,12 +16,12 @@ class DeleteGuestService {
   ) {}
 
   public async execute({
-    event_name,
+    event_id,
     first_name,
     last_name,
   }: IRequest): Promise<void> {
     const checkList = await this.guestsRepository.findByEventFirstNameAndLastName(
-      event_name,
+      event_id,
       first_name,
       last_name,
     );

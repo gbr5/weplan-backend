@@ -9,7 +9,7 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 
 interface IRequest {
   user_id: string;
-  event_name: string;
+  event_id: string;
   planner_id: string;
 }
 
@@ -28,11 +28,11 @@ class CreateEventPlannerService {
 
   public async execute({
     user_id,
-    event_name,
+    event_id,
     planner_id,
   }: IRequest): Promise<EventPlanner> {
     const plannerExists = await this.plannersRepository.findByEventAndPlannerId(
-      event_name,
+      event_id,
       planner_id,
     );
 
@@ -41,7 +41,7 @@ class CreateEventPlannerService {
     }
 
     const planner = await this.plannersRepository.create({
-      event_name,
+      event_id,
       planner_id,
     });
 

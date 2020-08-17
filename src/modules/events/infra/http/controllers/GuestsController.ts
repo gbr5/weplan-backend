@@ -15,7 +15,7 @@ export default class GuestsController {
 
     const dataParams = req.params;
 
-    const { event_name } = dataParams;
+    const { event_id } = dataParams;
 
     const createGuests = container.resolve(CreateGuestsService);
 
@@ -24,7 +24,7 @@ export default class GuestsController {
       first_name,
       last_name,
       description,
-      event_name,
+      event_id,
       host_id,
       confirmed,
     });
@@ -34,29 +34,29 @@ export default class GuestsController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_name } = dataParams;
+    const { event_id } = dataParams;
 
     const listGuests = container.resolve(ListGuestsService);
 
-    const guests = await listGuests.execute(event_name);
+    const guests = await listGuests.execute(event_id);
 
     return res.json(classToClass(guests));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_name, first_name, last_name } = dataParams;
+    const { event_id, first_name, last_name } = dataParams;
 
     const showGuest = container.resolve(ShowGuestService);
 
-    const guest = await showGuest.execute(event_name, first_name, last_name);
+    const guest = await showGuest.execute(event_id, first_name, last_name);
 
     return res.json(classToClass(guest));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_name, first_name, last_name } = dataParams;
+    const { event_id, first_name, last_name } = dataParams;
     const user_id = req.user.id;
 
     const {
@@ -76,7 +76,7 @@ export default class GuestsController {
       last_name,
       new_last_name,
       description,
-      event_name,
+      event_id,
       host_id,
       confirmed,
     });
@@ -87,12 +87,12 @@ export default class GuestsController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_name, first_name, last_name } = dataParams;
+    const { event_id, first_name, last_name } = dataParams;
 
     const deleteGuest = container.resolve(DeleteGuestService);
 
     await deleteGuest.execute({
-      event_name,
+      event_id,
       first_name,
       last_name,
     });

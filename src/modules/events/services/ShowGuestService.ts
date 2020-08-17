@@ -13,12 +13,12 @@ class ShowGuestService {
   ) {}
 
   public async execute(
-    event_name: string,
+    event_id: string,
     first_name: string,
     last_name: string,
   ): Promise<Guest> {
     const guest = await this.guestsRepository.findByEventFirstNameAndLastName(
-      event_name,
+      event_id,
       first_name,
       last_name,
     );

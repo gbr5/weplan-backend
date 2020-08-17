@@ -12,31 +12,31 @@ class GuestRepository implements IGuestsRepository {
   }
 
   public async findByEventFirstNameAndLastName(
-    event_name: string,
+    event_id: string,
     first_name: string,
     last_name: string,
   ): Promise<Guest | undefined> {
     const findGuest = await this.ormRepository.findOne({
-      where: { event_name, first_name, last_name },
+      where: { event_id, first_name, last_name },
     });
 
     return findGuest;
   }
 
   public async findByHostIdAndEvent(
-    event_name: string,
+    event_id: string,
     host_id: string,
   ): Promise<Guest[]> {
     const findGuest = await this.ormRepository.find({
-      where: { event_name, host_id },
+      where: { event_id, host_id },
     });
 
     return findGuest;
   }
 
-  public async findByEvent(event_name: string): Promise<Guest[]> {
+  public async findByEvent(event_id: string): Promise<Guest[]> {
     const findGuest = await this.ormRepository.find({
-      where: { event_name },
+      where: { event_id },
     });
 
     return findGuest;
@@ -46,7 +46,7 @@ class GuestRepository implements IGuestsRepository {
     first_name,
     last_name,
     description,
-    event_name,
+    event_id,
     host_id,
     confirmed,
   }: ICreateGuestDTO): Promise<Guest> {
@@ -54,7 +54,7 @@ class GuestRepository implements IGuestsRepository {
       first_name,
       last_name,
       description,
-      event_name,
+      event_id,
       host_id,
       confirmed,
     });
@@ -69,12 +69,12 @@ class GuestRepository implements IGuestsRepository {
   }
 
   public async delete({
-    event_name,
+    event_id,
     first_name,
     last_name,
   }: Guest): Promise<void> {
     await this.ormRepository.delete({
-      event_name,
+      event_id,
       first_name,
       last_name,
     });

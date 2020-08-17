@@ -15,9 +15,9 @@ class ListHostGuestsService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(event_name: string, host_id: string): Promise<Guest[]> {
+  public async execute(event_id: string, host_id: string): Promise<Guest[]> {
     const Guests = await this.GuestsRepository.findByHostIdAndEvent(
-      event_name,
+      event_id,
       host_id,
     );
 

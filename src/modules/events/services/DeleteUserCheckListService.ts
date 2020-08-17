@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IUserCheckListsRepository from '@modules/events/repositories/IUserCheckListsRepository';
 
 interface IRequest {
-  event_name: string;
+  event_id: string;
   id: string;
 }
 @injectable()
@@ -14,9 +14,9 @@ class DeleteUserCheckListService {
     private userCheckListsRepository: IUserCheckListsRepository,
   ) {}
 
-  public async execute({ event_name, id }: IRequest): Promise<void> {
+  public async execute({ event_id, id }: IRequest): Promise<void> {
     const checkList = await this.userCheckListsRepository.findByIdAndEvent(
-      event_name,
+      event_id,
       id,
     );
 

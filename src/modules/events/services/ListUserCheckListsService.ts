@@ -16,9 +16,9 @@ class ListUserCheckListsService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(event_name: string): Promise<UserCheckList[]> {
+  public async execute(event_id: string): Promise<UserCheckList[]> {
     const eventSupplier = await this.selectedSuppliersRepository.findByEvent(
-      event_name,
+      event_id,
     );
 
     return eventSupplier;

@@ -1,11 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventTeams1597189456817
-  implements MigrationInterface {
+export default class CreateEvents1597689974261 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_teams',
+        name: 'events',
         columns: [
           {
             name: 'id',
@@ -15,12 +14,26 @@ export default class CreateEventTeams1597189456817
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_name',
+            name: 'name',
             type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'trimmed_name',
+            type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'user_id',
             type: 'uuid',
+          },
+          {
+            name: 'event_type',
+            type: 'varchar',
+          },
+          {
+            name: 'date',
+            type: 'timestamp',
           },
           {
             name: 'created_at',
@@ -35,19 +48,11 @@ export default class CreateEventTeams1597189456817
         ],
         foreignKeys: [
           {
-            name: 'EventPlanner',
-            columnNames: ['event_name'],
-            referencedTableName: 'events',
-            referencedColumnNames: ['trimmed_name'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'UserEventPlanner',
+            name: 'EventUser',
             columnNames: ['user_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
+            onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
           },
         ],
@@ -56,6 +61,6 @@ export default class CreateEventTeams1597189456817
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_teams');
+    await queryRunner.dropTable('events');
   }
 }

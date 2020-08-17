@@ -16,10 +16,10 @@ class EventInfo {
   id: string;
 
   @Column()
-  event_name: string;
+  event_id: string;
 
-  @OneToOne(() => Event, event => event.trimmed_name)
-  @JoinColumn({ name: 'event_name' })
+  @OneToOne(() => Event, { eager: true })
+  @JoinColumn({ name: 'event_id' })
   Event: Event;
 
   @Column('numeric')
