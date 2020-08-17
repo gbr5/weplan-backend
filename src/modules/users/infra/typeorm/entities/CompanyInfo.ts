@@ -23,7 +23,7 @@ class CompanyInfo {
 
   @OneToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  users: User;
+  Company: User;
 
   @Column()
   name: string;

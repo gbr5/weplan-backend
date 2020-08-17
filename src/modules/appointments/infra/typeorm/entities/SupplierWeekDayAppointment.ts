@@ -26,7 +26,7 @@ class SupplierWeekDayAppointment {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
-  supplier: User;
+  Supplier: User;
 
   @CreateDateColumn()
   created_at: Date;
@@ -38,13 +38,13 @@ class SupplierWeekDayAppointment {
     () => SupplierAppointmentDaySchedule,
     appointmentDaySchedule => appointmentDaySchedule.week_day_id,
   )
-  appointmentDaySchedule: SupplierAppointmentDaySchedule;
+  Schedule: SupplierAppointmentDaySchedule;
 
   @OneToMany(
     () => SupplierAppointmentDayInterval,
     appointmentDayInterval => appointmentDayInterval.week_day_id,
   )
-  appointmentDayInterval: SupplierAppointmentDayInterval;
+  Interval: SupplierAppointmentDayInterval;
 }
 
 export default SupplierWeekDayAppointment;

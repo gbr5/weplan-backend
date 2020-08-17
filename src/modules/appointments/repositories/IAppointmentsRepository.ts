@@ -15,9 +15,13 @@ export default interface IAppointmentsRepository {
   // startOfHour(data: ICreateAppointmentDTO): Promise<>;
   findByDateAndUsers(
     date: Date,
-    guess_id: string,
     host_id: string,
   ): Promise<Appointment | undefined>;
   findById(id: string): Promise<Appointment | undefined>;
+  findByHostId(host_id: string): Promise<Appointment[]>;
   delete(data: ICreateAppointmentDTO): Promise<void>;
 }
+
+/// ////////////////////////////////////////////////////////
+// Consertar Appointments - ver todos os arquivos !!!!! ///
+/// ////////////////////////////////////////////////////////

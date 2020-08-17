@@ -23,7 +23,7 @@ class ContactType {
   updated_at: Date;
 
   @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
-  contact_infos: string;
+  ContactInfo: UserContactInfo;
 }
 
 export default ContactType;

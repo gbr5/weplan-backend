@@ -2,22 +2,34 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import AppointmentsController from '@modules/appointments/infra/http/controllers/AppointmentsController';
+import SupplierNonUserAppointmentsController from '@modules/appointments/infra/http/controllers/SupplierNonUserAppointmentsController';
+import WeplanUsersAppointmentsController from '@modules/appointments/infra/http/controllers/WeplanUsersAppointmentsController';
 import SupplierWeekDayAppointmentsController from '@modules/appointments/infra/http/controllers/SupplierWeekDayAppointmentsController';
 import SupplierAppointmentDaysOffController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaysOffController';
 import SupplierAppointmentDaySchedulesController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDaySchedulesController';
 import SupplierAppointmentDayIntervalsController from '@modules/appointments/infra/http/controllers/SupplierAppointmentDayIntervalsController';
 import AppointmentTypesController from '@modules/appointments/infra/http/controllers/AppointmentTypesController';
+import NonUserAppointmentGuestsController from '@modules/appointments/infra/http/controllers/NonUserAppointmentGuestsController';
+import WeplanAppointmentGuestsController from '@modules/appointments/infra/http/controllers/WeplanAppointmentGuestsController';
+import EventAppointmentsController from '@modules/appointments/infra/http/controllers/EventAppointmentsController';
+import StageCardAppointmentsController from '@modules/appointments/infra/http/controllers/StageCardAppointmentsController';
 
 import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
 const appointmentsController = new AppointmentsController();
+const supplierNonUserAppointmentsController = new SupplierNonUserAppointmentsController();
+const weplanUsersAppointmentsController = new WeplanUsersAppointmentsController();
 const supplierWeekDayAppointmentsController = new SupplierWeekDayAppointmentsController();
 const supplierAppointmentDaysOffController = new SupplierAppointmentDaysOffController();
 const supplierAppointmentDaySchedulesController = new SupplierAppointmentDaySchedulesController();
 const supplierAppointmentDayIntervalsController = new SupplierAppointmentDayIntervalsController();
 const appointmentTypesController = new AppointmentTypesController();
+const nonUserAppointmentGuestsController = new NonUserAppointmentGuestsController();
+const weplanAppointmentGuestsController = new WeplanAppointmentGuestsController();
+const eventAppointmentsController = new EventAppointmentsController();
+const stageCardAppointmentsController = new StageCardAppointmentsController();
 
 const supplierAppointmentController = new SupplierAppointmentController();
 appointmentsRouter.use(ensureAuthenticated);
@@ -43,7 +55,8 @@ appointmentsRouter.post(
       subject: Joi.string().required(),
       date: Joi.date(),
       address: Joi.string().required(),
-      host_id: Joi.string().uuid().required(),
+      appointment_type: Joi.string().required(),
+      weplanGuest: Joi.boolean().required(),
     },
   }),
   appointmentsController.create,
@@ -51,9 +64,41 @@ appointmentsRouter.post(
 
 appointmentsRouter.delete('/:id', appointmentsController.delete);
 
-appointmentsRouter.get(
-  '/my-daily-appointments',
-  supplierAppointmentController.index,
+appointmentsRouter.get('/my-appointments', supplierAppointmentController.index);
+
+// === Supplier Appointment's, with a non User Guest === //
+
+appointmentsRouter.post(
+  '/non-user-guests',
+  celebrate({
+    [Segments.BODY]: {
+      subject: Joi.string().required(),
+      date: Joi.date(),
+      address: Joi.string().required(),
+      appointment_type: Joi.string().required(),
+      name: Joi.string().required(),
+      phone: Joi.string().required(),
+      email: Joi.string().required(),
+      description: Joi.string().required(),
+    },
+  }),
+  supplierNonUserAppointmentsController.create,
+);
+
+// === Supplier Appointment's, with a non User Guest === //
+
+appointmentsRouter.post(
+  '/weplan-guests',
+  celebrate({
+    [Segments.BODY]: {
+      subject: Joi.string().required(),
+      date: Joi.date(),
+      address: Joi.string().required(),
+      appointment_type: Joi.string().required(),
+      guest_id: Joi.string().required(),
+    },
+  }),
+  weplanUsersAppointmentsController.create,
 );
 
 // === Supplier Week Day Appointments === //
@@ -160,6 +205,100 @@ appointmentsRouter.delete(
   supplierAppointmentDayIntervalsController.delete,
 );
 
+// === Non User Appointment Guests === //
+
+appointmentsRouter.post(
+  '/non-user-guests/guest',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      phone: Joi.string().required(),
+      email: Joi.string().required(),
+      description: Joi.string().required(),
+      appointment_id: Joi.string().required(),
+    },
+  }),
+  nonUserAppointmentGuestsController.create,
+);
+
+appointmentsRouter.get(
+  '/non-user-guests',
+  nonUserAppointmentGuestsController.index,
+);
+
+appointmentsRouter.delete(
+  '/non-user-guests/:id',
+  nonUserAppointmentGuestsController.delete,
+);
+
+// === Weplan Appointment Guests === //
+
+appointmentsRouter.post(
+  '/weplan-guests/guest',
+  celebrate({
+    [Segments.BODY]: {
+      appointment_id: Joi.string().required(),
+      guest_id: Joi.string().required(),
+    },
+  }),
+  weplanAppointmentGuestsController.create,
+);
+
+appointmentsRouter.get(
+  '/weplan-guests',
+  weplanAppointmentGuestsController.index,
+);
+
+appointmentsRouter.delete(
+  '/weplan-guests/:id',
+  weplanAppointmentGuestsController.delete,
+);
+
+// === Event Appointments === //
+
+appointmentsRouter.post(
+  '/event-appointments',
+  celebrate({
+    [Segments.BODY]: {
+      appointment_id: Joi.string().required(),
+      event_id: Joi.string().required(),
+    },
+  }),
+  eventAppointmentsController.create,
+);
+
+appointmentsRouter.get(
+  '/event-appointments',
+  eventAppointmentsController.index,
+);
+
+appointmentsRouter.delete(
+  '/event-appointments/:id',
+  eventAppointmentsController.delete,
+);
+
+// === Stage Card Appointments === //
+
+appointmentsRouter.post(
+  '/card-appointments',
+  celebrate({
+    [Segments.BODY]: {
+      appointment_id: Joi.string().required(),
+      card_id: Joi.string().required(),
+    },
+  }),
+  stageCardAppointmentsController.create,
+);
+
+appointmentsRouter.get(
+  '/card-appointments',
+  stageCardAppointmentsController.index,
+);
+
+appointmentsRouter.delete(
+  '/card-appointments/:id',
+  stageCardAppointmentsController.delete,
+);
 export default appointmentsRouter;
 
 // Rota: Aqui só pode ter funções para receber a requisição,

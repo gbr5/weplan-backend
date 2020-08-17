@@ -32,21 +32,21 @@ class CreateSupplierAppointmentService {
     date,
     address,
     host_id,
-    guess_id,
+    guest_id,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDateAndUsers(
       appointmentDate,
       host_id,
-      guess_id,
+      guest_id,
     );
 
     if (isBefore(appointmentDate, Date.now())) {
       throw new AppError("You can't create an appointment on a past date.");
     }
 
-    if (guess_id === host_id) {
+    if (guest_id === host_id) {
       throw new AppError("You can't create an appointment with yourself.");
     }
 
@@ -66,10 +66,10 @@ class CreateSupplierAppointmentService {
       date,
       address,
       host_id,
-      guess_id,
+      guest_id,
     });
 
-    const user = await this.usersRepository.findById(guess_id);
+    const user = await this.usersRepository.findById(guest_id);
     let name;
 
     const dateFormatted = format(

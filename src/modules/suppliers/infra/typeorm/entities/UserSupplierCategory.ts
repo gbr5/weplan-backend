@@ -21,7 +21,7 @@ class UserSupplierCategories {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  userId: User;
+  Supplier: User;
 
   @Column()
   sub_category_name: string;
@@ -31,7 +31,7 @@ class UserSupplierCategories {
     supplierCategory => supplierCategory.sub_category,
   )
   @JoinColumn({ name: 'sub_category_name' })
-  subCategoryName: SupplierSubCategory;
+  SubCategory: SupplierSubCategory;
 
   @CreateDateColumn()
   created_at: Date;

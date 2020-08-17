@@ -26,7 +26,7 @@ class SupplierCategories {
     () => SupplierSubCategory,
     user_supplier_category => user_supplier_category.category_name,
   )
-  user_supplier_categories: string;
+  SubCategory: SupplierSubCategory;
 }
 
 export default SupplierCategories;

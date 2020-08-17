@@ -20,6 +20,7 @@ import StageCard from '@modules/suppliers/infra/typeorm/entities/StageCard';
 import SupplierAppointmentDaySchedule from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDaySchedule';
 import SupplierAppointmentDayInterval from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDayInterval';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import WeplanAppointmentGuest from '@modules/appointments/infra/typeorm/entities/WeplanAppointmentGuest';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -72,61 +73,64 @@ class User {
   }
 
   @OneToOne(() => CompanyInfo, company_info => company_info.user_id)
-  company_info: CompanyInfo;
+  CompanyInfo: CompanyInfo;
 
   @OneToOne(() => PersonInfo, person_info => person_info.user_id)
-  person_info: PersonInfo;
+  PersonInfo: PersonInfo;
 
   @OneToOne(() => UserBirthdate, user_birthdate => user_birthdate.user_id)
-  user_birthdate: UserBirthdate;
+  UserBirthdate: UserBirthdate;
 
   @OneToMany(() => UserToken, user_token => user_token.token)
-  user_token: UserToken;
+  UserToken: UserToken;
 
   @OneToOne(() => Event, event => event.user_id)
-  event: Event;
+  Event: Event;
 
   @OneToMany(
     () => SelectedSupplier,
     selected_supplier => selected_supplier.supplier_id,
   )
-  selected_supplier: SelectedSupplier;
+  SelectedSupplier: SelectedSupplier;
 
   @OneToMany(
     () => EventTypeSupplier,
     event_type_supplier => event_type_supplier.user_id,
   )
-  event_type_supplier: EventTypeSupplier;
+  EventTypeSupplier: EventTypeSupplier;
 
-  @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
-  event_planner: EventPlanner;
+  @OneToMany(() => EventPlanner, event_planner => event_planner.planner_id)
+  EventPlanner: EventPlanner;
 
   @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
-  contact_info: UserContactInfo;
+  Contacts: UserContactInfo;
 
   @OneToMany(() => Funnel, funnel => funnel.supplier_id)
-  funnel: Funnel;
+  Funnel: Funnel;
 
   @OneToOne(() => StageCard, card => card.card_owner)
-  card: StageCard;
+  EventCard: StageCard;
 
   @OneToMany(
     () => SupplierAppointmentDaySchedule,
     appointmentDaySchedule => appointmentDaySchedule.supplier_id,
   )
-  appointmentDaySchedule: SupplierAppointmentDaySchedule;
+  SupplierAppointmentDaySchedule: SupplierAppointmentDaySchedule;
 
   @OneToMany(
     () => SupplierAppointmentDayInterval,
     appointmentDayInterval => appointmentDayInterval.supplier_id,
   )
-  appointmentDayInterval: SupplierAppointmentDayInterval;
-
-  @OneToMany(() => Appointment, appointment => appointment.guess_id)
-  guessAppointment: Appointment;
+  SupplierAppointmentDayInterval: SupplierAppointmentDayInterval;
 
   @OneToMany(() => Appointment, appointment => appointment.host_id)
-  hostAppointment: Appointment;
+  Appointment: Appointment;
+
+  @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.guest_id)
+  Guest: WeplanAppointmentGuest;
+
+  @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.host_id)
+  Host: WeplanAppointmentGuest;
 }
 
 export default User;

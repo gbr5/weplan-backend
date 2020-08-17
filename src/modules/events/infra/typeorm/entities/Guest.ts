@@ -30,14 +30,14 @@ class Guest {
 
   @ManyToOne(() => Event, event => event.name)
   @JoinColumn({ name: 'event_name' })
-  events: Event;
+  Event: Event;
 
   @Column()
   host_id: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'host_id' })
-  userId: User;
+  Host: User;
 
   @Column('boolean')
   confirmed: boolean;

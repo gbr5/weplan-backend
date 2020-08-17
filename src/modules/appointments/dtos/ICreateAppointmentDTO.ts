@@ -2,6 +2,7 @@ export default interface ICreatAppointmentDTO {
   subject: string;
   date: Date;
   address: string;
-  guess_id: string;
+  appointment_type: string;
+  weplanGuest: boolean;
   host_id: string;
 }

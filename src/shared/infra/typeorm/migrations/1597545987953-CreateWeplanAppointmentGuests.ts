@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateAppointmentWeplanGuests1597531117853
+export default class CreateWeplanAppointmentGuests1597545987953
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'appointment_weplan_guests',
+        name: 'weplan_appointment_guests',
         columns: [
           {
             name: 'id',
@@ -20,6 +20,10 @@ export default class CreateAppointmentWeplanGuests1597531117853
           },
           {
             name: 'guest_id',
+            type: 'uuid',
+          },
+          {
+            name: 'host_id',
             type: 'uuid',
           },
           {
@@ -50,12 +54,20 @@ export default class CreateAppointmentWeplanGuests1597531117853
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
+          {
+            name: 'AppointmentHost',
+            columnNames: ['host_id'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
         ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('appointment_weplan_guests');
+    await queryRunner.dropTable('weplan_appointment_guests');
   }
 }

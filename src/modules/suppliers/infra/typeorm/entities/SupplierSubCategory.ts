@@ -24,7 +24,7 @@ class SupplierSubCategories {
     supplierCategory => supplierCategory.category,
   )
   @JoinColumn({ name: 'category_name' })
-  categoryName: SupplierCategory;
+  Category: SupplierCategory;
 
   @Column()
   sub_category: string;
@@ -39,7 +39,7 @@ class SupplierSubCategories {
     () => UserSupplierCategory,
     user_supplier_category => user_supplier_category.sub_category_name,
   )
-  user_supplier_categories: string;
+  Supplier: UserSupplierCategory;
 }
 
 export default SupplierSubCategories;

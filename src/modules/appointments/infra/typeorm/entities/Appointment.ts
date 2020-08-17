@@ -6,9 +6,15 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import AppointmentType from './AppointmentType';
+import WeplanAppointmentGuest from './WeplanAppointmentGuest';
+import NonUserAppointmentGuest from './NonUserAppointmentGuest';
+import EventAppointment from './EventAppointment';
+import StageCardAppointment from './StageCardAppointment';
 
 @Entity('appointments')
 class Appointment {
@@ -25,24 +31,51 @@ class Appointment {
   address: string;
 
   @Column()
-  guess_id: string;
+  appointment_type: string;
 
-  @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'guess_id' })
-  appointmentGues: User;
+  @ManyToOne(() => AppointmentType, appointmentType => appointmentType.name)
+  @JoinColumn({ name: 'appointment_type' })
+  Type: AppointmentType;
+
+  @Column('boolean')
+  weplanGuest: boolean;
 
   @Column()
   host_id: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'host_id' })
-  appointmentHost: User;
+  Host: User;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => WeplanAppointmentGuest,
+    weplanGuest => weplanGuest.appointment_id,
+  )
+  WeplanGuest: WeplanAppointmentGuest;
+
+  @OneToMany(
+    () => NonUserAppointmentGuest,
+    nonUserappointmentGuest => nonUserappointmentGuest.appointment_id,
+  )
+  NUGuest: NonUserAppointmentGuest;
+
+  @OneToMany(
+    () => EventAppointment,
+    appointmentEvent => appointmentEvent.appointment_id,
+  )
+  Event: EventAppointment;
+
+  @OneToMany(
+    () => StageCardAppointment,
+    appointmentStageCard => appointmentStageCard.appointment_id,
+  )
+  StageCard: StageCardAppointment;
 }
 
 export default Appointment;

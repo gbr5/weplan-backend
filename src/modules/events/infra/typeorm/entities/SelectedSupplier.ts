@@ -22,21 +22,21 @@ class EventSupplier {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
-  supplierId: User;
+  Supplier: User;
 
   @Column()
   event_name: string;
 
   @ManyToOne(() => Event, event => event.trimmed_name)
   @JoinColumn({ name: 'event_name' })
-  eventName: Event;
+  Event: Event;
 
   @Column()
   supplier_sub_category: string;
 
   @ManyToOne(() => SupplierSubCategory, subCategory => subCategory.sub_category)
   @JoinColumn({ name: 'supplier_sub_category' })
-  supplierSubCategory: SupplierSubCategory;
+  SubCategory: SupplierSubCategory;
 
   @Column('boolean')
   isHired: boolean;

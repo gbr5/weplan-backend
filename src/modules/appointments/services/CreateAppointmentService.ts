@@ -5,7 +5,9 @@ import AppError from '@shared/errors/AppError';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
-import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentsRepository';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
+import INonUserAppointmentGuestsRepository from '@modules/appointments/repositories/INonUserAppointmentGuestsRepository';
+import IWeplanAppointmentGuestsRepository from '@modules/appointments/repositories/IWeplanAppointmentGuestsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
@@ -15,7 +17,13 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
-    private appointmentsRepository: IAppointmentRepository,
+    private appointmentsRepository: IAppointmentsRepository,
+
+    @inject('NonUserAppointmentGuestsRepository')
+    private nonUserAppointmentGuestsRepository: INonUserAppointmentGuestsRepository,
+
+    @inject('WeplanAppointmentGuestsRepository')
+    private weplanAppointmentGuestsRepository: IWeplanAppointmentGuestsRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
@@ -32,22 +40,18 @@ class CreateAppointmentService {
     date,
     address,
     host_id,
-    guess_id,
+    appointment_type,
+    weplanGuest,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDateAndUsers(
       appointmentDate,
       host_id,
-      guess_id,
     );
 
     if (isBefore(appointmentDate, Date.now())) {
       throw new AppError("You can't create an appointment on a past date.");
-    }
-
-    if (guess_id === host_id) {
-      throw new AppError("You can't create an appointment with yourself.");
     }
 
     if (findAppointmentInSameDate) {
@@ -58,29 +62,16 @@ class CreateAppointmentService {
       subject,
       date,
       address,
+      appointment_type,
+      weplanGuest,
       host_id,
-      guess_id,
     });
 
-    const guess = await this.usersRepository.findById(guess_id);
     const host = await this.usersRepository.findById(host_id);
 
-    if (!guess) {
-      throw new AppError('User not found.');
-    }
     if (!host) {
       throw new AppError('User not found.');
     }
-
-    const dateFormatted = format(
-      appointmentDate,
-      "dd/MM/yyyy 'às' HH:mm 'horas",
-    );
-
-    await this.notificationsRepository.create({
-      recipient_id: host_id,
-      content: `Novo agendamento com ${guess.name} no dia ${dateFormatted}`,
-    });
 
     await this.cacheProvider.invalidate(
       `host-appointments:${host_id}:${format(appointmentDate, 'yyyy-M-d')}`,

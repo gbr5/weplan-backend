@@ -26,14 +26,14 @@ class Funnel {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
-  supplierName: User;
+  Supplier: User;
 
   @Column()
   funnel_type: string;
 
   @ManyToOne(() => FunnelType, funnel_type => funnel_type.name)
   @JoinColumn({ name: 'funnel_type' })
-  funnelType: FunnelType;
+  Type: FunnelType;
 
   @CreateDateColumn()
   created_at: Date;
@@ -42,7 +42,7 @@ class Funnel {
   updated_at: Date;
 
   @OneToMany(() => FunnelStage, stage => stage.funnel_id)
-  stages: string;
+  Stage: FunnelStage;
 }
 
 export default Funnel;

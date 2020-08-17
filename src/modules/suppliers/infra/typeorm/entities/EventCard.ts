@@ -22,14 +22,14 @@ class EventCard {
 
   @OneToOne(() => StageCard, card => card.unique_name)
   @JoinColumn({ name: 'card_unique_name' })
-  stageCard: StageCard;
+  SupplierCard: StageCard;
 
   @Column('uuid')
   event_id: string;
 
   @ManyToOne(() => Event, { eager: true })
   @JoinColumn({ name: 'event_id' })
-  event: Event;
+  Event: Event;
 
   @CreateDateColumn()
   created_at: Date;

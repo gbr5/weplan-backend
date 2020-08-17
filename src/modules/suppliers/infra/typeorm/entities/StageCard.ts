@@ -7,9 +7,11 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import StageCardAppointment from '@modules/appointments/infra/typeorm/entities/StageCardAppointment';
 import FunnelStage from './FunnelStage';
 import EventCard from './EventCard';
 
@@ -35,14 +37,14 @@ class StageCard {
 
   @ManyToOne(() => FunnelStage, { eager: true })
   @JoinColumn({ name: 'stage_id' })
-  funnelStage: FunnelStage;
+  Stage: FunnelStage;
 
   @Column()
   card_owner: string;
 
   @OneToOne(() => User, { eager: true })
   @JoinColumn({ name: 'card_owner' })
-  cardOwner: User;
+  Owner: User;
 
   @CreateDateColumn()
   created_at: Date;
@@ -51,7 +53,10 @@ class StageCard {
   updated_at: Date;
 
   @OneToOne(() => EventCard, card => card.card_unique_name)
-  event: EventCard;
+  Event: EventCard;
+
+  @OneToMany(() => StageCardAppointment, card => card.card_id)
+  Appointment: StageCardAppointment;
 }
 
 export default StageCard;

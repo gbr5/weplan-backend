@@ -29,7 +29,7 @@ class UserCheckList {
 
   @ManyToOne(() => Event, event => event.trimmed_name)
   @JoinColumn({ name: 'event_name' })
-  eventName: Event;
+  Event: Event;
 
   @CreateDateColumn()
   created_at: Date;

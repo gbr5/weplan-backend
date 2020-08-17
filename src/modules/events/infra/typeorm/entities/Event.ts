@@ -12,6 +12,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventCard from '@modules/suppliers/infra/typeorm/entities/EventCard';
+import EventAppointment from '@modules/appointments/infra/typeorm/entities/EventAppointment';
 import EventType from './EventType';
 import SelectedSupplier from './SelectedSupplier';
 import UserCheckList from './UserCheckList';
@@ -36,14 +37,14 @@ class Event {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  userId: User;
+  Host: User;
 
   @Column()
   event_type: string;
 
   @ManyToOne(() => EventType, event_type => event_type.name)
   @JoinColumn({ name: 'event_type' })
-  eventType: EventType;
+  Type: EventType;
 
   @Column('timestamp with time zone')
   date: Date;
@@ -58,25 +59,31 @@ class Event {
     () => SelectedSupplier,
     selected_supplier => selected_supplier.event_name,
   )
-  selectedSupplier: SelectedSupplier;
+  Supplier: SelectedSupplier;
 
   @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_name)
-  UserEventCheckList: UserCheckList;
+  CheckList: UserCheckList;
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_name)
-  eventPlanner: EventPlanner;
+  Planner: EventPlanner;
 
   @OneToMany(() => EventOwner, event_owner => event_owner.event_name)
-  eventOwner: EventOwner;
+  Owner: EventOwner;
 
   @OneToMany(() => EventMember, event_member => event_member.event_name)
-  eventMember: EventMember;
+  Member: EventMember;
 
   @OneToOne(() => EventInfo, event_info => event_info.event_name)
-  eventInfo: EventInfo;
+  Info: EventInfo;
 
   @OneToOne(() => EventCard, card => card.event_id)
-  supplierCard: EventCard;
+  SupplierCard: EventCard;
+
+  @OneToMany(
+    () => EventAppointment,
+    eventAppointment => eventAppointment.event_id,
+  )
+  Event: EventAppointment;
 }
 
 export default Event;

@@ -8,17 +8,19 @@ import { classToClass } from 'class-transformer';
 
 export default class AppointmentsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { subject, address, host_id, date } = req.body;
-    const guess_id = req.user.id;
+    const { subject, address, appointment_type, date } = req.body;
+    const host_id = req.user.id;
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
+    const weplanGuest = true;
     const appointment = await createAppointment.execute({
       subject,
       address,
       date,
       host_id,
-      guess_id,
+      appointment_type,
+      weplanGuest,
     });
 
     return res.json(classToClass(appointment));

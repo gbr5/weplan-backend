@@ -16,14 +16,14 @@ class FunnelTypes {
   @Column()
   name: string;
 
-  @OneToMany(() => Funnel, funnel => funnel.funnel_type)
-  funnels: string;
-
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Funnel, funnel => funnel.funnel_type)
+  Funnel: Funnel;
 }
 
 export default FunnelTypes;

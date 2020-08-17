@@ -9,6 +9,18 @@ import AppointmentsRepository from '@modules/appointments/infra/typeorm/reposito
 import IAppointmentTypesRepository from '@modules/appointments/repositories/IAppointmentTypesRepository';
 import AppointmentTypesRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentTypesRepository';
 
+import INonUserAppointmentGuestsRepository from '@modules/appointments/repositories/INonUserAppointmentGuestsRepository';
+import NonUserAppointmentGuestsRepository from '@modules/appointments/infra/typeorm/repositories/NonUserAppointmentGuestsRepository';
+
+import IWeplanAppointmentGuestsRepository from '@modules/appointments/repositories/IWeplanAppointmentGuestsRepository';
+import WeplanAppointmentGuestsRepository from '@modules/appointments/infra/typeorm/repositories/WeplanAppointmentGuestsRepository';
+
+import IEventAppointmentsRepository from '@modules/appointments/repositories/IEventAppointmentsRepository';
+import EventAppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/EventAppointmentsRepository';
+
+import IStageCardAppointmentsRepository from '@modules/appointments/repositories/IStageCardAppointmentsRepository';
+import StageCardAppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/StageCardAppointmentsRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
@@ -109,6 +121,22 @@ container.registerSingleton<IAppointmentTypesRepository>(
   AppointmentTypesRepository,
 );
 
+container.registerSingleton<INonUserAppointmentGuestsRepository>(
+  'NonUserAppointmentGuestsRepository',
+  NonUserAppointmentGuestsRepository,
+);
+container.registerSingleton<IWeplanAppointmentGuestsRepository>(
+  'WeplanAppointmentGuestsRepository',
+  WeplanAppointmentGuestsRepository,
+);
+container.registerSingleton<IEventAppointmentsRepository>(
+  'EventAppointmentsRepository',
+  EventAppointmentsRepository,
+);
+container.registerSingleton<IStageCardAppointmentsRepository>(
+  'StageCardAppointmentsRepository',
+  StageCardAppointmentsRepository,
+);
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,

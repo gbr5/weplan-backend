@@ -23,7 +23,7 @@ class SupplierAppointmentDayOff {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
-  supplier: User;
+  Supplier: User;
 
   @CreateDateColumn()
   created_at: Date;

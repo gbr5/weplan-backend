@@ -21,14 +21,14 @@ class EventPlanner {
 
   @ManyToOne(() => Event, event => event.name)
   @JoinColumn({ name: 'event_name' })
-  events: Event;
+  Event: Event;
 
   @Column()
   planner_id: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'planner_id' })
-  userId: User;
+  Planner: User;
 
   @CreateDateColumn()
   created_at: Date;
