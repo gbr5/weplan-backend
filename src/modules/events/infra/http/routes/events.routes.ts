@@ -39,10 +39,10 @@ eventsRouter.post(
   }),
   eventsController.create,
 );
-eventsRouter.get('/:event_name', eventsController.show);
+eventsRouter.get('/:event_id', eventsController.show);
 
 eventsRouter.put(
-  '/:event_name',
+  '/:event_id',
   celebrate({
     [Segments.BODY]: {
       user_id: Joi.string().required(),
@@ -61,7 +61,7 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       supplier_id: Joi.string().uuid().required(),
-      event_name: Joi.string().required(),
+      event_id: Joi.string().required(),
       supplier_sub_category: Joi.string().required(),
       isHired: Joi.boolean().required(),
     },
@@ -70,7 +70,7 @@ eventsRouter.post(
 );
 
 eventsRouter.put(
-  '/:event_name/suppliers/:supplier_id',
+  '/:event_id/suppliers/:supplier_id',
   celebrate({
     [Segments.BODY]: {
       supplier_sub_category: Joi.string().required(),
@@ -81,22 +81,19 @@ eventsRouter.put(
 );
 
 eventsRouter.delete(
-  '/:event_name/suppliers/:supplier_id',
+  '/:event_id/suppliers/:supplier_id',
   selectedSuppliersController.delete,
 );
 eventsRouter.get(
-  '/:event_name/selected_suppliers',
+  '/:event_id/selected_suppliers',
   selectedSuppliersController.index,
 );
-eventsRouter.get(
-  '/:event_name/hired_suppliers',
-  hiredSuppliersController.index,
-);
+eventsRouter.get('/:event_id/hired_suppliers', hiredSuppliersController.index);
 
 // === User Check List === //
 
 eventsRouter.post(
-  '/:event_name/check-list',
+  '/:event_id/check-list',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -106,10 +103,10 @@ eventsRouter.post(
   }),
   userCheckListsController.create,
 );
-eventsRouter.get('/:event_name/check-list', userCheckListsController.index);
+eventsRouter.get('/:event_id/check-list', userCheckListsController.index);
 
 eventsRouter.put(
-  '/:event_name/check-list/:id',
+  '/:event_id/check-list/:id',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -121,14 +118,14 @@ eventsRouter.put(
 );
 
 eventsRouter.delete(
-  '/:event_name/check-list/:id',
+  '/:event_id/check-list/:id',
   userCheckListsController.delete,
 );
 
 // === Guests & Hosts Guests === //
 
 eventsRouter.post(
-  '/:event_name/guests',
+  '/:event_id/guests',
   celebrate({
     [Segments.BODY]: {
       first_name: Joi.string().required(),
@@ -142,7 +139,7 @@ eventsRouter.post(
 );
 
 eventsRouter.put(
-  '/:event_name/guests/:first_name-:last_name',
+  '/:event_id/guests/:first_name-:last_name',
   celebrate({
     [Segments.BODY]: {
       first_name: Joi.string().uuid().required(),
@@ -156,16 +153,16 @@ eventsRouter.put(
 );
 
 eventsRouter.delete(
-  '/:event_name/guests/:first_name-:last_name',
+  '/:event_id/guests/:first_name-:last_name',
   guestsController.delete,
 );
-eventsRouter.get('/:event_name/guests/', guestsController.index);
-eventsRouter.get('/:event_name/guests/:host_id', hostGuestsController.index);
+eventsRouter.get('/:event_id/guests/', guestsController.index);
+eventsRouter.get('/:event_id/guests/:host_id', hostGuestsController.index);
 
 // === Event Planners === //
 
 eventsRouter.post(
-  '/:event_name/event-planner',
+  '/:event_id/event-planner',
   celebrate({
     [Segments.BODY]: {
       planner_id: Joi.string().required(),
@@ -175,15 +172,15 @@ eventsRouter.post(
 );
 
 eventsRouter.delete(
-  '/:event_name/event-planner/:planner_id',
+  '/:event_id/event-planner/:planner_id',
   eventPlannersController.delete,
 );
-eventsRouter.get('/:event_name/event-planner/', eventPlannersController.index);
+eventsRouter.get('/:event_id/event-planner/', eventPlannersController.index);
 
 // === Event Owners === //
 
 eventsRouter.post(
-  '/:event_name/event-owners',
+  '/:event_id/event-owners',
   celebrate({
     [Segments.BODY]: {
       owner_id: Joi.string().required(),
@@ -193,15 +190,15 @@ eventsRouter.post(
 );
 
 eventsRouter.delete(
-  '/:event_name/event-owners/:owner_id',
+  '/:event_id/event-owners/:owner_id',
   eventOwnersController.delete,
 );
-eventsRouter.get('/:event_name/event-owners/', eventOwnersController.index);
+eventsRouter.get('/:event_id/event-owners/', eventOwnersController.index);
 
 // === Event Members === //
 
 eventsRouter.post(
-  '/:event_name/event-members',
+  '/:event_id/event-members',
   celebrate({
     [Segments.BODY]: {
       member_id: Joi.string().required(),
@@ -211,15 +208,15 @@ eventsRouter.post(
 );
 
 eventsRouter.delete(
-  '/:event_name/event-members/:member_id',
+  '/:event_id/event-members/:member_id',
   eventMembersController.delete,
 );
-eventsRouter.get('/:event_name/event-members/', eventMembersController.index);
+eventsRouter.get('/:event_id/event-members/', eventMembersController.index);
 
 // === Event Info === //
 
 eventsRouter.post(
-  '/:event_name/event-info',
+  '/:event_id/event-info',
   celebrate({
     [Segments.BODY]: {
       number_of_guests: Joi.number().required(),
@@ -234,10 +231,10 @@ eventsRouter.post(
   }),
   eventInfosController.create,
 );
-eventsRouter.get('/:event_name/event-info', eventInfosController.show);
+eventsRouter.get('/:event_id/event-info', eventInfosController.show);
 
 eventsRouter.put(
-  '/:event_name/event-info',
+  '/:event_id/event-info',
   celebrate({
     [Segments.BODY]: {
       number_of_guests: Joi.number().required(),

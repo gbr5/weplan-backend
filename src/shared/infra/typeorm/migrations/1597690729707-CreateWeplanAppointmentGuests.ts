@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventAppointments1597688629798
+export default class CreateWeplanAppointmentGuests1597690729707
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_appointments',
+        name: 'weplan_appointment_guests',
         columns: [
           {
             name: 'id',
@@ -19,7 +19,11 @@ export default class CreateEventAppointments1597688629798
             type: 'uuid',
           },
           {
-            name: 'event_id',
+            name: 'guest_id',
+            type: 'uuid',
+          },
+          {
+            name: 'host_id',
             type: 'uuid',
           },
           {
@@ -35,7 +39,7 @@ export default class CreateEventAppointments1597688629798
         ],
         foreignKeys: [
           {
-            name: 'EventAppointment',
+            name: 'WeplanGuestAppointment',
             columnNames: ['appointment_id'],
             referencedTableName: 'appointments',
             referencedColumnNames: ['id'],
@@ -43,9 +47,17 @@ export default class CreateEventAppointments1597688629798
             onUpdate: 'CASCADE',
           },
           {
-            name: 'AppointmentEvent',
-            columnNames: ['event_id'],
-            referencedTableName: 'events',
+            name: 'WeplanAppointmentGuest',
+            columnNames: ['guest_id'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'AppointmentHost',
+            columnNames: ['host_id'],
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -56,6 +68,6 @@ export default class CreateEventAppointments1597688629798
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_appointments');
+    await queryRunner.dropTable('weplan_appointment_guests');
   }
 }

@@ -6,9 +6,6 @@ import '@shared/container/providers';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 
-import IAppointmentDurationsRepository from '@modules/appointments/repositories/IAppointmentDurationsRepository';
-import AppointmentDurationsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentDurationsRepository';
-
 import IAppointmentTypesRepository from '@modules/appointments/repositories/IAppointmentTypesRepository';
 import AppointmentTypesRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentTypesRepository';
 
@@ -117,11 +114,6 @@ import SupplierAppointmentDayIntervalsRepository from '@modules/appointments/inf
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
-);
-
-container.registerSingleton<IAppointmentDurationsRepository>(
-  'AppointmentDurationsRepository',
-  AppointmentDurationsRepository,
 );
 
 container.registerSingleton<IAppointmentTypesRepository>(

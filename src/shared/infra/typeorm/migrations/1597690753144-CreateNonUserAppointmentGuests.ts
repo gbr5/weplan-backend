@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventPlanners1597687915095
+export default class CreateNonUserAppointmentGuests1597690753144
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'event_planners',
+        name: 'non_user_appointment_guests',
         columns: [
           {
             name: 'id',
@@ -15,11 +15,27 @@ export default class CreateEventPlanners1597687915095
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_id',
+            name: 'name',
+            type: 'varchar',
+          },
+          {
+            name: 'phone',
+            type: 'varchar',
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+          },
+          {
+            name: 'description',
+            type: 'varchar',
+          },
+          {
+            name: 'appointment_id',
             type: 'uuid',
           },
           {
-            name: 'planner_id',
+            name: 'supplier_id',
             type: 'uuid',
           },
           {
@@ -35,16 +51,16 @@ export default class CreateEventPlanners1597687915095
         ],
         foreignKeys: [
           {
-            name: 'EventPlanner',
-            columnNames: ['event_id'],
-            referencedTableName: 'events',
+            name: 'SupplierNonUserGuestAppointment',
+            columnNames: ['appointment_id'],
+            referencedTableName: 'appointments',
             referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
+            onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'UserEventPlanner',
-            columnNames: ['planner_id'],
+            name: 'SupplierNonUserAppointmentGuest',
+            columnNames: ['supplier_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
@@ -56,6 +72,6 @@ export default class CreateEventPlanners1597687915095
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('event_planners');
+    await queryRunner.dropTable('non_user_appointment_guests');
   }
 }

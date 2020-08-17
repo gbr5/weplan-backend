@@ -1,4 +1,4 @@
-import { startOfHour, isBefore } from 'date-fns';
+import { isBefore, startOfMinute } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -8,7 +8,6 @@ import IAppointmentsRepository from '@modules/appointments/repositories/IAppoint
 import IWeplanAppointmentGuestsRepository from '@modules/appointments/repositories/IWeplanAppointmentGuestsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
-import IAppointmentDurationsRepository from '../repositories/IAppointmentDurationsRepository';
 
 // Dependency Inversion (SOLID principles)
 @injectable()
@@ -19,9 +18,6 @@ class CreateAppointmentService {
 
     @inject('WeplanAppointmentGuestsRepository')
     private weplanAppointmentGuestsRepository: IWeplanAppointmentGuestsRepository,
-
-    @inject('AppointmentDurationsRepository')
-    private appointmentDurationsRepository: IAppointmentDurationsRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -54,31 +50,102 @@ class CreateAppointmentService {
     if (!findGuest) {
       throw new AppError('User not found.');
     }
+    const formattedDuration = duration_minutes - 1;
+    const endOfAppointment = startOfMinute(date).setMinutes(
+      date.getMinutes(),
+      formattedDuration * 60,
+    );
 
-    const appointmentDate = startOfHour(date);
-
-    if (isBefore(appointmentDate, Date.now())) {
+    if (isBefore(date, Date.now())) {
       throw new AppError("You can't create an appointment on a past date.");
     }
 
-    const findHostAppointment = await this.appointmentsRepository.findByDateAndUsers(
-      date,
-      host_id,
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const findAppointments = await this.appointmentsRepository.findAllInDayFromSupplier(
+      {
+        year,
+        month,
+        day,
+        host_id,
+      },
     );
-    if (findHostAppointment) {
-      throw new AppError(
-        'This host already have an appointment for this date.',
+
+    findAppointments.map(oldAppointment => {
+      const endOfNewAppointment = new Date(endOfAppointment);
+      const startOfOldAppointment = startOfMinute(oldAppointment.date);
+      const endAppointment = startOfMinute(oldAppointment.date).setMinutes(
+        startOfOldAppointment.getMinutes(),
+        oldAppointment.duration_minutes * 60,
       );
-    }
-    const findGuestAppointment = await this.appointmentsRepository.findByDateAndUsers(
-      date,
-      guest_id,
+      const endOfOldAppointment = new Date(endAppointment);
+      console.log('Old', startOfOldAppointment, endOfOldAppointment);
+      console.log('New', date, endOfNewAppointment);
+
+      if (
+        !(
+          (date < startOfOldAppointment &&
+            date < endOfOldAppointment &&
+            endOfNewAppointment < startOfOldAppointment &&
+            endOfNewAppointment < endOfOldAppointment) ||
+          (date > startOfOldAppointment &&
+            date > endOfOldAppointment &&
+            endOfNewAppointment > startOfOldAppointment &&
+            endOfNewAppointment > endOfOldAppointment)
+        )
+      ) {
+        const startHour = startOfOldAppointment.getHours();
+        const startMinutes = startOfOldAppointment.getMinutes();
+        const endHour = endOfOldAppointment.getHours();
+        const endMinutes = endOfOldAppointment.getMinutes();
+        throw new AppError(
+          `You already have an appointment at this date, ${startHour}:${startMinutes}-${endHour}:${endMinutes}`,
+        );
+      }
+      return true;
+    });
+
+    const findGuestAppointments = await this.appointmentsRepository.findAllInDayFromSupplier(
+      {
+        year,
+        month,
+        day,
+        host_id: guest_id,
+      },
     );
-    if (findGuestAppointment) {
-      throw new AppError(
-        'This guest already have an appointment for this date.',
+
+    findGuestAppointments.map(oldAppointment => {
+      const endOfNewAppointment = new Date(endOfAppointment);
+      const startOfOldAppointment = startOfMinute(oldAppointment.date);
+      const endAppointment = startOfMinute(oldAppointment.date).setMinutes(
+        startOfOldAppointment.getMinutes(),
+        oldAppointment.duration_minutes * 60,
       );
-    }
+      const endOfOldAppointment = new Date(endAppointment);
+
+      if (
+        !(
+          (date < startOfOldAppointment &&
+            date < endOfOldAppointment &&
+            endOfNewAppointment < startOfOldAppointment &&
+            endOfNewAppointment < endOfOldAppointment) ||
+          (date > startOfOldAppointment &&
+            date > endOfOldAppointment &&
+            endOfNewAppointment > startOfOldAppointment &&
+            endOfNewAppointment > endOfOldAppointment)
+        )
+      ) {
+        const startHour = startOfOldAppointment.getHours();
+        const startMinutes = startOfOldAppointment.getMinutes();
+        const endHour = endOfOldAppointment.getHours();
+        const endMinutes = endOfOldAppointment.getMinutes();
+        throw new AppError(
+          `The guest already have an appointment at this date, ${startHour}:${startMinutes}-${endHour}:${endMinutes}`,
+        );
+      }
+      return true;
+    });
 
     const appointment = await this.appointmentsRepository.create({
       subject,
@@ -87,23 +154,8 @@ class CreateAppointmentService {
       appointment_type,
       weplanGuest,
       host_id,
+      duration_minutes,
     });
-
-    const findAppointmentDurations = await this.appointmentDurationsRepository.findByAppointmentId(
-      appointment.id,
-    );
-
-    const findAppointmentDuration = findAppointmentDurations.filter(
-      duration => duration.appointment_id,
-    );
-
-    console.log(findAppointmentDuration);
-
-    if (findAppointmentDuration === []) {
-      throw new AppError(
-        'The duration for this appointment is already defined.',
-      );
-    }
 
     const guest = await this.weplanAppointmentGuestsRepository.create({
       appointment_id: appointment.id,
@@ -111,18 +163,11 @@ class CreateAppointmentService {
       host_id,
     });
 
-    const minutes = duration_minutes;
-    const duration = await this.appointmentDurationsRepository.create({
-      minutes,
-      appointment_id: appointment.id,
-    });
-    console.log(duration_minutes, minutes, appointment.date);
-
     return {
       id: appointment.id,
       subject: appointment.subject,
       date: appointment.date,
-      duration_minutes: duration.minutes,
+      duration_minutes: appointment.duration_minutes,
       address: appointment.address,
       appointment_type: appointment.appointment_type,
       host: appointment.Host,

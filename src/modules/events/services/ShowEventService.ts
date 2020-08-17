@@ -12,8 +12,8 @@ class ShowEventService {
     private eventsRepository: IEventsRepository,
   ) {}
 
-  public async execute(trimmed_name: string): Promise<Event> {
-    const event = await this.eventsRepository.findByName(trimmed_name);
+  public async execute(event_id: string): Promise<Event> {
+    const event = await this.eventsRepository.findByName(event_id);
 
     if (!event) {
       throw new AppError('Event not found.');

@@ -30,7 +30,14 @@ class CreateAppointmentService {
     host_id,
     appointment_type,
     weplanGuest,
+    duration_minutes,
   }: ICreateAppointmentDTO): Promise<Appointment> {
+    const host = await this.usersRepository.findById(host_id);
+
+    if (!host) {
+      throw new AppError('User not found.');
+    }
+
     const appointmentDate = startOfHour(date);
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDateAndUsers(
@@ -49,17 +56,12 @@ class CreateAppointmentService {
     const appointment = await this.appointmentsRepository.create({
       subject,
       date,
+      duration_minutes,
       address,
       appointment_type,
       weplanGuest,
       host_id,
     });
-
-    const host = await this.usersRepository.findById(host_id);
-
-    if (!host) {
-      throw new AppError('User not found.');
-    }
 
     await this.cacheProvider.invalidate(
       `host-appointments:${host_id}:${format(appointmentDate, 'yyyy-M-d')}`,

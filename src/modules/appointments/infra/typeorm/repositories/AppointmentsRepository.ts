@@ -82,22 +82,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return classToClass(appointments);
   }
 
-  public async create({
-    subject,
-    date,
-    address,
-    host_id,
-    appointment_type,
-    weplanGuest,
-  }: ICreateAppointmentDTO): Promise<Appointment> {
-    const appointment = this.ormRepository.create({
-      subject,
-      date,
-      address,
-      host_id,
-      appointment_type,
-      weplanGuest,
-    });
+  public async create(data: ICreateAppointmentDTO): Promise<Appointment> {
+    const appointment = this.ormRepository.create(data);
 
     await this.ormRepository.save(appointment);
 

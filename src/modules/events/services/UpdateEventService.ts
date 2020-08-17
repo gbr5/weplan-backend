@@ -8,8 +8,8 @@ import Event from '@modules/events/infra/typeorm/entities/Event';
 interface IRequest {
   user_id: string;
   event_type: string;
+  event_id: string;
   name: string;
-  trimmed_name: string;
   date: Date;
 }
 @injectable()
@@ -22,11 +22,11 @@ class UpdateEventService {
   public async execute({
     user_id,
     event_type,
+    event_id,
     name,
-    trimmed_name,
     date,
   }: IRequest): Promise<Event> {
-    const event = await this.eventsRepository.findByName(trimmed_name);
+    const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
       throw new AppError('Event not found.');

@@ -9,7 +9,6 @@ import IAppointmentsRepository from '@modules/appointments/repositories/IAppoint
 import INonUserAppointmentGuestsRepository from '@modules/appointments/repositories/INonUserAppointmentGuestsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
-import IAppointmentDurationsRepository from '../repositories/IAppointmentDurationsRepository';
 
 // Dependency Inversion (SOLID principles)
 @injectable()
@@ -20,9 +19,6 @@ class CreateAppointmentService {
 
     @inject('NonUserAppointmentGuestsRepository')
     private nonUserAppointmentGuestsRepository: INonUserAppointmentGuestsRepository,
-
-    @inject('AppointmentDurationsRepository')
-    private appointmentDurationsRepository: IAppointmentDurationsRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -59,7 +55,6 @@ class CreateAppointmentService {
       date.getMinutes(),
       duration_minutes * 60,
     );
-    console.log(date < new Date(endOfAppointment), 'new');
 
     if (isBefore(date, Date.now())) {
       throw new AppError("You can't create an appointment on a past date.");
@@ -78,18 +73,35 @@ class CreateAppointmentService {
     );
 
     findAppointments.map(oldAppointment => {
-      console.log('oi', oldAppointment.Duration);
-      if (oldAppointment.Duration) {
-        const startOfOldAppointment = startOfMinute(oldAppointment.date);
-        const endOfOldAppointment = startOfOldAppointment;
-        endOfOldAppointment.setMinutes(
-          startOfOldAppointment.getMinutes(),
-          oldAppointment.Duration.minutes * 60,
-        );
-        console.log(endOfOldAppointment, 'endofOLDAppointment');
+      const endOfNewAppointment = new Date(endOfAppointment);
+      const startOfOldAppointment = startOfMinute(oldAppointment.date);
+      const endAppointment = startOfMinute(oldAppointment.date).setMinutes(
+        startOfOldAppointment.getMinutes(),
+        oldAppointment.duration_minutes * 60,
+      );
+      const endOfOldAppointment = new Date(endAppointment);
 
-        return console.log(startOfOldAppointment, endOfOldAppointment, 'old');
+      if (
+        !(
+          (date < startOfOldAppointment &&
+            date < endOfOldAppointment &&
+            endOfNewAppointment < startOfOldAppointment &&
+            endOfNewAppointment < endOfOldAppointment) ||
+          (date > startOfOldAppointment &&
+            date > endOfOldAppointment &&
+            endOfNewAppointment > startOfOldAppointment &&
+            endOfNewAppointment > endOfOldAppointment)
+        )
+      ) {
+        const startHour = startOfOldAppointment.getHours();
+        const startMinutes = startOfOldAppointment.getMinutes();
+        const endHour = endOfOldAppointment.getHours();
+        const endMinutes = endOfOldAppointment.getMinutes();
+        throw new AppError(
+          `There is already an appointment at this time, ${startHour}:${startMinutes}-${endHour}:${endMinutes}`,
+        );
       }
+      return true;
     });
     // if (findAppointments === []) {
     //   throw new AppError(
@@ -104,20 +116,8 @@ class CreateAppointmentService {
       appointment_type,
       weplanGuest,
       host_id,
+      duration_minutes,
     });
-    const findAppointmentDurations = await this.appointmentDurationsRepository.findByAppointmentId(
-      appointment.id,
-    );
-
-    const findAppointmentDuration = findAppointmentDurations.filter(
-      duration => duration.minutes,
-    );
-
-    if (findAppointmentDuration === []) {
-      throw new AppError(
-        'The duration for this appointment is already defined.',
-      );
-    }
 
     const guest = await this.nonUserAppointmentGuestsRepository.create({
       name,
@@ -128,18 +128,11 @@ class CreateAppointmentService {
       supplier_id: host_id,
     });
 
-    const minutes = duration_minutes;
-
-    const duration = await this.appointmentDurationsRepository.create({
-      minutes,
-      appointment_id: appointment.id,
-    });
-
     return {
       id: appointment.id,
       subject: appointment.subject,
       date: appointment.date,
-      duration_minutes: duration.minutes,
+      duration_minutes: appointment.duration_minutes,
       address: appointment.address,
       appointment_type: appointment.appointment_type,
       host: appointment.Host,

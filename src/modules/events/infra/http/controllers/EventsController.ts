@@ -35,17 +35,19 @@ export default class EventsController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
-    const trimmed_name = req.params;
-
+    const dataParams = req.params;
+    const { event_id } = dataParams;
     const showEvents = container.resolve(ShowEventsService);
+    console.log(event_id);
 
-    const event = await showEvents.execute(trimmed_name.event_name);
+    const event = await showEvents.execute(event_id);
 
     return res.json(classToClass(event));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const trimmed_name = req.params;
+    const dataParams = req.params;
+    const { event_id } = dataParams;
     const user_id = req.user.id;
     const { event_type, name, date } = req.body;
 
@@ -54,9 +56,9 @@ export default class EventsController {
     const event = await updateEvent.execute({
       event_type,
       name,
-      trimmed_name: trimmed_name.event_name,
       date,
       user_id,
+      event_id,
     });
 
     return res.json(classToClass(event));
