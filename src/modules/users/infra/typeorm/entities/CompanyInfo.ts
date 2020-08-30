@@ -21,7 +21,7 @@ class CompanyInfo {
   @Column('uuid')
   user_id: string;
 
-  @OneToOne(() => User, { eager: true })
+  @OneToOne(() => User, user => user.id)
   @JoinColumn({ name: 'user_id' })
   Company: User;
 

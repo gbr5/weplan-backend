@@ -31,14 +31,17 @@ class SupplierAppointmentDaySchedule {
   @Column('uuid')
   supplier_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'supplier_id' })
   Supplier: User;
 
   @Column('uuid')
   week_day_id: string;
 
-  @ManyToOne(() => SupplierWeekDayAppointment, { eager: true })
+  @ManyToOne(
+    () => SupplierWeekDayAppointment,
+    supplierWeekDayAppointment => supplierWeekDayAppointment.id,
+  )
   @JoinColumn({ name: 'week_day_id' })
   WeekDay: SupplierWeekDayAppointment;
 

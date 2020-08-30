@@ -27,7 +27,7 @@ class UserCheckList {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, { eager: true })
+  @ManyToOne(() => Event, event => event.id)
   @JoinColumn({ name: 'event_id' })
   Event: Event;
 

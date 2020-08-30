@@ -19,14 +19,14 @@ class WeplanAppointmentGuest {
   @Column()
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, { eager: true })
+  @ManyToOne(() => Appointment, appointment => appointment.id)
   @JoinColumn({ name: 'appointment_id' })
   Appointment: Appointment;
 
   @Column()
   guest_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'guest_id' })
   Guest: User;
 

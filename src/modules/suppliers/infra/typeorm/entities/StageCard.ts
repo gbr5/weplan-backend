@@ -35,14 +35,14 @@ class StageCard {
   @Column()
   stage_id: string;
 
-  @ManyToOne(() => FunnelStage, { eager: true })
+  @ManyToOne(() => FunnelStage, funnelStage => funnelStage.id)
   @JoinColumn({ name: 'stage_id' })
   Stage: FunnelStage;
 
   @Column()
   card_owner: string;
 
-  @OneToOne(() => User, { eager: true })
+  @OneToOne(() => User, user => user.id)
   @JoinColumn({ name: 'card_owner' })
   Owner: User;
 

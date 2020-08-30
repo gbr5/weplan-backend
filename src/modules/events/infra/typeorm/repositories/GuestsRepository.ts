@@ -42,22 +42,8 @@ class GuestRepository implements IGuestsRepository {
     return findGuest;
   }
 
-  public async create({
-    first_name,
-    last_name,
-    description,
-    event_id,
-    host_id,
-    confirmed,
-  }: ICreateGuestDTO): Promise<Guest> {
-    const guest = this.ormRepository.create({
-      first_name,
-      last_name,
-      description,
-      event_id,
-      host_id,
-      confirmed,
-    });
+  public async create(data: ICreateGuestDTO): Promise<Guest> {
+    const guest = this.ormRepository.create(data);
 
     await this.ormRepository.save(guest);
 

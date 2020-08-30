@@ -6,29 +6,30 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import Event from './Event';
+import Guest from './Guest';
 
-@Entity('event_members')
-class EventMember {
+@Entity('weplan_guests')
+class WeplanGuest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  event_id: string;
+  guest_id: string;
 
-  @ManyToOne(() => Event, event => event.id)
-  @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  @OneToOne(() => Guest, guest => guest.id)
+  @JoinColumn({ name: 'guest_id' })
+  Guest: Guest;
 
   @Column()
-  member_id: string;
+  user_id: string;
 
   @ManyToOne(() => User, user => user.id)
-  @JoinColumn({ name: 'member_id' })
-  Member: User;
+  @JoinColumn({ name: 'user_id' })
+  User: User;
 
   @CreateDateColumn()
   created_at: Date;
@@ -37,4 +38,4 @@ class EventMember {
   updated_at: Date;
 }
 
-export default EventMember;
+export default WeplanGuest;

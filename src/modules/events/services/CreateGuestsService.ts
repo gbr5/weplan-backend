@@ -8,13 +8,13 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 
 interface IRequest {
-  user_id: string;
   first_name: string;
   last_name: string;
   description: string;
   event_id: string;
   host_id: string;
   confirmed: boolean;
+  weplanUser: boolean;
 }
 
 @injectable()
@@ -31,13 +31,13 @@ class CreateGuestService {
   ) {}
 
   public async execute({
-    user_id,
     first_name,
     last_name,
     event_id,
     description,
     host_id,
     confirmed,
+    weplanUser,
   }: IRequest): Promise<Guest> {
     const guestExists = await this.guestsRepository.findByEventFirstNameAndLastName(
       event_id,
@@ -56,10 +56,11 @@ class CreateGuestService {
       event_id,
       host_id,
       confirmed,
+      weplanUser,
     });
 
     await this.notificationsRepository.create({
-      recipient_id: user_id,
+      recipient_id: host_id,
       content: `O convidado ${first_name} ${last_name} foi adicionado com sucesso.`,
     });
 

@@ -20,17 +20,17 @@ class DeleteGuestService {
     first_name,
     last_name,
   }: IRequest): Promise<void> {
-    const checkList = await this.guestsRepository.findByEventFirstNameAndLastName(
+    const guest = await this.guestsRepository.findByEventFirstNameAndLastName(
       event_id,
       first_name,
       last_name,
     );
 
-    if (!checkList) {
-      throw new AppError('Selected supplier not found.');
+    if (!guest) {
+      throw new AppError('Guest not found.');
     }
 
-    await this.guestsRepository.delete(checkList);
+    await this.guestsRepository.delete(guest);
   }
 }
 

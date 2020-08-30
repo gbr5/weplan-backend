@@ -13,6 +13,30 @@ const supplierSubCategoriesController = new SupplierSubCategoriesController();
 
 supplierCategoriessRouter.use(ensureAuthenticated);
 
+// === $$ === $ ==> Supplier <== $ === $$ === //
+
+supplierCategoriessRouter.post(
+  '/:category_name/:sub_category',
+  userSupplierCategoriesController.create,
+);
+
+supplierCategoriessRouter.get(
+  '/:category_name/:sub_category',
+  userSupplierCategoriesController.index,
+);
+
+supplierCategoriessRouter.get(
+  '/:category_name/:sub_category/:user_id',
+  userSupplierCategoriesController.show,
+);
+
+supplierCategoriessRouter.delete(
+  '/:category_name/:sub_category',
+  userSupplierCategoriesController.delete,
+);
+
+// === Supplier Categories === //
+
 supplierCategoriessRouter.post(
   '/',
   celebrate({
@@ -34,6 +58,8 @@ supplierCategoriessRouter.put(
   }),
   supplierCategoriessController.update,
 );
+
+// === Supplier Sub Categories === //
 
 supplierCategoriessRouter.post(
   '/:category_name',
@@ -58,26 +84,6 @@ supplierCategoriessRouter.put(
     },
   }),
   supplierSubCategoriesController.update,
-);
-
-supplierCategoriessRouter.post(
-  '/:category_name/:sub_category',
-  userSupplierCategoriesController.create,
-);
-
-supplierCategoriessRouter.get(
-  '/:category_name/:sub_category',
-  userSupplierCategoriesController.index,
-);
-
-supplierCategoriessRouter.get(
-  '/:category_name/:sub_category/:user_id',
-  userSupplierCategoriesController.show,
-);
-
-supplierCategoriessRouter.delete(
-  '/:category_name/:sub_category',
-  userSupplierCategoriesController.delete,
 );
 
 export default supplierCategoriessRouter;

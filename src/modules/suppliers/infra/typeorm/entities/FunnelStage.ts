@@ -23,7 +23,7 @@ class FunnelStage {
   @Column()
   funnel_id: string;
 
-  @ManyToOne(() => Funnel, { eager: true })
+  @ManyToOne(() => Funnel, funnel => funnel.id)
   @JoinColumn({ name: 'funnel_id' })
   Funnel: Funnel;
 

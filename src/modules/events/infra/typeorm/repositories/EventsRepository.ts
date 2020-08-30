@@ -78,6 +78,10 @@ class EventsRepository implements IEventsRepository {
   public async save(event: Event): Promise<Event> {
     return this.ormRepository.save(event);
   }
+
+  public async delete(event_id: string): Promise<void> {
+    await this.ormRepository.delete(event_id);
+  }
 }
 
 export default EventsRepository;

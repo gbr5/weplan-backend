@@ -7,7 +7,6 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 import Guest from '@modules/events/infra/typeorm/entities/Guest';
 
 interface IRequest {
-  user_id: string;
   first_name: string;
   new_first_name: string;
   last_name: string;
@@ -16,6 +15,7 @@ interface IRequest {
   event_id: string;
   host_id: string;
   confirmed: boolean;
+  weplanUser: boolean;
 }
 @injectable()
 class UpdateGuestService {
@@ -31,7 +31,6 @@ class UpdateGuestService {
   ) {}
 
   public async execute({
-    user_id,
     first_name,
     new_first_name,
     last_name,
@@ -40,6 +39,7 @@ class UpdateGuestService {
     event_id,
     host_id,
     confirmed,
+    weplanUser,
   }: IRequest): Promise<Guest> {
     const guest = await this.guestsRepository.findByEventFirstNameAndLastName(
       event_id,
@@ -57,11 +57,12 @@ class UpdateGuestService {
     guest.event_id = event_id;
     guest.host_id = host_id;
     guest.confirmed = confirmed;
+    guest.weplanUser = weplanUser;
 
     const updatedGuest = await this.guestsRepository.save(guest);
 
     await this.notificationsRepository.create({
-      recipient_id: user_id,
+      recipient_id: host_id,
       content: `O convidado ${first_name} ${last_name} foi atualizado com sucesso.`,
     });
 

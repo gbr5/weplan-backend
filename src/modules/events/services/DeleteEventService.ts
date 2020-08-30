@@ -3,24 +3,22 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 
-import Event from '@modules/events/infra/typeorm/entities/Event';
-
 @injectable()
-class ShowEventService {
+class DeleteEventService {
   constructor(
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
   ) {}
 
-  public async execute(event_id: string): Promise<Event> {
+  public async execute(event_id: string): Promise<void> {
     const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
       throw new AppError('Event not found.');
     }
 
-    return event;
+    await this.eventsRepository.delete(event_id);
   }
 }
 
-export default ShowEventService;
+export default DeleteEventService;

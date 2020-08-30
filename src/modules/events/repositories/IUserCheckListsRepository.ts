@@ -1,7 +1,7 @@
 import UserCheckList from '@modules/events/infra/typeorm/entities/UserCheckList';
 import ICreateUserCheckListDTO from '@modules/events/dtos/ICreateUserCheckListDTO';
 
-export default interface IUserCheckListRepository {
+export default interface IUserCheckListsRepository {
   findByEvent(event_id: string): Promise<UserCheckList[]>;
   findByIdAndEvent(
     event_id: string,

@@ -3,6 +3,7 @@ import ICreateUserSupplierCategoryDTO from '@modules/suppliers/dtos/ICreateUserS
 
 export default interface IUserSupplierCategorysRepository {
   create(data: ICreateUserSupplierCategoryDTO): Promise<UserSupplierCategory>;
+  findById(supplier_id: string): Promise<UserSupplierCategory[]>;
   findByIdAndCategory(
     user_id: string,
     sub_category_name: string,

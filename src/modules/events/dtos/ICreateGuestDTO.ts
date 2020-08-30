@@ -5,4 +5,5 @@ export default interface ICreateGuestDTO {
   event_id: string;
   host_id: string;
   confirmed: boolean;
+  weplanUser: boolean;
 }

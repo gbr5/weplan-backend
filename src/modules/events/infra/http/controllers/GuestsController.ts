@@ -10,8 +10,15 @@ import DeleteGuestService from '@modules/events/services/DeleteGuestService';
 
 export default class GuestsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { first_name, last_name, description, host_id, confirmed } = req.body;
-    const user_id = req.user.id;
+    const {
+      first_name,
+      last_name,
+      description,
+      confirmed,
+      weplanUser,
+    } = req.body;
+
+    const host_id = req.user.id;
 
     const dataParams = req.params;
 
@@ -19,14 +26,24 @@ export default class GuestsController {
 
     const createGuests = container.resolve(CreateGuestsService);
 
-    const guest = await createGuests.execute({
-      user_id,
+    console.log({
       first_name,
       last_name,
       description,
       event_id,
       host_id,
       confirmed,
+      weplanUser,
+    });
+
+    const guest = await createGuests.execute({
+      first_name,
+      last_name,
+      description,
+      event_id,
+      host_id,
+      confirmed,
+      weplanUser,
     });
 
     return res.json(classToClass(guest));
@@ -57,20 +74,19 @@ export default class GuestsController {
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { event_id, first_name, last_name } = dataParams;
-    const user_id = req.user.id;
+    const host_id = req.user.id;
 
     const {
       new_first_name,
       new_last_name,
       description,
-      host_id,
       confirmed,
+      weplanUser,
     } = req.body;
 
     const updateGuest = container.resolve(UpdateGuestService);
 
     const event = await updateGuest.execute({
-      user_id,
       first_name,
       new_first_name,
       last_name,
@@ -79,6 +95,7 @@ export default class GuestsController {
       event_id,
       host_id,
       confirmed,
+      weplanUser,
     });
 
     return res.json(event);

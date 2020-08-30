@@ -46,7 +46,7 @@ class Appointment {
   @Column()
   host_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, host => host.id)
   @JoinColumn({ name: 'host_id' })
   Host: User;
 

@@ -21,6 +21,7 @@ import SupplierAppointmentDaySchedule from '@modules/appointments/infra/typeorm/
 import SupplierAppointmentDayInterval from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDayInterval';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import WeplanAppointmentGuest from '@modules/appointments/infra/typeorm/entities/WeplanAppointmentGuest';
+import WeplanGuest from '@modules/events/infra/typeorm/entities/WeplanGuest';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -131,6 +132,9 @@ class User {
 
   @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.host_id)
   Host: WeplanAppointmentGuest;
+
+  @OneToMany(() => WeplanGuest, guest => guest.user_id)
+  EventGuest: WeplanGuest;
 }
 
 export default User;

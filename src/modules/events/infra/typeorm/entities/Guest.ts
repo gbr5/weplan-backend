@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
+import WeplanGuest from './WeplanGuest';
 
 @Entity('guests')
 class Guest {
@@ -28,25 +30,31 @@ class Guest {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, { eager: true })
+  @ManyToOne(() => Event, event => event.id)
   @JoinColumn({ name: 'event_id' })
   Event: Event;
 
   @Column()
   host_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'host_id' })
   Host: User;
 
   @Column('boolean')
   confirmed: boolean;
 
+  @Column('boolean')
+  weplanUser: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToOne(() => WeplanGuest, guest => guest.guest_id)
+  WeplanGuest: WeplanGuest;
 }
 
 export default Guest;

@@ -18,7 +18,7 @@ class EventInfo {
   @Column()
   event_id: string;
 
-  @OneToOne(() => Event, { eager: true })
+  @OneToOne(() => Event, event => event.id)
   @JoinColumn({ name: 'event_id' })
   Event: Event;
 

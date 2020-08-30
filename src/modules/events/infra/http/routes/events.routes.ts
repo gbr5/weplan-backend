@@ -54,6 +54,8 @@ eventsRouter.put(
   eventsController.update,
 );
 
+eventsRouter.delete('/:event_id', eventsController.delete);
+
 // === Selected & Hired Suppliers === //
 
 eventsRouter.post(
@@ -131,8 +133,8 @@ eventsRouter.post(
       first_name: Joi.string().required(),
       last_name: Joi.string().required(),
       description: Joi.string().required(),
-      host_id: Joi.string().required(),
       confirmed: Joi.boolean().required(),
+      weplanUser: Joi.boolean().required(),
     },
   }),
   guestsController.create,
@@ -145,8 +147,8 @@ eventsRouter.put(
       first_name: Joi.string().uuid().required(),
       last_name: Joi.string().required(),
       description: Joi.string().required(),
-      host_id: Joi.string().required(),
       confirmed: Joi.boolean().required(),
+      weplanUser: Joi.boolean().required(),
     },
   }),
   guestsController.update,

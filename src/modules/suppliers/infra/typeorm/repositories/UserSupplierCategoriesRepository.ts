@@ -29,6 +29,14 @@ class UserSupplierCategoryRepository
     return findUserSupplierCategory;
   }
 
+  public async findById(supplier_id: string): Promise<UserSupplierCategory[]> {
+    const supplier = await this.ormRepository.find({
+      where: { user_id: supplier_id },
+    });
+
+    return supplier;
+  }
+
   public async findByIdAndCategory(
     user_id: string,
     sub_category_name: string,

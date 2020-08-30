@@ -19,14 +19,14 @@ class StageCardAppointment {
   @Column()
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, { eager: true })
+  @ManyToOne(() => Appointment, appointment => appointment.id)
   @JoinColumn({ name: 'appointment_id' })
   Appointment: Appointment;
 
   @Column()
   card_id: string;
 
-  @ManyToOne(() => StageCard, { eager: true })
+  @ManyToOne(() => StageCard, stageCard => stageCard.id)
   @JoinColumn({ name: 'card_id' })
   SupplierCard: StageCard;
 
