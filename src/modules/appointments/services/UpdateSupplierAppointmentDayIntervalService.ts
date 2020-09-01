@@ -19,7 +19,6 @@ class UpdateSupplierAppointmentDayIntervalService {
     duration_minutes: number,
     week_day_id: string,
   ): Promise<SupplierAppointmentDayInterval> {
-    console.log(id, start_hour, start_minutes, duration_minutes);
     const findSupplierAppointmentDayInterval = await this.appointmentsRepository.findBySupplierAppointmentDayIntervalId(
       id,
     );

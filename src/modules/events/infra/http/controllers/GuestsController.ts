@@ -26,16 +26,6 @@ export default class GuestsController {
 
     const createGuests = container.resolve(CreateGuestsService);
 
-    console.log({
-      first_name,
-      last_name,
-      description,
-      event_id,
-      host_id,
-      confirmed,
-      weplanUser,
-    });
-
     const guest = await createGuests.execute({
       first_name,
       last_name,

@@ -80,8 +80,6 @@ class CreateAppointmentService {
         oldAppointment.duration_minutes * 60,
       );
       const endOfOldAppointment = new Date(endAppointment);
-      console.log('Old', startOfOldAppointment, endOfOldAppointment);
-      console.log('New', date, endOfNewAppointment);
 
       if (
         !(

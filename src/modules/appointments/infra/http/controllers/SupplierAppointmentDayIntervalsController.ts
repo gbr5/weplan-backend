@@ -52,7 +52,6 @@ export default class WeekDayAppointmentsController {
     const { start_hour, start_minutes, duration_minutes } = req.body;
     const dataParams = req.params;
     const { id, week_day_id } = dataParams;
-    console.log(start_hour);
 
     const updateSupplierAppointmentDayIntervalService = container.resolve(
       UpdateSupplierAppointmentDayIntervalService,

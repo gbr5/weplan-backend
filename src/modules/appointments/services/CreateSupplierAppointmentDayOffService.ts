@@ -26,12 +26,9 @@ class CreateSupplierAppointmentDayOffService {
       supplier_id,
     );
 
-    console.log(day_off);
-
     const findSupplierAppointmentDayOff = findSupplierAppointmentDaysOff.filter(
       weekDay => weekDay.day_off === day_off,
     );
-    console.log(findSupplierAppointmentDayOff);
 
     if (findSupplierAppointmentDayOff === []) {
       throw new AppError('This supplier already registered this day off.');

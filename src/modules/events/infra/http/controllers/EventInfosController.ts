@@ -20,16 +20,6 @@ export default class EventInfosController {
     } = req.body;
     const dataParams = req.params;
     const { event_id } = dataParams;
-    console.log(
-      number_of_guests,
-      start_hour,
-      duration,
-      budget,
-      description,
-      country,
-      local_state,
-      city,
-    );
 
     const createEventInfo = container.resolve(CreateEventInfoService);
 

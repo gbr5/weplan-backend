@@ -57,6 +57,7 @@ appointmentsRouter.post(
       address: Joi.string().required(),
       appointment_type: Joi.string().required(),
       weplanGuest: Joi.boolean().required(),
+      duration_minutes: Joi.number().required(),
     },
   }),
   appointmentsController.create,

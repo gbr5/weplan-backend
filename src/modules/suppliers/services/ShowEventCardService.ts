@@ -15,7 +15,6 @@ class ShowEventCardService {
   public async execute(
     card_unique_name: string,
   ): Promise<EventCard | undefined> {
-    console.log(card_unique_name, ' => Show Event Card Service');
     const card = await this.eventCardsRepository.findByCard(card_unique_name);
 
     if (!card) {
