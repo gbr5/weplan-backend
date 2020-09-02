@@ -10,13 +10,13 @@ export default class EventInfosController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       number_of_guests,
-      start_hour,
       budget,
       description,
       country,
       local_state,
       city,
       duration,
+      address,
     } = req.body;
     const dataParams = req.params;
     const { event_id } = dataParams;
@@ -26,13 +26,13 @@ export default class EventInfosController {
     const eventInfo = await createEventInfo.execute({
       event_id,
       number_of_guests,
-      start_hour,
       duration,
       budget,
       description,
       country,
       local_state,
       city,
+      address,
     });
 
     return res.json(classToClass(eventInfo));
@@ -53,13 +53,13 @@ export default class EventInfosController {
   public async update(req: Request, res: Response): Promise<Response> {
     const {
       number_of_guests,
-      start_hour,
       duration,
       budget,
       description,
       country,
       local_state,
       city,
+      address,
     } = req.body;
 
     const dataParams = req.params;
@@ -71,13 +71,13 @@ export default class EventInfosController {
     const eventInfo = await updateEventInfo.execute({
       event_id,
       number_of_guests,
-      start_hour,
       duration,
       budget,
       description,
       country,
       local_state,
       city,
+      address,
     });
 
     return res.json(classToClass(eventInfo));

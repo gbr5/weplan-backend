@@ -16,13 +16,13 @@ class UpdateEventInfoService {
   public async execute({
     event_id,
     number_of_guests,
-    start_hour,
     duration,
     budget,
     description,
     country,
     local_state,
     city,
+    address,
   }: ICreateEventInfoDTO): Promise<EventInfo> {
     const eventInfo = await this.eventInfosRepository.findByEvent(event_id);
 
@@ -31,13 +31,13 @@ class UpdateEventInfoService {
     }
 
     eventInfo.number_of_guests = number_of_guests;
-    eventInfo.start_hour = start_hour;
     eventInfo.duration = duration;
     eventInfo.budget = budget;
     eventInfo.description = description;
     eventInfo.country = country;
     eventInfo.local_state = local_state;
     eventInfo.city = city;
+    eventInfo.address = address;
 
     const updatedEventInfo = await this.eventInfosRepository.save(eventInfo);
 

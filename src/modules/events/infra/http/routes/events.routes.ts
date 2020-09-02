@@ -221,13 +221,13 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       number_of_guests: Joi.number().required(),
-      start_hour: Joi.number().required(),
       duration: Joi.number().required(),
       budget: Joi.number().required(),
       description: Joi.string().required(),
       country: Joi.string().required(),
       local_state: Joi.string().required(),
       city: Joi.string().required(),
+      address: Joi.string().required(),
     },
   }),
   eventInfosController.create,
@@ -239,13 +239,13 @@ eventsRouter.put(
   celebrate({
     [Segments.BODY]: {
       number_of_guests: Joi.number().required(),
-      start_hour: Joi.number().required(),
       duration: Joi.number().required(),
       budget: Joi.number().required(),
       description: Joi.string().required(),
       country: Joi.string().required(),
       local_state: Joi.string().required(),
       city: Joi.string().required(),
+      address: Joi.string().required(),
     },
   }),
   eventInfosController.update,

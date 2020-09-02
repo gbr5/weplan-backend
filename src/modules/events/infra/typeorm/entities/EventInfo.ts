@@ -26,9 +26,6 @@ class EventInfo {
   number_of_guests: number;
 
   @Column('numeric')
-  start_hour: number;
-
-  @Column('numeric')
   duration: number;
 
   @Column('numeric')
@@ -45,6 +42,9 @@ class EventInfo {
 
   @Column()
   city: string;
+
+  @Column()
+  address: string;
 
   @CreateDateColumn()
   created_at: Date;

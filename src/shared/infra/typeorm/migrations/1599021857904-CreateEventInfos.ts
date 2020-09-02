@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateEventInfos1597690044071
+export default class CreateEventInfos1599021857904
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -20,10 +20,6 @@ export default class CreateEventInfos1597690044071
           },
           {
             name: 'number_of_guests',
-            type: 'numeric',
-          },
-          {
-            name: 'start_hour',
             type: 'numeric',
           },
           {
@@ -48,6 +44,10 @@ export default class CreateEventInfos1597690044071
           },
           {
             name: 'city',
+            type: 'varchar',
+          },
+          {
+            name: 'address',
             type: 'varchar',
           },
           {
