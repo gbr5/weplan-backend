@@ -9,7 +9,9 @@ import DeleteSelectedSupplierService from '@modules/events/services/DeleteSelect
 
 export default class SelectedSuppliersController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { supplier_id, event_id, supplier_sub_category, isHired } = req.body;
+    const { supplier_id, supplier_sub_category, isHired } = req.body;
+    const reqParams = req.params;
+    const { event_id } = reqParams;
 
     const createSelectedSupplier = container.resolve(
       CreateSelectedSupplierService,
