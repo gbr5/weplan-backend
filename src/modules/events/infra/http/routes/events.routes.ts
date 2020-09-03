@@ -45,9 +45,7 @@ eventsRouter.put(
   '/:event_id',
   celebrate({
     [Segments.BODY]: {
-      user_id: Joi.string().required(),
       name: Joi.string().required(),
-      event_type: Joi.string().required(),
       date: Joi.date(),
     },
   }),
@@ -185,6 +183,7 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       owner_id: Joi.string().required(),
+      description: Joi.string().required(),
     },
   }),
   eventOwnersController.create,

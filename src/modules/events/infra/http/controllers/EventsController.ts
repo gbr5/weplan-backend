@@ -49,12 +49,11 @@ export default class EventsController {
     const dataParams = req.params;
     const { event_id } = dataParams;
     const user_id = req.user.id;
-    const { event_type, name, date } = req.body;
+    const { name, date } = req.body;
 
     const updateEvent = container.resolve(UpdateEventService);
 
     const event = await updateEvent.execute({
-      event_type,
       name,
       date,
       user_id,

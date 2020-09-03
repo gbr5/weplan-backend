@@ -11,6 +11,7 @@ interface IRequest {
   user_id: string;
   event_id: string;
   owner_id: string;
+  description: string;
 }
 
 @injectable()
@@ -30,6 +31,7 @@ class CreateEventOwnerService {
     user_id,
     event_id,
     owner_id,
+    description,
   }: IRequest): Promise<EventOwner> {
     const ownerExists = await this.ownersRepository.findByEventAndOwnerId(
       event_id,
@@ -43,6 +45,7 @@ class CreateEventOwnerService {
     const owner = await this.ownersRepository.create({
       event_id,
       owner_id,
+      description,
     });
 
     await this.notificationsRepository.create({

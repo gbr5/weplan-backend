@@ -8,7 +8,7 @@ import DeleteEventOwnerService from '@modules/events/services/DeleteEventOwnerSe
 
 export default class EventOwnersController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { owner_id } = req.body;
+    const { owner_id, description } = req.body;
     const user_id = req.user.id;
 
     const dataParams = req.params;
@@ -21,6 +21,7 @@ export default class EventOwnersController {
       user_id,
       event_id,
       owner_id,
+      description,
     });
 
     return res.json(classToClass(owner));

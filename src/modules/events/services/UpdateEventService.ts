@@ -7,7 +7,6 @@ import Event from '@modules/events/infra/typeorm/entities/Event';
 
 interface IRequest {
   user_id: string;
-  event_type: string;
   event_id: string;
   name: string;
   date: Date;
@@ -21,7 +20,6 @@ class UpdateEventService {
 
   public async execute({
     user_id,
-    event_type,
     event_id,
     name,
     date,
@@ -48,7 +46,6 @@ class UpdateEventService {
       .join('');
 
     event.user_id = user_id;
-    event.event_type = event_type;
     event.name = eventName;
     event.trimmed_name = trimmedName;
     event.date = date;

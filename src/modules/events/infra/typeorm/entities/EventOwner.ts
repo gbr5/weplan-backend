@@ -30,6 +30,9 @@ class EventOwner {
   @JoinColumn({ name: 'owner_id' })
   Owner: User;
 
+  @Column()
+  description: string;
+
   @CreateDateColumn()
   created_at: Date;
 

@@ -33,10 +33,12 @@ class EventOwnerRepository implements IEventOwnersRepository {
   public async create({
     event_id,
     owner_id,
+    description,
   }: ICreateEventOwnerDTO): Promise<EventOwner> {
     const owner = this.ormRepository.create({
       event_id,
       owner_id,
+      description,
     });
 
     await this.ormRepository.save(owner);
