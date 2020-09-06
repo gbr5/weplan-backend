@@ -24,6 +24,8 @@ import WeplanAppointmentGuest from '@modules/appointments/infra/typeorm/entities
 import WeplanGuest from '@modules/events/infra/typeorm/entities/WeplanGuest';
 import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
 import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
+import FriendGroup from '@modules/users/infra/typeorm/entities/FriendGroup';
+import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -143,6 +145,15 @@ class User {
 
   @OneToMany(() => WeplanGuest, guest => guest.user_id)
   EventGuest: WeplanGuest;
+
+  @OneToMany(() => FriendGroup, owner => owner.user_id)
+  OwnerFriendGroup: FriendGroup;
+
+  @OneToMany(() => UserFriend, friend => friend.friend_id)
+  FriendUser: UserFriend;
+
+  @OneToMany(() => UserFriend, user => user.user_id)
+  UserFriend: UserFriend;
 }
 
 export default User;

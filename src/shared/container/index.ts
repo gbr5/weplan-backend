@@ -114,6 +114,12 @@ import SupplierAppointmentDaySchedulesRepository from '@modules/appointments/inf
 import ISupplierAppointmentDayIntervalsRepository from '@modules/appointments/repositories/ISupplierAppointmentDayIntervalsRepository';
 import SupplierAppointmentDayIntervalsRepository from '@modules/appointments/infra/typeorm/repositories/SupplierAppointmentDayIntervalsRepository';
 
+import IFriendGroupsRepository from '@modules/users/repositories/IFriendGroupsRepository';
+import FriendGroupsRepository from '@modules/users/infra/typeorm/repositories/FriendGroupsRepository';
+
+import IUserFriendsRepository from '@modules/users/repositories/IUserFriendsRepository';
+import UserFriendsRepository from '@modules/users/infra/typeorm/repositories/UserFriendsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -292,4 +298,14 @@ container.registerSingleton<ISupplierAppointmentDaySchedulesRepository>(
 container.registerSingleton<ISupplierAppointmentDayIntervalsRepository>(
   'SupplierAppointmentDayIntervalsRepository',
   SupplierAppointmentDayIntervalsRepository,
+);
+
+container.registerSingleton<IFriendGroupsRepository>(
+  'FriendGroupsRepository',
+  FriendGroupsRepository,
+);
+
+container.registerSingleton<IUserFriendsRepository>(
+  'UserFriendsRepository',
+  UserFriendsRepository,
 );
