@@ -26,7 +26,7 @@ class UserFriend {
   @Column('uuid')
   friend_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'friend_id' })
   Friend: User;
 

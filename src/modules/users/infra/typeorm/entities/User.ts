@@ -150,10 +150,10 @@ class User {
   OwnerFriendGroup: FriendGroup;
 
   @OneToMany(() => UserFriend, friend => friend.friend_id)
-  FriendUser: UserFriend;
+  UserFriend: UserFriend;
 
   @OneToMany(() => UserFriend, user => user.user_id)
-  UserFriend: UserFriend;
+  FriendUser: UserFriend;
 }
 
 export default User;
