@@ -26,7 +26,7 @@ class EventOwner {
   @Column()
   owner_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'owner_id' })
   Owner: User;
 

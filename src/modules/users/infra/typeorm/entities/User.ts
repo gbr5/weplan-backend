@@ -22,6 +22,8 @@ import SupplierAppointmentDayInterval from '@modules/appointments/infra/typeorm/
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import WeplanAppointmentGuest from '@modules/appointments/infra/typeorm/entities/WeplanAppointmentGuest';
 import WeplanGuest from '@modules/events/infra/typeorm/entities/WeplanGuest';
+import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
+import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -93,6 +95,12 @@ class User {
     selected_supplier => selected_supplier.supplier_id,
   )
   SelectedSupplier: SelectedSupplier;
+
+  @OneToMany(() => EventOwner, owner => owner.owner_id)
+  EventOwner: EventOwner;
+
+  @OneToMany(() => EventMember, member => member.member_id)
+  EventMember: EventMember;
 
   @OneToMany(
     () => EventTypeSupplier,

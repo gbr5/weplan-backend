@@ -59,19 +59,19 @@ class Event {
     () => SelectedSupplier,
     selected_supplier => selected_supplier.event_id,
   )
-  Supplier: SelectedSupplier;
+  Supplier: SelectedSupplier[];
 
   @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_id)
-  CheckList: UserCheckList;
+  CheckList: UserCheckList[];
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_id)
-  Planner: EventPlanner;
+  Planner: EventPlanner[];
 
   @OneToMany(() => EventOwner, event_owner => event_owner.event_id)
-  Owner: EventOwner;
+  Owner: EventOwner[];
 
   @OneToMany(() => EventMember, event_member => event_member.event_id)
-  Member: EventMember;
+  Member: EventMember[];
 
   @OneToOne(() => EventInfo, event_info => event_info.event_id)
   Info: EventInfo;
@@ -83,7 +83,7 @@ class Event {
     () => EventAppointment,
     eventAppointment => eventAppointment.event_id,
   )
-  Event: EventAppointment;
+  Event: EventAppointment[];
 }
 
 export default Event;

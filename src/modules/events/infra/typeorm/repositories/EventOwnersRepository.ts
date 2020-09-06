@@ -23,11 +23,11 @@ class EventOwnerRepository implements IEventOwnersRepository {
   }
 
   public async findByEvent(event_id: string): Promise<EventOwner[]> {
-    const findEventOwner = await this.ormRepository.find({
+    const events = await this.ormRepository.find({
       where: { event_id },
     });
 
-    return findEventOwner;
+    return events;
   }
 
   public async create({

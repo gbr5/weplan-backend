@@ -20,7 +20,7 @@ class EventSupplier {
   @Column()
   supplier_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'supplier_id' })
   Supplier: User;
 

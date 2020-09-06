@@ -4,7 +4,6 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import EventsController from '@modules/events/infra/http/controllers/EventsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import SelectedSuppliersController from '@modules/events/infra/http/controllers/SelectedSuppliersController';
-import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
 import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
 import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
@@ -16,7 +15,6 @@ import EventInfosController from '@modules/events/infra/http/controllers/EventIn
 const eventsRouter = Router();
 const eventsController = new EventsController();
 const selectedSuppliersController = new SelectedSuppliersController();
-const hiredSuppliersController = new HiredSuppliersController();
 const userCheckListsController = new UserCheckListsController();
 const guestsController = new GuestsController();
 const hostGuestsController = new HostGuestsController();
@@ -87,7 +85,6 @@ eventsRouter.get(
   '/:event_id/selected_suppliers',
   selectedSuppliersController.index,
 );
-eventsRouter.get('/:event_id/hired_suppliers', hiredSuppliersController.index);
 
 // === User Check List === //
 
@@ -132,6 +129,7 @@ eventsRouter.post(
       description: Joi.string().required(),
       confirmed: Joi.boolean().required(),
       weplanUser: Joi.boolean().required(),
+      guest_id: Joi.string().required(),
     },
   }),
   guestsController.create,

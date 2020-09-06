@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
+import ShowUserService from '@modules/users/services/ShowUserService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
 
 export default class UsersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -15,6 +17,34 @@ export default class UsersController {
       email,
       password,
       isCompany,
+    });
+
+    return res.json(classToClass(user));
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { user_id } = reqParams;
+
+    const showUser = container.resolve(ShowUserService);
+
+    const user = await showUser.execute({ user_id });
+
+    return res.json(classToClass(user));
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
+
+    const { name, email, password } = req.body;
+
+    const updateUser = container.resolve(UpdateUserService);
+
+    const user = await updateUser.execute({
+      email,
+      password,
+      user_id,
+      name,
     });
 
     return res.json(classToClass(user));

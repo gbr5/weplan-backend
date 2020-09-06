@@ -26,7 +26,7 @@ class EventPlanner {
   @Column()
   planner_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'planner_id' })
   Planner: User;
 

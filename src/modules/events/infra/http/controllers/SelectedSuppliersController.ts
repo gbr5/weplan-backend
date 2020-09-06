@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateSelectedSupplierService from '@modules/events/services/CreateSelectedSupplierService';
-import ListSelectedSuppliersIsHiredService from '@modules/events/services/ListSelectedSuppliersIsHiredService';
+import ListSelectedSuppliersService from '@modules/events/services/ListSelectedSuppliersService';
 import UpdateSelectedSupplierService from '@modules/events/services/UpdateSelectedSupplierService';
 import DeleteSelectedSupplierService from '@modules/events/services/DeleteSelectedSupplierService';
 
@@ -29,17 +29,13 @@ export default class SelectedSuppliersController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
+    const { event_id } = dataParams;
 
-    const listSelectedSuppliersIsHired = container.resolve(
-      ListSelectedSuppliersIsHiredService,
+    const listSelectedSuppliers = container.resolve(
+      ListSelectedSuppliersService,
     );
 
-    const isHired = false;
-
-    const selectedSuppliers = await listSelectedSuppliersIsHired.execute({
-      event_id: dataParams.event_id,
-      isHired,
-    });
+    const selectedSuppliers = await listSelectedSuppliers.execute(event_id);
 
     return res.json(classToClass(selectedSuppliers));
   }

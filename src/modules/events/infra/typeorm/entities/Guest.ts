@@ -37,7 +37,7 @@ class Guest {
   @Column()
   host_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'host_id' })
   Host: User;
 
