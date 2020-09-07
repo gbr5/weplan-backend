@@ -4,14 +4,14 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import PersonInfoController from '@modules/users/infra/http/controllers/PersonInfoController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
-const companyInfoRouter = Router();
-const companyInfoController = new PersonInfoController();
+const personInfoRouter = Router();
+const personInfoController = new PersonInfoController();
 
-companyInfoRouter.use(ensureAuthenticated);
+personInfoRouter.use(ensureAuthenticated);
 
-companyInfoRouter.post('/', companyInfoController.create);
-companyInfoRouter.get('/:user_id', companyInfoController.show);
-companyInfoRouter.put(
+personInfoRouter.post('/', personInfoController.create);
+personInfoRouter.get('/', personInfoController.show);
+personInfoRouter.put(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -20,7 +20,7 @@ companyInfoRouter.put(
       person_id: Joi.string().required(),
     },
   }),
-  companyInfoController.update,
+  personInfoController.update,
 );
 
-export default companyInfoRouter;
+export default personInfoRouter;

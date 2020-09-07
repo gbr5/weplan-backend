@@ -1,8 +1,7 @@
-export default interface IEventOwnerDTO {
+export default interface IUserDTO {
   id: string;
   name: string;
   avatar: string;
-  description: string;
   // first_name: string;
   // last_name: string;
 }

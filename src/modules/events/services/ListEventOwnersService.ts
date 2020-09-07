@@ -17,17 +17,22 @@ class ListEventOwnersService {
 
   public async execute(event_id: string): Promise<IEventOwnerDTO[]> {
     const eventOwners = await this.eventOwnersRepository.findByEvent(event_id);
-    const users = ([] as unknown) as Promise<IEventOwnerDTO[]>;
+    const users = ([] as unknown) as IEventOwnerDTO[];
 
     eventOwners.map(async owner => {
-      (await users).push({
+      console.log('42 - owner: ', owner);
+
+      users.push({
         id: owner.owner_id,
         name: owner.Owner.name,
         avatar: owner.Owner.avatar ? owner.Owner.avatar : '',
-        trimmed_name: owner.Owner.trimmed_name,
         description: owner.description,
+        // first_name: user ? user.first_name : '',
+        // last_name: user ? user.last_name : '',
       });
+      console.log('62 - users: ', users);
     });
+    console.log('65 - users: ', users);
 
     return users;
   }

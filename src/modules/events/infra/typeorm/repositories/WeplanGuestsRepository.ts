@@ -21,12 +21,20 @@ class WeplanGuestRepository implements IWeplanGuestsRepository {
     return findWeplanGuest;
   }
 
-  public async findByGuestAndUserId(
-    guest_id: string,
+  public async findByEventId(event_id: string): Promise<WeplanGuest[]> {
+    const findWeplanGuests = await this.ormRepository.find({
+      where: { event_id },
+    });
+
+    return findWeplanGuests;
+  }
+
+  public async findByEventAndUserId(
+    event_id: string,
     user_id: string,
   ): Promise<WeplanGuest | undefined> {
     const findWeplanGuest = await this.ormRepository.findOne({
-      where: { guest_id, user_id },
+      where: { event_id, user_id },
     });
 
     return findWeplanGuest;
@@ -35,10 +43,12 @@ class WeplanGuestRepository implements IWeplanGuestsRepository {
   public async create({
     guest_id,
     user_id,
+    event_id,
   }: ICreateWeplanGuestDTO): Promise<WeplanGuest> {
     const guest = this.ormRepository.create({
       guest_id,
       user_id,
+      event_id,
     });
 
     await this.ormRepository.save(guest);

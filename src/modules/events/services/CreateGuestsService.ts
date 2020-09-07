@@ -17,7 +17,7 @@ interface IRequest {
   host_id: string;
   confirmed: boolean;
   weplanUser: boolean;
-  guest_id: string;
+  user_id: string;
 }
 
 @injectable()
@@ -47,8 +47,9 @@ class CreateGuestService {
     host_id,
     confirmed,
     weplanUser,
-    guest_id,
+    user_id,
   }: IRequest): Promise<Guest> {
+    console.log('user_id', user_id);
     const guestExists = await this.guestsRepository.findByEventFirstNameAndLastName(
       event_id,
       first_name,
@@ -60,10 +61,8 @@ class CreateGuestService {
     }
 
     if (weplanUser === true) {
-      const user_id = host_id;
-
-      const weplanGuestExists = await this.weplanGuestsRepository.findByGuestAndUserId(
-        guest_id,
+      const weplanGuestExists = await this.weplanGuestsRepository.findByEventAndUserId(
+        event_id,
         user_id,
       );
 
@@ -71,10 +70,9 @@ class CreateGuestService {
         throw new AppError('The guest that you have chosen, already exists.');
       }
 
-      const weplanGuest = await this.personInfoRepository.findByUserId(
-        guest_id,
-      );
+      const weplanGuest = await this.personInfoRepository.findByUserId(user_id);
 
+      console.log('weplanGuest', weplanGuest);
       if (weplanGuest) {
         const guest = await this.guestsRepository.create({
           first_name: weplanGuest.first_name,
@@ -85,10 +83,12 @@ class CreateGuestService {
           confirmed,
           weplanUser,
         });
+        console.log('guest', guest);
 
         await this.weplanGuestsRepository.create({
-          guest_id: guest.id,
           user_id,
+          guest_id: guest.id,
+          event_id,
         });
 
         await this.notificationsRepository.create({

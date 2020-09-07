@@ -129,7 +129,7 @@ eventsRouter.post(
       description: Joi.string().required(),
       confirmed: Joi.boolean().required(),
       weplanUser: Joi.boolean().required(),
-      guest_id: Joi.string(),
+      user_id: Joi.string(),
     },
   }),
   guestsController.create,

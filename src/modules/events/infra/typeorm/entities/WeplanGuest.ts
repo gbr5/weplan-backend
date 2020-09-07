@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Guest from './Guest';
+import Event from './Event';
 
 @Entity('weplan_guests')
 class WeplanGuest {
@@ -29,7 +30,14 @@ class WeplanGuest {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  User: User;
+  UserGuest: User;
+
+  @Column()
+  event_id: string;
+
+  @ManyToOne(() => Event, { eager: true })
+  @JoinColumn({ name: 'event_id' })
+  Event: Event;
 
   @CreateDateColumn()
   created_at: Date;

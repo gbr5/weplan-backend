@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateNonUserAppointmentGuests1597546517991
+export default class CreateWeplanGuests1599510273922
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'non_user_appointment_guests',
+        name: 'weplan_guests',
         columns: [
           {
             name: 'id',
@@ -15,27 +15,15 @@ export default class CreateNonUserAppointmentGuests1597546517991
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'phone',
-            type: 'varchar',
-          },
-          {
-            name: 'email',
-            type: 'varchar',
-          },
-          {
-            name: 'description',
-            type: 'varchar',
-          },
-          {
-            name: 'appointment_id',
+            name: 'guest_id',
             type: 'uuid',
           },
           {
-            name: 'supplier_id',
+            name: 'user_id',
+            type: 'uuid',
+          },
+          {
+            name: 'event_id',
             type: 'uuid',
           },
           {
@@ -51,17 +39,25 @@ export default class CreateNonUserAppointmentGuests1597546517991
         ],
         foreignKeys: [
           {
-            name: 'SupplierNonUserGuestAppointment',
-            columnNames: ['appointment_id'],
-            referencedTableName: 'appointments',
+            name: 'UserGuestEvent',
+            columnNames: ['user_id'],
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            onDelete: 'NO ACTION',
+            onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'SupplierNonUserAppointmentGuest',
-            columnNames: ['supplier_id'],
-            referencedTableName: 'users',
+            name: 'EventGuestId',
+            columnNames: ['guest_id'],
+            referencedTableName: 'guests',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'EventWeplanGuest',
+            columnNames: ['event_id'],
+            referencedTableName: 'events',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -72,6 +68,6 @@ export default class CreateNonUserAppointmentGuests1597546517991
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('non_user_appointment_guests');
+    await queryRunner.dropTable('weplan_guests');
   }
 }

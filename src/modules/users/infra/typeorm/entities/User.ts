@@ -144,7 +144,7 @@ class User {
   Host: WeplanAppointmentGuest;
 
   @OneToMany(() => WeplanGuest, guest => guest.user_id)
-  EventGuest: WeplanGuest;
+  WeplanGuest: WeplanGuest;
 
   @OneToMany(() => FriendGroup, owner => owner.user_id)
   OwnerFriendGroup: FriendGroup;

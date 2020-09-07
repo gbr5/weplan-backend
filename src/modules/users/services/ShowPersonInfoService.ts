@@ -5,9 +5,6 @@ import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoReposi
 
 import PersonInfo from '@modules/users/infra/typeorm/entities/PersonInfo';
 
-interface IRequest {
-  user_id: string;
-}
 @injectable()
 class ShowPersonInfoService {
   constructor(
@@ -15,7 +12,7 @@ class ShowPersonInfoService {
     private personInfoRepository: IPersonInfoRepository,
   ) {}
 
-  public async execute({ user_id }: IRequest): Promise<PersonInfo> {
+  public async execute(user_id: string): Promise<PersonInfo> {
     const personInfo = await this.personInfoRepository.findByUserId(user_id);
 
     if (!personInfo) {

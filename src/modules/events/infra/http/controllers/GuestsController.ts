@@ -16,7 +16,7 @@ export default class GuestsController {
       description,
       confirmed,
       weplanUser,
-      guest_id,
+      user_id,
     } = req.body;
 
     const host_id = req.user.id;
@@ -35,7 +35,7 @@ export default class GuestsController {
       host_id,
       confirmed,
       weplanUser,
-      guest_id,
+      user_id,
     });
 
     return res.json(classToClass(guest));

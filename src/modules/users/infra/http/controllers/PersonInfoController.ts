@@ -25,12 +25,11 @@ export default class PersonInfoController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
-    const dataParams = req.params;
-    const { user_id } = dataParams;
+    const user_id = req.user.id;
 
     const showPersonInfo = container.resolve(ShowPersonInfoService);
 
-    const personInfo = await showPersonInfo.execute({ user_id });
+    const personInfo = await showPersonInfo.execute(user_id);
 
     return res.json(classToClass(personInfo));
   }

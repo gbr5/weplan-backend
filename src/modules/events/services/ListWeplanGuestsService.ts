@@ -1,31 +1,31 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
-import IEventPlannersRepository from '@modules/events/repositories/IEventPlannersRepository';
+import IWeplanGuestsRepository from '@modules/events/repositories/IWeplanGuestsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUserDTO from '../dtos/IUserDTO';
 
 @injectable()
-class ListEventPlannersService {
+class ListWeplanGuestsService {
   constructor(
-    @inject('EventPlannersRepository')
-    private eventPlannersRepository: IEventPlannersRepository,
+    @inject('WeplanGuestsRepository')
+    private weplanGuestsRepository: IWeplanGuestsRepository,
 
     @inject('CacheProvider')
     private cacheUser: ICacheProvider,
   ) {}
 
   public async execute(event_id: string): Promise<IUserDTO[]> {
-    const EventPlanners = await this.eventPlannersRepository.findByEvent(
+    const WeplanGuests = await this.weplanGuestsRepository.findByEventId(
       event_id,
     );
     const users = ([] as unknown) as Promise<IUserDTO[]>;
 
-    EventPlanners.map(async planner => {
+    WeplanGuests.map(async guest => {
       (await users).push({
-        id: planner.planner_id,
-        name: planner.Planner.name,
-        avatar: planner.Planner.avatar ? planner.Planner.avatar : '',
+        id: guest.UserGuest.id,
+        name: guest.UserGuest.name,
+        avatar: guest.UserGuest.avatar ? guest.UserGuest.avatar : '',
       });
     });
 
@@ -33,4 +33,4 @@ class ListEventPlannersService {
   }
 }
 
-export default ListEventPlannersService;
+export default ListWeplanGuestsService;

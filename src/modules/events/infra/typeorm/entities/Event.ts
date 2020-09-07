@@ -20,6 +20,7 @@ import EventPlanner from './EventPlanner';
 import EventOwner from './EventOwner';
 import EventMember from './EventMember';
 import EventInfo from './EventInfo';
+import WeplanGuest from './WeplanGuest';
 
 @Entity('events')
 class Event {
@@ -72,6 +73,9 @@ class Event {
 
   @OneToMany(() => EventMember, event_member => event_member.event_id)
   Member: EventMember[];
+
+  @OneToMany(() => WeplanGuest, guest => guest.event_id)
+  WeplanGuest: WeplanGuest[];
 
   @OneToOne(() => EventInfo, event_info => event_info.event_id)
   Info: EventInfo;

@@ -10,6 +10,7 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 interface IRequest {
   user_id: string;
   guest_id: string;
+  event_id: string;
 }
 
 @injectable()
@@ -25,8 +26,15 @@ class CreateWeplanGuestService {
     private cacheProvider: ICacheProvider,
   ) {}
 
-  public async execute({ user_id, guest_id }: IRequest): Promise<WeplanGuest> {
-    const guestExists = await this.guestsRepository.findByGuestId(guest_id);
+  public async execute({
+    user_id,
+    guest_id,
+    event_id,
+  }: IRequest): Promise<WeplanGuest> {
+    const guestExists = await this.guestsRepository.findByEventAndUserId(
+      event_id,
+      user_id,
+    );
 
     if (guestExists) {
       throw new AppError('The guest that you have chosen, already exists.');
@@ -35,6 +43,7 @@ class CreateWeplanGuestService {
     const guest = await this.guestsRepository.create({
       user_id,
       guest_id,
+      event_id,
     });
 
     return guest;
