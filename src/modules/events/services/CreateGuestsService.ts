@@ -61,29 +61,21 @@ class CreateGuestService {
 
     if (weplanUser === true) {
       const user_id = host_id;
-      console.log(
-        'cheguei até a linha 63  -- weplanUser === true :',
-        host_id,
-        user_id,
-      );
+
       const weplanGuestExists = await this.weplanGuestsRepository.findByGuestAndUserId(
         guest_id,
         user_id,
       );
-      console.log('cheguei até a linha 68  -- weplanUser === true');
 
       if (weplanGuestExists) {
         throw new AppError('The guest that you have chosen, already exists.');
       }
-      console.log('cheguei até a linha 73  -- weplanGuestExists === false');
 
       const weplanGuest = await this.personInfoRepository.findByUserId(
         guest_id,
       );
 
       if (weplanGuest) {
-        console.log('cheguei até a linha 78  -- personInfo === true');
-
         const guest = await this.guestsRepository.create({
           first_name: weplanGuest.first_name,
           last_name: weplanGuest.last_name,
@@ -93,15 +85,11 @@ class CreateGuestService {
           confirmed,
           weplanUser,
         });
-        console.log('cheguei até a linha 90  -- personInfo && guest === true');
 
         await this.weplanGuestsRepository.create({
           guest_id: guest.id,
           user_id,
         });
-        console.log(
-          'cheguei até a linha 98  -- personInfo && guest && weplanGuest === true',
-        );
 
         await this.notificationsRepository.create({
           recipient_id: host_id,
@@ -110,11 +98,7 @@ class CreateGuestService {
 
         return guest;
       }
-      console.log('cheguei até a linha 114', weplanGuest);
     }
-    console.log(
-      'cheguei até a linha 119  -- weplanGuest && weplanUser === false',
-    );
 
     const guest = await this.guestsRepository.create({
       first_name,

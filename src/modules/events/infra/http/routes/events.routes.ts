@@ -129,30 +129,26 @@ eventsRouter.post(
       description: Joi.string().required(),
       confirmed: Joi.boolean().required(),
       weplanUser: Joi.boolean().required(),
-      guest_id: Joi.string().required(),
+      guest_id: Joi.string(),
     },
   }),
   guestsController.create,
 );
 
 eventsRouter.put(
-  '/:event_id/guests/:first_name-:last_name',
+  '/:event_id/guests/:id',
   celebrate({
     [Segments.BODY]: {
-      first_name: Joi.string().uuid().required(),
+      first_name: Joi.string().required(),
       last_name: Joi.string().required(),
       description: Joi.string().required(),
       confirmed: Joi.boolean().required(),
-      weplanUser: Joi.boolean().required(),
     },
   }),
   guestsController.update,
 );
 
-eventsRouter.delete(
-  '/:event_id/guests/:first_name-:last_name',
-  guestsController.delete,
-);
+eventsRouter.delete('/:event_id/guests/:id', guestsController.delete);
 eventsRouter.get('/:event_id/guests/', guestsController.index);
 eventsRouter.get('/:event_id/guests/:host_id', hostGuestsController.index);
 

@@ -19,12 +19,12 @@ class ListUserFriendsService {
     const userFriends = await this.userFriendsRepository.findAllFriends(
       user_id,
     );
-    console.log(userFriends);
+
     const friends = ([] as unknown) as Promise<IUserFriendDTO[]>;
 
     userFriends.map(async friend => {
       (await friends).push({
-        id: friend.friend_id,
+        id: friend.Friend.id,
         name: friend.Friend.name,
       });
     });

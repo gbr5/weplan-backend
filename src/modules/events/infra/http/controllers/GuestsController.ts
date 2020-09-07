@@ -65,29 +65,19 @@ export default class GuestsController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_id, first_name, last_name } = dataParams;
+    const { id } = dataParams;
     const host_id = req.user.id;
 
-    const {
-      new_first_name,
-      new_last_name,
-      description,
-      confirmed,
-      weplanUser,
-    } = req.body;
-
+    const { first_name, last_name, description, confirmed } = req.body;
     const updateGuest = container.resolve(UpdateGuestService);
 
     const event = await updateGuest.execute({
       first_name,
-      new_first_name,
       last_name,
-      new_last_name,
       description,
-      event_id,
+      id,
       host_id,
       confirmed,
-      weplanUser,
     });
 
     return res.json(event);
@@ -96,15 +86,11 @@ export default class GuestsController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_id, first_name, last_name } = dataParams;
+    const { id } = dataParams;
 
     const deleteGuest = container.resolve(DeleteGuestService);
 
-    await deleteGuest.execute({
-      event_id,
-      first_name,
-      last_name,
-    });
+    await deleteGuest.execute({ id });
 
     return res.status(200).send();
   }

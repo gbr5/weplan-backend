@@ -12,11 +12,9 @@ class DeleteContactTypeService {
 
   public async execute(id: string): Promise<void> {
     const group = await this.friendGroupsRepository.findByFriendGroupId(id);
-    console.log('15 - delete group service - group: ', group);
     if (!group) {
       throw new AppError('Group not found.');
     }
-    console.log('19 - delete group service - group: ', group);
 
     await this.friendGroupsRepository.delete(group);
   }

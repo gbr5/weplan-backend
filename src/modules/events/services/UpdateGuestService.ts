@@ -8,14 +8,11 @@ import Guest from '@modules/events/infra/typeorm/entities/Guest';
 
 interface IRequest {
   first_name: string;
-  new_first_name: string;
   last_name: string;
-  new_last_name: string;
   description: string;
-  event_id: string;
   host_id: string;
   confirmed: boolean;
-  weplanUser: boolean;
+  id: string;
 }
 @injectable()
 class UpdateGuestService {
@@ -32,32 +29,22 @@ class UpdateGuestService {
 
   public async execute({
     first_name,
-    new_first_name,
     last_name,
-    new_last_name,
     description,
-    event_id,
     host_id,
     confirmed,
-    weplanUser,
+    id,
   }: IRequest): Promise<Guest> {
-    const guest = await this.guestsRepository.findByEventFirstNameAndLastName(
-      event_id,
-      first_name,
-      last_name,
-    );
+    const guest = await this.guestsRepository.findByGuestId(id);
 
     if (!guest) {
       throw new AppError('Guest not found.');
     }
 
-    guest.first_name = new_first_name;
-    guest.last_name = new_last_name;
+    guest.first_name = first_name;
+    guest.last_name = last_name;
     guest.description = description;
-    guest.event_id = event_id;
-    guest.host_id = host_id;
     guest.confirmed = confirmed;
-    guest.weplanUser = weplanUser;
 
     const updatedGuest = await this.guestsRepository.save(guest);
 
