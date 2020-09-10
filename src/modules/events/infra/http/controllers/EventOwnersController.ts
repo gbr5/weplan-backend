@@ -5,24 +5,42 @@ import { classToClass } from 'class-transformer';
 import CreateEventOwnerService from '@modules/events/services/CreateEventOwnerService';
 import ListEventOwnersService from '@modules/events/services/ListEventOwnersService';
 import DeleteEventOwnerService from '@modules/events/services/DeleteEventOwnerService';
+import UpdateEventOwnerService from '@modules/events/services/UpdateEventOwnerService';
 
 export default class EventOwnersController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { owner_id, description } = req.body;
+    const { owner_id, number_of_guests, description } = req.body;
     const user_id = req.user.id;
 
     const dataParams = req.params;
 
     const { event_id } = dataParams;
 
-    const createEventOwners = container.resolve(CreateEventOwnerService);
+    const createEventOwner = container.resolve(CreateEventOwnerService);
 
-    const owner = await createEventOwners.execute({
+    const owner = await createEventOwner.execute({
       user_id,
       event_id,
       owner_id,
       description,
+      number_of_guests,
     });
+
+    return res.json(classToClass(owner));
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const { number_of_guests, description } = req.body;
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const updateEventOwner = container.resolve(UpdateEventOwnerService);
+
+    const owner = await updateEventOwner.execute(
+      id,
+      description,
+      number_of_guests,
+    );
 
     return res.json(classToClass(owner));
   }

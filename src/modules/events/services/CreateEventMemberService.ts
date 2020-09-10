@@ -11,6 +11,7 @@ interface IRequest {
   user_id: string;
   event_id: string;
   member_id: string;
+  number_of_guests: number;
 }
 
 @injectable()
@@ -30,6 +31,7 @@ class CreateEventMemberService {
     user_id,
     event_id,
     member_id,
+    number_of_guests,
   }: IRequest): Promise<EventMember> {
     const memberExists = await this.membersRepository.findByEventAndMemberId(
       event_id,
@@ -43,6 +45,7 @@ class CreateEventMemberService {
     const member = await this.membersRepository.create({
       event_id,
       member_id,
+      number_of_guests,
     });
 
     await this.notificationsRepository.create({

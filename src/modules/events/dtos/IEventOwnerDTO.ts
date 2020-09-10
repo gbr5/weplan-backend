@@ -3,6 +3,7 @@ export default interface IEventOwnerDTO {
   name: string;
   avatar: string;
   description: string;
+  number_of_guests: number;
   // first_name: string;
   // last_name: string;
 }

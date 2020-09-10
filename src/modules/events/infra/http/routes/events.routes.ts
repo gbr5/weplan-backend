@@ -93,8 +93,8 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      priority_level: Joi.number(),
-      checked: Joi.boolean(),
+      priority_level: Joi.number().required(),
+      checked: Joi.boolean().required(),
     },
   }),
   userCheckListsController.create,
@@ -106,8 +106,8 @@ eventsRouter.put(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      priority_level: Joi.number(),
-      checked: Joi.boolean(),
+      priority_level: Joi.number().required(),
+      checked: Joi.boolean().required(),
     },
   }),
   userCheckListsController.update,
@@ -126,7 +126,7 @@ eventsRouter.post(
     [Segments.BODY]: {
       first_name: Joi.string().required(),
       last_name: Joi.string().required(),
-      description: Joi.string().required(),
+      description: Joi.string(),
       confirmed: Joi.boolean().required(),
       weplanUser: Joi.boolean().required(),
       user_id: Joi.string(),
@@ -141,7 +141,7 @@ eventsRouter.put(
     [Segments.BODY]: {
       first_name: Joi.string().required(),
       last_name: Joi.string().required(),
-      description: Joi.string().required(),
+      description: Joi.string(),
       confirmed: Joi.boolean().required(),
     },
   }),
@@ -177,10 +177,22 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       owner_id: Joi.string().required(),
-      description: Joi.string().required(),
+      description: Joi.string(),
+      number_of_guests: Joi.number(),
     },
   }),
   eventOwnersController.create,
+);
+
+eventsRouter.put(
+  '/:event_id/event-owners',
+  celebrate({
+    [Segments.BODY]: {
+      description: Joi.string(),
+      number_of_guests: Joi.number(),
+    },
+  }),
+  eventOwnersController.update,
 );
 
 eventsRouter.delete(
@@ -196,9 +208,20 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       member_id: Joi.string().required(),
+      number_of_guests: Joi.number(),
     },
   }),
   eventMembersController.create,
+);
+
+eventsRouter.put(
+  '/:event_id/event-members',
+  celebrate({
+    [Segments.BODY]: {
+      number_of_guests: Joi.number(),
+    },
+  }),
+  eventMembersController.update,
 );
 
 eventsRouter.delete(
@@ -213,14 +236,14 @@ eventsRouter.post(
   '/:event_id/event-info',
   celebrate({
     [Segments.BODY]: {
-      number_of_guests: Joi.number().required(),
-      duration: Joi.number().required(),
-      budget: Joi.number().required(),
-      description: Joi.string().required(),
-      country: Joi.string().required(),
-      local_state: Joi.string().required(),
-      city: Joi.string().required(),
-      address: Joi.string().required(),
+      number_of_guests: Joi.number(),
+      duration: Joi.number(),
+      budget: Joi.number(),
+      description: Joi.string(),
+      country: Joi.string(),
+      local_state: Joi.string(),
+      city: Joi.string(),
+      address: Joi.string(),
     },
   }),
   eventInfosController.create,
@@ -231,14 +254,14 @@ eventsRouter.put(
   '/:event_id/event-info',
   celebrate({
     [Segments.BODY]: {
-      number_of_guests: Joi.number().required(),
-      duration: Joi.number().required(),
-      budget: Joi.number().required(),
-      description: Joi.string().required(),
-      country: Joi.string().required(),
-      local_state: Joi.string().required(),
-      city: Joi.string().required(),
-      address: Joi.string().required(),
+      number_of_guests: Joi.number(),
+      duration: Joi.number(),
+      budget: Joi.number(),
+      description: Joi.string(),
+      country: Joi.string(),
+      local_state: Joi.string(),
+      city: Joi.string(),
+      address: Joi.string(),
     },
   }),
   eventInfosController.update,

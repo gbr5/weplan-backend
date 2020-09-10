@@ -30,6 +30,9 @@ class EventMember {
   @JoinColumn({ name: 'member_id' })
   Member: User;
 
+  @Column('numeric')
+  number_of_guests: number;
+
   @CreateDateColumn()
   created_at: Date;
 

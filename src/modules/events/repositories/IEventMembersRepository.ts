@@ -8,6 +8,7 @@ export default interface IEventMembersRepository {
     member_id: string,
   ): Promise<EventMember | undefined>;
   findByEvent(event_id: string): Promise<EventMember[]>;
+  findById(id: string): Promise<EventMember | undefined>;
   save(member: EventMember): Promise<EventMember>;
   delete(member: EventMember): Promise<void>;
 }

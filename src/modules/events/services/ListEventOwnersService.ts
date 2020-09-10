@@ -27,6 +27,7 @@ class ListEventOwnersService {
         name: owner.Owner.name,
         avatar: owner.Owner.avatar ? owner.Owner.avatar : '',
         description: owner.description,
+        number_of_guests: owner.number_of_guests,
         // first_name: user ? user.first_name : '',
         // last_name: user ? user.last_name : '',
       });

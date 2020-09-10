@@ -30,6 +30,9 @@ class EventOwner {
   @JoinColumn({ name: 'owner_id' })
   Owner: User;
 
+  @Column('numeric')
+  number_of_guests: number;
+
   @Column()
   description: string;
 
