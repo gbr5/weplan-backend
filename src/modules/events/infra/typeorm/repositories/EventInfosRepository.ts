@@ -12,9 +12,11 @@ class EventInfosRepository implements IEventInfosRepository {
   }
 
   public async findByEvent(event_id: string): Promise<EventInfo | undefined> {
+    console.log('event_id', event_id);
     const findEventInfo = await this.ormRepository.findOne({
       where: { event_id },
     });
+    console.log('event_info', findEventInfo);
 
     return findEventInfo;
   }

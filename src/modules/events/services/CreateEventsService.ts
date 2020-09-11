@@ -7,6 +7,7 @@ import Event from '@modules/events/infra/typeorm/entities/Event';
 import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
+import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
 
 interface IRequest {
   name: string;
@@ -20,6 +21,9 @@ class CreateEventService {
   constructor(
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
+
+    @inject('EventOwnersRepository')
+    private eventOwnersRepository: IEventOwnersRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
@@ -70,6 +74,13 @@ class CreateEventService {
       user_id,
       event_type,
       date: eventDate,
+    });
+
+    await this.eventOwnersRepository.create({
+      event_id: event.id,
+      description: 'Anfitrião Master',
+      number_of_guests: 0,
+      owner_id: user_id,
     });
 
     const dateFormatted = format(eventDate, "dd/MM/yyyy 'às' HH:mm 'horas");

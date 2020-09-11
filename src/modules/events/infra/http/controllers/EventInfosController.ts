@@ -42,10 +42,11 @@ export default class EventInfosController {
     const dataParams = req.params;
 
     const { event_id } = dataParams;
-
+    console.log(event_id);
     const showEventInfo = container.resolve(ShowEventInfoService);
 
     const eventInfo = await showEventInfo.execute(event_id);
+    console.log(eventInfo);
 
     return res.json(classToClass(eventInfo));
   }

@@ -12,8 +12,8 @@ class EventOwnerRepository implements IEventOwnersRepository {
   }
 
   public async findByEventAndOwnerId(
-    event_id: string,
     owner_id: string,
+    event_id: string,
   ): Promise<EventOwner | undefined> {
     const findEventOwner = await this.ormRepository.findOne({
       where: { event_id, owner_id },

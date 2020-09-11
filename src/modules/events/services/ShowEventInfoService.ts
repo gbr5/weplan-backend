@@ -13,7 +13,10 @@ class ShowEventInfoService {
   ) {}
 
   public async execute(event_id: string): Promise<EventInfo> {
+    console.log(event_id);
+
     const eventInfo = await this.eventInfosRepository.findByEvent(event_id);
+    console.log('show service, eventInfo:', eventInfo);
 
     if (!eventInfo) {
       throw new AppError('EventInfo not found.');
