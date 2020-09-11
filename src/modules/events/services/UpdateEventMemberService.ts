@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 import IEventMembersRepository from '@modules/events/repositories/IEventMembersRepository';
 
 import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
+import ICreateEventMemberDTO from '../dtos/ICreateEventMemberDTO';
 
 @injectable()
 class UpdateEventMemberService {
@@ -12,11 +13,15 @@ class UpdateEventMemberService {
     private eventMembersRepository: IEventMembersRepository,
   ) {}
 
-  public async execute(
-    id: string,
-    number_of_guests: number,
-  ): Promise<EventMember> {
-    const eventMember = await this.eventMembersRepository.findById(id);
+  public async execute({
+    event_id,
+    member_id,
+    number_of_guests,
+  }: ICreateEventMemberDTO): Promise<EventMember> {
+    const eventMember = await this.eventMembersRepository.findByEventAndMemberId(
+      event_id,
+      member_id,
+    );
 
     if (!eventMember) {
       throw new AppError('Event informations not found.');

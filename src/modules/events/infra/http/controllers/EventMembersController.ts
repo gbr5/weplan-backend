@@ -31,11 +31,15 @@ export default class EventMembersController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { number_of_guests } = req.body;
     const reqParams = req.params;
-    const { id } = reqParams;
+    const { event_id, member_id } = reqParams;
 
     const updateEventMember = container.resolve(UpdateEventMemberService);
 
-    const owner = await updateEventMember.execute(id, number_of_guests);
+    const owner = await updateEventMember.execute({
+      event_id,
+      member_id,
+      number_of_guests,
+    });
 
     return res.json(classToClass(owner));
   }

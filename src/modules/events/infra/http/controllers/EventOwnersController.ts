@@ -32,15 +32,16 @@ export default class EventOwnersController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { number_of_guests, description } = req.body;
     const reqParams = req.params;
-    const { id } = reqParams;
+    const { event_id, owner_id } = reqParams;
 
     const updateEventOwner = container.resolve(UpdateEventOwnerService);
 
-    const owner = await updateEventOwner.execute(
-      id,
+    const owner = await updateEventOwner.execute({
+      owner_id,
+      event_id,
       description,
       number_of_guests,
-    );
+    });
 
     return res.json(classToClass(owner));
   }

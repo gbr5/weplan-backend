@@ -5,6 +5,12 @@ import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRep
 
 import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
 
+interface IRequest {
+  owner_id: string;
+  event_id: string;
+  description: string;
+  number_of_guests: number;
+}
 @injectable()
 class UpdateEventOwnerService {
   constructor(
@@ -12,19 +18,23 @@ class UpdateEventOwnerService {
     private eventOwnersRepository: IEventOwnersRepository,
   ) {}
 
-  public async execute(
-    id: string,
-    number_of_guests: number,
-    description: string,
-  ): Promise<EventOwner> {
-    const eventOwner = await this.eventOwnersRepository.findById(id);
+  public async execute({
+    owner_id,
+    event_id,
+    description,
+    number_of_guests,
+  }: IRequest): Promise<EventOwner> {
+    const eventOwner = await this.eventOwnersRepository.findByEventAndOwnerId(
+      owner_id,
+      event_id,
+    );
 
     if (!eventOwner) {
       throw new AppError('Event informations not found.');
     }
 
-    eventOwner.number_of_guests = number_of_guests;
     eventOwner.description = description;
+    eventOwner.number_of_guests = number_of_guests;
 
     const updatedEventOwner = await this.eventOwnersRepository.save(eventOwner);
 

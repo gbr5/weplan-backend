@@ -185,7 +185,7 @@ eventsRouter.post(
 );
 
 eventsRouter.put(
-  '/:event_id/event-owners',
+  '/:event_id/event-owners/:owner_id',
   celebrate({
     [Segments.BODY]: {
       description: Joi.string(),
@@ -215,7 +215,7 @@ eventsRouter.post(
 );
 
 eventsRouter.put(
-  '/:event_id/event-members',
+  '/:event_id/event-members/:member_id',
   celebrate({
     [Segments.BODY]: {
       number_of_guests: Joi.number(),
