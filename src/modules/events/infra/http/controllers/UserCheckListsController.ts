@@ -41,7 +41,7 @@ export default class UserCheckListsController {
 
     const dataParams = req.params;
 
-    const { event_id, id } = dataParams;
+    const { id } = dataParams;
 
     const updateUserCheckList = container.resolve(UpdateUserCheckListService);
 
@@ -49,7 +49,6 @@ export default class UserCheckListsController {
       name,
       priority_level,
       checked,
-      event_id,
       id,
     });
 
@@ -59,14 +58,11 @@ export default class UserCheckListsController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_id, id } = dataParams;
+    const { id } = dataParams;
 
     const deleteUserCheckList = container.resolve(DeleteUserCheckListService);
 
-    await deleteUserCheckList.execute({
-      event_id,
-      id,
-    });
+    await deleteUserCheckList.execute(id);
 
     return res.status(200).send();
   }

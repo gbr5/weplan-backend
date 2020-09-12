@@ -16,13 +16,8 @@ class UserCheckListsRepository implements IUserCheckListsRepository {
     this.ormRepository = getRepository(UserCheckList);
   }
 
-  public async findByIdAndEvent(
-    event_id: string,
-    id: string,
-  ): Promise<UserCheckList | undefined> {
-    const findUserCheckList = await this.ormRepository.findOne({
-      where: { event_id, id },
-    });
+  public async findById(id: string): Promise<UserCheckList | undefined> {
+    const findUserCheckList = await this.ormRepository.findOne({ id });
 
     return findUserCheckList;
   }
@@ -30,6 +25,7 @@ class UserCheckListsRepository implements IUserCheckListsRepository {
   public async findByEvent(event_id: string): Promise<UserCheckList[]> {
     const findUserCheckList = await this.ormRepository.find({
       where: { event_id },
+      order: { priority_level: 'DESC' },
     });
 
     return findUserCheckList;

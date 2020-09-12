@@ -63,6 +63,21 @@ appointmentsRouter.post(
   appointmentsController.create,
 );
 
+appointmentsRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.BODY]: {
+      subject: Joi.string().required(),
+      date: Joi.date(),
+      address: Joi.string().required(),
+      appointment_type: Joi.string().required(),
+      weplanGuest: Joi.boolean().required(),
+      duration_minutes: Joi.number().required(),
+    },
+  }),
+  appointmentsController.update,
+);
+
 appointmentsRouter.delete('/:id', appointmentsController.delete);
 
 appointmentsRouter.get('/my-appointments', supplierAppointmentController.index);

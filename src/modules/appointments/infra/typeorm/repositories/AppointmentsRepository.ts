@@ -18,6 +18,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
   public async findByHostId(host_id: string): Promise<Appointment[]> {
     const findAppointment = await this.ormRepository.find({
       where: { host_id },
+      order: { date: 'ASC' },
     });
 
     return findAppointment;
@@ -94,6 +95,10 @@ class AppointmentsRepository implements IAppointmentsRepository {
     await this.ormRepository.delete({
       id,
     });
+  }
+
+  public async save(appointment: Appointment): Promise<Appointment> {
+    return this.ormRepository.save(appointment);
   }
 }
 

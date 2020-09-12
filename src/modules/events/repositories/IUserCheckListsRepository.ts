@@ -3,10 +3,7 @@ import ICreateUserCheckListDTO from '@modules/events/dtos/ICreateUserCheckListDT
 
 export default interface IUserCheckListsRepository {
   findByEvent(event_id: string): Promise<UserCheckList[]>;
-  findByIdAndEvent(
-    event_id: string,
-    id: string,
-  ): Promise<UserCheckList | undefined>;
+  findById(id: string): Promise<UserCheckList | undefined>;
   create(data: ICreateUserCheckListDTO): Promise<UserCheckList>;
   save(checkList: UserCheckList): Promise<UserCheckList>;
   delete(checkList: UserCheckList): Promise<void>;
