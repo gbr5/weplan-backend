@@ -16,12 +16,12 @@ export default class AppointmentsController {
       appointment_type,
       date,
       duration_minutes,
+      weplanGuest,
     } = req.body;
     const host_id = req.user.id;
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
-    const weplanGuest = true;
     const appointment = await createAppointment.execute({
       subject,
       address,
@@ -38,12 +38,28 @@ export default class AppointmentsController {
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { id } = dataParams;
+    const {
+      subject,
+      date,
+      duration_minutes,
+      address,
+      appointment_type,
+      weplanGuest,
+    } = req.body;
 
     const updateAppointmentService = container.resolve(
       UpdateAppointmentService,
     );
 
-    const appointment = await updateAppointmentService.execute(id);
+    const appointment = await updateAppointmentService.execute(
+      id,
+      subject,
+      date,
+      duration_minutes,
+      address,
+      appointment_type,
+      weplanGuest,
+    );
 
     return res.json(classToClass(appointment));
   }

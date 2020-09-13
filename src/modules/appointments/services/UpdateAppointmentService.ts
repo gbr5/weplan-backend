@@ -14,12 +14,12 @@ class UpdateAppointmentService {
 
   public async execute(
     id: string,
+    subject: string,
     date: Date,
     duration_minutes: number,
-    subject: string,
+    address: string,
     appointment_type: string,
     weplanGuest: boolean,
-    address: string,
   ): Promise<Appointment> {
     const findAppointment = await this.appointmentsRepository.findById(id);
 
@@ -27,12 +27,20 @@ class UpdateAppointmentService {
       throw new AppError('Appointment day interval not found.');
     }
 
-    findAppointment.weplanGuest = weplanGuest;
-    findAppointment.address = address;
-    findAppointment.duration_minutes = duration_minutes;
+    console.log({
+      subject,
+      date,
+      duration_minutes,
+      address,
+      appointment_type,
+      weplanGuest,
+    });
     findAppointment.subject = subject;
-    findAppointment.appointment_type = appointment_type;
     findAppointment.date = date;
+    findAppointment.duration_minutes = duration_minutes;
+    findAppointment.address = address;
+    findAppointment.appointment_type = appointment_type;
+    findAppointment.weplanGuest = weplanGuest;
 
     const updatedAppointment = await this.appointmentsRepository.save(
       findAppointment,
