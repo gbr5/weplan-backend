@@ -12,6 +12,7 @@ import contactTypesRouter from '@modules/users/infra/http/routes/contactTypes.ro
 
 import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.routes';
+import friendsEventsRouter from '@modules/events/infra/http/routes/friendsEvents.routes';
 
 import suppliersRouter from '@modules/suppliers/infra/http/routes/suppliers.routes';
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
@@ -33,6 +34,7 @@ routes.use('/contact-types', contactTypesRouter);
 
 routes.use('/events', eventsRouter);
 routes.use('/event-types', eventTypesRouter);
+routes.use('/friends-events', friendsEventsRouter);
 
 routes.use('/suppliers', suppliersRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);

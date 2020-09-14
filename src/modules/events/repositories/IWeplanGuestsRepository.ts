@@ -4,6 +4,7 @@ import ICreateWeplanGuestDTO from '@modules/events/dtos/ICreateWeplanGuestDTO';
 export default interface IWeplanGuestsRepository {
   create(data: ICreateWeplanGuestDTO): Promise<WeplanGuest>;
   findByEventId(event_id: string): Promise<WeplanGuest[]>;
+  findByUserId(user_id: string): Promise<WeplanGuest[]>;
   findByGuestId(guest_id: string): Promise<WeplanGuest | undefined>;
   findByEventAndUserId(
     event_id: string,

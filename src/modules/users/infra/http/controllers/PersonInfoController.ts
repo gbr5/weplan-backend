@@ -8,9 +8,7 @@ import { classToClass } from 'class-transformer';
 
 export default class PersonInfoController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
-
-    const { person_id, first_name, last_name } = req.body;
+    const { person_id, first_name, last_name, user_id } = req.body;
 
     const createPersonInfo = container.resolve(CreatePersonInfoService);
 

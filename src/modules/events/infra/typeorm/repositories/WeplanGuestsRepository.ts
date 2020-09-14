@@ -29,6 +29,14 @@ class WeplanGuestRepository implements IWeplanGuestsRepository {
     return findWeplanGuests;
   }
 
+  public async findByUserId(user_id: string): Promise<WeplanGuest[]> {
+    const findWeplanGuests = await this.ormRepository.find({
+      where: { user_id },
+    });
+
+    return findWeplanGuests;
+  }
+
   public async findByEventAndUserId(
     event_id: string,
     user_id: string,

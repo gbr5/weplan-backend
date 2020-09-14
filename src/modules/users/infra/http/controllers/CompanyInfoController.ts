@@ -8,9 +8,7 @@ import ShowCompanyInfoService from '@modules/users/services/ShowCompanyInfoServi
 
 export default class CompanyInfoController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
-
-    const { company_id, name } = req.body;
+    const { company_id, name, user_id } = req.body;
 
     const createCompanyInfo = container.resolve(CreateCompanyInfoService);
 

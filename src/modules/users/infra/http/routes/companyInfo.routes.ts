@@ -7,12 +7,21 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 const companyInfoRouter = Router();
 const companyInfoController = new CompanyInfoController();
 
-companyInfoRouter.use(ensureAuthenticated);
-
-companyInfoRouter.post('/', companyInfoController.create);
-companyInfoRouter.get('/', companyInfoController.show);
+companyInfoRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      company_id: Joi.string().required(),
+      user_id: Joi.string().required(),
+    },
+  }),
+  companyInfoController.create,
+);
+companyInfoRouter.get('/', ensureAuthenticated, companyInfoController.show);
 companyInfoRouter.put(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
