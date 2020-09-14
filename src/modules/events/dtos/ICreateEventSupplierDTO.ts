@@ -3,4 +3,5 @@ export default interface ICreateSelectedSupplierDTO {
   event_id: string;
   supplier_sub_category: string;
   isHired: boolean;
+  weplanUser: boolean;
 }
