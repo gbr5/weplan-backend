@@ -12,7 +12,6 @@ import uploadConfig from '@config/upload';
 import { Exclude, Expose } from 'class-transformer';
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import EventTypeSupplier from '@modules/events/infra/typeorm/entities/EventTypeSupplier';
-import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSupplier';
 
 import EventPlanner from '@modules/events/infra/typeorm/entities/EventPlanner';
 import Funnel from '@modules/suppliers/infra/typeorm/entities/Funnel';
@@ -91,12 +90,6 @@ class User {
 
   @OneToOne(() => Event, event => event.user_id)
   Event: Event;
-
-  @OneToMany(
-    () => SelectedSupplier,
-    selected_supplier => selected_supplier.supplier_id,
-  )
-  SelectedSupplier: SelectedSupplier;
 
   @OneToMany(() => EventOwner, owner => owner.owner_id)
   EventOwner: EventOwner;

@@ -14,7 +14,6 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import EventCard from '@modules/suppliers/infra/typeorm/entities/EventCard';
 import EventAppointment from '@modules/appointments/infra/typeorm/entities/EventAppointment';
 import EventType from './EventType';
-import SelectedSupplier from './SelectedSupplier';
 import UserCheckList from './UserCheckList';
 import EventPlanner from './EventPlanner';
 import EventOwner from './EventOwner';
@@ -55,12 +54,6 @@ class Event {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @OneToMany(
-    () => SelectedSupplier,
-    selected_supplier => selected_supplier.event_id,
-  )
-  Supplier: SelectedSupplier[];
 
   @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_id)
   CheckList: UserCheckList[];

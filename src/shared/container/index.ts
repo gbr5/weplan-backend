@@ -48,8 +48,11 @@ import EventTypesRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventTypeSuppliersRepository from '@modules/events/repositories/IEventTypeSuppliersRepository';
 import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventTypeSuppliersRepository';
 
-import ISelectedSuppliersRepository from '@modules/events/repositories/ISelectedSuppliersRepository';
-import SelectedSuppliersRepository from '@modules/events/infra/typeorm/repositories/SelectedSuppliersRepository';
+import IEventWeplanSuppliersRepository from '@modules/events/repositories/IEventWeplanSuppliersRepository';
+import EventWeplanSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventWeplanSuppliersRepository';
+
+import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
+import EventSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventSuppliersRepository';
 
 import ISupplierCategoriesRepository from '@modules/suppliers/repositories/ISupplierCategoriesRepository';
 import SupplierCategoriesRepository from '@modules/suppliers/infra/typeorm/repositories/SupplierCategoriesRepository';
@@ -190,9 +193,14 @@ container.registerSingleton<IEventTypeSuppliersRepository>(
   EventTypeSuppliersRepository,
 );
 
-container.registerSingleton<ISelectedSuppliersRepository>(
-  'SelectedSuppliersRepository',
-  SelectedSuppliersRepository,
+container.registerSingleton<IEventSuppliersRepository>(
+  'EventSuppliersRepository',
+  EventSuppliersRepository,
+);
+
+container.registerSingleton<IEventWeplanSuppliersRepository>(
+  'EventWeplanSuppliersRepository',
+  EventWeplanSuppliersRepository,
 );
 
 container.registerSingleton<ISupplierCategoriesRepository>(

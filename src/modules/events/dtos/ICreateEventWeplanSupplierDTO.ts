@@ -1,6 +1,5 @@
 export default interface ICreateSelectedSupplierDTO {
-  supplier_id: string;
+  user_id: string;
+  event_supplier_id: string;
   event_id: string;
-  supplier_sub_category: string;
-  isHired: boolean;
 }

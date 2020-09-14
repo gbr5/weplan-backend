@@ -2,23 +2,25 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import SelectedSupplier from '@modules/events/infra/typeorm/entities/SelectedSupplier';
-import ISelectedSuppliersRepository from '@modules/events/repositories/ISelectedSuppliersRepository';
+import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
+import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 
 interface IRequest {
-  supplier_id: string;
+  name: string;
   event_id: string;
   supplier_sub_category: string;
   isHired: boolean;
+  weplanUser: boolean;
+  user_id: string;
 }
 
 @injectable()
-class CreateSelectedSupplierService {
+class CreateEventSupplierService {
   constructor(
-    @inject('SelectedSuppliersRepository')
-    private eventSuppliersRepository: ISelectedSuppliersRepository,
+    @inject('EventSuppliersRepository')
+    private eventSuppliersRepository: IEventSuppliersRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
@@ -28,13 +30,15 @@ class CreateSelectedSupplierService {
   ) {}
 
   public async execute({
-    supplier_id,
+    name,
     event_id,
     supplier_sub_category,
     isHired,
-  }: IRequest): Promise<SelectedSupplier> {
-    const eventSupplierExists = await this.eventSuppliersRepository.findByIdAndEvent(
-      supplier_id,
+    weplanUser,
+    user_id,
+  }: IRequest): Promise<EventSupplier> {
+    const eventSupplierExists = await this.eventSuppliersRepository.findByNameAndEvent(
+      name,
       event_id,
     );
 
@@ -45,19 +49,20 @@ class CreateSelectedSupplierService {
     }
 
     const event = await this.eventSuppliersRepository.create({
-      supplier_id,
+      name,
       event_id,
       supplier_sub_category,
       isHired,
+      weplanUser,
     });
 
     await this.notificationsRepository.create({
-      recipient_id: supplier_id,
-      content: `${supplier_id} adicionado ao ${event_id}.`,
+      recipient_id: user_id,
+      content: `${name} adicionado!.`,
     });
 
     return event;
   }
 }
 
-export default CreateSelectedSupplierService;
+export default CreateEventSupplierService;

@@ -8,23 +8,18 @@ import {
   Column,
 } from 'typeorm';
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
 
-@Entity('selected_suppliers')
+@Entity('event_suppliers')
 class EventSupplier {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  supplier_id: string;
+  name: string;
 
-  @ManyToOne(() => User, { eager: true })
-  @JoinColumn({ name: 'supplier_id' })
-  Supplier: User;
-
-  @Column()
+  @Column('uuid')
   event_id: string;
 
   @ManyToOne(() => Event, event => event.id)
@@ -40,6 +35,9 @@ class EventSupplier {
 
   @Column('boolean')
   isHired: boolean;
+
+  @Column('boolean')
+  weplanUser: boolean;
 
   @CreateDateColumn()
   created_at: Date;

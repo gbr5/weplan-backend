@@ -3,7 +3,8 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import EventsController from '@modules/events/infra/http/controllers/EventsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import SelectedSuppliersController from '@modules/events/infra/http/controllers/SelectedSuppliersController';
+import EventSuppliersController from '@modules/events/infra/http/controllers/EventSuppliersController';
+import EventWeplanSuppliersController from '@modules/events/infra/http/controllers/EventWeplanSuppliersController';
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
 import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
 import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
@@ -14,7 +15,8 @@ import EventInfosController from '@modules/events/infra/http/controllers/EventIn
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
-const selectedSuppliersController = new SelectedSuppliersController();
+const eventSuppliersController = new EventSuppliersController();
+const eventWeplanSuppliersController = new EventWeplanSuppliersController();
 const userCheckListsController = new UserCheckListsController();
 const guestsController = new GuestsController();
 const hostGuestsController = new HostGuestsController();
@@ -55,35 +57,52 @@ eventsRouter.delete('/:event_id', eventsController.delete);
 // === Selected & Hired Suppliers === //
 
 eventsRouter.post(
-  '/:event_id/suppliers',
+  '/:event_id/event-suppliers',
   celebrate({
     [Segments.BODY]: {
-      supplier_id: Joi.string().uuid().required(),
+      name: Joi.string().required(),
       supplier_sub_category: Joi.string().required(),
       isHired: Joi.boolean().required(),
+      weplanUser: Joi.boolean().required(),
     },
   }),
-  selectedSuppliersController.create,
+  eventSuppliersController.create,
 );
 
 eventsRouter.put(
-  '/:event_id/suppliers/:supplier_id',
+  '/:event_id/event-suppliers/:id',
   celebrate({
     [Segments.BODY]: {
+      name: Joi.string().required(),
       supplier_sub_category: Joi.string().required(),
       isHired: Joi.boolean().required(),
     },
   }),
-  selectedSuppliersController.update,
+  eventSuppliersController.update,
 );
 
 eventsRouter.delete(
-  '/:event_id/suppliers/:supplier_id',
-  selectedSuppliersController.delete,
+  '/:event_id/event-suppliers/:id',
+  eventSuppliersController.delete,
 );
+eventsRouter.get('/:event_id/event-suppliers', eventSuppliersController.index);
+
+// === Selected & Hired WEPLAN Suppliers === //
+
+eventsRouter.post(
+  '/:event_id/event-weplan-suppliers',
+  celebrate({
+    [Segments.BODY]: {
+      user_id: Joi.string().uuid().required(),
+      event_supplier_id: Joi.string().required(),
+    },
+  }),
+  eventWeplanSuppliersController.create,
+);
+
 eventsRouter.get(
-  '/:event_id/selected_suppliers',
-  selectedSuppliersController.index,
+  '/:event_id/event-weplan-suppliers',
+  eventWeplanSuppliersController.index,
 );
 
 // === User Check List === //
