@@ -9,6 +9,7 @@ export default interface IEventAppointmentsRepository {
   //   host_id: string,
   // ): Promise<EventAppointment | undefined>;
   findByEventId(event_id: string): Promise<EventAppointment[]>;
+  findBySupplierId(supplier_id: string): Promise<EventAppointment[]>;
   findById(id: string): Promise<EventAppointment | undefined>;
   delete(data: ICreateEventAppointmentDTO): Promise<void>;
 }

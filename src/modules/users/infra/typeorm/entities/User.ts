@@ -17,6 +17,7 @@ import EventPlanner from '@modules/events/infra/typeorm/entities/EventPlanner';
 import Funnel from '@modules/suppliers/infra/typeorm/entities/Funnel';
 import StageCard from '@modules/suppliers/infra/typeorm/entities/StageCard';
 import SupplierAppointmentDaySchedule from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDaySchedule';
+import SupplierAppointmentDayOff from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDayOff';
 import SupplierAppointmentDayInterval from '@modules/appointments/infra/typeorm/entities/SupplierAppointmentDayInterval';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import WeplanAppointmentGuest from '@modules/appointments/infra/typeorm/entities/WeplanAppointmentGuest';
@@ -25,6 +26,7 @@ import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
 import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
 import FriendGroup from '@modules/users/infra/typeorm/entities/FriendGroup';
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
+import NonUserAppointmentGuest from '@modules/appointments/infra/typeorm/entities/NonUserAppointmentGuest';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -147,6 +149,15 @@ class User {
 
   @OneToMany(() => UserFriend, user => user.user_id)
   FriendUser: UserFriend;
+
+  @OneToMany(
+    () => NonUserAppointmentGuest,
+    nonUserappointmentGuest => nonUserappointmentGuest.supplier_id,
+  )
+  NUGuest: NonUserAppointmentGuest;
+
+  @OneToMany(() => SupplierAppointmentDayOff, supplier => supplier.id)
+  SupplierAppointmentDayOff: SupplierAppointmentDayOff;
 }
 
 export default User;
