@@ -26,6 +26,16 @@ class EventAppointmentsRepository implements IEventAppointmentsRepository {
     return findEventAppointment;
   }
 
+  public async findBySupplierId(
+    supplier_id: string,
+  ): Promise<EventAppointment[]> {
+    const findEventAppointment = await this.ormRepository.find({
+      where: { supplier_id },
+    });
+
+    return findEventAppointment;
+  }
+
   public async create({
     appointment_id,
     event_id,
