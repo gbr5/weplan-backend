@@ -16,14 +16,14 @@ class EventAppointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   appointment_id: string;
 
   @ManyToOne(() => Appointment, appointment => appointment.id)
   @JoinColumn({ name: 'appointment_id' })
   Appointment: Appointment;
 
-  @Column()
+  @Column('uuid')
   event_id: string;
 
   @ManyToOne(() => Event, event => event.id)
