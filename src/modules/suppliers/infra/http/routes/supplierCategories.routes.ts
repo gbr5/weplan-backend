@@ -16,22 +16,22 @@ supplierCategoriessRouter.use(ensureAuthenticated);
 // === $$ === $ ==> Supplier <== $ === $$ === //
 
 supplierCategoriessRouter.post(
-  '/:category_name/:sub_category',
+  '/weplan/:category_name/:sub_category',
   userSupplierCategoriesController.create,
 );
 
 supplierCategoriessRouter.get(
-  '/:category_name/:sub_category',
+  '/weplan/:category_name/:sub_category',
   userSupplierCategoriesController.index,
 );
 
 supplierCategoriessRouter.get(
-  '/:category_name/:sub_category/:user_id',
+  '/weplan/:category_name/:sub_category/:user_id',
   userSupplierCategoriesController.show,
 );
 
 supplierCategoriessRouter.delete(
-  '/:category_name/:sub_category',
+  '/weplan/:category_name/:sub_category',
   userSupplierCategoriesController.delete,
 );
 
@@ -72,7 +72,7 @@ supplierCategoriessRouter.post(
 );
 
 supplierCategoriessRouter.get(
-  '/:category_name',
+  '/sub-categories/:category_name',
   supplierSubCategoriesController.index,
 );
 

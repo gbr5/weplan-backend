@@ -15,8 +15,10 @@ class ListUserSupplierSubCategoriesService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(): Promise<SupplierSubCategory[]> {
-    const supplierSubCategories = await this.supplierSubCategoriesRepository.findAll();
+  public async execute(category_name: string): Promise<SupplierSubCategory[]> {
+    const supplierSubCategories = await this.supplierSubCategoriesRepository.findByCategoryName(
+      category_name,
+    );
 
     return supplierSubCategories;
   }
