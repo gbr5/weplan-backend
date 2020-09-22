@@ -57,7 +57,7 @@ eventsRouter.delete('/:event_id', eventsController.delete);
 // === Selected & Hired Suppliers === //
 
 eventsRouter.post(
-  '/:event_id/event-suppliers',
+  '/event-suppliers/:event_id',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
