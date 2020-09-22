@@ -49,7 +49,6 @@ class CreateGuestService {
     weplanUser,
     user_id,
   }: IRequest): Promise<Guest> {
-    console.log('user_id', user_id);
     const guestExists = await this.guestsRepository.findByEventFirstNameAndLastName(
       event_id,
       first_name,
@@ -72,7 +71,6 @@ class CreateGuestService {
 
       const weplanGuest = await this.personInfoRepository.findByUserId(user_id);
 
-      console.log('weplanGuest', weplanGuest);
       if (weplanGuest) {
         const guest = await this.guestsRepository.create({
           first_name: weplanGuest.first_name,
@@ -83,7 +81,6 @@ class CreateGuestService {
           confirmed,
           weplanUser,
         });
-        console.log('guest', guest);
 
         await this.weplanGuestsRepository.create({
           user_id,

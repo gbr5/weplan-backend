@@ -24,7 +24,6 @@ class SupplierCategoriesRepository implements ISupplierCategoriesRepository {
 
   public async findAll(): Promise<SupplierCategory[]> {
     const findSupplierCategories = await this.ormRepository.find();
-    console.log(findSupplierCategories);
 
     return findSupplierCategories;
   }

@@ -27,14 +27,6 @@ class UpdateAppointmentService {
       throw new AppError('Appointment day interval not found.');
     }
 
-    console.log({
-      subject,
-      date,
-      duration_minutes,
-      address,
-      appointment_type,
-      weplanGuest,
-    });
     findAppointment.subject = subject;
     findAppointment.date = date;
     findAppointment.duration_minutes = duration_minutes;

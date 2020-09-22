@@ -15,11 +15,6 @@ class EventOwnerRepository implements IEventOwnersRepository {
     event_id: string,
     owner_id: string,
   ): Promise<EventOwner | undefined> {
-    console.log(
-      event_id,
-      owner_id,
-      'Tentando deletar owner, estou no Event Owner Repository.',
-    );
     const findEventOwner = await this.ormRepository.findOne({
       where: { event_id, owner_id },
     });

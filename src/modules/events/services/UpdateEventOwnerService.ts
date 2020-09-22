@@ -25,8 +25,8 @@ class UpdateEventOwnerService {
     number_of_guests,
   }: IRequest): Promise<EventOwner> {
     const eventOwner = await this.eventOwnersRepository.findByEventAndOwnerId(
-      owner_id,
       event_id,
+      owner_id,
     );
 
     if (!eventOwner) {

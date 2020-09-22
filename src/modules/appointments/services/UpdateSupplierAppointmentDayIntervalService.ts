@@ -27,8 +27,6 @@ class UpdateSupplierAppointmentDayIntervalService {
       throw new AppError('Appointment day interval not found.');
     }
 
-    const weekDayId = findSupplierAppointmentDayInterval.week_day_id;
-
     findSupplierAppointmentDayInterval.start_hour = start_hour;
     findSupplierAppointmentDayInterval.start_minutes = start_minutes;
     findSupplierAppointmentDayInterval.duration_minutes = duration_minutes;
@@ -36,15 +34,6 @@ class UpdateSupplierAppointmentDayIntervalService {
 
     const updatedSupplierAppointmentDayInterval = await this.appointmentsRepository.save(
       findSupplierAppointmentDayInterval,
-    );
-
-    console.log(
-      'weekDayId',
-      weekDayId,
-      'findSupplierAppointmentDayInterval',
-      findSupplierAppointmentDayInterval,
-      'updatedSupplierAppointmentDayInterval',
-      updatedSupplierAppointmentDayInterval,
     );
 
     return updatedSupplierAppointmentDayInterval;

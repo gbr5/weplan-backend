@@ -20,20 +20,14 @@ class ListEventOwnersService {
     const users = ([] as unknown) as IEventOwnerDTO[];
 
     eventOwners.map(async owner => {
-      console.log('42 - owner: ', owner);
-
       users.push({
         id: owner.owner_id,
         name: owner.Owner.name,
         avatar: owner.Owner.avatar ? owner.Owner.avatar : '',
         description: owner.description,
         number_of_guests: owner.number_of_guests,
-        // first_name: user ? user.first_name : '',
-        // last_name: user ? user.last_name : '',
       });
-      console.log('62 - users: ', users);
     });
-    console.log('65 - users: ', users);
 
     return users;
   }
