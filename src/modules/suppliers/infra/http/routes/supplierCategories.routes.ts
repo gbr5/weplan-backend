@@ -47,7 +47,7 @@ supplierCategoriessRouter.post(
   supplierCategoriessController.create,
 );
 
-supplierCategoriessRouter.get('/', supplierCategoriessController.index);
+supplierCategoriessRouter.get('/all', supplierCategoriessController.index);
 
 supplierCategoriessRouter.put(
   '/:category',
