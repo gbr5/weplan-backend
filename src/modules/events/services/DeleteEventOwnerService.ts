@@ -15,6 +15,7 @@ class DeleteEventOwnerService {
   ) {}
 
   public async execute({ event_id, owner_id }: IRequest): Promise<void> {
+    console.log(event_id, owner_id, 'Tentando deletar owner');
     const checkList = await this.eventOwnersRepository.findByEventAndOwnerId(
       event_id,
       owner_id,
