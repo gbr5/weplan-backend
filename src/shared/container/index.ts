@@ -123,6 +123,12 @@ import FriendGroupsRepository from '@modules/users/infra/typeorm/repositories/Fr
 import IUserFriendsRepository from '@modules/users/repositories/IUserFriendsRepository';
 import UserFriendsRepository from '@modules/users/infra/typeorm/repositories/UserFriendsRepository';
 
+import ITransactionAgreementsRepository from '@modules/finances/repositories/ITransactionAgreementsRepository';
+import TransactionAgreementsRepository from '@modules/finances/infra/typeorm/repositories/TransactionAgreementsRepository';
+
+import ITransactionsRepository from '@modules/finances/repositories/ITransactionsRepository';
+import TransactionsRepository from '@modules/finances/infra/typeorm/repositories/TransactionsRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -316,4 +322,14 @@ container.registerSingleton<IFriendGroupsRepository>(
 container.registerSingleton<IUserFriendsRepository>(
   'UserFriendsRepository',
   UserFriendsRepository,
+);
+
+container.registerSingleton<ITransactionAgreementsRepository>(
+  'TransactionAgreementsRepository',
+  TransactionAgreementsRepository,
+);
+
+container.registerSingleton<ITransactionsRepository>(
+  'TransactionsRepository',
+  TransactionsRepository,
 );

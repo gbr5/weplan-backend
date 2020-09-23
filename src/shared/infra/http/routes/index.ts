@@ -19,6 +19,8 @@ import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/suppl
 import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
 import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
 
+import financesRouter from '@modules/finances/infra/http/routes/finances.routes';
+
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
@@ -40,5 +42,7 @@ routes.use('/suppliers', suppliersRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);
 routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
+
+routes.use('/finances', financesRouter);
 
 export default routes;
