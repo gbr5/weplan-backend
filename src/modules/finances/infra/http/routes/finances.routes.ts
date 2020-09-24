@@ -49,7 +49,7 @@ financesRouter.get(
 // === Supplier Appointment's, with a non User Guest === //
 
 financesRouter.post(
-  '/transactions',
+  '/agreements/transactions',
   celebrate({
     [Segments.BODY]: {
       agreement_id: Joi.string().required(),
@@ -62,7 +62,7 @@ financesRouter.post(
 );
 
 financesRouter.put(
-  '/transactions/:id',
+  '/agreements/transactions/:id',
   celebrate({
     [Segments.BODY]: {
       amount: Joi.number().required(),
@@ -73,9 +73,15 @@ financesRouter.put(
   transactionsController.update,
 );
 
-financesRouter.delete('/transactions/:id', transactionsController.delete);
+financesRouter.delete(
+  '/agreements/transactions/:id',
+  transactionsController.delete,
+);
 
-financesRouter.get('/transactions/:agreement_id', transactionsController.index);
+financesRouter.get(
+  '/agreements/transactions/:agreement_id',
+  transactionsController.index,
+);
 
 export default financesRouter;
 
