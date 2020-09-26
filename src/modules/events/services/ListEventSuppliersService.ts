@@ -16,9 +16,11 @@ class ListUserEventSupplierService {
   ) {}
 
   public async execute(event_id: string): Promise<IEventSupplierDTO[]> {
+    console.log('1 list event supplier service', event_id);
     const selectedSuppliers = await this.selectedSuppliersRepository.findByEvent(
       event_id,
     );
+    console.log('2 list event supplier service', event_id, selectedSuppliers);
     // const users = ([] as unknown) as Promise<IEventSupplierDTO[]>;
 
     // selectedSuppliers.map(async supplier => {

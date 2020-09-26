@@ -18,9 +18,9 @@ class Transaction {
   @Column('uuid')
   agreement_id: string;
 
-  @ManyToOne(() => TransactionAgreement, agreement => agreement.id)
+  @ManyToOne(() => TransactionAgreement)
   @JoinColumn({ name: 'agreement_id' })
-  TransactionAgreement: TransactionAgreement;
+  agreement: TransactionAgreement;
 
   @Column('numeric')
   amount: number;

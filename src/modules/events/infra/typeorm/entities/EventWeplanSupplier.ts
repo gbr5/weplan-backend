@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
   Column,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
@@ -34,7 +35,7 @@ class EventWeplanSupplier {
   @Column('uuid')
   event_supplier_id: string;
 
-  @ManyToOne(() => EventSupplier, eventSupplier => eventSupplier.id)
+  @OneToOne(() => EventSupplier)
   @JoinColumn({ name: 'event_supplier_id' })
   EventSupplier: EventSupplier;
 

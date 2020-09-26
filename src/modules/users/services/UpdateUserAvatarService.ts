@@ -35,7 +35,9 @@ class UpdateUserAvatarService {
 
     user.avatar = fileName;
 
-    delete user.password;
+    // if (user.password) {
+    //   delete user.password;
+    // }
 
     await this.usersRepository.save(user);
 

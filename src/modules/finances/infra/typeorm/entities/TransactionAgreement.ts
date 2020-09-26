@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
+import Transaction from '@modules/finances/infra/typeorm/entities/Transaction';
 
 @Entity('transaction_agreements')
 class TransactionAgreement {
@@ -18,9 +20,9 @@ class TransactionAgreement {
   @Column('uuid')
   supplier_id: string;
 
-  @ManyToOne(() => EventSupplier, supplier => supplier.id)
+  @ManyToOne(() => EventSupplier, supplier => supplier.transactionAgreement)
   @JoinColumn({ name: 'supplier_id' })
-  EventSupplier: EventSupplier;
+  supplier: EventSupplier;
 
   @Column('numeric')
   amount: number;
@@ -33,6 +35,12 @@ class TransactionAgreement {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Transaction, transaction => transaction.agreement, {
+    cascade: true,
+    eager: true,
+  })
+  transactions: Transaction[];
 }
 
 export default TransactionAgreement;

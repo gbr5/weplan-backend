@@ -33,9 +33,18 @@ class TransactionAgreementsRepository
     supplier_id: string,
     amount: number,
   ): Promise<TransactionAgreement | undefined> {
+    console.log(
+      'findBySupplierIdAndAmount',
+      supplier_id,
+      amount,
+      typeof supplier_id,
+      typeof amount,
+    );
+
     const findTransactionAgreement = await this.ormRepository.findOne({
       where: { supplier_id, amount },
     });
+    console.log('transaction agreements repository', findTransactionAgreement);
 
     return findTransactionAgreement;
   }
@@ -62,9 +71,7 @@ class TransactionAgreementsRepository
     });
   }
 
-  public async save(
-    data: ICreateTransactionAgreementDTO,
-  ): Promise<TransactionAgreement> {
+  public async save(data: TransactionAgreement): Promise<TransactionAgreement> {
     const agreement = await this.ormRepository.save(data);
 
     return agreement;

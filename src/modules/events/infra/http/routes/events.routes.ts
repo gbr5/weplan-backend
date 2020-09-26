@@ -4,6 +4,7 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import EventsController from '@modules/events/infra/http/controllers/EventsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import EventSuppliersController from '@modules/events/infra/http/controllers/EventSuppliersController';
+import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
 import EventWeplanSuppliersController from '@modules/events/infra/http/controllers/EventWeplanSuppliersController';
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
 import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
@@ -14,20 +15,21 @@ import EventMembersController from '@modules/events/infra/http/controllers/Event
 import EventInfosController from '@modules/events/infra/http/controllers/EventInfosController';
 
 const eventsRouter = Router();
-const eventsController = new EventsController();
-const eventSuppliersController = new EventSuppliersController();
-const eventWeplanSuppliersController = new EventWeplanSuppliersController();
-const userCheckListsController = new UserCheckListsController();
-const guestsController = new GuestsController();
-const hostGuestsController = new HostGuestsController();
-const eventPlannersController = new EventPlannersController();
-const eventOwnersController = new EventOwnersController();
-const eventMembersController = new EventMembersController();
-const eventInfosController = new EventInfosController();
+const events = new EventsController();
+const eventSuppliers = new EventSuppliersController();
+const hiredSuppliers = new HiredSuppliersController();
+const eventWeplanSuppliers = new EventWeplanSuppliersController();
+const userCheckLists = new UserCheckListsController();
+const guests = new GuestsController();
+const hostGuests = new HostGuestsController();
+const eventPlanners = new EventPlannersController();
+const eventOwners = new EventOwnersController();
+const eventMembers = new EventMembersController();
+const eventInfos = new EventInfosController();
 
 eventsRouter.use(ensureAuthenticated);
 
-eventsRouter.get('/', eventsController.index);
+eventsRouter.get('/', events.index);
 eventsRouter.post(
   '/',
   celebrate({
@@ -37,9 +39,9 @@ eventsRouter.post(
       date: Joi.date(),
     },
   }),
-  eventsController.create,
+  events.create,
 );
-eventsRouter.get('/:event_id', eventsController.show);
+eventsRouter.get('/:event_id', events.show);
 
 eventsRouter.put(
   '/:event_id',
@@ -49,10 +51,14 @@ eventsRouter.put(
       date: Joi.date(),
     },
   }),
-  eventsController.update,
+  events.update,
 );
 
-eventsRouter.delete('/:event_id', eventsController.delete);
+eventsRouter.delete('/:event_id', events.delete);
+
+// === Hired Suppliers === //
+
+eventsRouter.get('/hired-suppliers/:event_id', hiredSuppliers.index);
 
 // === Selected & Hired Suppliers === //
 
@@ -66,7 +72,7 @@ eventsRouter.post(
       weplanUser: Joi.boolean().required(),
     },
   }),
-  eventSuppliersController.create,
+  eventSuppliers.create,
 );
 
 eventsRouter.put(
@@ -78,14 +84,11 @@ eventsRouter.put(
       isHired: Joi.boolean().required(),
     },
   }),
-  eventSuppliersController.update,
+  eventSuppliers.update,
 );
 
-eventsRouter.delete(
-  '/:event_id/event-suppliers/:id',
-  eventSuppliersController.delete,
-);
-eventsRouter.get('/:event_id/event-suppliers', eventSuppliersController.index);
+eventsRouter.delete('/:event_id/event-suppliers/:id', eventSuppliers.delete);
+eventsRouter.get('/event-suppliers/:event_id', eventSuppliers.index);
 
 // === Selected & Hired WEPLAN Suppliers === //
 
@@ -97,12 +100,12 @@ eventsRouter.post(
       event_supplier_id: Joi.string().required(),
     },
   }),
-  eventWeplanSuppliersController.create,
+  eventWeplanSuppliers.create,
 );
 
 eventsRouter.get(
   '/:event_id/event-weplan-suppliers',
-  eventWeplanSuppliersController.index,
+  eventWeplanSuppliers.index,
 );
 
 // === User Check List === //
@@ -116,9 +119,9 @@ eventsRouter.post(
       checked: Joi.boolean().required(),
     },
   }),
-  userCheckListsController.create,
+  userCheckLists.create,
 );
-eventsRouter.get('/:event_id/check-list', userCheckListsController.index);
+eventsRouter.get('/:event_id/check-list', userCheckLists.index);
 
 eventsRouter.put(
   '/:event_id/check-list/:id',
@@ -129,13 +132,10 @@ eventsRouter.put(
       checked: Joi.boolean().required(),
     },
   }),
-  userCheckListsController.update,
+  userCheckLists.update,
 );
 
-eventsRouter.delete(
-  '/:event_id/check-list/:id',
-  userCheckListsController.delete,
-);
+eventsRouter.delete('/:event_id/check-list/:id', userCheckLists.delete);
 
 // === Guests & Hosts Guests === //
 
@@ -151,7 +151,7 @@ eventsRouter.post(
       user_id: Joi.string(),
     },
   }),
-  guestsController.create,
+  guests.create,
 );
 
 eventsRouter.put(
@@ -164,12 +164,12 @@ eventsRouter.put(
       confirmed: Joi.boolean().required(),
     },
   }),
-  guestsController.update,
+  guests.update,
 );
 
-eventsRouter.delete('/:event_id/guests/:id', guestsController.delete);
-eventsRouter.get('/:event_id/guests/', guestsController.index);
-eventsRouter.get('/:event_id/guests/:host_id', hostGuestsController.index);
+eventsRouter.delete('/:event_id/guests/:id', guests.delete);
+eventsRouter.get('/:event_id/guests/', guests.index);
+eventsRouter.get('/:event_id/guests/:host_id', hostGuests.index);
 
 // === Event Planners === //
 
@@ -180,14 +180,14 @@ eventsRouter.post(
       planner_id: Joi.string().required(),
     },
   }),
-  eventPlannersController.create,
+  eventPlanners.create,
 );
 
 eventsRouter.delete(
   '/:event_id/event-planner/:planner_id',
-  eventPlannersController.delete,
+  eventPlanners.delete,
 );
-eventsRouter.get('/:event_id/event-planner/', eventPlannersController.index);
+eventsRouter.get('/:event_id/event-planner/', eventPlanners.index);
 
 // === Event Owners === //
 
@@ -200,7 +200,7 @@ eventsRouter.post(
       number_of_guests: Joi.number(),
     },
   }),
-  eventOwnersController.create,
+  eventOwners.create,
 );
 
 eventsRouter.put(
@@ -211,14 +211,11 @@ eventsRouter.put(
       number_of_guests: Joi.number(),
     },
   }),
-  eventOwnersController.update,
+  eventOwners.update,
 );
 
-eventsRouter.delete(
-  '/:event_id/event-owners/:owner_id',
-  eventOwnersController.delete,
-);
-eventsRouter.get('/:event_id/event-owners/', eventOwnersController.index);
+eventsRouter.delete('/:event_id/event-owners/:owner_id', eventOwners.delete);
+eventsRouter.get('/:event_id/event-owners/', eventOwners.index);
 
 // === Event Members === //
 
@@ -230,7 +227,7 @@ eventsRouter.post(
       number_of_guests: Joi.number(),
     },
   }),
-  eventMembersController.create,
+  eventMembers.create,
 );
 
 eventsRouter.put(
@@ -240,14 +237,11 @@ eventsRouter.put(
       number_of_guests: Joi.number(),
     },
   }),
-  eventMembersController.update,
+  eventMembers.update,
 );
 
-eventsRouter.delete(
-  '/:event_id/event-members/:member_id',
-  eventMembersController.delete,
-);
-eventsRouter.get('/:event_id/event-members/', eventMembersController.index);
+eventsRouter.delete('/:event_id/event-members/:member_id', eventMembers.delete);
+eventsRouter.get('/:event_id/event-members/', eventMembers.index);
 
 // === Event Info === //
 
@@ -265,9 +259,9 @@ eventsRouter.post(
       address: Joi.string(),
     },
   }),
-  eventInfosController.create,
+  eventInfos.create,
 );
-eventsRouter.get('/:event_id/event-info', eventInfosController.show);
+eventsRouter.get('/:event_id/event-info', eventInfos.show);
 
 eventsRouter.put(
   '/:event_id/event-info',
@@ -283,7 +277,7 @@ eventsRouter.put(
       address: Joi.string(),
     },
   }),
-  eventInfosController.update,
+  eventInfos.update,
 );
 
 export default eventsRouter;

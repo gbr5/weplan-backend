@@ -1,5 +1,5 @@
 import Transaction from '@modules/finances/infra/typeorm/entities/Transaction';
-import ICreateTransactionDTO from '@modules/finances/dtos/ICreateTransactionDTO';
+import ICreateTransactionDTO from '@modules/finances/dtos/ITransactionDTO';
 
 export default interface ITransactionsRepository {
   create(data: ICreateTransactionDTO): Promise<Transaction>;

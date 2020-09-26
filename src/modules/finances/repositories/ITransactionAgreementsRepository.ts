@@ -9,6 +9,6 @@ export default interface ITransactionAgreementsRepository {
     amount: number,
   ): Promise<TransactionAgreement | undefined>;
   findById(id: string): Promise<TransactionAgreement | undefined>;
-  save(data: ICreateTransactionAgreementDTO): Promise<TransactionAgreement>;
-  delete(data: ICreateTransactionAgreementDTO): Promise<void>;
+  save(data: TransactionAgreement): Promise<TransactionAgreement>;
+  delete(data: TransactionAgreement): Promise<void>;
 }

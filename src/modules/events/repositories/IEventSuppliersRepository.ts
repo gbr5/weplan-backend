@@ -1,9 +1,11 @@
 import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
 import ICreateEventSupplierDTO from '@modules/events/dtos/ICreateEventSupplierDTO';
+import IHiredSupplierDTO from '../dtos/IHiredSupplierDTO';
 
 export default interface IEventSupplierRepository {
   findById(id: string): Promise<EventSupplier | undefined>;
   findByEvent(event_id: string): Promise<EventSupplier[]>;
+  findByEventAndIsHired(event_id: string): Promise<IHiredSupplierDTO[]>;
   findByNameAndEvent(
     event_id: string,
     name: string,

@@ -11,7 +11,7 @@ const transactionsController = new TransactionsController();
 
 financesRouter.use(ensureAuthenticated);
 
-// === Appointment === //
+// === Transaction Agreements === //
 
 financesRouter.post(
   '/transaction-agreements',
@@ -20,6 +20,7 @@ financesRouter.post(
       supplier_id: Joi.string().required(),
       amount: Joi.number().required(),
       number_of_installments: Joi.number().required(),
+      transactions: Joi.array(),
     },
   }),
   transactionAgreementsController.create,

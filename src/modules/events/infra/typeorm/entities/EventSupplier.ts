@@ -6,10 +6,14 @@ import {
   ManyToOne,
   JoinColumn,
   Column,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
+import TransactionAgreement from '@modules/finances/infra/typeorm/entities/TransactionAgreement';
+import EventWeplanSupplier from './EventWeplanSupplier';
 
 @Entity('event_suppliers')
 class EventSupplier {
@@ -24,14 +28,14 @@ class EventSupplier {
 
   @ManyToOne(() => Event, event => event.id)
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
   @Column()
   supplier_sub_category: string;
 
   @ManyToOne(() => SupplierSubCategory, subCategory => subCategory.sub_category)
   @JoinColumn({ name: 'supplier_sub_category' })
-  SubCategory: SupplierSubCategory;
+  subCategory: SupplierSubCategory;
 
   @Column('boolean')
   isHired: boolean;
@@ -44,6 +48,18 @@ class EventSupplier {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToOne(
+    () => EventWeplanSupplier,
+    eventWeplanSupplier => eventWeplanSupplier.User,
+  )
+  eventWeplanSupplier: EventWeplanSupplier;
+
+  @OneToMany(
+    () => TransactionAgreement,
+    transactionAgreement => transactionAgreement.supplier,
+  )
+  transactionAgreement: TransactionAgreement[];
 }
 
 export default EventSupplier;

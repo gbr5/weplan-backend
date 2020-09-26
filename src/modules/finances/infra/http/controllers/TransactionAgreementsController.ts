@@ -25,7 +25,13 @@ export default class TransactionAgreementsController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { supplier_id, amount, number_of_installments } = req.body;
+    const {
+      supplier_id,
+      amount,
+      number_of_installments,
+      transactions,
+    } = req.body;
+    console.log({ supplier_id, amount, number_of_installments, transactions });
 
     const createTransactionAgreement = container.resolve(
       CreateTransactionAgreementService,
@@ -35,6 +41,7 @@ export default class TransactionAgreementsController {
       supplier_id,
       amount,
       number_of_installments,
+      transactions,
     });
 
     return res.json(classToClass(agreement));

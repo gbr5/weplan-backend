@@ -1,6 +1,5 @@
-export default interface IEventOwnerDTO {
+export default interface ISelectedSupplierDTO {
   id: string;
-  name: string;
-  trimmed_name: string;
-  avatar: string;
+  user_id: string;
+  event_id: string;
 }
