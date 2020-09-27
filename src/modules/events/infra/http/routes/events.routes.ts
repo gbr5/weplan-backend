@@ -76,7 +76,7 @@ eventsRouter.post(
 );
 
 eventsRouter.put(
-  '/:event_id/event-suppliers/:id',
+  '/event-suppliers/edit/:id',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

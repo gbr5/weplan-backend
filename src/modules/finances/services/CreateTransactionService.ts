@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import Transaction from '@modules/finances/infra/typeorm/entities/Transaction';
-import ICreateTransactionDTO from '@modules/finances/dtos/ICreateTransactionDTO';
+import ICreateTransactionDTO from '@modules/finances/dtos/ITransactionDTO';
 import ITransactionRepository from '@modules/finances/repositories/ITransactionsRepository';
 import ITransactionAgreementsRepository from '@modules/finances/repositories/ITransactionAgreementsRepository';
 

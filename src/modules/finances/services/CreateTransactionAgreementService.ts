@@ -40,9 +40,8 @@ class CreateTransactionAgreementService {
       supplier_id,
       amount,
     );
-    console.log(findTransactionAgreement);
 
-    if (findTransactionAgreement) {
+    if (findTransactionAgreement !== undefined) {
       throw new AppError('A agreement similar to that, already exists');
     }
 
@@ -54,36 +53,28 @@ class CreateTransactionAgreementService {
         transactions,
       },
     );
+    console.log('!@! transactionAgreement criada agora', TransactionAgreement);
 
     const findTransactions = await this.transactionsRepository.findByAgreementId(
       transactionAgreement.id,
     );
+    console.log(
+      '!@! transactionAgreement buscada pelo ID para comparar transactions length',
+      findTransactionAgreement,
+    );
 
     if (findTransactions.length !== transactions.length) {
-      transactions.map(transaction => {
-        return this.transactionsRepository.create({
-          agreement_id: transactionAgreement.id,
-          amount: transaction.amount,
-          due_date: transaction.due_date,
-          isPaid: transaction.isPaid,
-        });
-      });
+      await this.transactionsRepository.createMultiple(
+        transactions,
+        transactionAgreement.id,
+      );
     }
 
-    await this.eventSuppliersRepository.save({
-      id: supplier.id,
-      name: supplier.name,
-      event_id: supplier.event_id,
-      isHired: supplier.isHired,
-      supplier_sub_category: supplier.supplier_sub_category,
-      created_at: supplier.created_at,
-      updated_at: new Date(),
-      event: supplier.event,
-      subCategory: supplier.subCategory,
-      weplanUser: supplier.weplanUser,
-      eventWeplanSupplier: supplier.eventWeplanSupplier,
-      transactionAgreement: [transactionAgreement],
-    });
+    // await this.eventSuppliersRepository.save({
+    //   ...supplier,
+    //   isHired: supplier.isHired,
+    //   // transactionAgreement: [transactionAgreement],
+    // });
 
     return transactionAgreement;
   }

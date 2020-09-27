@@ -31,7 +31,12 @@ export default class TransactionAgreementsController {
       number_of_installments,
       transactions,
     } = req.body;
-    console.log({ supplier_id, amount, number_of_installments, transactions });
+    console.log('transactionAgreement Controller:', {
+      supplier_id,
+      amount,
+      number_of_installments,
+      transactions,
+    });
 
     const createTransactionAgreement = container.resolve(
       CreateTransactionAgreementService,

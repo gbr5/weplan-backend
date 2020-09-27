@@ -31,7 +31,6 @@ export default class EventSuppliersController {
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { event_id } = dataParams;
-    console.log(event_id);
 
     const listEventSuppliers = container.resolve(ListEventSuppliersService);
 
@@ -45,6 +44,11 @@ export default class EventSuppliersController {
 
     const dataParams = req.params;
     const { id } = dataParams;
+    console.log('!!!eventSuppliers Update:', {
+      name,
+      supplier_sub_category,
+      isHired,
+    });
 
     const updateEventSupplier = container.resolve(UpdateEventSupplierService);
 
