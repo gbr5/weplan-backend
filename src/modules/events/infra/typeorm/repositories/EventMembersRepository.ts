@@ -30,10 +30,18 @@ class EventMemberRepository implements IEventMembersRepository {
     return members;
   }
 
-  public async findById(id: string): Promise<EventMember | undefined> {
-    const member = await this.ormRepository.findOne(id);
+  public async findByMemberId(member_id: string): Promise<EventMember[]> {
+    const member = await this.ormRepository.find({
+      where: { member_id },
+    });
 
     return member;
+  }
+
+  public async findById(id: string): Promise<EventMember | undefined> {
+    const event = await this.ormRepository.findOne(id);
+
+    return event;
   }
 
   public async create({

@@ -8,6 +8,7 @@ export default interface IEventOwnersRepository {
     owner_id: string,
   ): Promise<EventOwner | undefined>;
   findByEvent(event_id: string): Promise<EventOwner[]>;
+  findByOwnerId(owner_id: string): Promise<EventOwner[]>;
   findById(id: string): Promise<EventOwner | undefined>;
   save(owner: EventOwner): Promise<EventOwner>;
   delete(owner: EventOwner): Promise<void>;

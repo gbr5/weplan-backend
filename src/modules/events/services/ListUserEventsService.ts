@@ -1,9 +1,11 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
-import Event from '@modules/events/infra/typeorm/entities/Event';
-import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
+import IEventMembersRepository from '../repositories/IEventMembersRepository';
+import IListUserEvent from '../dtos/IListUserEvent';
+import IWeplanGuestsRepository from '../repositories/IWeplanGuestsRepository';
 
 interface IRequest {
   user_id: string;
@@ -12,25 +14,80 @@ interface IRequest {
 @injectable()
 class ListUserEventService {
   constructor(
-    @inject('EventsRepository')
-    private eventsRepository: IEventsRepository,
+    @inject('EventOwnersRepository')
+    private eventOwnersRepository: IEventOwnersRepository,
+
+    @inject('EventMembersRepository')
+    private eventMembersRepository: IEventMembersRepository,
+
+    @inject('WeplanGuestsRepository')
+    private weplanGuestsRepository: IWeplanGuestsRepository,
 
     @inject('CacheProvider')
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute({ user_id }: IRequest): Promise<Event[]> {
-    // const cacheKey = `user-events:${user_id}:${year}-${month}-${day}`;
+  public async execute({ user_id }: IRequest): Promise<IListUserEvent[]> {
+    const owner_id = user_id;
+    const member_id = user_id;
+    const eventsAsOwner = await this.eventOwnersRepository.findByOwnerId(
+      owner_id,
+    );
+    const eventsAsMember = await this.eventMembersRepository.findByMemberId(
+      member_id,
+    );
+    const eventsAsGuest = await this.weplanGuestsRepository.findByUserId(
+      user_id,
+    );
+    const userEvents = [{} as IListUserEvent];
 
-    // let events = await this.cacheUser.recover<Event[]>(cacheKey);
+    eventsAsOwner.map(owner => {
+      const userEventOwner = {
+        id: owner.Event.id,
+        name: owner.Event.name,
+        trimmed_name: owner.Event.trimmed_name,
+        isOwner: true,
+        owner_master: owner.Event.user_id,
+        isGuest: false,
+        event_type: owner.Event.event_type,
+        date: owner.Event.date,
+      };
+      userEvents.push(userEventOwner);
 
-    // if (!events) {
-    const events = await this.eventsRepository.findByUserId(user_id);
+      return userEventOwner;
+    });
+    eventsAsMember.map(member => {
+      const userEventMember = {
+        id: member.Event.id,
+        name: member.Event.name,
+        trimmed_name: member.Event.trimmed_name,
+        isOwner: false,
+        owner_master: member.Event.user_id,
+        isGuest: false,
+        event_type: member.Event.event_type,
+        date: member.Event.date,
+      };
+      userEvents.push(userEventMember);
 
-    //   await this.cacheUser.save(cacheKey, classToClass(events));
-    // }
+      return userEventMember;
+    });
+    eventsAsGuest.map(guest => {
+      const userEventMember = {
+        id: guest.Event.id,
+        name: guest.Event.name,
+        trimmed_name: guest.Event.trimmed_name,
+        isOwner: false,
+        owner_master: guest.Event.user_id,
+        isGuest: false,
+        event_type: guest.Event.event_type,
+        date: guest.Event.date,
+      };
+      userEvents.push(userEventMember);
 
-    return events;
+      return userEventMember;
+    });
+
+    return userEvents;
   }
 }
 

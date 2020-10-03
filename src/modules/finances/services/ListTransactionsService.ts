@@ -15,7 +15,6 @@ class ListTransactionService {
     const transactions = await this.transactionsRepository.findByAgreementId(
       agreement_id,
     );
-
     return transactions;
   }
 }

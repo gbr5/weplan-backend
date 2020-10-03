@@ -20,12 +20,10 @@ class ListHiredSuppliersService {
   ) {}
 
   public async execute(event_id: string): Promise<IHiredSupplierDTO[]> {
-    console.log('1 list hired supplier service', event_id);
     const hiredSuppliers = await this.hiredSuppliersRepository.findByEventAndIsHired(
       event_id,
     );
 
-    console.log('2 list hired supplier service', event_id, hiredSuppliers);
     const users = ([] as unknown) as Promise<IHiredSupplierDTO[]>;
 
     hiredSuppliers.map(async supplier => {
@@ -35,7 +33,6 @@ class ListHiredSuppliersService {
         transactionAgreement: supplier.transactionAgreement,
       });
     });
-    console.log('3 list hired supplier service', event_id, 'Der certo', users);
 
     return users;
   }

@@ -19,7 +19,7 @@ class EventMember {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.id)
+  @ManyToOne(() => Event, { eager: true })
   @JoinColumn({ name: 'event_id' })
   Event: Event;
 

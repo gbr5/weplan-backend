@@ -28,10 +28,7 @@ class CreateTransactionAgreementService {
     number_of_installments,
     transactions,
   }: ICreateTransactionAgreementDTO): Promise<TransactionAgreement> {
-    console.log({ supplier_id, amount, number_of_installments });
-
     const supplier = await this.eventSuppliersRepository.findById(supplier_id);
-    console.log('por aqui tudo certo', supplier);
     if (!supplier) {
       throw new AppError('Event supplier not found.');
     }
@@ -53,14 +50,9 @@ class CreateTransactionAgreementService {
         transactions,
       },
     );
-    console.log('!@! transactionAgreement criada agora', TransactionAgreement);
 
     const findTransactions = await this.transactionsRepository.findByAgreementId(
       transactionAgreement.id,
-    );
-    console.log(
-      '!@! transactionAgreement buscada pelo ID para comparar transactions length',
-      findTransactionAgreement,
     );
 
     if (findTransactions.length !== transactions.length) {

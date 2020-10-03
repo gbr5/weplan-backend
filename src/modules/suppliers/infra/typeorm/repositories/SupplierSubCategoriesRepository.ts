@@ -26,11 +26,9 @@ class SupplierSubCategoriesRepository
   public async findByCategoryName(
     category_name: string,
   ): Promise<SupplierSubCategory[]> {
-    console.log(category_name);
     const findSupplierSubCategory = await this.ormRepository.find({
       where: { category_name },
     });
-    console.log('SupplierSubCategoryRepository', findSupplierSubCategory);
 
     return findSupplierSubCategory;
   }

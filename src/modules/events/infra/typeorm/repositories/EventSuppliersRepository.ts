@@ -35,15 +35,9 @@ class EventSuppliersRepository implements IEventSuppliersRepository {
   }
 
   public async findByEvent(event_id: string): Promise<EventSupplier[]> {
-    console.log('1 event supplier repository, findByEvent()', event_id);
     const findEventSupplier = await this.ormRepository.find({
       where: { event_id },
     });
-    console.log(
-      '2 event supplier repository, findByEvent()',
-      event_id,
-      findEventSupplier,
-    );
 
     return findEventSupplier;
   }
@@ -51,21 +45,10 @@ class EventSuppliersRepository implements IEventSuppliersRepository {
   public async findByEventAndIsHired(
     event_id: string,
   ): Promise<IHiredSupplierDTO[]> {
-    console.log(
-      '1 event supplier repository, findByEventAndIsHired()',
-      event_id,
-    );
-
     const findHiredSuppliers = await this.ormRepository.find({
       where: { event_id, isHired: true },
       relations: ['transactionAgreement'],
     });
-
-    console.log(
-      '2 event supplier repository, findByEventAndIsHired()',
-      event_id,
-      findHiredSuppliers,
-    );
 
     return findHiredSuppliers;
   }

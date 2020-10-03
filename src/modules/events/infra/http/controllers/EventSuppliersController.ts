@@ -44,11 +44,6 @@ export default class EventSuppliersController {
 
     const dataParams = req.params;
     const { id } = dataParams;
-    console.log('!!!eventSuppliers Update:', {
-      name,
-      supplier_sub_category,
-      isHired,
-    });
 
     const updateEventSupplier = container.resolve(UpdateEventSupplierService);
 

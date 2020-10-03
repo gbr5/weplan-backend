@@ -27,7 +27,6 @@ export default class SupplierSubCategoriesController {
   public async index(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { category_name } = reqParams;
-    console.log('SubCategoryController, category_name:', category_name);
     const listSupplierSubCategories = container.resolve(
       ListSupplierSubCategoriesService,
     );
