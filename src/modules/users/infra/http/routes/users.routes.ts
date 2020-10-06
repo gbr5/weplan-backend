@@ -32,6 +32,7 @@ usersRouter.post(
 );
 
 usersRouter.get('/:user_id', usersController.show);
+usersRouter.get('/', usersController.index);
 usersRouter.put(
   '/',
   celebrate({

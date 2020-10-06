@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 import ShowUserService from '@modules/users/services/ShowUserService';
+import ListUserService from '@modules/users/services/ListUserService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 
 export default class UsersController {
@@ -33,6 +34,23 @@ export default class UsersController {
     return res.json(classToClass(user));
   }
 
+  public async index(req: Request, res: Response): Promise<Response> {
+    const user_name = req.query.name;
+    const userName = String(user_name);
+
+    const listUser = container.resolve(ListUserService);
+
+    const users = await listUser.execute();
+
+    const sortedUsers = users.filter(user => user.name.includes(userName));
+
+    if (sortedUsers.length > 0) {
+      return res.json(classToClass(sortedUsers));
+    }
+
+    return res.json(classToClass(users));
+  }
+
   public async update(req: Request, res: Response): Promise<Response> {
     const user_id = req.user.id;
 
@@ -50,5 +68,3 @@ export default class UsersController {
     return res.json(classToClass(user));
   }
 }
-
-// Parei no minuto 7:19
