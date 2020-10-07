@@ -33,8 +33,8 @@ class FriendGroup {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => UserFriend, friendUser => friendUser.friend_group)
-  FriendUserGroup: UserFriend;
+  @OneToMany(() => UserFriend, userFriend => userFriend.friend_group)
+  userFriend: UserFriend[];
 }
 
 export default FriendGroup;

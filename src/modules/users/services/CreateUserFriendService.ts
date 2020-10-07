@@ -5,6 +5,7 @@ import IUserFriendsRepository from '@modules/users/repositories/IUserFriendsRepo
 import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
+import IFriendGroupsRepository from '../repositories/IFriendGroupsRepository';
 
 interface IRequest {
   user_id: string;
@@ -18,6 +19,9 @@ class CreateUserFriendService {
     @inject('UserFriendsRepository')
     private userFriendsRepository: IUserFriendsRepository,
 
+    @inject('FriendGroupsRepository')
+    private friendGroupsRepository: IFriendGroupsRepository,
+
     @inject('HashProvider')
     private hashProvider: IHashProvider,
 
@@ -30,6 +34,27 @@ class CreateUserFriendService {
     friend_id,
     friend_group,
   }: IRequest): Promise<UserFriend> {
+    const name = 'All';
+    const userAllGroup = await this.friendGroupsRepository.findByNameAndUserId(
+      user_id,
+      name,
+    );
+    const checkUserFriendExitsInAllGroup = await this.userFriendsRepository.findByFriendId(
+      friend_id,
+    );
+    console.log(checkUserFriendExitsInAllGroup);
+    const friendInAllGroup = checkUserFriendExitsInAllGroup.filter(
+      user => user.FriendGroup.name === 'All',
+    );
+    if (friendInAllGroup) {
+      if (userAllGroup) {
+        await this.userFriendsRepository.create({
+          user_id,
+          friend_id,
+          friend_group: userAllGroup.id,
+        });
+      }
+    }
     const checkUserFriendExits = await this.userFriendsRepository.findByFriendGroupAndFriendId(
       friend_id,
       friend_group,

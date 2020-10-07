@@ -30,7 +30,8 @@ class ListUserFriendsService {
       (await friends).push({
         id: friend.id,
         name: friend.Friend.name,
-        friend_group: friend.friend_group,
+        friend_group_id: friend.friend_group,
+        friend_group: friend.FriendGroup.name,
         friend_id: friend.friend_id,
         user_id: friend.user_id,
         avatar: friend.Friend.avatar ? friend.Friend.avatar : '',

@@ -3,6 +3,7 @@ export default interface IUserFriendDTO {
   name: string;
   friend_id: string;
   user_id: string;
+  friend_group_id: string;
   friend_group: string;
   avatar: string;
 }
