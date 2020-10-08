@@ -7,6 +7,7 @@ import UpdateGuestService from '@modules/events/services/UpdateGuestService';
 import ShowGuestService from '@modules/events/services/ShowGuestService';
 import ListGuestsService from '@modules/events/services/ListGuestsService';
 import DeleteGuestService from '@modules/events/services/DeleteGuestService';
+import UpdateWeplanGuestService from '@modules/events/services/UpdateWeplanGuestService';
 
 export default class GuestsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -83,6 +84,21 @@ export default class GuestsController {
     return res.json(event);
   }
 
+  public async updateWeplanGuest(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const dataParams = req.params;
+    const { id } = dataParams;
+
+    const { confirmed } = req.body;
+    const updateGuest = container.resolve(UpdateWeplanGuestService);
+
+    const event = await updateGuest.execute({ id, confirmed });
+
+    return res.json(event);
+  }
+
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
@@ -90,7 +106,7 @@ export default class GuestsController {
 
     const deleteGuest = container.resolve(DeleteGuestService);
 
-    await deleteGuest.execute({ id });
+    await deleteGuest.execute(id);
 
     return res.status(200).send();
   }

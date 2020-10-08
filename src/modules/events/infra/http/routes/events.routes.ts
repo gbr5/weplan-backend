@@ -167,6 +167,16 @@ eventsRouter.put(
   guests.update,
 );
 
+eventsRouter.put(
+  '/weplan-user-guest/:id',
+  celebrate({
+    [Segments.BODY]: {
+      confirmed: Joi.boolean().required(),
+    },
+  }),
+  guests.updateWeplanGuest,
+);
+
 eventsRouter.delete('/:event_id/guests/:id', guests.delete);
 eventsRouter.get('/:event_id/guests/', guests.index);
 eventsRouter.get('/:event_id/guests/:host_id', hostGuests.index);
