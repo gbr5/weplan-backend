@@ -34,33 +34,48 @@ class CreateUserFriendService {
     friend_id,
     friend_group,
   }: IRequest): Promise<UserFriend> {
-    const name = 'All';
-    const userAllGroup = await this.friendGroupsRepository.findByNameAndUserId(
+    console.log(
+      'user_id',
       user_id,
-      name,
-    );
-    const checkUserFriendExitsInAllGroup = await this.userFriendsRepository.findByFriendId(
+      'friend_id',
       friend_id,
+      'friend_group',
+      friend_group,
     );
-    console.log(checkUserFriendExitsInAllGroup);
-    const friendInAllGroup = checkUserFriendExitsInAllGroup.filter(
-      user => user.FriendGroup.name === 'All',
-    );
-    if (friendInAllGroup) {
-      if (userAllGroup) {
-        await this.userFriendsRepository.create({
-          user_id,
-          friend_id,
-          friend_group: userAllGroup.id,
-        });
-      }
-    }
+    // const name = 'All';
+    // const userAllGroup = await this.friendGroupsRepository.findByNameAndUserId(
+    //   user_id,
+    //   name,
+    // );
+    // const checkUserFriendExitsInAllGroup = await this.userFriendsRepository.findByFriendId(
+    //   friend_id,
+    // );
+    // console.log(checkUserFriendExitsInAllGroup);
+    // const friendInAllGroup = checkUserFriendExitsInAllGroup.filter(
+    //   user => user.FriendGroup.name === 'All',
+    // );
+    // if (friendInAllGroup) {
+    //   if (userAllGroup) {
+    //     await this.userFriendsRepository.create({
+    //       user_id,
+    //       friend_id,
+    //       friend_group: userAllGroup.id,
+    //     });
+    //   }
+    // }
     const checkUserFriendExits = await this.userFriendsRepository.findByFriendGroupAndFriendId(
       friend_id,
       friend_group,
     );
+    console.log('checkUserFriendExits', checkUserFriendExits);
+    console.log(
+      'checkUserFriendExits?.FriendGroup.id !== friend_group',
+      checkUserFriendExits?.FriendGroup.id !== friend_group,
+      checkUserFriendExits?.FriendGroup.id,
+      friend_group,
+    );
 
-    if (checkUserFriendExits) {
+    if (checkUserFriendExits?.FriendGroup.id === friend_group) {
       throw new AppError('This user is already registered to this group!');
     }
 
