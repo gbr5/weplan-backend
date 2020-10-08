@@ -34,14 +34,6 @@ class CreateUserFriendService {
     friend_id,
     friend_group,
   }: IRequest): Promise<UserFriend> {
-    console.log(
-      'user_id',
-      user_id,
-      'friend_id',
-      friend_id,
-      'friend_group',
-      friend_group,
-    );
     // const name = 'All';
     // const userAllGroup = await this.friendGroupsRepository.findByNameAndUserId(
     //   user_id,
@@ -65,13 +57,6 @@ class CreateUserFriendService {
     // }
     const checkUserFriendExits = await this.userFriendsRepository.findByFriendGroupAndFriendId(
       friend_id,
-      friend_group,
-    );
-    console.log('checkUserFriendExits', checkUserFriendExits);
-    console.log(
-      'checkUserFriendExits?.FriendGroup.id !== friend_group',
-      checkUserFriendExits?.FriendGroup.id !== friend_group,
-      checkUserFriendExits?.FriendGroup.id,
       friend_group,
     );
 
