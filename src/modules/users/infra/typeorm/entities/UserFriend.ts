@@ -21,21 +21,21 @@ class UserFriend {
 
   @ManyToOne(() => User, user => user.id)
   @JoinColumn({ name: 'user_id' })
-  UserFriend: User;
+  user: User;
 
   @Column('uuid')
   friend_id: string;
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'friend_id' })
-  Friend: User;
+  friend: User;
 
   @Column('uuid')
   friend_group: string;
 
   @ManyToOne(() => FriendGroup, { eager: true })
   @JoinColumn({ name: 'friend_group' })
-  FriendGroup: FriendGroup;
+  friendGroup: FriendGroup;
 
   @CreateDateColumn()
   created_at: Date;

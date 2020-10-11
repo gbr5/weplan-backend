@@ -81,7 +81,7 @@ class User {
   @OneToOne(() => CompanyInfo, company_info => company_info.user_id)
   CompanyInfo: CompanyInfo;
 
-  @OneToOne(() => PersonInfo, person_info => person_info.user_id)
+  @OneToOne(() => PersonInfo, user => user.user_id)
   PersonInfo: PersonInfo;
 
   @OneToOne(() => UserBirthdate, user_birthdate => user_birthdate.user_id)
@@ -145,10 +145,10 @@ class User {
   OwnerFriendGroup: FriendGroup;
 
   @OneToMany(() => UserFriend, friend => friend.friend_id)
-  UserFriend: UserFriend;
+  friend: UserFriend;
 
   @OneToMany(() => UserFriend, user => user.user_id)
-  FriendUser: UserFriend;
+  user: UserFriend;
 
   @OneToMany(
     () => NonUserAppointmentGuest,
