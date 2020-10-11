@@ -59,6 +59,7 @@ export default class EventMembersController {
     const dataParams = req.params;
 
     const { event_id, member_id } = dataParams;
+    console.log('event_id, member_id', event_id, member_id);
 
     const deleteEventMember = container.resolve(DeleteEventMemberService);
 

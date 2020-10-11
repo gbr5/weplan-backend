@@ -1,5 +1,6 @@
 export default interface IListUserEvent {
   id: string;
+  userEvent_id?: string;
   name: string;
   trimmed_name: string;
   isOwner: boolean;

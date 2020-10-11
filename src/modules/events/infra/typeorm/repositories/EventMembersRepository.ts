@@ -15,10 +15,11 @@ class EventMemberRepository implements IEventMembersRepository {
     event_id: string,
     member_id: string,
   ): Promise<EventMember | undefined> {
+    console.log('event_id, member_id', event_id, member_id);
     const member = await this.ormRepository.findOne({
       where: { event_id, member_id },
     });
-
+    console.log(member);
     return member;
   }
 

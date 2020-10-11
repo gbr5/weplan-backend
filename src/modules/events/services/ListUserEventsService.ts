@@ -44,6 +44,7 @@ class ListUserEventService {
     eventsAsOwner.map(owner => {
       const userEventOwner = {
         id: owner.Event.id,
+        userEvent_id: owner.owner_id,
         name: owner.Event.name,
         trimmed_name: owner.Event.trimmed_name,
         isOwner: true,
@@ -59,6 +60,7 @@ class ListUserEventService {
     eventsAsMember.map(member => {
       const userEventMember = {
         id: member.Event.id,
+        userEvent_id: member.member_id,
         name: member.Event.name,
         trimmed_name: member.Event.trimmed_name,
         isOwner: false,
@@ -74,6 +76,7 @@ class ListUserEventService {
     eventsAsGuest.map(guest => {
       const userEventMember = {
         id: guest.Event.id,
+        userEvent_id: guest.Guest.id,
         name: guest.Event.name,
         trimmed_name: guest.Event.trimmed_name,
         isOwner: false,
