@@ -44,7 +44,7 @@ export default {
   config: {
     disk: {},
     aws: {
-      bucket: 'go-app-barber',
+      bucket: 'guest-lists',
     },
   },
 } as IUploadConfig;
