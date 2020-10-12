@@ -13,6 +13,8 @@ import EventPlannersController from '@modules/events/infra/http/controllers/Even
 import EventOwnersController from '@modules/events/infra/http/controllers/EventOwnersController';
 import EventMembersController from '@modules/events/infra/http/controllers/EventMembersController';
 import EventInfosController from '@modules/events/infra/http/controllers/EventInfosController';
+import multer from 'multer';
+import uploadConfig from '@config/upload';
 
 const eventsRouter = Router();
 const events = new EventsController();
@@ -26,6 +28,7 @@ const eventPlanners = new EventPlannersController();
 const eventOwners = new EventOwnersController();
 const eventMembers = new EventMembersController();
 const eventInfos = new EventInfosController();
+const upload = multer(uploadConfig.multer);
 
 eventsRouter.use(ensureAuthenticated);
 
@@ -152,6 +155,12 @@ eventsRouter.post(
     },
   }),
   guests.create,
+);
+
+eventsRouter.post(
+  '/:event_id/guests/import',
+  upload.single('file'),
+  guests.import,
 );
 
 eventsRouter.put(

@@ -8,6 +8,7 @@ import ShowGuestService from '@modules/events/services/ShowGuestService';
 import ListGuestsService from '@modules/events/services/ListGuestsService';
 import DeleteGuestService from '@modules/events/services/DeleteGuestService';
 import UpdateWeplanGuestService from '@modules/events/services/UpdateWeplanGuestService';
+import ImportGuestsService from '@modules/events/services/ImportGuestsService';
 
 export default class GuestsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -40,6 +41,23 @@ export default class GuestsController {
     });
 
     return res.json(classToClass(guest));
+  }
+
+  public async import(req: Request, res: Response): Promise<Response> {
+    const host_id = req.user.id;
+    const fileguestListFileName = req.file.path;
+    const dataParams = req.params;
+    const { event_id } = dataParams;
+
+    const importGuests = container.resolve(ImportGuestsService);
+
+    const guests = await importGuests.execute(
+      fileguestListFileName,
+      event_id,
+      host_id,
+    );
+
+    return res.json(classToClass(guests));
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
