@@ -8,7 +8,8 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 interface IRequest {
   name: string;
   priority_level: number;
-  checked: boolean;
+  status: number;
+  due_date: Date;
   event_id: string;
 }
 
@@ -28,13 +29,15 @@ class CreateUserCheckListService {
   public async execute({
     name,
     priority_level,
-    checked,
+    status,
+    due_date,
     event_id,
   }: IRequest): Promise<UserCheckList> {
     const checkList = await this.userCheckListsRepository.create({
       name,
       priority_level,
-      checked,
+      status,
+      due_date,
       event_id,
     });
 

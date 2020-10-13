@@ -8,7 +8,8 @@ import UserCheckList from '@modules/events/infra/typeorm/entities/UserCheckList'
 interface IRequest {
   name: string;
   priority_level: number;
-  checked: boolean;
+  status: number;
+  due_date: Date;
   id: string;
 }
 @injectable()
@@ -21,7 +22,8 @@ class UpdateUserCheckListService {
   public async execute({
     name,
     priority_level,
-    checked,
+    status,
+    due_date,
     id,
   }: IRequest): Promise<UserCheckList> {
     const checkList = await this.checkListsRepository.findById(id);
@@ -32,7 +34,8 @@ class UpdateUserCheckListService {
 
     checkList.name = name;
     checkList.priority_level = priority_level;
-    checkList.checked = checked;
+    checkList.status = status;
+    checkList.due_date = due_date;
 
     const updatedUserCheckList = await this.checkListsRepository.save(
       checkList,

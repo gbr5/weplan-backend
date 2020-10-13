@@ -34,13 +34,15 @@ class UserCheckListsRepository implements IUserCheckListsRepository {
   public async create({
     name,
     priority_level,
-    checked,
+    status,
+    due_date,
     event_id,
   }: ICreateUserCheckListDTO): Promise<UserCheckList> {
     const userCheckList = this.ormRepository.create({
       name,
       priority_level,
-      checked,
+      status,
+      due_date,
       event_id,
     });
 

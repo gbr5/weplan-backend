@@ -119,7 +119,8 @@ eventsRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       priority_level: Joi.number().required(),
-      checked: Joi.boolean().required(),
+      status: Joi.number().required(),
+      due_date: Joi.date().required(),
     },
   }),
   userCheckLists.create,
@@ -127,18 +128,19 @@ eventsRouter.post(
 eventsRouter.get('/:event_id/check-list', userCheckLists.index);
 
 eventsRouter.put(
-  '/:event_id/check-list/:id',
+  '/check-list/:id',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
       priority_level: Joi.number().required(),
-      checked: Joi.boolean().required(),
+      status: Joi.number().required(),
+      due_date: Joi.date().required(),
     },
   }),
   userCheckLists.update,
 );
 
-eventsRouter.delete('/:event_id/check-list/:id', userCheckLists.delete);
+eventsRouter.delete('/check-list/:id', userCheckLists.delete);
 
 // === Guests & Hosts Guests === //
 

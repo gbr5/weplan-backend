@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserCheckLists1597689995940
+export default class CreateUserCheckLists1602561814994
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -23,8 +23,12 @@ export default class CreateUserCheckLists1597689995940
             type: 'numeric',
           },
           {
-            name: 'checked',
-            type: 'boolean',
+            name: 'status',
+            type: 'numeric',
+          },
+          {
+            name: 'due_date',
+            type: 'timestamp',
           },
           {
             name: 'event_id',

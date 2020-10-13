@@ -9,16 +9,18 @@ import DeleteUserCheckListService from '@modules/events/services/DeleteUserCheck
 
 export default class UserCheckListsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, priority_level, checked } = req.body;
+    const { name, priority_level, status, due_date } = req.body;
     const dataParams = req.params;
+    const { event_id } = dataParams;
 
     const createUserCheckList = container.resolve(CreateUserCheckListService);
 
     const checkList = await createUserCheckList.execute({
       name,
       priority_level,
-      checked,
-      event_id: dataParams.event_id,
+      status,
+      due_date,
+      event_id,
     });
 
     return res.json(classToClass(checkList));
@@ -37,7 +39,7 @@ export default class UserCheckListsController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { name, priority_level, checked } = req.body;
+    const { name, priority_level, status, due_date } = req.body;
 
     const dataParams = req.params;
 
@@ -48,7 +50,8 @@ export default class UserCheckListsController {
     const checkList = await updateUserCheckList.execute({
       name,
       priority_level,
-      checked,
+      status,
+      due_date,
       id,
     });
 

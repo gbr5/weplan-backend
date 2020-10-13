@@ -21,8 +21,11 @@ class UserCheckList {
   @Column()
   priority_level: number;
 
-  @Column('boolean')
-  checked: boolean;
+  @Column()
+  status: number;
+
+  @Column()
+  due_date: Date;
 
   @Column()
   event_id: string;
