@@ -18,6 +18,10 @@ class S3StorageProvider implements IStorageProvider {
 
   public async saveFile(file: string): Promise<string> {
     const originalPath = path.resolve(uploadConfig.tmpFolder, file);
+    console.log(
+      'passei por aqui S3StorageProvider: originalPath: ',
+      originalPath,
+    );
 
     const ContentType = mime.getType(originalPath);
 

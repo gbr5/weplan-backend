@@ -44,7 +44,7 @@ export default {
   config: {
     disk: {},
     aws: {
-      bucket: 'guest-lists',
+      bucket: 'weplan-user',
     },
   },
 } as IUploadConfig;
