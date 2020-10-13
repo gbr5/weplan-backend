@@ -71,6 +71,9 @@ class ImportGuestsService {
         throw new AppError(err);
       }
     }
+    await fs.promises.unlink(fileName);
+
+    await this.storageProvider.deleteFile(fileName);
 
     return guests;
   }

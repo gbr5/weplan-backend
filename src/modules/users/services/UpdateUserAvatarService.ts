@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -38,7 +39,6 @@ class UpdateUserAvatarService {
     // if (user.password) {
     //   delete user.password;
     // }
-
     await this.usersRepository.save(user);
 
     return user;
