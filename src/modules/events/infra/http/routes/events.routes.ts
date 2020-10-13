@@ -120,7 +120,7 @@ eventsRouter.post(
       name: Joi.string().required(),
       priority_level: Joi.number().required(),
       status: Joi.number().required(),
-      due_date: Joi.date().required(),
+      due_date: Joi.date(),
     },
   }),
   userCheckLists.create,
@@ -138,6 +138,16 @@ eventsRouter.put(
     },
   }),
   userCheckLists.update,
+);
+
+eventsRouter.put(
+  '/check-list/:id/status',
+  celebrate({
+    [Segments.BODY]: {
+      status: Joi.number().required(),
+    },
+  }),
+  userCheckLists.updateStatus,
 );
 
 eventsRouter.delete('/check-list/:id', userCheckLists.delete);

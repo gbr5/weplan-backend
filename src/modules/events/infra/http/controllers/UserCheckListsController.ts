@@ -6,6 +6,7 @@ import CreateUserCheckListService from '@modules/events/services/CreateUserCheck
 import ListUserCheckListsService from '@modules/events/services/ListUserCheckListsService';
 import UpdateUserCheckListService from '@modules/events/services/UpdateUserCheckListService';
 import DeleteUserCheckListService from '@modules/events/services/DeleteUserCheckListService';
+import UpdateCheckListItemStatusService from '@modules/events/services/UpdateCheckListItemStatusService';
 
 export default class UserCheckListsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -52,6 +53,25 @@ export default class UserCheckListsController {
       priority_level,
       status,
       due_date,
+      id,
+    });
+
+    return res.json(classToClass(checkList));
+  }
+
+  public async updateStatus(req: Request, res: Response): Promise<Response> {
+    const { status } = req.body;
+
+    const dataParams = req.params;
+
+    const { id } = dataParams;
+
+    const updateUserCheckList = container.resolve(
+      UpdateCheckListItemStatusService,
+    );
+
+    const checkList = await updateUserCheckList.execute({
+      status,
       id,
     });
 
