@@ -133,7 +133,6 @@ eventsRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       priority_level: Joi.number().required(),
-      status: Joi.number().required(),
       due_date: Joi.date().required(),
     },
   }),
@@ -148,6 +147,16 @@ eventsRouter.put(
     },
   }),
   userCheckLists.updateStatus,
+);
+
+eventsRouter.put(
+  '/check-list/:id/priority-level',
+  celebrate({
+    [Segments.BODY]: {
+      priority_level: Joi.number().required(),
+    },
+  }),
+  userCheckLists.updatePriorityLevel,
 );
 
 eventsRouter.delete('/check-list/:id', userCheckLists.delete);

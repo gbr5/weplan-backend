@@ -7,6 +7,7 @@ import ListUserCheckListsService from '@modules/events/services/ListUserCheckLis
 import UpdateUserCheckListService from '@modules/events/services/UpdateUserCheckListService';
 import DeleteUserCheckListService from '@modules/events/services/DeleteUserCheckListService';
 import UpdateCheckListItemStatusService from '@modules/events/services/UpdateCheckListItemStatusService';
+import UpdateCheckListItemPriorityLevelService from '@modules/events/services/UpdateCheckListItemPriorityLevelService';
 
 export default class UserCheckListsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -40,7 +41,7 @@ export default class UserCheckListsController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { name, priority_level, status, due_date } = req.body;
+    const { name, priority_level, due_date } = req.body;
 
     const dataParams = req.params;
 
@@ -51,7 +52,6 @@ export default class UserCheckListsController {
     const checkList = await updateUserCheckList.execute({
       name,
       priority_level,
-      status,
       due_date,
       id,
     });
@@ -72,6 +72,28 @@ export default class UserCheckListsController {
 
     const checkList = await updateUserCheckList.execute({
       status,
+      id,
+    });
+
+    return res.json(classToClass(checkList));
+  }
+
+  public async updatePriorityLevel(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const { priority_level } = req.body;
+
+    const dataParams = req.params;
+
+    const { id } = dataParams;
+
+    const updateUserCheckList = container.resolve(
+      UpdateCheckListItemPriorityLevelService,
+    );
+
+    const checkList = await updateUserCheckList.execute({
+      priority_level,
       id,
     });
 
