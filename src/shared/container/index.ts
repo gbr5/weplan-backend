@@ -105,6 +105,9 @@ import StageCardsRepository from '@modules/suppliers/infra/typeorm/repositories/
 import IEventCardsRepository from '@modules/suppliers/repositories/IEventCardsRepository';
 import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/EventCardsRepository';
 
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
+import CompanyEmployeesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeesRepository';
+
 import ISupplierWeekDayAppointmentsRepository from '@modules/appointments/repositories/ISupplierWeekDayAppointmentsRepository';
 import SupplierWeekDayAppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/SupplierWeekDayAppointmentsRepository';
 
@@ -172,6 +175,11 @@ container.registerSingleton<INotificationsRepository>(
 container.registerSingleton<ICompanyInfoRepository>(
   'CompanyInfoRepository',
   CompanyInfoRepository,
+);
+
+container.registerSingleton<ICompanyEmployeesRepository>(
+  'CompanyEmployeesRepository',
+  CompanyEmployeesRepository,
 );
 
 container.registerSingleton<IPersonInfoRepository>(
