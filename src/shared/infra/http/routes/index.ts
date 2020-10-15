@@ -15,6 +15,7 @@ import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.route
 import friendsEventsRouter from '@modules/events/infra/http/routes/friendsEvents.routes';
 
 import suppliersRouter from '@modules/suppliers/infra/http/routes/suppliers.routes';
+import supplierEmployeesRouter from '@modules/suppliers/infra/http/routes/supplierEmployees.routes';
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
 import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
 import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
@@ -39,6 +40,7 @@ routes.use('/event-types', eventTypesRouter);
 routes.use('/friends-events', friendsEventsRouter);
 
 routes.use('/suppliers', suppliersRouter);
+routes.use('/supplier-employees', supplierEmployeesRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);
 routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);

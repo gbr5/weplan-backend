@@ -4,6 +4,7 @@ import ICreateCompanyEmployeeDTO from '@modules/suppliers/dtos/ICreateCompanyEmp
 export default interface ICompanyEmployeesRepository {
   create(data: ICreateCompanyEmployeeDTO): Promise<CompanyEmployee>;
   findByCompanyId(company_id: string): Promise<CompanyEmployee[]>;
+  findByEmployeeId(employee_id: string): Promise<CompanyEmployee | undefined>;
   findByEmployeeIdAndCompanyId(
     employee_id: string,
     company_id: string,

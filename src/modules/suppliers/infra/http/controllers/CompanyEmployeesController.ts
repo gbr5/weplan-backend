@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateCompanyEmployeeService from '@modules/suppliers/services/CreateCompanyEmployeeService';
 import ListCompanyEmployeesService from '@modules/suppliers/services/ListCompanyEmployeesService';
+import ShowCompanyEmployeeService from '@modules/suppliers/services/ShowCompanyEmployeeService';
 import DeleteCompanyEmployeeService from '@modules/suppliers/services/DeleteCompanyEmployeeService';
 
 export default class CompanyEmployeesController {
@@ -12,6 +13,14 @@ export default class CompanyEmployeesController {
     const { employee_id } = reqParams;
     const company_id = req.user.id;
     const { position } = req.body;
+    console.log(
+      'employee_id',
+      employee_id,
+      'company_id',
+      company_id,
+      'position',
+      position,
+    );
 
     const createCompanyEmployees = container.resolve(
       CreateCompanyEmployeeService,
@@ -31,7 +40,17 @@ export default class CompanyEmployeesController {
     const { company_id } = reqParams;
     const listCompanyEmployees = container.resolve(ListCompanyEmployeesService);
 
-    const employee = await listCompanyEmployees.execute(company_id);
+    const employees = await listCompanyEmployees.execute(company_id);
+
+    return res.json(classToClass(employees));
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { employee_id } = reqParams;
+    const showCompanyEmployee = container.resolve(ShowCompanyEmployeeService);
+
+    const employee = await showCompanyEmployee.execute(employee_id);
 
     return res.json(classToClass(employee));
   }
