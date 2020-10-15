@@ -15,19 +15,19 @@ class CompanyEmployee {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   employee_id: string;
 
   @ManyToOne(() => User, employee => employee.id)
   @JoinColumn({ name: 'employee_id' })
-  employee: User;
+  Employee: User;
 
-  @Column()
+  @Column('uuid')
   company_id: string;
 
   @ManyToOne(() => User, company => company.id)
   @JoinColumn({ name: 'company_id' })
-  company: User;
+  Company: User;
 
   @Column()
   position: string;

@@ -27,6 +27,7 @@ import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
 import FriendGroup from '@modules/users/infra/typeorm/entities/FriendGroup';
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
 import NonUserAppointmentGuest from '@modules/appointments/infra/typeorm/entities/NonUserAppointmentGuest';
+import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -156,8 +157,14 @@ class User {
   )
   NUGuest: NonUserAppointmentGuest;
 
-  @OneToMany(() => SupplierAppointmentDayOff, supplier => supplier.id)
+  @OneToMany(() => SupplierAppointmentDayOff, supplier => supplier.supplier_id)
   SupplierAppointmentDayOff: SupplierAppointmentDayOff;
+
+  @OneToMany(() => CompanyEmployee, employee => employee.employee_id)
+  employee: CompanyEmployee;
+
+  @OneToMany(() => CompanyEmployee, company => company.company_id)
+  company: CompanyEmployee;
 }
 
 export default User;
