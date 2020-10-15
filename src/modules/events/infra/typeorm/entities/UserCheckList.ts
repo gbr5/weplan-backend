@@ -10,7 +10,7 @@ import {
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
 
-@Entity('user_check_lists')
+@Entity('user_check_list')
 class UserCheckList {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserCheckLists1602574713765
+export default class CreateUserCheckList1602745659536
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_check_lists',
+        name: 'user_check_list',
         columns: [
           {
             name: 'id',
@@ -47,7 +47,7 @@ export default class CreateUserCheckLists1602574713765
         ],
         foreignKeys: [
           {
-            name: 'UserEventCheckList',
+            name: 'EventUserCheckList',
             columnNames: ['event_id'],
             referencedTableName: 'events',
             referencedColumnNames: ['id'],
@@ -60,6 +60,6 @@ export default class CreateUserCheckLists1602574713765
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_check_lists');
+    await queryRunner.dropTable('user_check_list');
   }
 }

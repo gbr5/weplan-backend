@@ -10,7 +10,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
-@Entity('company_employees')
+@Entity('supplier_employees')
 class CompanyEmployee {
   @PrimaryGeneratedColumn('uuid')
   id: string;
