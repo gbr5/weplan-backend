@@ -47,7 +47,7 @@ export default class GuestsController {
     const host_id = req.user.id;
     const fileguestListFileName = req.file.path;
     const dataParams = req.params;
-    const { event_id } = dataParams;
+    const { event_id, number_of_guests_available } = dataParams;
 
     const importGuests = container.resolve(ImportGuestsService);
 
@@ -55,6 +55,7 @@ export default class GuestsController {
       fileguestListFileName,
       event_id,
       host_id,
+      Number(number_of_guests_available),
     );
 
     return res.json(classToClass(guests));

@@ -25,6 +25,7 @@ class ImportGuestsService {
     guestListFileName: string,
     event_id: string,
     host_id: string,
+    number_of_guests_available: number,
   ): Promise<Guest[]> {
     const fileName = await this.storageProvider.saveFile(guestListFileName);
 
@@ -50,6 +51,10 @@ class ImportGuestsService {
       };
       return guest;
     });
+
+    if (rawGuestInfo.length > number_of_guests_available) {
+      throw new AppError('Limite de convidados excedido.');
+    }
 
     const guests: Guest[] = [];
 

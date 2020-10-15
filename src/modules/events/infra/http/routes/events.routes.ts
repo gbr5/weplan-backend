@@ -179,7 +179,7 @@ eventsRouter.post(
 );
 
 eventsRouter.post(
-  '/:event_id/guests/import',
+  '/:event_id/guests/import/:number_of_guests_available',
   upload.single('file'),
   guests.import,
 );
