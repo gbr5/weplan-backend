@@ -48,6 +48,9 @@ import EventTypesRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventTypeSuppliersRepository from '@modules/events/repositories/IEventTypeSuppliersRepository';
 import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventTypeSuppliersRepository';
 
+import IWeplanManagementModulesRepository from '@modules/suppliers/repositories/IWeplanManagementModulesRepository';
+import WeplanManagementModulesRepository from '@modules/suppliers/infra/typeorm/repositories/WeplanManagementModulesRepository';
+
 import IEventWeplanSuppliersRepository from '@modules/events/repositories/IEventWeplanSuppliersRepository';
 import EventWeplanSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventWeplanSuppliersRepository';
 
@@ -169,6 +172,11 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository,
+);
+
+container.registerSingleton<IWeplanManagementModulesRepository>(
+  'WeplanManagementModulesRepository',
+  WeplanManagementModulesRepository,
 );
 
 container.registerSingleton<INotificationsRepository>(

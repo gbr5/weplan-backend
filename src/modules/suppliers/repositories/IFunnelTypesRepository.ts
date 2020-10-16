@@ -1,5 +1,5 @@
-import FunnelType from '@modules/events/infra/typeorm/entities/FunnelType';
-import ICreateFunnelTypeDTO from '@modules/events/dtos/ICreateFunnelTypeDTO';
+import FunnelType from '@modules/suppliers/infra/typeorm/entities/FunnelType';
+import ICreateFunnelTypeDTO from '@modules/suppliers/dtos/ICreateFunnelTypeDTO';
 
 export default interface IFunnelTypesRepository {
   create(data: ICreateFunnelTypeDTO): Promise<FunnelType>;
