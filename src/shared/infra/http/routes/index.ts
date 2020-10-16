@@ -20,6 +20,7 @@ import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/suppl
 import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
 import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
 import weplanManagementModulesRouter from '@modules/suppliers/infra/http/routes/weplanManagementModules.routes';
+import weplanProductsRouter from '@modules/suppliers/infra/http/routes/weplanProducts.routes';
 
 import financesRouter from '@modules/finances/infra/http/routes/finances.routes';
 
@@ -43,6 +44,7 @@ routes.use('/friends-events', friendsEventsRouter);
 routes.use('/suppliers', suppliersRouter);
 routes.use('/supplier-employees', supplierEmployeesRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);
+routes.use('/wp-products', weplanProductsRouter);
 routes.use('/wp-management-modules', weplanManagementModulesRouter);
 routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
