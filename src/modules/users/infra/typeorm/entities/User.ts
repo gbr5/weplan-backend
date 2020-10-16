@@ -28,6 +28,7 @@ import FriendGroup from '@modules/users/infra/typeorm/entities/FriendGroup';
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
 import NonUserAppointmentGuest from '@modules/appointments/infra/typeorm/entities/NonUserAppointmentGuest';
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
+import SupplierProduct from '@modules/suppliers/infra/typeorm/entities/SupplierProduct';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -165,6 +166,9 @@ class User {
 
   @OneToMany(() => CompanyEmployee, company => company.company_id)
   company: CompanyEmployee;
+
+  @OneToMany(() => SupplierProduct, supplierProduct => supplierProduct.user_id)
+  supplierProduct: SupplierProduct;
 }
 
 export default User;

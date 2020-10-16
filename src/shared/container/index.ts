@@ -120,6 +120,9 @@ import SupplierAppointmentDaySchedulesRepository from '@modules/appointments/inf
 import ISupplierAppointmentDayIntervalsRepository from '@modules/appointments/repositories/ISupplierAppointmentDayIntervalsRepository';
 import SupplierAppointmentDayIntervalsRepository from '@modules/appointments/infra/typeorm/repositories/SupplierAppointmentDayIntervalsRepository';
 
+import ISupplierProductRepository from '@modules/suppliers/repositories/ISupplierProductRepository';
+import SupplierProductRepository from '@modules/suppliers/infra/typeorm/repositories/SupplierProductsRepository';
+
 import IFriendGroupsRepository from '@modules/users/repositories/IFriendGroupsRepository';
 import FriendGroupsRepository from '@modules/users/infra/typeorm/repositories/FriendGroupsRepository';
 
@@ -215,6 +218,11 @@ container.registerSingleton<IEventSuppliersRepository>(
 container.registerSingleton<IEventWeplanSuppliersRepository>(
   'EventWeplanSuppliersRepository',
   EventWeplanSuppliersRepository,
+);
+
+container.registerSingleton<ISupplierProductRepository>(
+  'SupplierProductRepository',
+  SupplierProductRepository,
 );
 
 container.registerSingleton<ISupplierCategoriesRepository>(
