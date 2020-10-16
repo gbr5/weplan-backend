@@ -141,6 +141,9 @@ import TransactionAgreementsRepository from '@modules/finances/infra/typeorm/rep
 import ITransactionsRepository from '@modules/finances/repositories/ITransactionsRepository';
 import TransactionsRepository from '@modules/finances/infra/typeorm/repositories/TransactionsRepository';
 
+import IWeplanContractOrdersRepository from '@modules/weplan/repositories/IWeplanContractOrdersRepository';
+import WeplanContractOrdersRepository from '@modules/weplan/infra/typeorm/repositories/WeplanContractOrdersRepository';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -175,6 +178,11 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository,
+);
+
+container.registerSingleton<IWeplanContractOrdersRepository>(
+  'WeplanContractOrdersRepository',
+  WeplanContractOrdersRepository,
 );
 
 container.registerSingleton<IWeplanProductsRepository>(

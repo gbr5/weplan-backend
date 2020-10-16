@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateWeplanProducts1602830293206
+export default class CreateWeplanContractOrders1602834978683
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'weplan_products',
+        name: 'weplan_contract_orders',
         columns: [
           {
             name: 'id',
@@ -15,16 +15,8 @@ export default class CreateWeplanProducts1602830293206
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'target_audience',
-            type: 'varchar',
-          },
-          {
-            name: 'price',
-            type: 'numeric',
+            name: 'user_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -37,11 +29,21 @@ export default class CreateWeplanProducts1602830293206
             default: 'now()',
           },
         ],
+        foreignKeys: [
+          {
+            name: 'SupplierWeplanContractOrder',
+            columnNames: ['user_id'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+        ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('weplan_products');
+    await queryRunner.dropTable('weplan_contract_orders');
   }
 }
