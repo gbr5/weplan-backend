@@ -7,11 +7,18 @@ import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompan
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IWeplanManagementModulesRepository from '@modules/weplan/repositories/IWeplanManagementModulesRepository';
+
+interface IModulesDTO {
+  management_module_id: string;
+  access_level: number;
+}
 
 interface IRequest {
   employee_id: string;
   company_id: string;
   position: string;
+  modules: IModulesDTO[];
 }
 
 @injectable()
@@ -22,6 +29,9 @@ class CreateCompanyEmployeeService {
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('WeplanManagementModulesRepository')
+    private weplanManagementModulesRepository: IWeplanManagementModulesRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
@@ -34,6 +44,7 @@ class CreateCompanyEmployeeService {
     employee_id,
     company_id,
     position,
+    modules,
   }: IRequest): Promise<CompanyEmployee> {
     try {
       const companyEmployeeExists = await this.companyEmployeesRepository.findByEmployeeIdAndCompanyId(
@@ -47,17 +58,70 @@ class CreateCompanyEmployeeService {
         );
       }
 
-      const user = await this.usersRepository.findById(employee_id);
+      const employee = await this.usersRepository.findById(employee_id);
+      const company = await this.usersRepository.findById(company_id);
 
-      if (!user) {
-        throw new AppError('User not found');
+      if (!employee) {
+        throw new AppError("Employee's user not found");
+      }
+      if (!company) {
+        throw new AppError("Employee's user not found");
       }
 
+      const modulesIDs = modules.map(thisModule => {
+        console.log(thisModule);
+        return { id: thisModule.management_module_id };
+      });
+
+      const modulesItems = await this.weplanManagementModulesRepository.findAllById(
+        modulesIDs,
+      );
+      console.log(
+        'Create Service=> modulesItems',
+        modulesItems,
+        'Create Service=> employee',
+        employee,
+        'Create Service=> company',
+        company,
+        'Create Service=> modules',
+        modules,
+        'Create Service=> modulesIDs',
+        modulesIDs,
+      );
+
+      if (modulesItems.length !== modules.length) {
+        throw new AppError('Module Missing');
+      }
+
+      const modulesList = modulesItems.map(moduleItem => {
+        const moduleList = modules.find(
+          moduleFind => moduleFind.management_module_id === moduleItem.id,
+        );
+
+        if (!moduleList) {
+          throw new AppError(`Module ${moduleItem.name} not found.`);
+        }
+
+        return {
+          management_module_id: moduleItem.id,
+          access_level: moduleList.access_level,
+        };
+      });
+
       const companyEmployee = await this.companyEmployeesRepository.create({
+        employee,
+        company,
+        position,
+        modules: modulesList,
+      });
+      console.log(
+        'companyEmployee',
+        companyEmployee,
         employee_id,
         company_id,
         position,
-      });
+        modulesList,
+      );
 
       return companyEmployee;
     } catch (err) {

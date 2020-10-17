@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 import CompanyEmployeesController from '@modules/suppliers/infra/http/controllers/CompanyEmployeesController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import { celebrate, Joi, Segments } from 'celebrate';
 
 const supplierEmployeesRouter = Router();
 const companyEmployeesController = new CompanyEmployeesController();
@@ -11,11 +10,6 @@ const companyEmployeesController = new CompanyEmployeesController();
 
 supplierEmployeesRouter.post(
   '/:employee_id',
-  celebrate({
-    [Segments.BODY]: {
-      position: Joi.string().required(),
-    },
-  }),
   ensureAuthenticated,
   companyEmployeesController.create,
 );

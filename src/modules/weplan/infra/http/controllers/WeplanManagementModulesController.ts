@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import CreateWeplanManagementModuleService from '@modules/suppliers/services/CreateWeplanManagementModuleService';
-import UpdateWeplanManagementModuleService from '@modules/suppliers/services/UpdateWeplanManagementModuleService';
-import DeleteWeplanManagementModuleService from '@modules/suppliers/services/DeleteWeplanManagementModuleService';
-import ListWeplanManagementModulesService from '@modules/suppliers/services/ListWeplanManagementModulesService';
+import CreateWeplanManagementModuleService from '@modules/weplan/services/CreateWeplanManagementModuleService';
+import UpdateWeplanManagementModuleService from '@modules/weplan/services/UpdateWeplanManagementModuleService';
+import DeleteWeplanManagementModuleService from '@modules/weplan/services/DeleteWeplanManagementModuleService';
+import ListWeplanManagementModulesService from '@modules/weplan/services/ListWeplanManagementModulesService';
 
 export default class WeplanManagementModuleController {
   public async create(req: Request, res: Response): Promise<Response> {

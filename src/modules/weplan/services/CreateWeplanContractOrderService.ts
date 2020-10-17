@@ -71,6 +71,8 @@ class CreateWeplanContractOrdersService {
       products: productsList,
     });
 
+    console.log('constractOrder:', contractOrder);
+
     return contractOrder;
   }
 }

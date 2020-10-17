@@ -6,9 +6,11 @@ import {
   ManyToOne,
   JoinColumn,
   Column,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import SupplierEmployeeManagementModule from '@modules/suppliers/infra/typeorm/entities/SupplierEmployeeManagementModule';
 
 @Entity('supplier_employees')
 class CompanyEmployee {
@@ -18,19 +20,29 @@ class CompanyEmployee {
   @Column('uuid')
   employee_id: string;
 
-  @ManyToOne(() => User, employee => employee.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'employee_id' })
-  Employee: User;
+  employee: User;
 
   @Column('uuid')
   company_id: string;
 
-  @ManyToOne(() => User, company => company.id)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'company_id' })
-  Company: User;
+  company: User;
 
   @Column()
   position: string;
+
+  @OneToMany(
+    () => SupplierEmployeeManagementModule,
+    employee => employee.supplierEmployee,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  modules: SupplierEmployeeManagementModule[];
 
   @CreateDateColumn()
   created_at: Date;

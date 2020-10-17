@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
-import WeplanManagementModulesController from '@modules/suppliers/infra/http/controllers/WeplanManagementModulesController';
+import WeplanManagementModulesController from '@modules/weplan/infra/http/controllers/WeplanManagementModulesController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const weplanManagementModulesRouter = Router();

@@ -16,9 +16,12 @@ class ListUserCompanyEmployeeService {
   ) {}
 
   public async execute(company_id: string): Promise<CompanyEmployee[]> {
+    console.log(company_id);
+
     const companyEmployee = await this.companyEmployeesRepository.findByCompanyId(
       company_id,
     );
+    console.log('companyEmployee', companyEmployee);
 
     return companyEmployee;
   }

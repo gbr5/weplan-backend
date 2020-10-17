@@ -169,10 +169,10 @@ class User {
   company: CompanyEmployee;
 
   @OneToMany(() => SupplierProduct, supplierProduct => supplierProduct.user_id)
-  supplierProduct: SupplierProduct;
+  supplierProduct: SupplierProduct[];
 
   @OneToMany(() => WeplanContractOrder, order => order.user_id)
-  contractOrder: WeplanContractOrder;
+  contractOrder: WeplanContractOrder[];
 }
 
 export default User;

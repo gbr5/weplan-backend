@@ -6,11 +6,6 @@ import ICreateCompanyEmployeeDTO from '@modules/suppliers/dtos/ICreateCompanyEmp
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import AppError from '@shared/errors/AppError';
 
-interface IRequest {
-  employee_id: string;
-  company_id: string;
-}
-
 class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
   private ormRepository: Repository<CompanyEmployee>;
 
@@ -19,6 +14,7 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
   }
 
   public async findByCompanyId(company_id: string): Promise<CompanyEmployee[]> {
+    console.log('Respository company_id:', company_id);
     const findCompanyEmployee = await this.ormRepository.find({
       where: { company_id },
     });
@@ -60,15 +56,17 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
   }
 
   public async create({
-    employee_id,
-    company_id,
+    employee,
+    company,
     position,
+    modules,
   }: ICreateCompanyEmployeeDTO): Promise<CompanyEmployee> {
     try {
       const companyEmployee = this.ormRepository.create({
-        employee_id,
-        company_id,
+        employee,
+        company,
         position,
+        modules,
       });
 
       await this.ormRepository.save(companyEmployee);

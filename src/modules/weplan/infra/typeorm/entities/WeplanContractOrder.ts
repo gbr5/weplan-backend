@@ -1,4 +1,3 @@
-import User from '@modules/users/infra/typeorm/entities/User';
 import {
   Entity,
   Column,
@@ -9,6 +8,8 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
+
+import User from '@modules/users/infra/typeorm/entities/User';
 import WeplanContractOrderProduct from './WeplanContractOrderProduct';
 
 @Entity('weplan_contract_orders')

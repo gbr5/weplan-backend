@@ -48,8 +48,8 @@ import EventTypesRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventTypeSuppliersRepository from '@modules/events/repositories/IEventTypeSuppliersRepository';
 import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventTypeSuppliersRepository';
 
-import IWeplanManagementModulesRepository from '@modules/suppliers/repositories/IWeplanManagementModulesRepository';
-import WeplanManagementModulesRepository from '@modules/suppliers/infra/typeorm/repositories/WeplanManagementModulesRepository';
+import IWeplanManagementModulesRepository from '@modules/weplan/repositories/IWeplanManagementModulesRepository';
+import WeplanManagementModulesRepository from '@modules/weplan/infra/typeorm/repositories/WeplanManagementModulesRepository';
 
 import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
 import WeplanProductsRepository from '@modules/weplan/infra/typeorm/repositories/WeplanProductsRepository';

@@ -19,7 +19,7 @@ import supplierEmployeesRouter from '@modules/suppliers/infra/http/routes/suppli
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
 import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
 import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
-import weplanManagementModulesRouter from '@modules/suppliers/infra/http/routes/weplanManagementModules.routes';
+import weplanManagementModulesRouter from '@modules/weplan/infra/http/routes/weplanManagementModules.routes';
 import weplanProductsRouter from '@modules/weplan/infra/http/routes/weplanProducts.routes';
 import weplanContractOrdersRouter from '@modules/weplan/infra/http/routes/weplanContractOrders.routes';
 

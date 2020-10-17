@@ -1,4 +1,3 @@
-import WeplanProduct from '@modules/weplan/infra/typeorm/entities/WeplanProduct';
 import {
   Entity,
   Column,
@@ -8,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import WeplanProduct from '@modules/weplan/infra/typeorm/entities/WeplanProduct';
 import WeplanContractOrder from './WeplanContractOrder';
 
 @Entity('weplan_contract_order_products')

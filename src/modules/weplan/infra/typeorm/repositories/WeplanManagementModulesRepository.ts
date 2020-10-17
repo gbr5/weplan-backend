@@ -1,10 +1,14 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IWeplanManagementModulesRepository from '@modules/suppliers/repositories/IWeplanManagementModulesRepository';
-import ICreateWeplanManagementModuleDTO from '@modules/suppliers/dtos/ICreateWeplanManagementModuleDTO';
+import IWeplanManagementModulesRepository from '@modules/weplan/repositories/IWeplanManagementModulesRepository';
+import ICreateWeplanManagementModuleDTO from '@modules/weplan/dtos/ICreateWeplanManagementModuleDTO';
 
-import WeplanManagementModule from '@modules/suppliers/infra/typeorm/entities/WeplanManagementModule';
+import WeplanManagementModule from '@modules/weplan/infra/typeorm/entities/WeplanManagementModule';
 import AppError from '@shared/errors/AppError';
+
+interface IFindModules {
+  id: string;
+}
 
 class WeplanManagementModulesRepository
   implements IWeplanManagementModulesRepository {
@@ -18,6 +22,22 @@ class WeplanManagementModulesRepository
     id: string,
   ): Promise<WeplanManagementModule | undefined> {
     const findWeplanManagementModule = await this.ormRepository.findOne(id);
+
+    return findWeplanManagementModule;
+  }
+
+  public async findAllById(
+    modules: IFindModules[],
+  ): Promise<WeplanManagementModule[]> {
+    const findWeplanManagementModule = await this.ormRepository.findByIds(
+      modules,
+    );
+    console.log(
+      'modules',
+      modules,
+      'findWeplanManagementModule',
+      findWeplanManagementModule,
+    );
 
     return findWeplanManagementModule;
   }
