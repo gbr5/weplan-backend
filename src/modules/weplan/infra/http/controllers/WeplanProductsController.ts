@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import CreateWeplanProductService from '@modules/suppliers/services/CreateWeplanProductService';
-import UpdateWeplanProductService from '@modules/suppliers/services/UpdateWeplanProductService';
-import DeleteWeplanProductService from '@modules/suppliers/services/DeleteWeplanProductService';
-import ListWeplanProductsService from '@modules/suppliers/services/ListWeplanProductsService';
+import CreateWeplanProductService from '@modules/weplan/services/CreateWeplanProductService';
+import UpdateWeplanProductService from '@modules/weplan/services/UpdateWeplanProductService';
+import DeleteWeplanProductService from '@modules/weplan/services/DeleteWeplanProductService';
+import ListWeplanProductsService from '@modules/weplan/services/ListWeplanProductsService';
 
 export default class WeplanProductController {
   public async create(req: Request, res: Response): Promise<Response> {

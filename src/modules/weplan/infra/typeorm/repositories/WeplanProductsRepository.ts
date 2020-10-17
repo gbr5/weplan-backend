@@ -1,9 +1,9 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IWeplanProductsRepository from '@modules/suppliers/repositories/IWeplanProductsRepository';
-import ICreateWeplanProductDTO from '@modules/suppliers/dtos/ICreateWeplanProductDTO';
+import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
+import ICreateWeplanProductDTO from '@modules/weplan/dtos/ICreateWeplanProductDTO';
 
-import WeplanProduct from '@modules/suppliers/infra/typeorm/entities/WeplanProduct';
+import WeplanProduct from '@modules/weplan/infra/typeorm/entities/WeplanProduct';
 import AppError from '@shared/errors/AppError';
 
 interface IFindProducts {

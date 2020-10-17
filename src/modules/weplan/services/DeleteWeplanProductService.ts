@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import IWeplanProductsRepository from '@modules/suppliers/repositories/IWeplanProductsRepository';
+import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
 
 @injectable()
 class DeleteWeplanProductService {

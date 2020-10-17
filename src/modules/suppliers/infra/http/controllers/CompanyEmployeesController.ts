@@ -13,14 +13,6 @@ export default class CompanyEmployeesController {
     const { employee_id } = reqParams;
     const company_id = req.user.id;
     const { position } = req.body;
-    console.log(
-      'employee_id',
-      employee_id,
-      'company_id',
-      company_id,
-      'position',
-      position,
-    );
 
     const createCompanyEmployees = container.resolve(
       CreateCompanyEmployeeService,

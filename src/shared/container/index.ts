@@ -51,8 +51,8 @@ import EventTypeSuppliersRepository from '@modules/events/infra/typeorm/reposito
 import IWeplanManagementModulesRepository from '@modules/suppliers/repositories/IWeplanManagementModulesRepository';
 import WeplanManagementModulesRepository from '@modules/suppliers/infra/typeorm/repositories/WeplanManagementModulesRepository';
 
-import IWeplanProductsRepository from '@modules/suppliers/repositories/IWeplanProductsRepository';
-import WeplanProductsRepository from '@modules/suppliers/infra/typeorm/repositories/WeplanProductsRepository';
+import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
+import WeplanProductsRepository from '@modules/weplan/infra/typeorm/repositories/WeplanProductsRepository';
 
 import IEventWeplanSuppliersRepository from '@modules/events/repositories/IEventWeplanSuppliersRepository';
 import EventWeplanSuppliersRepository from '@modules/events/infra/typeorm/repositories/EventWeplanSuppliersRepository';

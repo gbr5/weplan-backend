@@ -1,5 +1,5 @@
-import WeplanProduct from '@modules/suppliers/infra/typeorm/entities/WeplanProduct';
-import ICreateWeplanProductDTO from '@modules/suppliers/dtos/ICreateWeplanProductDTO';
+import WeplanProduct from '@modules/weplan/infra/typeorm/entities/WeplanProduct';
+import ICreateWeplanProductDTO from '@modules/weplan/dtos/ICreateWeplanProductDTO';
 
 interface IFindProducts {
   id: string;

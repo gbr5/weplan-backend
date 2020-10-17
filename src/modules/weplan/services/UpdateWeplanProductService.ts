@@ -1,9 +1,9 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import IWeplanProductsRepository from '@modules/suppliers/repositories/IWeplanProductsRepository';
+import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
 
-import WeplanProduct from '@modules/suppliers/infra/typeorm/entities/WeplanProduct';
+import WeplanProduct from '@modules/weplan/infra/typeorm/entities/WeplanProduct';
 import ICreateWeplanProductDTO from '../dtos/ICreateWeplanProductDTO';
 
 @injectable()

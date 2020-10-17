@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import WeplanContractOrder from '@modules/weplan/infra/typeorm/entities/WeplanContractOrder';
 import IWeplanContractOrdersRepository from '@modules/weplan/repositories/IWeplanContractOrdersRepository';
-import IWeplanProductsRepository from '@modules/suppliers/repositories/IWeplanProductsRepository';
+import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
 
@@ -70,7 +70,6 @@ class CreateWeplanContractOrdersService {
       customer,
       products: productsList,
     });
-    console.log('customer:', customer, 'contractOrder:', contractOrder);
 
     return contractOrder;
   }

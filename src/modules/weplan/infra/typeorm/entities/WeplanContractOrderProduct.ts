@@ -1,4 +1,4 @@
-import WeplanProduct from '@modules/suppliers/infra/typeorm/entities/WeplanProduct';
+import WeplanProduct from '@modules/weplan/infra/typeorm/entities/WeplanProduct';
 import {
   Entity,
   Column,
