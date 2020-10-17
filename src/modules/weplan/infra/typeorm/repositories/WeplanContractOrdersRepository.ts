@@ -1,10 +1,10 @@
 import { getRepository, Repository } from 'typeorm';
 
 import IWeplanContractOrdersRepository from '@modules/weplan/repositories/IWeplanContractOrdersRepository';
-import ICreateWeplanContractOrderDTO from '@modules/weplan/dtos/ICreateWeplanContractOrderDTO';
 
 import WeplanContractOrder from '@modules/weplan/infra/typeorm/entities/WeplanContractOrder';
 import AppError from '@shared/errors/AppError';
+import ICreateWeplanContractOrderWithProductsDTO from '@modules/weplan/dtos/ICreateWeplanContractOrderWithProductsDTO';
 
 class WeplanContractOrdersRepository
   implements IWeplanContractOrdersRepository {
@@ -35,13 +35,16 @@ class WeplanContractOrdersRepository
   }
 
   public async create(
-    data: ICreateWeplanContractOrderDTO,
+    data: ICreateWeplanContractOrderWithProductsDTO,
   ): Promise<WeplanContractOrder> {
-    const funnelType = this.ormRepository.create(data);
+    const order = this.ormRepository.create({
+      customer: data.customer,
+      products: data.products,
+    });
 
-    await this.ormRepository.save(funnelType);
+    await this.ormRepository.save(order);
 
-    return funnelType;
+    return order;
   }
 
   public async save(

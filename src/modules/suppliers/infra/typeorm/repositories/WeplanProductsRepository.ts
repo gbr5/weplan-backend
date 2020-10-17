@@ -6,6 +6,10 @@ import ICreateWeplanProductDTO from '@modules/suppliers/dtos/ICreateWeplanProduc
 import WeplanProduct from '@modules/suppliers/infra/typeorm/entities/WeplanProduct';
 import AppError from '@shared/errors/AppError';
 
+interface IFindProducts {
+  id: string;
+}
+
 class WeplanProductsRepository implements IWeplanProductsRepository {
   private ormRepository: Repository<WeplanProduct>;
 
@@ -17,6 +21,18 @@ class WeplanProductsRepository implements IWeplanProductsRepository {
     const findWeplanProduct = await this.ormRepository.findOne(id);
 
     return findWeplanProduct;
+  }
+
+  public async findByAllById(
+    products: IFindProducts[],
+  ): Promise<WeplanProduct[]> {
+    const findWeplanProducts = await this.ormRepository.findByIds(products);
+
+    if (findWeplanProducts.length !== products.length) {
+      throw new AppError('Missing Product');
+    }
+
+    return findWeplanProducts;
   }
 
   public async findByName(name: string): Promise<WeplanProduct | undefined> {

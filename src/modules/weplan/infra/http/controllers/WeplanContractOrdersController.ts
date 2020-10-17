@@ -7,7 +7,7 @@ import ListWeplanContractOrdersService from '@modules/weplan/services/ListWeplan
 
 export default class WeplanContractOrderController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { user_id } = req.body;
+    const { user_id, products } = req.body;
 
     const createWeplanContractOrder = container.resolve(
       CreateWeplanContractOrderService,
@@ -15,6 +15,7 @@ export default class WeplanContractOrderController {
 
     const order = await createWeplanContractOrder.execute({
       user_id,
+      products,
     });
 
     return res.json(order);

@@ -7,7 +7,9 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import WeplanContractOrderProduct from './WeplanContractOrderProduct';
 
 @Entity('weplan_contract_orders')
 class WeplanContractOrder {
@@ -19,7 +21,17 @@ class WeplanContractOrder {
 
   @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  supplier: User;
+  customer: User;
+
+  @OneToMany(
+    () => WeplanContractOrderProduct,
+    weplanContractOrder => weplanContractOrder.weplanContractOrder,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  products: WeplanContractOrderProduct[];
 
   @CreateDateColumn()
   created_at: Date;
