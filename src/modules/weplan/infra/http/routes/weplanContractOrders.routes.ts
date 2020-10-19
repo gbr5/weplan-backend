@@ -9,9 +9,11 @@ const weplanContractOrdersRouter = Router();
 const weplanContractOrdersController = new WeplanContractOrdersController();
 const weplanContractOrderProductsController = new WeplanContractOrderProductsController();
 
-weplanContractOrdersRouter.use(ensureAuthenticated);
-
-weplanContractOrdersRouter.post('/', weplanContractOrdersController.create);
+weplanContractOrdersRouter.post(
+  '/',
+  ensureAuthenticated,
+  weplanContractOrdersController.create,
+);
 
 weplanContractOrdersRouter.get(
   '/:user_id',
@@ -20,6 +22,7 @@ weplanContractOrdersRouter.get(
 
 weplanContractOrdersRouter.delete(
   '/:id',
+  ensureAuthenticated,
   weplanContractOrdersController.delete,
 );
 
@@ -27,6 +30,7 @@ weplanContractOrdersRouter.delete(
 
 weplanContractOrdersRouter.post(
   '/products/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       contract_order_id: Joi.string().required(),
