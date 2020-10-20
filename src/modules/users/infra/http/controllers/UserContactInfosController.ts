@@ -9,7 +9,8 @@ import ListUserContactInfosService from '@modules/users/services/ListUserContact
 
 export default class UserContactInfoController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
+    const reqParams = req.params;
+    const { user_id } = reqParams;
 
     const { contact_info, contact_type } = req.body;
 
@@ -19,8 +20,8 @@ export default class UserContactInfoController {
 
     const userContactInfo = await createUserContactInfo.execute({
       contact_info,
-      user_id,
       contact_type,
+      user_id,
     });
 
     return res.json(classToClass(userContactInfo));
