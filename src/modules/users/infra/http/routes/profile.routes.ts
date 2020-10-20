@@ -9,11 +9,10 @@ const profileRouter = Router();
 const userscontroller = new ProfileController();
 const userContactInfosController = new UserContactInfosController();
 
-profileRouter.use(ensureAuthenticated);
-
-profileRouter.get('/', userscontroller.show);
+profileRouter.get('/', ensureAuthenticated, userscontroller.show);
 profileRouter.put(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -29,7 +28,7 @@ profileRouter.put(
 // === User Contact Info === //
 
 profileRouter.post(
-  '/contact-info',
+  '/contact-info/add/:user_id',
   celebrate({
     [Segments.BODY]: {
       contact_info: Joi.string().required(),
@@ -41,6 +40,7 @@ profileRouter.post(
 
 profileRouter.put(
   '/contact-info/:user_id/:contact_type',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       contact_info: Joi.string().required(),
@@ -49,9 +49,14 @@ profileRouter.put(
   userContactInfosController.update,
 );
 
-profileRouter.get('/contact-info/:user_id/', userContactInfosController.index);
+profileRouter.get(
+  '/contact-info/:user_id/',
+  ensureAuthenticated,
+  userContactInfosController.index,
+);
 profileRouter.get(
   '/contact-info/:user_id/:contact_type',
+  ensureAuthenticated,
   userContactInfosController.show,
 );
 
