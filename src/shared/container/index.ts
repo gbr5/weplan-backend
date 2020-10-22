@@ -33,6 +33,9 @@ import NotificationsRepository from '@modules/notifications/infra/typeorm/reposi
 import ICompanyInfoRepository from '@modules/users/repositories/ICompanyInfoRepository';
 import CompanyInfoRepository from '@modules/users/infra/typeorm/repositories/CompanyInfoRepository';
 
+import ICompanyEmployeeConfirmationRepository from '@modules/suppliers/repositories/ICompanyEmployeeConfirmationRepository';
+import CompanyEmployeeConfirmationRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeeConfirmationRepository';
+
 import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
 import PersonInfoRepository from '@modules/users/infra/typeorm/repositories/PersonInfoRepository';
 
@@ -215,6 +218,11 @@ container.registerSingleton<ICompanyInfoRepository>(
 container.registerSingleton<ICompanyEmployeesRepository>(
   'CompanyEmployeesRepository',
   CompanyEmployeesRepository,
+);
+
+container.registerSingleton<ICompanyEmployeeConfirmationRepository>(
+  'CompanyEmployeeConfirmationRepository',
+  CompanyEmployeeConfirmationRepository,
 );
 
 container.registerSingleton<IPersonInfoRepository>(

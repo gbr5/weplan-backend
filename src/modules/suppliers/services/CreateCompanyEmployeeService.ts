@@ -19,6 +19,8 @@ interface IRequest {
   company_id: string;
   position: string;
   modules: IModulesDTO[];
+  request_message: string;
+  salary: number;
 }
 
 @injectable()
@@ -45,6 +47,8 @@ class CreateCompanyEmployeeService {
     company_id,
     position,
     modules,
+    request_message,
+    salary,
   }: IRequest): Promise<CompanyEmployee> {
     try {
       const companyEmployeeExists = await this.companyEmployeesRepository.findByEmployeeIdAndCompanyId(
@@ -76,18 +80,6 @@ class CreateCompanyEmployeeService {
       const modulesItems = await this.weplanManagementModulesRepository.findAllById(
         modulesIDs,
       );
-      console.log(
-        'Create Service=> modulesItems',
-        modulesItems,
-        'Create Service=> employee',
-        employee,
-        'Create Service=> company',
-        company,
-        'Create Service=> modules',
-        modules,
-        'Create Service=> modulesIDs',
-        modulesIDs,
-      );
 
       if (modulesItems.length !== modules.length) {
         throw new AppError('Module Missing');
@@ -113,15 +105,12 @@ class CreateCompanyEmployeeService {
         company,
         position,
         modules: modulesList,
+        confirmation: {
+          request_message,
+          isConfirmed: false,
+          salary,
+        },
       });
-      console.log(
-        'companyEmployee',
-        companyEmployee,
-        employee_id,
-        company_id,
-        position,
-        modulesList,
-      );
 
       return companyEmployee;
     } catch (err) {

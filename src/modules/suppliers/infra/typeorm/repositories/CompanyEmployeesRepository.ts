@@ -55,19 +55,11 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
     }
   }
 
-  public async create({
-    employee,
-    company,
-    position,
-    modules,
-  }: ICreateCompanyEmployeeDTO): Promise<CompanyEmployee> {
+  public async create(
+    data: ICreateCompanyEmployeeDTO,
+  ): Promise<CompanyEmployee> {
     try {
-      const companyEmployee = this.ormRepository.create({
-        employee,
-        company,
-        position,
-        modules,
-      });
+      const companyEmployee = this.ormRepository.create(data);
 
       await this.ormRepository.save(companyEmployee);
 

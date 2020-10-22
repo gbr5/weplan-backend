@@ -12,7 +12,7 @@ export default class CompanyEmployeesController {
     const reqParams = req.params;
     const { employee_id } = reqParams;
     const company_id = req.user.id;
-    const { position, modules } = req.body;
+    const { position, modules, request_message, salary } = req.body;
 
     const createCompanyEmployees = container.resolve(
       CreateCompanyEmployeeService,
@@ -23,6 +23,8 @@ export default class CompanyEmployeesController {
       company_id,
       position,
       modules,
+      request_message,
+      salary,
     });
 
     return res.json(classToClass(employee));
@@ -31,7 +33,6 @@ export default class CompanyEmployeesController {
   public async index(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { company_id } = reqParams;
-    console.log('company_id', company_id);
     const listCompanyEmployees = container.resolve(ListCompanyEmployeesService);
 
     const employees = await listCompanyEmployees.execute(company_id);
