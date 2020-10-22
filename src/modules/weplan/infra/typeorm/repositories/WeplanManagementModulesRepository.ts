@@ -32,12 +32,6 @@ class WeplanManagementModulesRepository
     const findWeplanManagementModule = await this.ormRepository.findByIds(
       modules,
     );
-    console.log(
-      'modules',
-      modules,
-      'findWeplanManagementModule',
-      findWeplanManagementModule,
-    );
 
     return findWeplanManagementModule;
   }
