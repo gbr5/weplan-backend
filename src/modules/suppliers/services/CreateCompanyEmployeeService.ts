@@ -73,7 +73,6 @@ class CreateCompanyEmployeeService {
       }
 
       const modulesIDs = modules.map(thisModule => {
-        console.log(thisModule);
         return { id: thisModule.management_module_id };
       });
 
