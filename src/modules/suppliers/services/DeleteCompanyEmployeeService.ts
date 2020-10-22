@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 
 @injectable()
-class UpdateCompanyEmployeeService {
+class DeleteCompanyEmployeeService {
   constructor(
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
@@ -21,4 +21,4 @@ class UpdateCompanyEmployeeService {
   }
 }
 
-export default UpdateCompanyEmployeeService;
+export default DeleteCompanyEmployeeService;

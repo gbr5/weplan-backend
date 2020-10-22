@@ -7,10 +7,12 @@ import {
   JoinColumn,
   Column,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import SupplierEmployeeManagementModule from '@modules/suppliers/infra/typeorm/entities/SupplierEmployeeManagementModule';
+import CompanyEmployeeConfirmation from './CompanyEmployeeConfirmation';
 
 @Entity('supplier_employees')
 class CompanyEmployee {
@@ -36,13 +38,23 @@ class CompanyEmployee {
 
   @OneToMany(
     () => SupplierEmployeeManagementModule,
-    employee => employee.supplierEmployee,
+    module => module.supplierEmployee,
     {
       cascade: true,
       eager: true,
     },
   )
   modules: SupplierEmployeeManagementModule[];
+
+  @OneToOne(
+    () => CompanyEmployeeConfirmation,
+    confirmation => confirmation.companyEmployee,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  confirmation: CompanyEmployeeConfirmation;
 
   @CreateDateColumn()
   created_at: Date;
