@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
+import uploadConfig from '@config/upload';
 
 import CompanyInfoController from '@modules/users/infra/http/controllers/CompanyInfoController';
+import CompanyLogoController from '@modules/users/infra/http/controllers/CompanyLogoController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import multer from 'multer';
 
 const companyInfoRouter = Router();
+const upload = multer(uploadConfig.multer);
 const companyInfoController = new CompanyInfoController();
+const companyLogoController = new CompanyLogoController();
 
 companyInfoRouter.post(
   '/',
@@ -29,6 +34,13 @@ companyInfoRouter.put(
     },
   }),
   companyInfoController.update,
+);
+
+companyInfoRouter.patch(
+  '/logo',
+  ensureAuthenticated,
+  upload.single('logo'),
+  companyLogoController.update,
 );
 
 export default companyInfoRouter;
