@@ -30,6 +30,7 @@ import NonUserAppointmentGuest from '@modules/appointments/infra/typeorm/entitie
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import SupplierProduct from '@modules/suppliers/infra/typeorm/entities/SupplierProduct';
 import WeplanContractOrder from '@modules/weplan/infra/typeorm/entities/WeplanContractOrder';
+import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/CompanyMasterUser';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -167,6 +168,12 @@ class User {
 
   @OneToMany(() => CompanyEmployee, company => company.company_id)
   company: CompanyEmployee;
+
+  @OneToMany(() => CompanyMasterUser, user => user.masterUser)
+  masterUsers: CompanyMasterUser[];
+
+  @OneToMany(() => CompanyMasterUser, company => company.company)
+  companyMasterUsers: CompanyMasterUser[];
 
   @OneToMany(() => SupplierProduct, supplierProduct => supplierProduct.user_id)
   supplierProduct: SupplierProduct[];

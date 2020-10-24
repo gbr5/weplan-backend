@@ -36,6 +36,9 @@ import CompanyInfoRepository from '@modules/users/infra/typeorm/repositories/Com
 import ICompanyEmployeeConfirmationRepository from '@modules/suppliers/repositories/ICompanyEmployeeConfirmationRepository';
 import CompanyEmployeeConfirmationRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeeConfirmationRepository';
 
+import ICompanyMasterUsersRepository from '@modules/suppliers/repositories/ICompanyMasterUsersRepository';
+import CompanyMasterUsersRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyMasterUsersRepository';
+
 import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
 import PersonInfoRepository from '@modules/users/infra/typeorm/repositories/PersonInfoRepository';
 
@@ -388,4 +391,9 @@ container.registerSingleton<ITransactionAgreementsRepository>(
 container.registerSingleton<ITransactionsRepository>(
   'TransactionsRepository',
   TransactionsRepository,
+);
+
+container.registerSingleton<ICompanyMasterUsersRepository>(
+  'CompanyMasterUsersRepository',
+  CompanyMasterUsersRepository,
 );
