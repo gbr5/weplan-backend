@@ -2,10 +2,12 @@ import { Router } from 'express';
 
 import SuppliersController from '@modules/suppliers/infra/http/controllers/SuppliersController';
 import SupplierProductsController from '@modules/suppliers/infra/http/controllers/SupplierProductsController';
+import CompanyMasterUsersController from '@modules/suppliers/infra/http/controllers/CompanyMasterUsersController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const suppliersRouter = Router();
 const suppliersController = new SuppliersController();
+const companyMasterUsersController = new CompanyMasterUsersController();
 const supplierProductsController = new SupplierProductsController();
 
 suppliersRouter.use(ensureAuthenticated);
@@ -19,5 +21,26 @@ suppliersRouter.get('/:supplier_id', suppliersController.index);
 suppliersRouter.post('/products', supplierProductsController.create);
 suppliersRouter.get('/products/:user_id', supplierProductsController.index);
 suppliersRouter.delete('/products/:id', supplierProductsController.delete);
+
+// === $$ === $ ==> Supplier Products <== $ === $$ === //
+
+suppliersRouter.post(
+  '/master/user/:user_id',
+  companyMasterUsersController.create,
+);
+suppliersRouter.get(
+  '/master/users/:company_id',
+  companyMasterUsersController.index,
+);
+suppliersRouter.get(
+  '/masters/users/:user_id',
+  companyMasterUsersController.listUserMasters,
+);
+suppliersRouter.get(
+  '/master/user/:user_id/:company_id',
+  companyMasterUsersController.show,
+);
+suppliersRouter.put('/master/user/:id', companyMasterUsersController.update);
+suppliersRouter.delete('/master/user/:id', companyMasterUsersController.delete);
 
 export default suppliersRouter;

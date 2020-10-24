@@ -41,17 +41,13 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
     employee_id: string,
     company_id: string,
   ): Promise<CompanyEmployee | undefined> {
-    try {
-      const findCompanyEmployee = await this.ormRepository.findOne({
-        where: {
-          employee_id,
-          company_id,
-        },
-      });
-      return findCompanyEmployee;
-    } catch (err) {
-      return undefined;
-    }
+    const findCompanyEmployee = await this.ormRepository.findOne({
+      where: {
+        employee_id,
+        company_id,
+      },
+    });
+    return findCompanyEmployee;
   }
 
   public async create(
@@ -69,11 +65,7 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
   }
 
   public async save(employee: CompanyEmployee): Promise<CompanyEmployee> {
-    try {
-      return this.ormRepository.save(employee);
-    } catch (err) {
-      throw new AppError('Algo deu errado, CompanyEmployeeRepository.save');
-    }
+    return this.ormRepository.save(employee);
   }
 
   public async delete(employee: CompanyEmployee): Promise<void> {
