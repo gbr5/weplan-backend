@@ -23,7 +23,11 @@ companyInfoRouter.post(
   }),
   companyInfoController.create,
 );
-companyInfoRouter.get('/', ensureAuthenticated, companyInfoController.show);
+companyInfoRouter.get(
+  '/:user_id',
+  ensureAuthenticated,
+  companyInfoController.show,
+);
 companyInfoRouter.put(
   '/',
   ensureAuthenticated,

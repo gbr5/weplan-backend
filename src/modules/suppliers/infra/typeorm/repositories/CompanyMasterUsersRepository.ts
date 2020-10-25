@@ -40,14 +40,12 @@ class CompanyMasterUserRepository implements ICompanyMasterUsersRepository {
     user_id: string,
     company_id: string,
   ): Promise<CompanyMasterUser | undefined> {
-    console.log('user_id, company_id', user_id, company_id);
     const findCompanyMasterUser = await this.ormRepository.findOne({
       where: {
         user_id,
         company_id,
       },
     });
-    console.log('findCompanyMasterUser', findCompanyMasterUser);
     return findCompanyMasterUser;
   }
 

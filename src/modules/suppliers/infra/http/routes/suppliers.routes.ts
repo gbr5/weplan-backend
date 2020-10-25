@@ -22,18 +22,28 @@ suppliersRouter.post('/products', supplierProductsController.create);
 suppliersRouter.get('/products/:user_id', supplierProductsController.index);
 suppliersRouter.delete('/products/:id', supplierProductsController.delete);
 
-// === $$ === $ ==> Supplier Products <== $ === $$ === //
+// === $$ === $ ==>  Company Master Users  <== $ === $$ === //
 
 suppliersRouter.post(
   '/master/user/:user_id',
   companyMasterUsersController.create,
 );
+
 suppliersRouter.get(
   '/master/users/:company_id',
   companyMasterUsersController.index,
 );
+
+// === $$ === $ ==>  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  <== $ === $$ === //
+
+// === $$ === $ ==>  Difference between route below & above  <== $ === $$ === //
+
+// === $$ === $ ==>  ! Is the S at the of master and user !  <== $ === $$ === //
+
+// === $$ === $ ==>  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  <== $ === $$ === //
+
 suppliersRouter.get(
-  '/masters/users/:user_id',
+  '/masters/user/:user_id',
   companyMasterUsersController.listUserMasters,
 );
 suppliersRouter.get(
