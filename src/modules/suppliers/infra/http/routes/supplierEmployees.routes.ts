@@ -8,7 +8,7 @@ const supplierEmployeesRouter = Router();
 const companyEmployeesController = new CompanyEmployeesController();
 const companyEmployeeConfirmationController = new CompanyEmployeeConfirmationController();
 
-// === $$ === $ ==> Supplier <== $ === $$ === //
+// === $$ === $ ==> Employee <== $ === $$ === //
 
 supplierEmployeesRouter.post(
   '/:employee_id',
@@ -21,7 +21,11 @@ supplierEmployeesRouter.get(
   companyEmployeesController.index,
 );
 supplierEmployeesRouter.get(
-  '/employee/:employee_id',
+  '/user/:employee_id',
+  companyEmployeesController.listUserEmployee,
+);
+supplierEmployeesRouter.get(
+  '/employee/:employee_id/:company_id',
   companyEmployeesController.show,
 );
 supplierEmployeesRouter.delete(
@@ -30,7 +34,7 @@ supplierEmployeesRouter.delete(
   companyEmployeesController.delete,
 );
 
-// === $$ === $ ==> Supplier <== $ === $$ === //
+// === $$ === $ ==> Employee Confirmation <== $ === $$ === //
 
 supplierEmployeesRouter.post(
   '/user/confirmation/:company_employee_id',
