@@ -10,27 +10,43 @@ const suppliersController = new SuppliersController();
 const companyMasterUsersController = new CompanyMasterUsersController();
 const supplierProductsController = new SupplierProductsController();
 
-suppliersRouter.use(ensureAuthenticated);
-
 // === $$ === $ ==> Supplier <== $ === $$ === //
 
-suppliersRouter.get('/:supplier_id', suppliersController.index);
+suppliersRouter.get(
+  '/:supplier_id',
+  ensureAuthenticated,
+  suppliersController.index,
+);
 
 // === $$ === $ ==> Supplier Products <== $ === $$ === //
 
-suppliersRouter.post('/products', supplierProductsController.create);
-suppliersRouter.get('/products/:user_id', supplierProductsController.index);
-suppliersRouter.delete('/products/:id', supplierProductsController.delete);
+suppliersRouter.post(
+  '/products',
+  ensureAuthenticated,
+  supplierProductsController.create,
+);
+suppliersRouter.get(
+  '/products/:user_id',
+  ensureAuthenticated,
+  supplierProductsController.index,
+);
+suppliersRouter.delete(
+  '/products/:id',
+  ensureAuthenticated,
+  supplierProductsController.delete,
+);
 
 // === $$ === $ ==>  Company Master Users  <== $ === $$ === //
 
 suppliersRouter.post(
   '/master/user/:user_id',
+  ensureAuthenticated,
   companyMasterUsersController.create,
 );
 
 suppliersRouter.get(
   '/master/users/:company_id',
+  ensureAuthenticated,
   companyMasterUsersController.index,
 );
 
@@ -48,9 +64,18 @@ suppliersRouter.get(
 );
 suppliersRouter.get(
   '/master/user/:user_id/:company_id',
+  ensureAuthenticated,
   companyMasterUsersController.show,
 );
-suppliersRouter.put('/master/user/:id', companyMasterUsersController.update);
-suppliersRouter.delete('/master/user/:id', companyMasterUsersController.delete);
+suppliersRouter.put(
+  '/master/user/:id',
+  ensureAuthenticated,
+  companyMasterUsersController.update,
+);
+suppliersRouter.delete(
+  '/master/user/:id',
+  ensureAuthenticated,
+  companyMasterUsersController.delete,
+);
 
 export default suppliersRouter;
