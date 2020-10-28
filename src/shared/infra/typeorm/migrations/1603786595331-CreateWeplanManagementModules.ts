@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateCompanyEmployeeConfirmation1603348236180
+export default class CreateWeplanManagementModules1603786595331
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'company_employee_confirmation',
+        name: 'weplan_management_modules',
         columns: [
           {
             name: 'id',
@@ -15,20 +15,9 @@ export default class CreateCompanyEmployeeConfirmation1603348236180
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'company_employee_id',
-            type: 'uuid',
-          },
-          {
-            name: 'request_message',
+            name: 'name',
             type: 'varchar',
-          },
-          {
-            name: 'isConfirmed',
-            type: 'boolean',
-          },
-          {
-            name: 'salary',
-            type: 'numeric',
+            isUnique: true,
           },
           {
             name: 'created_at',
@@ -41,21 +30,11 @@ export default class CreateCompanyEmployeeConfirmation1603348236180
             default: 'now()',
           },
         ],
-        foreignKeys: [
-          {
-            name: 'EmployeeConfirmation',
-            columnNames: ['company_employee_id'],
-            referencedTableName: 'supplier_employees',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('company_employee_confirmation');
+    await queryRunner.dropTable('weplan_management_modules');
   }
 }

@@ -8,7 +8,8 @@ import DeleteSupplierProductService from '@modules/suppliers/services/DeleteSupp
 
 export default class SupplierProductsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
+    const reqParams = req.params;
+    const { company_id } = reqParams;
     const { sub_category_id, event_type_id, price } = req.body;
 
     const createSupplierProduct = container.resolve(
@@ -16,7 +17,7 @@ export default class SupplierProductsController {
     );
 
     const supplierProduct = await createSupplierProduct.execute({
-      user_id,
+      user_id: company_id,
       sub_category_id,
       event_type_id,
       price,

@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import appointmentsRouter from '@modules/appointments/infra/http/routes/appointments.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import userConfirmationsRouter from '@modules/users/infra/http/routes/userConfirmations.routes';
+import userManagementModulesRouter from '@modules/users/infra/http/routes/userManagementModules.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import profileRouter from '@modules/users/infra/http/routes/profile.routes';
@@ -15,7 +17,7 @@ import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.route
 import friendsEventsRouter from '@modules/events/infra/http/routes/friendsEvents.routes';
 
 import suppliersRouter from '@modules/suppliers/infra/http/routes/suppliers.routes';
-import supplierEmployeesRouter from '@modules/suppliers/infra/http/routes/supplierEmployees.routes';
+import companyEmployeesRouter from '@modules/suppliers/infra/http/routes/companyEmployees.routes';
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
 import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
 import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
@@ -30,6 +32,8 @@ const routes = Router();
 routes.use('/appointments', appointmentsRouter);
 
 routes.use('/users', usersRouter);
+routes.use('/user/modules', userManagementModulesRouter);
+routes.use('/user/confirmations', userConfirmationsRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
@@ -43,7 +47,7 @@ routes.use('/event-types', eventTypesRouter);
 routes.use('/friends-events', friendsEventsRouter);
 
 routes.use('/suppliers', suppliersRouter);
-routes.use('/supplier-employees', supplierEmployeesRouter);
+routes.use('/supplier-employees', companyEmployeesRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);
 routes.use('/wp-products', weplanProductsRouter);
 routes.use('/wp/contract-orders', weplanContractOrdersRouter);

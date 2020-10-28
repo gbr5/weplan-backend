@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateWeplanManagementModules1602825096135
+export default class CreateUserToUserConfirmations1603784776695
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'weplan_management_modules',
+        name: 'user_confirmations',
         columns: [
           {
             name: 'id',
@@ -15,8 +15,24 @@ export default class CreateWeplanManagementModules1602825096135
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
+            name: 'sender_id',
+            type: 'uuid',
+          },
+          {
+            name: 'receiver_id',
+            type: 'uuid',
+          },
+          {
+            name: 'title',
             type: 'varchar',
+          },
+          {
+            name: 'message',
+            type: 'varchar',
+          },
+          {
+            name: 'isConfirmed',
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -34,6 +50,6 @@ export default class CreateWeplanManagementModules1602825096135
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('weplan_management_modules');
+    await queryRunner.dropTable('user_confirmations');
   }
 }

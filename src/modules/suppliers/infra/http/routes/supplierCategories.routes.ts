@@ -13,10 +13,12 @@ const supplierSubCategoriesController = new SupplierSubCategoriesController();
 
 supplierCategoriessRouter.use(ensureAuthenticated);
 
+// =============== !!! ==> http.../suppliers/categories  <== ===============
+
 // === $$ === $ ==> Supplier <== $ === $$ === //
 
 supplierCategoriessRouter.post(
-  '/weplan/:category_name/:sub_category',
+  '/weplan/:sub_category_name/:company_id',
   userSupplierCategoriesController.create,
 );
 

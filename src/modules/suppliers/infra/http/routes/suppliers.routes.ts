@@ -21,7 +21,7 @@ suppliersRouter.get(
 // === $$ === $ ==> Supplier Products <== $ === $$ === //
 
 suppliersRouter.post(
-  '/products',
+  '/products/:company_id',
   ensureAuthenticated,
   supplierProductsController.create,
 );

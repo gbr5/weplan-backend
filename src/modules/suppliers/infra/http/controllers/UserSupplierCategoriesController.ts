@@ -9,16 +9,16 @@ import DeleteUserSupplierCategoriesService from '@modules/suppliers/services/Del
 
 export default class UserSupplierCategoriesController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const subCategory_name = req.params;
-    const user_id = req.user.id;
+    const reqParams = req.params;
+    const { company_id, sub_category_name } = reqParams;
 
     const createUserSupplierCategories = container.resolve(
       CreateUserSupplierCategoriesService,
     );
 
     const userSupplierCategories = await createUserSupplierCategories.execute({
-      sub_category_name: subCategory_name.sub_category,
-      user_id,
+      sub_category_name,
+      user_id: company_id,
     });
 
     return res.json(classToClass(userSupplierCategories));
