@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity('weplan_management_modules')
-class WeplanManagementManagement {
+class WeplanManagementModule {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,4 +21,4 @@ class WeplanManagementManagement {
   updated_at: Date;
 }
 
-export default WeplanManagementManagement;
+export default WeplanManagementModule;

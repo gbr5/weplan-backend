@@ -10,6 +10,7 @@ export default interface ICompanyEmployeesRepository {
     company_id: string,
   ): Promise<CompanyEmployee | undefined>;
   findById(id: string): Promise<CompanyEmployee | undefined>;
+  findByEmail(email: string): Promise<CompanyEmployee | undefined>;
   save(supplier: CompanyEmployee): Promise<CompanyEmployee>;
   delete(employee: CompanyEmployee): Promise<void>;
 }

@@ -7,6 +7,7 @@ import ListCompanyEmployeesService from '@modules/suppliers/services/ListCompany
 import ShowCompanyEmployeeService from '@modules/suppliers/services/ShowCompanyEmployeeService';
 import DeleteCompanyEmployeeService from '@modules/suppliers/services/DeleteCompanyEmployeeService';
 import ListUserAsEmployeeService from '@modules/suppliers/services/ListUserAsEmployeeService';
+import UpdateCompanyEmployeesService from '@modules/suppliers/services/UpdateCompanyEmployeeService';
 
 export default class CompanyEmployeesController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -41,6 +42,24 @@ export default class CompanyEmployeesController {
     const employees = await listCompanyEmployees.execute(company_id);
 
     return res.json(classToClass(employees));
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+    const { position, email, isActive } = req.body;
+    const updateCompanyEmployee = container.resolve(
+      UpdateCompanyEmployeesService,
+    );
+
+    const employee = await updateCompanyEmployee.execute({
+      id,
+      position,
+      email,
+      isActive,
+    });
+
+    return res.json(classToClass(employee));
   }
 
   public async listUserEmployee(

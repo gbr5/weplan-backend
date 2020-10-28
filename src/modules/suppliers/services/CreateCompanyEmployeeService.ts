@@ -6,6 +6,7 @@ import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEm
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
+import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 
 // interface IModulesDTO {
 //   management_module: string;
@@ -35,6 +36,9 @@ class CreateCompanyEmployeeService {
 
     @inject('UserConfirmationRepository')
     private userConfirmationsRepository: IUserConfirmationRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
@@ -75,11 +79,13 @@ class CreateCompanyEmployeeService {
         throw new AppError("Company's user not found");
       }
 
+      const hashedPassword = await this.hashProvider.generateHash(password);
+
       const companyEmployee = await this.companyEmployeesRepository.create({
         position,
         access_key,
         email: employee.email,
-        password,
+        password: hashedPassword,
         isActive: false,
         employee,
         company,
