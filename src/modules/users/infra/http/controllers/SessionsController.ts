@@ -36,19 +36,6 @@ export default class SessionsController {
       password,
     });
 
-    console.log({
-      id: user.id,
-      email: user.email,
-      position: user.position,
-      employee_avatar: user.avatar ? user.avatar : '',
-      userInfo: classToClass(user.employee),
-      company: classToClass(user.company),
-      companyInfo,
-      personInfo,
-      modules,
-      token,
-    });
-
     return res.json({
       id: user.id,
       email: user.email,
@@ -71,11 +58,24 @@ export default class SessionsController {
 
     const authenticateUser = container.resolve(AuthenticateEnterpriseService);
 
-    const { user, token } = await authenticateUser.execute({
+    const {
+      companyInfo,
+      modules,
+      user,
+      token,
+    } = await authenticateUser.execute({
       email,
       password,
     });
 
-    return res.json({ user: classToClass(user), token });
+    return res.json({
+      id: user.id,
+      email: user.email,
+      company: classToClass(user),
+      userInfo: classToClass(user.masterUser),
+      companyInfo,
+      modules,
+      token,
+    });
   }
 }

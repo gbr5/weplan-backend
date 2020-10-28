@@ -8,33 +8,44 @@ import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/Company
 interface IRequest {
   id: string;
   isConfirmed: boolean;
+  email: string;
 }
 
 @injectable()
 class UpdateCompanyMasterUsersService {
   constructor(
     @inject('CompanyMasterUsersRepository')
-    private CompanyMasterUsersRepository: ICompanyMasterUsersRepository,
+    private companyMasterUsersRepository: ICompanyMasterUsersRepository,
   ) {}
 
   public async execute({
     id,
     isConfirmed,
+    email,
   }: IRequest): Promise<CompanyMasterUser> {
-    const companyMasterUsers = await this.CompanyMasterUsersRepository.findById(
+    const companyMasterUser = await this.companyMasterUsersRepository.findById(
       id,
     );
 
-    if (!companyMasterUsers) {
+    if (!companyMasterUser) {
       throw new AppError('CompanyMasterUsers not found.');
     }
-    companyMasterUsers.isConfirmed = isConfirmed;
 
-    const updatedCompanyMasterUsers = await this.CompanyMasterUsersRepository.save(
-      companyMasterUsers,
+    const masterEmail = await this.companyMasterUsersRepository.findByEmail(
+      email,
     );
 
-    return updatedCompanyMasterUsers;
+    if (masterEmail && masterEmail.email !== companyMasterUser.email) {
+      throw new AppError('This email is already associated with another user.');
+    }
+    companyMasterUser.isConfirmed = isConfirmed;
+    companyMasterUser.email = email;
+
+    const updatedCompanyMasterUser = await this.companyMasterUsersRepository.save(
+      companyMasterUser,
+    );
+
+    return updatedCompanyMasterUser;
   }
 }
 

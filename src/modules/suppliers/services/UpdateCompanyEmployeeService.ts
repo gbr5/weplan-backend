@@ -16,7 +16,7 @@ interface IRequest {
 class UpdateCompanyEmployeesService {
   constructor(
     @inject('CompanyEmployeesRepository')
-    private CompanyEmployeesRepository: ICompanyEmployeesRepository,
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute({
@@ -25,16 +25,25 @@ class UpdateCompanyEmployeesService {
     isActive,
     email,
   }: IRequest): Promise<CompanyEmployee> {
-    const companyEmployee = await this.CompanyEmployeesRepository.findById(id);
+    const companyEmployee = await this.companyEmployeesRepository.findById(id);
 
     if (!companyEmployee) {
       throw new AppError('CompanyEmployees not found.');
     }
+
+    const employeeEmail = await this.companyEmployeesRepository.findByEmail(
+      email,
+    );
+
+    if (employeeEmail && employeeEmail.email !== companyEmployee.email) {
+      throw new AppError('This email is already associated with another user.');
+    }
+
     companyEmployee.position = position;
     companyEmployee.isActive = isActive;
     companyEmployee.email = email;
 
-    const updatedCompanyEmployees = await this.CompanyEmployeesRepository.save(
+    const updatedCompanyEmployees = await this.companyEmployeesRepository.save(
       companyEmployee,
     );
 

@@ -36,6 +36,16 @@ class CompanyMasterUserRepository implements ICompanyMasterUsersRepository {
     return user;
   }
 
+  public async findByEmail(
+    email: string,
+  ): Promise<CompanyMasterUser | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { email },
+    });
+
+    return user;
+  }
+
   public async findByUserIdAndCompanyId(
     user_id: string,
     company_id: string,
