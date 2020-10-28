@@ -33,8 +33,11 @@ import NotificationsRepository from '@modules/notifications/infra/typeorm/reposi
 import ICompanyInfoRepository from '@modules/users/repositories/ICompanyInfoRepository';
 import CompanyInfoRepository from '@modules/users/infra/typeorm/repositories/CompanyInfoRepository';
 
-import ICompanyEmployeeConfirmationRepository from '@modules/suppliers/repositories/ICompanyEmployeeConfirmationRepository';
-import CompanyEmployeeConfirmationRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeeConfirmationRepository';
+import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
+import UserConfirmationRepository from '@modules/users/infra/typeorm/repositories/UserConfirmationRepository';
+
+import IUserManagementModulesRepository from '@modules/users/repositories/IUserManagementModulesRepository';
+import UserManagementModulesRepository from '@modules/users/infra/typeorm/repositories/UserManagementModulesRepository';
 
 import ICompanyMasterUsersRepository from '@modules/suppliers/repositories/ICompanyMasterUsersRepository';
 import CompanyMasterUsersRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyMasterUsersRepository';
@@ -223,9 +226,14 @@ container.registerSingleton<ICompanyEmployeesRepository>(
   CompanyEmployeesRepository,
 );
 
-container.registerSingleton<ICompanyEmployeeConfirmationRepository>(
-  'CompanyEmployeeConfirmationRepository',
-  CompanyEmployeeConfirmationRepository,
+container.registerSingleton<IUserConfirmationRepository>(
+  'UserConfirmationRepository',
+  UserConfirmationRepository,
+);
+
+container.registerSingleton<IUserManagementModulesRepository>(
+  'UserManagementModulesRepository',
+  UserManagementModulesRepository,
 );
 
 container.registerSingleton<IPersonInfoRepository>(

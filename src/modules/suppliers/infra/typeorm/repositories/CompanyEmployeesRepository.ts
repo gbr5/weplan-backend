@@ -47,6 +47,10 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
         company_id,
       },
     });
+    console.log(
+      'findByEmployeeAndCompanyID, repository employee',
+      findCompanyEmployee,
+    );
     return findCompanyEmployee;
   }
 
@@ -55,6 +59,7 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
   ): Promise<CompanyEmployee> {
     try {
       const companyEmployee = this.ormRepository.create(data);
+      console.log('repository - employee 59', data);
 
       await this.ormRepository.save(companyEmployee);
 

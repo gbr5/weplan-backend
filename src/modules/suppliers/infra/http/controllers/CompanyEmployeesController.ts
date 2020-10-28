@@ -11,21 +11,44 @@ import ListUserAsEmployeeService from '@modules/suppliers/services/ListUserAsEmp
 export default class CompanyEmployeesController {
   public async create(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
-    const { employee_id } = reqParams;
-    const company_id = req.user.id;
-    const { position, modules, request_message, salary } = req.body;
+    const { employee_id, company_id } = reqParams;
+    const {
+      access_key,
+      password,
+      title,
+      message,
+      position,
+      modules,
+    } = req.body;
 
     const createCompanyEmployees = container.resolve(
       CreateCompanyEmployeeService,
     );
 
-    const employee = await createCompanyEmployees.execute({
+    console.log('controller employee', {
+      access_key,
+      password,
+      title,
+      message,
       employee_id,
       company_id,
+      receiver_id: employee_id,
+      sender_id: company_id,
       position,
       modules,
-      request_message,
-      salary,
+    });
+
+    const employee = await createCompanyEmployees.execute({
+      access_key,
+      password,
+      title,
+      message,
+      employee_id,
+      company_id,
+      receiver_id: employee_id,
+      sender_id: company_id,
+      position,
+      modules,
     });
 
     return res.json(classToClass(employee));

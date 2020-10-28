@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateSupplierEmployees1602745675530
+export default class CreateUserManagementModules1603786648309
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'supplier_employees',
+        name: 'user_management_modules',
         columns: [
           {
             name: 'id',
@@ -15,16 +15,16 @@ export default class CreateSupplierEmployees1602745675530
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'employee_id',
+            name: 'user_id',
             type: 'uuid',
           },
           {
-            name: 'company_id',
-            type: 'uuid',
-          },
-          {
-            name: 'position',
+            name: 'management_module',
             type: 'varchar',
+          },
+          {
+            name: 'access_level',
+            type: 'integer',
           },
           {
             name: 'created_at',
@@ -39,18 +39,10 @@ export default class CreateSupplierEmployees1602745675530
         ],
         foreignKeys: [
           {
-            name: 'UserEmployee',
-            columnNames: ['employee_id'],
-            referencedTableName: 'users',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'CompanyEmployer',
-            columnNames: ['company_id'],
-            referencedTableName: 'users',
-            referencedColumnNames: ['id'],
+            name: 'UserManagementModules',
+            columnNames: ['management_module'],
+            referencedTableName: 'weplan_management_modules',
+            referencedColumnNames: ['name'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -60,6 +52,6 @@ export default class CreateSupplierEmployees1602745675530
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('supplier_employees');
+    await queryRunner.dropTable('user_management_modules');
   }
 }

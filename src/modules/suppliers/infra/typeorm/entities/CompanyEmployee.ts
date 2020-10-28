@@ -6,18 +6,28 @@ import {
   ManyToOne,
   JoinColumn,
   Column,
-  OneToMany,
-  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import SupplierEmployeeManagementModule from '@modules/suppliers/infra/typeorm/entities/SupplierEmployeeManagementModule';
-import CompanyEmployeeConfirmation from './CompanyEmployeeConfirmation';
+// import UserManagementModule from '@modules/users/infra/typeorm/entities/UserManagementModule';
+// import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 
-@Entity('supplier_employees')
+@Entity('company_employees')
 class CompanyEmployee {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column()
+  access_key: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  avatar: string;
+
+  @Column()
+  isActive: boolean;
 
   @Column('uuid')
   employee_id: string;
@@ -36,25 +46,25 @@ class CompanyEmployee {
   @Column()
   position: string;
 
-  @OneToMany(
-    () => SupplierEmployeeManagementModule,
-    module => module.supplierEmployee,
-    {
-      cascade: true,
-      eager: true,
-    },
-  )
-  modules: SupplierEmployeeManagementModule[];
+  // @OneToMany(
+  //   () => UserManagementModule,
+  //   managementModule => managementModule.companyEmployee,
+  //   {
+  //     cascade: true,
+  //     eager: true,
+  //   },
+  // )
+  // modules: UserManagementModule[];
 
-  @OneToOne(
-    () => CompanyEmployeeConfirmation,
-    confirmation => confirmation.companyEmployee,
-    {
-      cascade: true,
-      eager: true,
-    },
-  )
-  confirmation: CompanyEmployeeConfirmation;
+  // @OneToMany(
+  //   () => UserConfirmation,
+  //   confirmation => confirmation.employeeReceiver,
+  //   {
+  //     cascade: true,
+  //     eager: true,
+  //   },
+  // )
+  // confirmation: UserConfirmation[];
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CompanyEmployeeManagementModules1602939206298
+export default class CreateCompanyEmployees1603784117454
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'company_employee_management_modules',
+        name: 'company_employees',
         columns: [
           {
             name: 'id',
@@ -15,16 +15,34 @@ export default class CompanyEmployeeManagementModules1602939206298
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'supplier_employee_id',
+            name: 'access_key',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+          },
+          {
+            name: 'isActive',
+            type: 'boolean',
+          },
+          {
+            name: 'avatar',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'employee_id',
             type: 'uuid',
           },
           {
-            name: 'management_module_id',
+            name: 'company_id',
             type: 'uuid',
           },
           {
-            name: 'access_level',
-            type: 'integer',
+            name: 'position',
+            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -39,17 +57,17 @@ export default class CompanyEmployeeManagementModules1602939206298
         ],
         foreignKeys: [
           {
-            name: 'EmployeeModule',
-            columnNames: ['supplier_employee_id'],
-            referencedTableName: 'supplier_employees',
+            name: 'UserEmployee',
+            columnNames: ['employee_id'],
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'ModuleEmployee',
-            columnNames: ['management_module_id'],
-            referencedTableName: 'weplan_management_modules',
+            name: 'CompanyEmployer',
+            columnNames: ['company_id'],
+            referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -60,6 +78,6 @@ export default class CompanyEmployeeManagementModules1602939206298
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('company_employee_management_modules');
+    await queryRunner.dropTable('company_employees');
   }
 }

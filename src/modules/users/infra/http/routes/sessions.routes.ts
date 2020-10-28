@@ -19,4 +19,15 @@ sessionsRouter.post(
   sessionsController.create,
 );
 
+sessionsRouter.post(
+  '/enterprise',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  sessionsController.createEnterprise,
+);
+
 export default sessionsRouter;

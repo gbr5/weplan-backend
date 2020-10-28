@@ -36,6 +36,7 @@ export default class CompanyInfoController {
     const user_id = req.user.id;
 
     const { name, company_id } = req.body;
+    console.log({ user_id, name, company_id });
 
     const updateCompanyInfo = container.resolve(UpdateCompanyInfoService);
 

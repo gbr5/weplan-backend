@@ -4,23 +4,24 @@ import AppError from '@shared/errors/AppError';
 
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IWeplanManagementModulesRepository from '@modules/weplan/repositories/IWeplanManagementModulesRepository';
+import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
 
 interface IModulesDTO {
-  management_module_id: string;
+  management_module: string;
   access_level: number;
 }
-
 interface IRequest {
+  access_key: string;
+  password: string;
+  title: string;
+  message: string;
   employee_id: string;
   company_id: string;
+  receiver_id: string;
+  sender_id: string;
   position: string;
   modules: IModulesDTO[];
-  request_message: string;
-  salary: number;
 }
 
 @injectable()
@@ -32,23 +33,21 @@ class CreateCompanyEmployeeService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('WeplanManagementModulesRepository')
-    private weplanManagementModulesRepository: IWeplanManagementModulesRepository,
-
-    @inject('NotificationsRepository')
-    private notificationsRepository: INotificationRepository,
-
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
+    @inject('UserConfirmationRepository')
+    private userConfirmationsRepository: IUserConfirmationRepository,
   ) {}
 
   public async execute({
+    access_key,
+    password,
+    title,
+    message,
     employee_id,
     company_id,
+    receiver_id,
+    sender_id,
     position,
     modules,
-    request_message,
-    salary,
   }: IRequest): Promise<CompanyEmployee> {
     try {
       const companyEmployeeExists = await this.companyEmployeesRepository.findByEmployeeIdAndCompanyId(
@@ -72,43 +71,37 @@ class CreateCompanyEmployeeService {
         throw new AppError("Employee's user not found");
       }
 
-      const modulesIDs = modules.map(thisModule => {
-        return { id: thisModule.management_module_id };
-      });
-
-      const modulesItems = await this.weplanManagementModulesRepository.findAllById(
-        modulesIDs,
-      );
-
-      if (modulesItems.length !== modules.length) {
-        throw new AppError('Module Missing');
-      }
-
-      const modulesList = modulesItems.map(moduleItem => {
-        const moduleList = modules.find(
-          moduleFind => moduleFind.management_module_id === moduleItem.id,
-        );
-
-        if (!moduleList) {
-          throw new AppError(`Module ${moduleItem.name} not found.`);
-        }
-
-        return {
-          management_module_id: moduleItem.id,
-          access_level: moduleList.access_level,
-        };
+      console.log('service create employee', {
+        employee,
+        company,
+        access_key,
+        password,
+        position,
+        confirmation: {
+          receiver_id,
+          sender_id,
+          title,
+          message,
+          isConfirmed: false,
+        },
       });
 
       const companyEmployee = await this.companyEmployeesRepository.create({
         employee,
         company,
+        isActive: false,
+        access_key,
+        password,
         position,
-        modules: modulesList,
-        confirmation: {
-          request_message,
-          isConfirmed: false,
-          salary,
-        },
+        modules,
+      });
+
+      await this.userConfirmationsRepository.create({
+        isConfirmed: false,
+        message,
+        receiver_id,
+        sender_id,
+        title,
       });
 
       return companyEmployee;

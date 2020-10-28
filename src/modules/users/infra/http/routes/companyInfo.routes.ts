@@ -29,7 +29,7 @@ companyInfoRouter.get(
   companyInfoController.show,
 );
 companyInfoRouter.put(
-  '/',
+  '/edit/:user_id',
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
