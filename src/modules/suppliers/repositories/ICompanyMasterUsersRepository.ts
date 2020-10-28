@@ -10,6 +10,7 @@ export default interface ICompanyMasterUsersRepository {
     company_id: string,
   ): Promise<CompanyMasterUser | undefined>;
   findById(id: string): Promise<CompanyMasterUser | undefined>;
+  findByEmail(email: string): Promise<CompanyMasterUser | undefined>;
   save(supplier: CompanyMasterUser): Promise<CompanyMasterUser>;
   delete(user: CompanyMasterUser): Promise<void>;
 }

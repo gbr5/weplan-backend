@@ -15,6 +15,12 @@ class CompanyMasterUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
+
   @Column('uuid')
   user_id: string;
 

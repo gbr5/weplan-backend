@@ -13,6 +13,7 @@ export default class CompanyMasterUsersController {
   public async create(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { user_id } = reqParams;
+    const { email, password } = req.body;
     const company_id = req.user.id;
 
     const createCompanyMasterUsers = container.resolve(
@@ -22,6 +23,8 @@ export default class CompanyMasterUsersController {
     const user = await createCompanyMasterUsers.execute({
       user_id,
       company_id,
+      email,
+      password,
     });
 
     return res.json(classToClass(user));
@@ -66,13 +69,17 @@ export default class CompanyMasterUsersController {
   public async update(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { id } = reqParams;
-    const { isConfirmed } = req.body;
+    const { isConfirmed, email } = req.body;
 
     const updateCompanyMasterUsers = container.resolve(
       UpdateCompanyMasterUserService,
     );
 
-    const user = await updateCompanyMasterUsers.execute({ id, isConfirmed });
+    const user = await updateCompanyMasterUsers.execute({
+      id,
+      isConfirmed,
+      email,
+    });
 
     return res.json(classToClass(user));
   }
