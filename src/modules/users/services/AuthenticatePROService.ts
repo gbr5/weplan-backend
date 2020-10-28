@@ -19,7 +19,7 @@ interface IResponse {
   token: string;
 }
 @injectable()
-class AuthenticateEnterpriseService {
+class AuthenticatePROService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -76,4 +76,4 @@ class AuthenticateEnterpriseService {
   }
 }
 
-export default AuthenticateEnterpriseService;
+export default AuthenticatePROService;
