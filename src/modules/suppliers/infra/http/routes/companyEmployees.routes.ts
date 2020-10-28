@@ -13,6 +13,11 @@ companyEmployeesRouter.post(
   ensureAuthenticated,
   companyEmployeesController.create,
 );
+companyEmployeesRouter.put(
+  '/:id',
+  ensureAuthenticated,
+  companyEmployeesController.update,
+);
 companyEmployeesRouter.get(
   '/:company_id',
   ensureAuthenticated,

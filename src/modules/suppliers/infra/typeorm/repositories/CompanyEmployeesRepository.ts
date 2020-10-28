@@ -21,6 +21,16 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
     return findCompanyEmployee;
   }
 
+  public async findByEmail(
+    email: string,
+  ): Promise<CompanyEmployee | undefined> {
+    const findCompanyEmployee = await this.ormRepository.findOne({
+      where: { email },
+    });
+
+    return findCompanyEmployee;
+  }
+
   public async findByEmployeeId(
     employee_id: string,
   ): Promise<CompanyEmployee[]> {

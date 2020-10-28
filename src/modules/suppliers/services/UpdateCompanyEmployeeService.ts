@@ -8,6 +8,8 @@ import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEm
 interface IRequest {
   id: string;
   position: string;
+  isActive: boolean;
+  email: string;
 }
 
 @injectable()
@@ -17,16 +19,23 @@ class UpdateCompanyEmployeesService {
     private CompanyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
-  public async execute({ id, position }: IRequest): Promise<CompanyEmployee> {
-    const companyEmployees = await this.CompanyEmployeesRepository.findById(id);
+  public async execute({
+    id,
+    position,
+    isActive,
+    email,
+  }: IRequest): Promise<CompanyEmployee> {
+    const companyEmployee = await this.CompanyEmployeesRepository.findById(id);
 
-    if (!companyEmployees) {
+    if (!companyEmployee) {
       throw new AppError('CompanyEmployees not found.');
     }
-    companyEmployees.position = position;
+    companyEmployee.position = position;
+    companyEmployee.isActive = isActive;
+    companyEmployee.email = email;
 
     const updatedCompanyEmployees = await this.CompanyEmployeesRepository.save(
-      companyEmployees,
+      companyEmployee,
     );
 
     return updatedCompanyEmployees;
