@@ -7,10 +7,10 @@ import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompan
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
 
-interface IModulesDTO {
-  management_module: string;
-  access_level: number;
-}
+// interface IModulesDTO {
+//   management_module: string;
+//   access_level: number;
+// }
 interface IRequest {
   access_key: string;
   password: string;
@@ -21,7 +21,7 @@ interface IRequest {
   receiver_id: string;
   sender_id: string;
   position: string;
-  modules: IModulesDTO[];
+  // modules: IModulesDTO[];
 }
 
 @injectable()
@@ -47,7 +47,6 @@ class CreateCompanyEmployeeService {
     receiver_id,
     sender_id,
     position,
-    modules,
   }: IRequest): Promise<CompanyEmployee> {
     try {
       const companyEmployeeExists = await this.companyEmployeesRepository.findByEmployeeIdAndCompanyId(
@@ -67,33 +66,23 @@ class CreateCompanyEmployeeService {
       if (!employee) {
         throw new AppError("Employee's user not found");
       }
+      if (employee.isCompany) {
+        throw new AppError(
+          'It is not possible to add a company as an employee',
+        );
+      }
       if (!company) {
-        throw new AppError("Employee's user not found");
+        throw new AppError("Company's user not found");
       }
 
-      console.log('service create employee', {
-        employee,
-        company,
-        access_key,
-        password,
-        position,
-        confirmation: {
-          receiver_id,
-          sender_id,
-          title,
-          message,
-          isConfirmed: false,
-        },
-      });
-
       const companyEmployee = await this.companyEmployeesRepository.create({
+        position,
+        access_key,
+        email: employee.email,
+        password,
+        isActive: false,
         employee,
         company,
-        isActive: false,
-        access_key,
-        password,
-        position,
-        modules,
       });
 
       await this.userConfirmationsRepository.create({

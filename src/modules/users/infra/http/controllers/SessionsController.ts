@@ -19,6 +19,19 @@ export default class SessionsController {
     return res.json({ user: classToClass(user), token });
   }
 
+  // public async createPRO(req: Request, res: Response): Promise<Response> {
+  //   const { email, password } = req.body;
+
+  //   const authenticateUser = container.resolve(AuthenticateEnterpriseService);
+
+  //   const { user, token } = await authenticateUser.execute({
+  //     email,
+  //     password,
+  //   });
+
+  //   return res.json({ user: classToClass(user), token });
+  // }
+
   public async createEnterprise(
     req: Request,
     res: Response,

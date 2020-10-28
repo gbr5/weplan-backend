@@ -21,6 +21,9 @@ class CompanyEmployee {
   access_key: string;
 
   @Column()
+  email: string;
+
+  @Column()
   password: string;
 
   @Column()
@@ -46,6 +49,11 @@ class CompanyEmployee {
   @Column()
   position: string;
 
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
   // @OneToMany(
   //   () => UserManagementModule,
   //   managementModule => managementModule.companyEmployee,
@@ -65,12 +73,6 @@ class CompanyEmployee {
   //   },
   // )
   // confirmation: UserConfirmation[];
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
 }
 
 export default CompanyEmployee;

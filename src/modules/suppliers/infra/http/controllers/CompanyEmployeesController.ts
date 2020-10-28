@@ -12,31 +12,11 @@ export default class CompanyEmployeesController {
   public async create(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { employee_id, company_id } = reqParams;
-    const {
-      access_key,
-      password,
-      title,
-      message,
-      position,
-      modules,
-    } = req.body;
+    const { access_key, password, title, message, position } = req.body;
 
     const createCompanyEmployees = container.resolve(
       CreateCompanyEmployeeService,
     );
-
-    console.log('controller employee', {
-      access_key,
-      password,
-      title,
-      message,
-      employee_id,
-      company_id,
-      receiver_id: employee_id,
-      sender_id: company_id,
-      position,
-      modules,
-    });
 
     const employee = await createCompanyEmployees.execute({
       access_key,
@@ -48,7 +28,6 @@ export default class CompanyEmployeesController {
       receiver_id: employee_id,
       sender_id: company_id,
       position,
-      modules,
     });
 
     return res.json(classToClass(employee));
