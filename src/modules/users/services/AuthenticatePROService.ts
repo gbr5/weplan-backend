@@ -11,6 +11,8 @@ import UserManagementModule from '../infra/typeorm/entities/UserManagementModule
 import ICompanyInfoRepository from '../repositories/ICompanyInfoRepository';
 import IPersonInfoRepository from '../repositories/IPersonInfoRepository';
 import IUserManagementModulesRepository from '../repositories/IUserManagementModulesRepository';
+import IUserConfirmationRepository from '../repositories/IUserConfirmationRepository';
+import UserConfirmation from '../infra/typeorm/entities/UserConfirmation';
 
 interface IRequest {
   email: string;
@@ -20,7 +22,7 @@ interface IRequest {
 interface ICompanyInfo {
   name: string;
   company_id: string;
-  logo_url?: string;
+  logo_url: string;
 }
 interface IPersonInfo {
   first_name: string;
@@ -31,6 +33,7 @@ interface IPersonInfo {
 interface IResponse {
   personInfo: IPersonInfo;
   modules: UserManagementModule[];
+  confirmation: UserConfirmation;
   companyInfo: ICompanyInfo;
   user: CompanyEmployee;
   token: string;
@@ -49,6 +52,9 @@ class AuthenticatePROService {
 
     @inject('UserManagementModulesRepository')
     private userManagementModulesRepository: IUserManagementModulesRepository,
+
+    @inject('UserConfirmationRepository')
+    private userConfirmationRepository: IUserConfirmationRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -84,6 +90,20 @@ class AuthenticatePROService {
       throw new AppError('This user does not have modules access.', 401);
     }
 
+    const confirmation = await this.userConfirmationRepository.findByReceiverIdAndSenderId(
+      user.id,
+      user.company.id,
+    );
+
+    if (!confirmation) {
+      throw new AppError('This user does not have confirmation request.', 401);
+    }
+
+    if (confirmation.isConfirmed === false) {
+      confirmation.isConfirmed = true;
+      await this.userConfirmationRepository.save(confirmation);
+    }
+
     const companyInfoPlaceholder = {
       name: '',
       company_id: '',
@@ -111,11 +131,17 @@ class AuthenticatePROService {
       subject: user.id,
       expiresIn,
     });
+    const logo_url = company_info ? company_info.getLogoUrl() : '';
 
     return {
-      companyInfo,
+      companyInfo: {
+        company_id: companyInfo.company_id,
+        name: companyInfo.name,
+        logo_url: logo_url || '',
+      },
       modules,
       personInfo,
+      confirmation,
       user,
       token,
     };
