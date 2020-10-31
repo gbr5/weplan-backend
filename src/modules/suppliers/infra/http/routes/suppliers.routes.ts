@@ -40,7 +40,6 @@ suppliersRouter.delete(
 
 suppliersRouter.post(
   '/master/user/:company_id/:user_id',
-  ensureAuthenticated,
   companyMasterUsersController.create,
 );
 
