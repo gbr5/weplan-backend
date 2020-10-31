@@ -40,7 +40,7 @@ class CompanyInfo {
   updated_at: Date;
 
   @Expose({ name: 'logo_url' })
-  getAvatarUrl(): string | null {
+  getLogoUrl(): string | null {
     if (!this.logo) {
       return null;
     }

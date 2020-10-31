@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import UserManagementModuleController from '@modules/users/infra/http/controllers/UserManagementModulesController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import { celebrate, Joi, Segments } from 'celebrate';
 
 const userManagementModuleRouter = Router();
 const userManagementModuleController = new UserManagementModuleController();
@@ -10,6 +11,13 @@ const userManagementModuleController = new UserManagementModuleController();
 
 userManagementModuleRouter.post(
   '/',
+  celebrate({
+    [Segments.BODY]: {
+      user_id: Joi.string().required(),
+      management_module: Joi.string().required(),
+      access_level: Joi.number().required(),
+    },
+  }),
   ensureAuthenticated,
   userManagementModuleController.create,
 );

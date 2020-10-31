@@ -60,6 +60,7 @@ export default class SessionsController {
 
     const {
       companyInfo,
+      personInfo,
       modules,
       user,
       token,
@@ -69,11 +70,33 @@ export default class SessionsController {
     });
 
     return res.json({
-      id: user.id,
-      email: user.email,
-      company: classToClass(user),
-      userInfo: classToClass(user.masterUser),
-      companyInfo,
+      userMaster: {
+        id: user.id,
+        email: user.email,
+      },
+      company: {
+        id: user.company.id,
+        name: user.company.name,
+        email: user.company.email,
+        avatar_url: user.company.getAvatarUrl()
+          ? user.company.getAvatarUrl()
+          : '',
+      },
+      person: {
+        id: user.masterUser.id,
+        name: user.masterUser.name,
+        email: user.masterUser.email,
+        avatar_url: user.masterUser.getAvatarUrl()
+          ? user.masterUser.getAvatarUrl()
+          : '',
+      },
+      companyInfo: {
+        id: companyInfo.id,
+        name: companyInfo.name,
+        company_id: companyInfo.company_id,
+        logo_url: companyInfo.logo_url ? companyInfo.logo_url : '',
+      },
+      personInfo,
       modules,
       token,
     });

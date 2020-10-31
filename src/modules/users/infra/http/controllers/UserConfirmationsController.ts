@@ -49,10 +49,10 @@ export default class UserConfirmationsController {
 
   public async show(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
-    const { id } = reqParams;
+    const { receiver_id, sender_id } = reqParams;
     const showUserConfirmation = container.resolve(ShowUserConfirmationService);
 
-    const employee = await showUserConfirmation.execute(id);
+    const employee = await showUserConfirmation.execute(receiver_id, sender_id);
 
     return res.json(classToClass(employee));
   }

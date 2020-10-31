@@ -15,8 +15,14 @@ class ShowUserConfirmationService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(id: string): Promise<UserConfirmation | undefined> {
-    const userConfirmation = await this.userConfirmationRepository.findById(id);
+  public async execute(
+    receiver_id: string,
+    sender_id: string,
+  ): Promise<UserConfirmation | undefined> {
+    const userConfirmation = await this.userConfirmationRepository.findByReceiverIdAndSenderId(
+      receiver_id,
+      sender_id,
+    );
 
     return userConfirmation;
   }

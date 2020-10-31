@@ -41,7 +41,7 @@ companyInfoRouter.put(
 );
 
 companyInfoRouter.patch(
-  '/logo',
+  '/logo/:user_id',
   ensureAuthenticated,
   upload.single('logo'),
   companyLogoController.update,

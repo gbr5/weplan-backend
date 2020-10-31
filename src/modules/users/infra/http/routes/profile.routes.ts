@@ -11,7 +11,7 @@ const userContactInfosController = new UserContactInfosController();
 
 profileRouter.get('/', ensureAuthenticated, userscontroller.show);
 profileRouter.put(
-  '/',
+  '/:user_id',
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {

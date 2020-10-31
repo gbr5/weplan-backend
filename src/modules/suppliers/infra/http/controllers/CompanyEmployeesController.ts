@@ -8,6 +8,8 @@ import ShowCompanyEmployeeService from '@modules/suppliers/services/ShowCompanyE
 import DeleteCompanyEmployeeService from '@modules/suppliers/services/DeleteCompanyEmployeeService';
 import ListUserAsEmployeeService from '@modules/suppliers/services/ListUserAsEmployeeService';
 import UpdateCompanyEmployeesService from '@modules/suppliers/services/UpdateCompanyEmployeeService';
+import UpdateCompanyEmployeeAccessKeyService from '@modules/suppliers/services/UpdateCompanyEmployeeAccessKeyService';
+import UpdateCompanyEmployeePasswordService from '@modules/suppliers/services/UpdateCompanyEmployeePasswordService';
 
 export default class CompanyEmployeesController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -26,7 +28,6 @@ export default class CompanyEmployeesController {
       message,
       employee_id,
       company_id,
-      receiver_id: employee_id,
       sender_id: company_id,
       position,
     });
@@ -57,6 +58,38 @@ export default class CompanyEmployeesController {
       position,
       email,
       isActive,
+    });
+
+    return res.json(classToClass(employee));
+  }
+
+  public async updateAccessKey(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+    const { access_key } = req.body;
+    const updateCompanyEmployeeAccessKey = container.resolve(
+      UpdateCompanyEmployeeAccessKeyService,
+    );
+
+    const employee = await updateCompanyEmployeeAccessKey.execute({
+      id,
+      access_key,
+    });
+
+    return res.json(classToClass(employee));
+  }
+
+  public async updatePassword(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+    const { password } = req.body;
+    const updateCompanyEmployeePassword = container.resolve(
+      UpdateCompanyEmployeePasswordService,
+    );
+
+    const employee = await updateCompanyEmployeePassword.execute({
+      id,
+      password,
     });
 
     return res.json(classToClass(employee));

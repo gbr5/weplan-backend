@@ -19,7 +19,6 @@ interface IRequest {
   message: string;
   employee_id: string;
   company_id: string;
-  receiver_id: string;
   sender_id: string;
   position: string;
   // modules: IModulesDTO[];
@@ -48,7 +47,6 @@ class CreateCompanyEmployeeService {
     message,
     employee_id,
     company_id,
-    receiver_id,
     sender_id,
     position,
   }: IRequest): Promise<CompanyEmployee> {
@@ -94,7 +92,7 @@ class CreateCompanyEmployeeService {
       await this.userConfirmationsRepository.create({
         isConfirmed: false,
         message,
-        receiver_id,
+        receiver_id: companyEmployee.id,
         sender_id,
         title,
       });
