@@ -30,6 +30,7 @@ export default class SessionsController {
       companyInfo,
       modules,
       user,
+      confirmation,
       token,
     } = await authenticateUser.execute({
       email,
@@ -37,15 +38,36 @@ export default class SessionsController {
     });
 
     return res.json({
-      id: user.id,
-      email: user.email,
-      position: user.position,
-      employee_avatar: user.avatar ? user.avatar : '',
-      userInfo: classToClass(user.employee),
-      company: classToClass(user.company),
-      companyInfo,
+      userEmployee: {
+        id: user.id,
+        email: user.email,
+        position: user.position,
+        employee_avatar: user.avatar ? user.avatar : '',
+      },
+      person: {
+        id: user.employee.id,
+        name: user.employee.name,
+        email: user.employee.email,
+        avatar_url: user.employee.getAvatarUrl()
+          ? user.employee.getAvatarUrl()
+          : '',
+      },
+      company: {
+        id: user.company.id,
+        name: user.company.name,
+        email: user.company.email,
+        avatar_url: user.company.getAvatarUrl()
+          ? user.company.getAvatarUrl()
+          : '',
+      },
+      companyInfo: {
+        name: companyInfo.name,
+        company_id: companyInfo.company_id,
+        logo_url: companyInfo.logo_url ? companyInfo.logo_url : '',
+      },
       personInfo,
       modules,
+      confirmation,
       token,
     });
   }

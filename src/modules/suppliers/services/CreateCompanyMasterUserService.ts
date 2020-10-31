@@ -51,7 +51,11 @@ class CreateCompanyMasterUserService {
       if (!company) {
         throw new AppError("User's user not found");
       }
-
+      if (user.isCompany) {
+        throw new AppError(
+          'It is not possible to add a company as an user Master',
+        );
+      }
       const companyMasterUserExists = await this.companyMasterUsersRepository.findByUserIdAndCompanyId(
         user_id,
         company_id,
