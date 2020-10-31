@@ -5,6 +5,7 @@ export default interface IUserConfirmationRepository {
   create(data: ICreateUserConfirmationDTO): Promise<UserConfirmation>;
   findByReceiverId(receiver_id: string): Promise<UserConfirmation[]>;
   findBySenderId(sender_id: string): Promise<UserConfirmation[]>;
+  findAllById(id: string[]): Promise<UserConfirmation[]>;
   findByReceiverIdAndSenderId(
     sender_id: string,
     receiver_id: string,

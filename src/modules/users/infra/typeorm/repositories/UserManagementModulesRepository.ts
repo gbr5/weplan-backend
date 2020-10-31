@@ -23,9 +23,15 @@ class UserManagementModuleRepository
   }
 
   public async findById(id: string): Promise<UserManagementModule | undefined> {
-    const employee = await this.ormRepository.findOne(id);
+    const userModule = await this.ormRepository.findOne(id);
 
-    return employee;
+    return userModule;
+  }
+
+  public async findAllById(ids: string[]): Promise<UserManagementModule[]> {
+    const modules = await this.ormRepository.findByIds(ids);
+
+    return modules;
   }
 
   public async create(

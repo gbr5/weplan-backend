@@ -12,9 +12,8 @@ import DeleteCompanyMasterUserService from '@modules/suppliers/services/DeleteCo
 export default class CompanyMasterUsersController {
   public async create(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
-    const { user_id } = reqParams;
+    const { company_id, user_id } = reqParams;
     const { email, password } = req.body;
-    const company_id = req.user.id;
 
     const createCompanyMasterUsers = container.resolve(
       CreateCompanyMasterUserService,

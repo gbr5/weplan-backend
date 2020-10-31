@@ -53,11 +53,9 @@ export default class UserContactInfoController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
     const { contact_info } = req.body;
     const dataParams = req.params;
-    const { contact_type } = dataParams;
-
+    const { user_id, contact_type } = dataParams;
     const updateUserContactInfo = container.resolve(
       UpdateUserContactInfoService,
     );

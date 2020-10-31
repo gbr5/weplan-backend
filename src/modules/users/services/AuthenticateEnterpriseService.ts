@@ -10,20 +10,35 @@ import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/Company
 import UserManagementModule from '../infra/typeorm/entities/UserManagementModule';
 import IUserManagementModulesRepository from '../repositories/IUserManagementModulesRepository';
 import ICompanyInfoRepository from '../repositories/ICompanyInfoRepository';
+import IPersonInfoRepository from '../repositories/IPersonInfoRepository';
 
 interface IRequest {
   email: string;
   password: string;
 }
-interface ICompanyInfo {
+interface IResponseCompanyInfo {
+  id: string;
   name: string;
   company_id: string;
-  logo_url?: string;
+  getLogoUrl: FunctionStringCallback;
+}
+
+interface ICompanyInfo {
+  id: string;
+  name: string;
+  company_id: string;
+  logo_url: string;
+}
+interface IPersonInfo {
+  first_name: string;
+  last_name: string;
+  person_id: string;
 }
 
 interface IResponse {
   user: CompanyMasterUser;
   companyInfo: ICompanyInfo;
+  personInfo: IPersonInfo;
   modules: UserManagementModule[];
   token: string;
 }
@@ -35,6 +50,9 @@ class AuthenticateEnterpriseService {
 
     @inject('CompanyInfoRepository')
     private companyInfoRepository: ICompanyInfoRepository,
+
+    @inject('PersonInfoRepository')
+    private personInfoRepository: IPersonInfoRepository,
 
     @inject('CompanyMasterUsersRepository')
     private companyMasterUsersRepository: ICompanyMasterUsersRepository,
@@ -67,17 +85,30 @@ class AuthenticateEnterpriseService {
     }
 
     const companyInfoPlaceholder = {
-      name: user.id,
-      company_id: user.id,
+      id: '',
+      name: '',
+      company_id: '',
       logo_url: '',
+    };
+    const personInfoPlaceholder = {
+      first_name: '',
+      last_name: '',
+      person_id: '',
     };
 
     const company_info = await this.companyInfoRepository.findByUserId(
       user.company_id,
     );
 
+    const person_info = await this.personInfoRepository.findByUserId(
+      user.user_id,
+    );
+
     const companyInfo =
       company_info === undefined ? companyInfoPlaceholder : company_info;
+
+    const personInfo =
+      person_info === undefined ? personInfoPlaceholder : person_info;
 
     const { secret, expiresIn } = authConfig.jwt;
 
@@ -85,6 +116,7 @@ class AuthenticateEnterpriseService {
       subject: user.id,
       expiresIn,
     });
+    const logo_url = company_info ? company_info.getLogoUrl() : '';
 
     if (!user.isConfirmed) {
       user.isConfirmed = true;
@@ -93,7 +125,13 @@ class AuthenticateEnterpriseService {
     }
 
     return {
-      companyInfo,
+      companyInfo: {
+        id: companyInfo.id,
+        company_id: companyInfo.company_id,
+        name: companyInfo.name,
+        logo_url: logo_url || '',
+      },
+      personInfo,
       modules,
       user,
       token,

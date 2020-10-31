@@ -6,10 +6,12 @@ import UpdateCompanyLogoService from '@modules/users/services/UpdateCompanyLogoS
 
 export default class CompanyLogoController {
   public async update(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { user_id } = reqParams;
     const updateCompanyLogo = container.resolve(UpdateCompanyLogoService);
 
     const user = await updateCompanyLogo.execute({
-      user_id: req.user.id,
+      user_id,
       logoFilename: req.file.filename,
     });
 

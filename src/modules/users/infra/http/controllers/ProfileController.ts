@@ -17,7 +17,8 @@ export default class ProfileController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
+    const reqParams = req.params;
+    const { user_id } = reqParams;
     const { name, email, old_password, password } = req.body;
 
     const updateProfile = container.resolve(UpdateProfileService);

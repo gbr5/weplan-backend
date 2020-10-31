@@ -33,10 +33,10 @@ export default class CompanyInfoController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
+    const reqParams = req.params;
+    const { user_id } = reqParams;
 
     const { name, company_id } = req.body;
-    console.log({ user_id, name, company_id });
 
     const updateCompanyInfo = container.resolve(UpdateCompanyInfoService);
 

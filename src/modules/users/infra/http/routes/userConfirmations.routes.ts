@@ -18,7 +18,10 @@ userConfirmationRouter.put(
   ensureAuthenticated,
   companyEmployeeConfirmationController.update,
 );
-userConfirmationRouter.get('/:id', companyEmployeeConfirmationController.show);
+userConfirmationRouter.get(
+  '/:receiver_id/:sender_id',
+  companyEmployeeConfirmationController.show,
+);
 userConfirmationRouter.get(
   '/receiver/:receiver_id',
   companyEmployeeConfirmationController.listReceiver,

@@ -23,6 +23,11 @@ class UserConfirmationRepository implements IUserConfirmationRepository {
     return findUserConfirmation;
   }
 
+  public async findAllById(ids: string[]): Promise<UserConfirmation[]> {
+    const findUserConfirmations = await this.ormRepository.findByIds(ids);
+    return findUserConfirmations;
+  }
+
   public async findBySenderId(sender_id: string): Promise<UserConfirmation[]> {
     const findUserConfirmation = await this.ormRepository.find({
       where: { sender_id },

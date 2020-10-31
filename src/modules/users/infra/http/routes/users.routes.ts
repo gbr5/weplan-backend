@@ -46,7 +46,7 @@ usersRouter.put(
 );
 
 usersRouter.patch(
-  '/avatar',
+  '/avatar/:user_id',
   ensureAuthenticated,
   upload.single('avatar'),
   userAvatarController.update,

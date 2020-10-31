@@ -39,7 +39,7 @@ suppliersRouter.delete(
 // === $$ === $ ==>  Company Master Users  <== $ === $$ === //
 
 suppliersRouter.post(
-  '/master/user/:user_id',
+  '/master/user/:company_id/:user_id',
   ensureAuthenticated,
   companyMasterUsersController.create,
 );

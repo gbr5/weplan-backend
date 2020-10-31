@@ -85,14 +85,14 @@ class AuthenticatePROService {
     }
 
     const companyInfoPlaceholder = {
-      name: user.id,
-      company_id: user.id,
-      logo_url: user.avatar ? user.avatar : '',
+      name: '',
+      company_id: '',
+      logo_url: '',
     };
     const personInfoPlaceholder = {
-      first_name: user.id,
-      last_name: user.id,
-      person_id: user.id,
+      first_name: '',
+      last_name: '',
+      person_id: '',
     };
     const company_info = await this.companyInfoRepository.findByUserId(
       user.company_id,
