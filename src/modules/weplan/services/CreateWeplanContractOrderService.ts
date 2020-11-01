@@ -5,6 +5,9 @@ import IWeplanContractOrdersRepository from '@modules/weplan/repositories/IWepla
 import IWeplanProductsRepository from '@modules/weplan/repositories/IWeplanProductsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
+import IUserManagementModulesRepository from '@modules/users/repositories/IUserManagementModulesRepository';
+import IFunnelsRepository from '@modules/suppliers/repositories/IFunnelsRepository';
+import IFunnelStagesRepository from '@modules/suppliers/repositories/IFunnelStagesRepository';
 
 interface IProductsWPDTO {
   weplan_product_id: string;
@@ -25,6 +28,15 @@ class CreateWeplanContractOrdersService {
     @inject('WeplanContractOrdersRepository')
     private weplanContractOrdersRepository: IWeplanContractOrdersRepository,
 
+    @inject('UserManagementModulesRepository')
+    private userManagementModulesRepository: IUserManagementModulesRepository,
+
+    @inject('FunnelsRepository')
+    private funnelsRepository: IFunnelsRepository,
+
+    @inject('FunnelStagesRepository')
+    private funnelStagesRepository: IFunnelStagesRepository,
+
     @inject('WeplanProductsRepository')
     private weplanProductsRepository: IWeplanProductsRepository,
   ) {}
@@ -38,6 +50,13 @@ class CreateWeplanContractOrdersService {
     if (!customer) {
       throw new AppError('Customer does not exists.');
     }
+    const funnels = await this.funnelsRepository.findBySupplierId(customer.id);
+    const comercialFunnel = funnels.find(funnel => funnel.name === 'Comercial');
+    const operationsFunnel = funnels.find(
+      funnel => funnel.name === 'Operations',
+    );
+    const projectsFunnel = funnels.find(funnel => funnel.name === 'Projects');
+    const financialFunnel = funnels.find(funnel => funnel.name === 'Financial');
 
     const productsIDs = products.map(product => {
       return { id: product.weplan_product_id };
@@ -58,6 +77,170 @@ class CreateWeplanContractOrdersService {
 
       if (!productList) {
         throw new AppError(`Product ${productItem.name} not found!`);
+      }
+
+      if (productItem.name === 'Comercial' && comercialFunnel === undefined) {
+        this.userManagementModulesRepository.create({
+          user_id: customer.id,
+          access_level: 1,
+          management_module: 'Comercial',
+        });
+        this.funnelsRepository
+          .create({
+            funnel_type: 'Comercial',
+            name: 'Comercial',
+            supplier_id: customer.id,
+          })
+          .then(response => {
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 1,
+              name: 'Prospectos',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 2,
+              name: '1° Contato',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 3,
+              name: 'Orçamento Enviado',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 4,
+              name: 'Negociação',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 5,
+              name: 'Contrato Enviado',
+            });
+          });
+      }
+
+      if (productItem.name === 'Operations' && operationsFunnel === undefined) {
+        this.userManagementModulesRepository.create({
+          user_id: customer.id,
+          access_level: 1,
+          management_module: 'Operations',
+        });
+        this.funnelsRepository
+          .create({
+            funnel_type: 'Operations',
+            name: 'Operations',
+            supplier_id: customer.id,
+          })
+          .then(response => {
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 1,
+              name: 'Definição de Escopo',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 2,
+              name: 'Planejamento',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 3,
+              name: 'Execução',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 4,
+              name: 'Monitoramento e Controle',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 5,
+              name: 'Encerramento',
+            });
+          });
+      }
+
+      if (productItem.name === 'Projects' && projectsFunnel === undefined) {
+        this.userManagementModulesRepository.create({
+          user_id: customer.id,
+          access_level: 1,
+          management_module: 'Projects',
+        });
+        this.funnelsRepository
+          .create({
+            funnel_type: 'Projects',
+            name: 'Projects',
+            supplier_id: customer.id,
+          })
+          .then(response => {
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 1,
+              name: 'Definição de Escopo',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 2,
+              name: 'Planejamento',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 3,
+              name: 'Execução',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 4,
+              name: 'Monitoramento e Controle',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 5,
+              name: 'Encerramento',
+            });
+          });
+      }
+
+      if (productItem.name === 'Financial' && financialFunnel === undefined) {
+        this.userManagementModulesRepository.create({
+          user_id: customer.id,
+          access_level: 1,
+          management_module: 'Financial',
+        });
+        this.funnelsRepository
+          .create({
+            funnel_type: 'Financial',
+            name: 'Financial',
+            supplier_id: customer.id,
+          })
+          .then(response => {
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 1,
+              name: 'Contas Pagas',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 2,
+              name: 'Contas Vencidas',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 3,
+              name: 'A pagar - 7 dias',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 4,
+              name: 'A pagar - 30 dias',
+            });
+            this.funnelStagesRepository.create({
+              funnel_id: response.id,
+              funnel_order: 5,
+              name: 'Recorrentes',
+            });
+          });
       }
 
       return {

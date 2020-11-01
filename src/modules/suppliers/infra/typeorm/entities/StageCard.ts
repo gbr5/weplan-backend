@@ -37,7 +37,7 @@ class StageCard {
 
   @ManyToOne(() => FunnelStage, funnelStage => funnelStage.id)
   @JoinColumn({ name: 'stage_id' })
-  Stage: FunnelStage;
+  stage: FunnelStage;
 
   @Column()
   card_owner: string;
@@ -52,7 +52,7 @@ class StageCard {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => EventCard, card => card.card_unique_name)
+  @OneToOne(() => EventCard, card => card.Event, { eager: true })
   Event: EventCard;
 
   @OneToMany(() => StageCardAppointment, card => card.card_id)
