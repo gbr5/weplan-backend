@@ -22,7 +22,7 @@ funnelTypesRouter.post(
 funnelTypesRouter.get('/', funnelTypesController.index);
 
 funnelTypesRouter.put(
-  '/:name',
+  '/:oldName',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

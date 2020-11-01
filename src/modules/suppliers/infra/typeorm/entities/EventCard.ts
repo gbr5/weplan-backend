@@ -20,7 +20,7 @@ class EventCard {
   @Column()
   card_unique_name: string;
 
-  @OneToOne(() => StageCard, card => card.unique_name)
+  @OneToOne(() => StageCard, card => card)
   @JoinColumn({ name: 'card_unique_name' })
   SupplierCard: StageCard;
 

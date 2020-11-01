@@ -23,9 +23,9 @@ class FunnelStage {
   @Column()
   funnel_id: string;
 
-  @ManyToOne(() => Funnel, funnel => funnel.id)
+  @ManyToOne(() => Funnel, funnel => funnel.stages)
   @JoinColumn({ name: 'funnel_id' })
-  Funnel: Funnel;
+  funnel: Funnel;
 
   @Column()
   funnel_order: number;
@@ -36,8 +36,8 @@ class FunnelStage {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => StageCard, card => card.stage_id)
-  SupplierCard: StageCard;
+  @OneToMany(() => StageCard, card => card.stage, { eager: true })
+  cards: StageCard[];
 }
 
 export default FunnelStage;

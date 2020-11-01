@@ -27,12 +27,15 @@ export default class FunnelTypeController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { oldName } = reqParams;
     const { name } = req.body;
 
     const updateFunnelType = container.resolve(UpdateFunnelTypeService);
 
     const funnelType = await updateFunnelType.execute({
       name,
+      oldName,
     });
 
     return res.json(funnelType);

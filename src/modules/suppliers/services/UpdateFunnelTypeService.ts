@@ -7,6 +7,7 @@ import FunnelType from '@modules/suppliers/infra/typeorm/entities/FunnelType';
 
 interface IRequest {
   name: string;
+  oldName: string;
 }
 @injectable()
 class UpdateFunnelTypesService {
@@ -15,8 +16,8 @@ class UpdateFunnelTypesService {
     private funnelTypesRepository: IFunnelTypesRepository,
   ) {}
 
-  public async execute({ name }: IRequest): Promise<FunnelType> {
-    const funnelType = await this.funnelTypesRepository.findByName(name);
+  public async execute({ name, oldName }: IRequest): Promise<FunnelType> {
+    const funnelType = await this.funnelTypesRepository.findByName(oldName);
 
     if (!funnelType) {
       throw new AppError('FunnelTypes not found.');

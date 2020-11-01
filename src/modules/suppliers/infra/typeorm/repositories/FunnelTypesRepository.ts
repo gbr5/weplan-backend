@@ -12,9 +12,9 @@ class FunnelTypesRepository implements IFunnelTypesRepository {
     this.ormRepository = getRepository(FunnelType);
   }
 
-  public async findByName(name: string): Promise<FunnelType | undefined> {
+  public async findByName(oldName: string): Promise<FunnelType | undefined> {
     const findFunnelType = await this.ormRepository.findOne({
-      where: { name },
+      where: { name: oldName },
     });
 
     return findFunnelType;
