@@ -10,11 +10,11 @@ import INotificationRepository from '@modules/notifications/repositories/INotifi
 import IWeplanGuestsRepository from '../repositories/IWeplanGuestsRepository';
 
 interface IRequest {
+  host_id: string;
   first_name: string;
   last_name: string;
-  description: string;
   event_id: string;
-  host_id: string;
+  description: string;
   confirmed: boolean;
   weplanUser: boolean;
   user_id: string;
@@ -40,11 +40,11 @@ class CreateGuestService {
   ) {}
 
   public async execute({
+    host_id,
     first_name,
     last_name,
     event_id,
     description,
-    host_id,
     confirmed,
     weplanUser,
     user_id,
@@ -54,12 +54,11 @@ class CreateGuestService {
       first_name,
       last_name,
     );
-
     if (guestExists) {
       throw new AppError('The guest that you have chosen, already exists.');
     }
 
-    if (weplanUser === true) {
+    if (weplanUser) {
       const weplanGuestExists = await this.weplanGuestsRepository.findByEventAndUserId(
         event_id,
         user_id,
@@ -69,12 +68,14 @@ class CreateGuestService {
         throw new AppError('The guest that you have chosen, already exists.');
       }
 
-      const weplanGuest = await this.personInfoRepository.findByUserId(user_id);
+      const weplanGuestInfo = await this.personInfoRepository.findByUserId(
+        user_id,
+      );
 
-      if (weplanGuest) {
+      if (weplanGuestInfo !== undefined) {
         const guest = await this.guestsRepository.create({
-          first_name: weplanGuest.first_name,
-          last_name: weplanGuest.last_name,
+          first_name: weplanGuestInfo.first_name,
+          last_name: weplanGuestInfo.last_name,
           description,
           event_id,
           host_id,
@@ -83,7 +84,7 @@ class CreateGuestService {
         });
 
         await this.weplanGuestsRepository.create({
-          user_id,
+          user_id: weplanGuestInfo.user_id,
           guest_id: guest.id,
           event_id,
         });

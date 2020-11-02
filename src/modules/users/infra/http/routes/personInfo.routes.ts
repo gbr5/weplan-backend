@@ -8,20 +8,19 @@ const personInfoRouter = Router();
 const personInfoController = new PersonInfoController();
 
 personInfoRouter.post(
-  '/',
+  '/:user_id',
   celebrate({
     [Segments.BODY]: {
       first_name: Joi.string().required(),
       last_name: Joi.string().required(),
       person_id: Joi.string().required(),
-      user_id: Joi.string().required(),
     },
   }),
   personInfoController.create,
 );
 personInfoRouter.get('/', ensureAuthenticated, personInfoController.show);
 personInfoRouter.put(
-  '/',
+  '/edit',
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
