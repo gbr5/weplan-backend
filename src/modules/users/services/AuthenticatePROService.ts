@@ -7,12 +7,14 @@ import IHashProvider from '@modules/users/providers/hashProviders/models/IHashPr
 
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
+import IFunnelsRepository from '@modules/suppliers/repositories/IFunnelsRepository';
 import UserManagementModule from '../infra/typeorm/entities/UserManagementModule';
 import ICompanyInfoRepository from '../repositories/ICompanyInfoRepository';
 import IPersonInfoRepository from '../repositories/IPersonInfoRepository';
 import IUserManagementModulesRepository from '../repositories/IUserManagementModulesRepository';
 import IUserConfirmationRepository from '../repositories/IUserConfirmationRepository';
 import UserConfirmation from '../infra/typeorm/entities/UserConfirmation';
+import IListFunnelDTO from '../dtos/IListFunnelDTO';
 
 interface IRequest {
   email: string;
@@ -37,6 +39,7 @@ interface IResponse {
   companyInfo: ICompanyInfo;
   user: CompanyEmployee;
   token: string;
+  funnels: IListFunnelDTO[];
 }
 @injectable()
 class AuthenticatePROService {
@@ -55,6 +58,9 @@ class AuthenticatePROService {
 
     @inject('UserConfirmationRepository')
     private userConfirmationRepository: IUserConfirmationRepository,
+
+    @inject('FunnelsRepository')
+    private funnelsRepository: IFunnelsRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -89,6 +95,24 @@ class AuthenticatePROService {
     if (!modules) {
       throw new AppError('This user does not have modules access.', 401);
     }
+
+    const companyFunnels = await this.funnelsRepository.findBySupplierId(
+      user.company_id,
+    );
+
+    if (!companyFunnels) {
+      throw new AppError('The company does not have funnels.', 401);
+    }
+
+    const funnels = companyFunnels.filter(funnel => {
+      const employeeModuleAcess = modules.find(
+        thisModule => thisModule.management_module === funnel.funnel_type,
+      );
+      if (employeeModuleAcess !== undefined) {
+        return funnel;
+      }
+      return '';
+    });
 
     const confirmation = await this.userConfirmationRepository.findByReceiverIdAndSenderId(
       user.id,
@@ -144,6 +168,7 @@ class AuthenticatePROService {
       confirmation,
       user,
       token,
+      funnels,
     };
   }
 }
