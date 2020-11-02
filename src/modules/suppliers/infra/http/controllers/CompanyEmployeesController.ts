@@ -15,7 +15,7 @@ export default class CompanyEmployeesController {
   public async create(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { employee_id, company_id } = reqParams;
-    const { access_key, password, title, message, position } = req.body;
+    const { access_key, password, email, title, message, position } = req.body;
 
     const createCompanyEmployees = container.resolve(
       CreateCompanyEmployeeService,
@@ -25,6 +25,7 @@ export default class CompanyEmployeesController {
       access_key,
       password,
       title,
+      email,
       message,
       employee_id,
       company_id,
