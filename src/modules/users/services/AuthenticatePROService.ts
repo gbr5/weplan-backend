@@ -14,7 +14,7 @@ import IPersonInfoRepository from '../repositories/IPersonInfoRepository';
 import IUserManagementModulesRepository from '../repositories/IUserManagementModulesRepository';
 import IUserConfirmationRepository from '../repositories/IUserConfirmationRepository';
 import UserConfirmation from '../infra/typeorm/entities/UserConfirmation';
-import IListFunnelDTO from '../dtos/IListFunnelDTO';
+import IFunnelDTO from '../dtos/IListFunnelDTO';
 
 interface IRequest {
   email: string;
@@ -39,7 +39,7 @@ interface IResponse {
   companyInfo: ICompanyInfo;
   user: CompanyEmployee;
   token: string;
-  funnels: IListFunnelDTO[];
+  funnels: IFunnelDTO[];
 }
 @injectable()
 class AuthenticatePROService {
@@ -104,15 +104,56 @@ class AuthenticatePROService {
       throw new AppError('The company does not have funnels.', 401);
     }
 
-    const funnels = companyFunnels.filter(funnel => {
-      const employeeModuleAcess = modules.find(
-        thisModule => thisModule.management_module === funnel.funnel_type,
+    const comercial = modules.filter(
+      thisModule => thisModule.management_module === 'Comercial',
+    );
+    const operations = modules.filter(
+      thisModule => thisModule.management_module === 'Operations',
+    );
+    const projects = modules.filter(
+      thisModule => thisModule.management_module === 'Projects',
+    );
+    const financial = modules.filter(
+      thisModule => thisModule.management_module === 'Financial',
+    );
+
+    const employeeFunnels: IFunnelDTO[] = [];
+
+    if (comercial.length > 0) {
+      const crmAccess = companyFunnels.find(
+        ciaFunnel => ciaFunnel.name === 'Comercial',
       );
-      if (employeeModuleAcess !== undefined) {
-        return funnel;
+      if (crmAccess) {
+        employeeFunnels.push(crmAccess);
       }
-      return '';
-    });
+    }
+
+    if (operations.length > 0) {
+      const operationsAccess = companyFunnels.find(
+        ciaFunnel => ciaFunnel.name === 'Operations',
+      );
+      if (operationsAccess) {
+        employeeFunnels.push(operationsAccess);
+      }
+    }
+
+    if (projects.length > 0) {
+      const projectsAccess = companyFunnels.find(
+        ciaFunnel => ciaFunnel.name === 'Projects',
+      );
+      if (projectsAccess) {
+        employeeFunnels.push(projectsAccess);
+      }
+    }
+
+    if (financial.length > 0) {
+      const financialAccess = companyFunnels.find(
+        ciaFunnel => ciaFunnel.name === 'Financial',
+      );
+      if (financialAccess) {
+        employeeFunnels.push(financialAccess);
+      }
+    }
 
     const confirmation = await this.userConfirmationRepository.findByReceiverIdAndSenderId(
       user.id,
@@ -168,7 +209,7 @@ class AuthenticatePROService {
       confirmation,
       user,
       token,
-      funnels,
+      funnels: employeeFunnels,
     };
   }
 }
