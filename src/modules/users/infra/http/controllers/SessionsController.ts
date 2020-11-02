@@ -26,6 +26,7 @@ export default class SessionsController {
     const authenticateUser = container.resolve(AuthenticatePROService);
 
     const {
+      funnels,
       personInfo,
       companyInfo,
       modules,
@@ -67,6 +68,7 @@ export default class SessionsController {
       },
       personInfo,
       modules,
+      funnels,
       confirmation,
       token,
     });
