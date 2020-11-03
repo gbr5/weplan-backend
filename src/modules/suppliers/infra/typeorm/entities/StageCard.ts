@@ -12,6 +12,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import StageCardAppointment from '@modules/appointments/infra/typeorm/entities/StageCardAppointment';
+import CardCheckList from '@modules/checklists/infra/typeorm/entities/CardCheckList';
 import FunnelStage from './FunnelStage';
 import EventCard from './EventCard';
 
@@ -56,7 +57,12 @@ class StageCard {
   Event: EventCard;
 
   @OneToMany(() => StageCardAppointment, card => card.card_id)
-  Appointment: StageCardAppointment;
+  Appointment: StageCardAppointment[];
+
+  @OneToMany(() => CardCheckList, check_list => check_list.card, {
+    eager: true,
+  })
+  check_lists: CardCheckList[];
 }
 
 export default StageCard;

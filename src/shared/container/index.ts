@@ -27,6 +27,9 @@ import CheckListsRepository from '@modules/checklists/infra/typeorm/repositories
 import ICheckListTasksRepository from '@modules/checklists/repositories/ICheckListTasksRepository';
 import CheckListTasksRepository from '@modules/checklists/infra/typeorm/repositories/CheckListTasksRepository';
 
+import ICardCheckListsRepository from '@modules/checklists/repositories/ICardCheckListsRepository';
+import CardCheckListsRepository from '@modules/checklists/infra/typeorm/repositories/CardCheckListsRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
@@ -196,6 +199,11 @@ container.registerSingleton<ICheckListsRepository>(
 container.registerSingleton<ICheckListTasksRepository>(
   'CheckListTasksRepository',
   CheckListTasksRepository,
+);
+
+container.registerSingleton<ICardCheckListsRepository>(
+  'CardCheckListsRepository',
+  CardCheckListsRepository,
 );
 
 container.registerSingleton<IUsersRepository>(
