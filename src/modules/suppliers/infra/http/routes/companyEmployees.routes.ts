@@ -16,6 +16,7 @@ companyEmployeesRouter.post(
       access_key: Joi.string().required(),
       password: Joi.string().required(),
       title: Joi.string().required(),
+      email: Joi.string().required(),
       message: Joi.string().required(),
       position: Joi.string().required(),
     },

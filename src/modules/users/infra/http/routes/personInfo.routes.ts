@@ -18,7 +18,11 @@ personInfoRouter.post(
   }),
   personInfoController.create,
 );
-personInfoRouter.get('/', ensureAuthenticated, personInfoController.show);
+personInfoRouter.get(
+  '/:user_id',
+  ensureAuthenticated,
+  personInfoController.show,
+);
 personInfoRouter.put(
   '/edit',
   ensureAuthenticated,

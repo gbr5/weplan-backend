@@ -16,6 +16,7 @@ interface IRequest {
   access_key: string;
   password: string;
   title: string;
+  email: string;
   message: string;
   employee_id: string;
   company_id: string;
@@ -44,6 +45,7 @@ class CreateCompanyEmployeeService {
     access_key,
     password,
     title,
+    email,
     message,
     employee_id,
     company_id,
@@ -82,7 +84,7 @@ class CreateCompanyEmployeeService {
       const companyEmployee = await this.companyEmployeesRepository.create({
         position,
         access_key,
-        email: employee.email,
+        email,
         password: hashedPassword,
         isActive: false,
         employee,

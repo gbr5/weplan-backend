@@ -27,6 +27,8 @@ import weplanContractOrdersRouter from '@modules/weplan/infra/http/routes/weplan
 
 import financesRouter from '@modules/finances/infra/http/routes/finances.routes';
 
+import checkListRouter from '@modules/checklists/infra/http/routes/checkList.routes';
+
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
@@ -56,5 +58,6 @@ routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
 
 routes.use('/finances', financesRouter);
+routes.use('/check-lists', checkListRouter);
 
 export default routes;

@@ -25,7 +25,8 @@ export default class PersonInfoController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
-    const user_id = req.user.id;
+    const reqParams = req.params;
+    const { user_id } = reqParams;
 
     const showPersonInfo = container.resolve(ShowPersonInfoService);
 
