@@ -31,6 +31,8 @@ import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEm
 import SupplierProduct from '@modules/suppliers/infra/typeorm/entities/SupplierProduct';
 import WeplanContractOrder from '@modules/weplan/infra/typeorm/entities/WeplanContractOrder';
 import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/CompanyMasterUser';
+import CheckList from '@modules/checklists/infra/typeorm/entities/CheckList';
+import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListTask';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -180,6 +182,12 @@ class User {
 
   @OneToMany(() => WeplanContractOrder, order => order.user_id)
   contractOrder: WeplanContractOrder[];
+
+  @OneToMany(() => CheckList, check_list => check_list.user)
+  check_lists: CheckList[];
+
+  @OneToMany(() => CheckListTask, task => task.owner)
+  tasks: CheckListTask[];
 }
 
 export default User;

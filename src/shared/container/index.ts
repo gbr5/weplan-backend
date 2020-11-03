@@ -21,6 +21,12 @@ import EventAppointmentsRepository from '@modules/appointments/infra/typeorm/rep
 import IStageCardAppointmentsRepository from '@modules/appointments/repositories/IStageCardAppointmentsRepository';
 import StageCardAppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/StageCardAppointmentsRepository';
 
+import ICheckListsRepository from '@modules/checklists/repositories/ICheckListsRepository';
+import CheckListsRepository from '@modules/checklists/infra/typeorm/repositories/CheckListsRepository';
+
+import ICheckListTasksRepository from '@modules/checklists/repositories/ICheckListTasksRepository';
+import CheckListTasksRepository from '@modules/checklists/infra/typeorm/repositories/CheckListTasksRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
@@ -182,6 +188,16 @@ container.registerSingleton<IStageCardAppointmentsRepository>(
   'StageCardAppointmentsRepository',
   StageCardAppointmentsRepository,
 );
+container.registerSingleton<ICheckListsRepository>(
+  'CheckListsRepository',
+  CheckListsRepository,
+);
+
+container.registerSingleton<ICheckListTasksRepository>(
+  'CheckListTasksRepository',
+  CheckListTasksRepository,
+);
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
