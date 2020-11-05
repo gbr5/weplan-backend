@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import CheckListTask from './CheckListTask';
+import CardCheckList from './CardCheckList';
 
 @Entity('check_lists')
 class CheckList {
@@ -47,6 +48,9 @@ class CheckList {
 
   @OneToMany(() => CheckListTask, task => task.check_list, { eager: true })
   tasks: CheckListTask[];
+
+  @OneToMany(() => CardCheckList, card => card.check_list_id)
+  cards: CardCheckList[];
 }
 
 export default CheckList;
