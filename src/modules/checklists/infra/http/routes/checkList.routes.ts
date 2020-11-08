@@ -4,10 +4,12 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import CheckListController from '@modules/checklists/infra/http/controllers/CheckListsController';
 import CheckListTaskController from '@modules/checklists/infra/http/controllers/CheckListTasksController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import CompanyUserEmployeeTasksController from '../controllers/CompanyUserEmployeeTasksController';
 
 const checkListRouter = Router();
 const checkListController = new CheckListController();
 const checkListTaskController = new CheckListTaskController();
+const companyUserEmployeeTasksController = new CompanyUserEmployeeTasksController();
 
 checkListRouter.post(
   '/',
@@ -63,6 +65,11 @@ checkListRouter.get(
   '/tasks/:check_list_id',
   ensureAuthenticated,
   checkListTaskController.index,
+);
+checkListRouter.get(
+  '/tasks/:company_id/:owner_id',
+  ensureAuthenticated,
+  companyUserEmployeeTasksController.index,
 );
 checkListRouter.put(
   '/tasks/edit/:id',
