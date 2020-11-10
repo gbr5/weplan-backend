@@ -8,6 +8,7 @@ export default class CompanyUserEmployeeTasksController {
   public async index(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { company_id, owner_id } = reqParams;
+    const { day, month, year } = req.query;
 
     const listCheckListTasks = container.resolve(
       ListCheckListTasksByCompanyAndOwnerIDService,
@@ -16,8 +17,10 @@ export default class CompanyUserEmployeeTasksController {
     const checkListTasks = await listCheckListTasks.execute({
       company_id,
       owner_id,
+      day: Number(day),
+      month: Number(month),
+      year: Number(year),
     });
-    console.log('resultado: ', checkListTasks);
 
     return res.json(classToClass(checkListTasks));
   }

@@ -7,6 +7,9 @@ import ICheckListsRepository from '../repositories/ICheckListsRepository';
 interface IRequest {
   company_id: string;
   owner_id: string;
+  day?: number;
+  month?: number;
+  year?: number;
 }
 
 @injectable()
@@ -19,6 +22,9 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
   public async execute({
     company_id,
     owner_id,
+    day,
+    month,
+    year,
   }: IRequest): Promise<CheckListTask[]> {
     const companyCheckLists = await this.checkListsRepository.findByUserId(
       company_id,
@@ -33,7 +39,13 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
       });
       return tasks;
     });
-    console.log(owner_tasks);
+
+    if (day && month && year) {
+      const sorted_owner_tasks = owner_tasks.filter(
+        task => task.due_date === `${day}/${month}/${year}`,
+      );
+      return sorted_owner_tasks;
+    }
 
     return owner_tasks;
   }
