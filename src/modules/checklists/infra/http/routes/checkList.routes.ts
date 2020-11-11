@@ -86,5 +86,35 @@ checkListRouter.put(
   }),
   checkListTaskController.update,
 );
+checkListRouter.put(
+  '/tasks/edit/is-active/:id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      isActive: Joi.boolean().required(),
+    },
+  }),
+  checkListTaskController.updateIsActive,
+);
+checkListRouter.put(
+  '/tasks/edit/status/:id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      status: Joi.string().required(),
+    },
+  }),
+  checkListTaskController.updateStatus,
+);
+checkListRouter.put(
+  '/tasks/edit/priority/:id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.BODY]: {
+      priority: Joi.string().required(),
+    },
+  }),
+  checkListTaskController.updatePriority,
+);
 
 export default checkListRouter;
