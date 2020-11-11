@@ -5,6 +5,9 @@ import { classToClass } from 'class-transformer';
 import CreateCheckListTaskService from '@modules/checklists/services/CreateCheckListTaskService';
 import UpdateCheckListTasksService from '@modules/checklists/services/UpdateCheckListTaskService';
 import ListCheckListTasksService from '@modules/checklists/services/ListCheckListTasksService';
+import UpdateCheckListTaskStatusService from '@modules/checklists/services/UpdateCheckListTaskStatusService';
+import UpdateCheckListTaskIsActiveService from '@modules/checklists/services/UpdateCheckListTaskIsActiveService';
+import UpdateCheckListTaskPriorityService from '@modules/checklists/services/UpdateCheckListTaskPriorityService';
 
 export default class CheckListTasksController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -64,6 +67,51 @@ export default class CheckListTasksController {
       status,
       due_date,
     });
+
+    return res.json(classToClass(checkListTask));
+  }
+
+  public async updateIsActive(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const { isActive } = req.body;
+
+    const updateCheckListTasks = container.resolve(
+      UpdateCheckListTaskIsActiveService,
+    );
+
+    const checkListTask = await updateCheckListTasks.execute({ id, isActive });
+
+    return res.json(classToClass(checkListTask));
+  }
+
+  public async updateStatus(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const { status } = req.body;
+
+    const updateCheckListTasks = container.resolve(
+      UpdateCheckListTaskStatusService,
+    );
+
+    const checkListTask = await updateCheckListTasks.execute({ id, status });
+
+    return res.json(classToClass(checkListTask));
+  }
+
+  public async updatePriority(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const { priority } = req.body;
+
+    const updateCheckListTasks = container.resolve(
+      UpdateCheckListTaskPriorityService,
+    );
+
+    const checkListTask = await updateCheckListTasks.execute({ id, priority });
 
     return res.json(classToClass(checkListTask));
   }
