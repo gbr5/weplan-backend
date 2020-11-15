@@ -33,6 +33,8 @@ import WeplanContractOrder from '@modules/weplan/infra/typeorm/entities/WeplanCo
 import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/CompanyMasterUser';
 import CheckList from '@modules/checklists/infra/typeorm/entities/CheckList';
 import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListTask';
+// import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
+// import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -188,6 +190,18 @@ class User {
 
   @OneToMany(() => CheckListTask, task => task.owner)
   tasks: CheckListTask[];
+
+  // @OneToMany(
+  //   () => CompanyFunnelCardInfoField,
+  //   funnel_card_field => funnel_card_field.company,
+  // )
+  // company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
+
+  // @OneToMany(
+  //   () => CompanyFunnelCardInfo,
+  //   funnel_card_info => funnel_card_info.author,
+  // )
+  // funnel_card_infos: CompanyFunnelCardInfo[];
 }
 
 export default User;

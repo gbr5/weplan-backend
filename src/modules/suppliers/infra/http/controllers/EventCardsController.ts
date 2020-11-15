@@ -6,7 +6,7 @@ import CreateEventCardService from '@modules/suppliers/services/CreateEventCardS
 import ListEventCardsService from '@modules/suppliers/services/ListEventCardsService';
 import ShowEventCardService from '@modules/suppliers/services/ShowEventCardService';
 import DeleteEventCardService from '@modules/suppliers/services/DeleteEventCardService';
-import UpdateEventCardService from '@modules/suppliers/services/UpdateFunnelStageService copy';
+import UpdateEventCardService from '@modules/suppliers/services/UpdateStageCardService';
 
 export default class EventCardsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -51,11 +51,25 @@ export default class EventCardsController {
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { card_unique_name, event_id } = dataParams;
+    const { id } = dataParams;
+    const {
+      weplanEvent,
+      name,
+      isActive,
+      new_stage_id,
+      new_card_owner,
+    } = req.body;
 
     const eventCard = container.resolve(UpdateEventCardService);
 
-    await eventCard.execute(card_unique_name, event_id);
+    await eventCard.execute(
+      id,
+      weplanEvent,
+      name,
+      isActive,
+      new_stage_id,
+      new_card_owner,
+    );
 
     return res.json(classToClass(eventCard));
   }

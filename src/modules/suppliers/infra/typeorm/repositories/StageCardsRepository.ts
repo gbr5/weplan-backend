@@ -18,6 +18,16 @@ class StageCardsRepository implements IStageCardsRepository {
     return stageCard;
   }
 
+  public async findByUniqueName(
+    unique_name: string,
+  ): Promise<StageCard | undefined> {
+    const stageCard = await this.ormRepository.findOne({
+      where: { unique_name },
+    });
+
+    return stageCard;
+  }
+
   public async findByStageId(stage_id: string): Promise<StageCard[]> {
     const stageCards = await this.ormRepository.find({
       where: { stage_id },
