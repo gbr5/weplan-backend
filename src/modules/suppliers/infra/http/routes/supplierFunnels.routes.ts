@@ -5,6 +5,8 @@ import FunnelsController from '@modules/suppliers/infra/http/controllers/Funnels
 import FunnelStagesController from '@modules/suppliers/infra/http/controllers/FunnelStagesController';
 import StageCardsController from '@modules/suppliers/infra/http/controllers/StageCardsController';
 import EventCardsController from '@modules/suppliers/infra/http/controllers/EventCardsController';
+import CompanyFunnelCardInfoFieldsController from '@modules/suppliers/infra/http/controllers/CompanyFunnelCardInfoFieldsController';
+import CompanyFunnelCardInfosController from '@modules/suppliers/infra/http/controllers/CompanyFunnelCardInfosController';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
@@ -13,6 +15,8 @@ const funnelsController = new FunnelsController();
 const funnelStagesController = new FunnelStagesController();
 const stageCardsController = new StageCardsController();
 const eventCardsController = new EventCardsController();
+const companyFunnelCardInfoFieldsController = new CompanyFunnelCardInfoFieldsController();
+const companyFunnelCardInfosController = new CompanyFunnelCardInfosController();
 
 supplierFunnelsRouter.use(ensureAuthenticated);
 
@@ -136,6 +140,78 @@ supplierFunnelsRouter.put(
 supplierFunnelsRouter.delete(
   '/cards/event/:card_unique_name/:event_id',
   eventCardsController.delete,
+);
+
+// === Company Funnel Card Info Fields === //
+
+supplierFunnelsRouter.post(
+  '/company-funnel-card-info-field/:company_id',
+  celebrate({
+    [Segments.BODY]: {
+      funnel_id: Joi.string().required(),
+      name: Joi.string().required(),
+      field_type: Joi.string().required(),
+      isRequired: Joi.boolean().required(),
+    },
+  }),
+  companyFunnelCardInfoFieldsController.create,
+);
+
+supplierFunnelsRouter.get(
+  '/company-funnel-card-info-field/:funnel_id',
+  companyFunnelCardInfoFieldsController.index,
+);
+
+supplierFunnelsRouter.put(
+  '/company-funnel-card-info-field/:funnel_id/:id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      field_type: Joi.string().required(),
+      isRequired: Joi.boolean().required(),
+    },
+  }),
+  companyFunnelCardInfoFieldsController.update,
+);
+
+supplierFunnelsRouter.delete(
+  '/company-funnel-card-info-field/:id',
+  companyFunnelCardInfoFieldsController.delete,
+);
+
+// === Company Funnel Card Infos === //
+
+supplierFunnelsRouter.post(
+  '/card/company-funnel-card-info',
+  celebrate({
+    [Segments.BODY]: {
+      funnel_card_field_id: Joi.string().required(),
+      card_unique_name: Joi.string().required(),
+      user_id: Joi.string().required(),
+      response: Joi.string().required(),
+    },
+  }),
+  companyFunnelCardInfosController.create,
+);
+
+supplierFunnelsRouter.get(
+  '/card/company-funnel-card-info/:card_unique_name',
+  companyFunnelCardInfosController.index,
+);
+
+supplierFunnelsRouter.put(
+  '/card/company-funnel-card-info/:id/:card_unique_name/:funnel_card_field_id',
+  celebrate({
+    [Segments.BODY]: {
+      response: Joi.string().required(),
+    },
+  }),
+  companyFunnelCardInfosController.update,
+);
+
+supplierFunnelsRouter.delete(
+  '/card/company-funnel-card-info/:id',
+  companyFunnelCardInfosController.delete,
 );
 
 export default supplierFunnelsRouter;

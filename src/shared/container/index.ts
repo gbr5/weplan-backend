@@ -132,6 +132,12 @@ import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import CompanyEmployeesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeesRepository';
 
+import ICompanyFunnelCardInfoFieldsRepository from '@modules/suppliers/repositories/ICompanyFunnelCardInfoFieldsRepository';
+import CompanyFunnelCardInfoFieldsRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyFunnelCardInfoFieldsRepository';
+
+import ICompanyFunnelCardInfosRepository from '@modules/suppliers/repositories/ICompanyFunnelCardInfosRepository';
+import CompanyFunnelCardInfosRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyFunnelCardInfosRepository';
+
 import ISupplierWeekDayAppointmentsRepository from '@modules/appointments/repositories/ISupplierWeekDayAppointmentsRepository';
 import SupplierWeekDayAppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/SupplierWeekDayAppointmentsRepository';
 
@@ -244,17 +250,22 @@ container.registerSingleton<ICompanyInfoRepository>(
   'CompanyInfoRepository',
   CompanyInfoRepository,
 );
-
 container.registerSingleton<ICompanyEmployeesRepository>(
   'CompanyEmployeesRepository',
   CompanyEmployeesRepository,
 );
-
+container.registerSingleton<ICompanyFunnelCardInfoFieldsRepository>(
+  'CompanyFunnelCardInfoFieldsRepository',
+  CompanyFunnelCardInfoFieldsRepository,
+);
+container.registerSingleton<ICompanyFunnelCardInfosRepository>(
+  'CompanyFunnelCardInfosRepository',
+  CompanyFunnelCardInfosRepository,
+);
 container.registerSingleton<IUserConfirmationRepository>(
   'UserConfirmationRepository',
   UserConfirmationRepository,
 );
-
 container.registerSingleton<IUserManagementModulesRepository>(
   'UserManagementModulesRepository',
   UserManagementModulesRepository,

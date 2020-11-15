@@ -15,6 +15,7 @@ import StageCardAppointment from '@modules/appointments/infra/typeorm/entities/S
 import CardCheckList from '@modules/checklists/infra/typeorm/entities/CardCheckList';
 import FunnelStage from './FunnelStage';
 import EventCard from './EventCard';
+// import CompanyFunnelCardInfo from './CompanyFunnelCardInfo';
 
 @Entity('stage_cards')
 class StageCard {
@@ -63,6 +64,15 @@ class StageCard {
     eager: true,
   })
   check_lists: CardCheckList[];
+
+  // @OneToMany(
+  //   () => CompanyFunnelCardInfo,
+  //   funnel_card_info => funnel_card_info.card,
+  //   {
+  //     eager: true,
+  //   },
+  // )
+  // funnel_card_infos: CompanyFunnelCardInfo[];
 }
 
 export default StageCard;
