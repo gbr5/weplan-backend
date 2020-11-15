@@ -23,5 +23,10 @@ cardCheckListRouter.get(
   ensureAuthenticated,
   cardCheckListController.index,
 );
+cardCheckListRouter.delete(
+  '/:id',
+  ensureAuthenticated,
+  cardCheckListController.delete,
+);
 
 export default cardCheckListRouter;
