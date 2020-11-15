@@ -12,7 +12,7 @@ class ListCardCheckListsService {
   ) {}
 
   public async execute(card_id: string): Promise<CardCheckList[]> {
-    const cardCheckList = await this.cardCheckListRepository.findByCheckListId(
+    const cardCheckList = await this.cardCheckListRepository.findByCardId(
       card_id,
     );
 
