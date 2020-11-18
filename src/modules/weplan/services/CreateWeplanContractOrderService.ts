@@ -8,6 +8,7 @@ import AppError from '@shared/errors/AppError';
 import IUserManagementModulesRepository from '@modules/users/repositories/IUserManagementModulesRepository';
 import IFunnelsRepository from '@modules/suppliers/repositories/IFunnelsRepository';
 import IFunnelStagesRepository from '@modules/suppliers/repositories/IFunnelStagesRepository';
+import ICompanyFunnelCardInfoFieldsRepository from '@modules/suppliers/repositories/ICompanyFunnelCardInfoFieldsRepository';
 
 interface IProductsWPDTO {
   weplan_product_id: string;
@@ -39,6 +40,9 @@ class CreateWeplanContractOrdersService {
 
     @inject('WeplanProductsRepository')
     private weplanProductsRepository: IWeplanProductsRepository,
+
+    @inject('CompanyFunnelCardInfoFieldsRepository')
+    private companyFunnelCardInfoFieldsRepository: ICompanyFunnelCardInfoFieldsRepository,
   ) {}
 
   public async execute({
@@ -116,6 +120,43 @@ class CreateWeplanContractOrdersService {
               funnel_id: response.id,
               funnel_order: 5,
               name: 'Contrato Enviado',
+            });
+            // este campo será preenchido com o id do contato, contato terá
+            // primeiro nome, segundo nome, se é weplanner, contatos.
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Cliente',
+              field_type: 'string',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Tipo de Evento',
+              field_type: 'string',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Data do Evento',
+              field_type: 'string',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Valor Esperado',
+              field_type: 'number',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Probabilidade',
+              field_type: 'number',
+              isRequired: false,
             });
           });
       }
