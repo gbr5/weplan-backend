@@ -14,7 +14,7 @@ class DeleteCardCheckListService {
     const cardCheckList = await this.cardCheckListsRepository.findById(id);
 
     if (!cardCheckList) {
-      throw new AppError('No card chack list found.');
+      throw new AppError('No card check list found.');
     }
 
     await this.cardCheckListsRepository.delete(cardCheckList);
