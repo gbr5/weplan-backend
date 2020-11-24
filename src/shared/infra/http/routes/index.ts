@@ -21,6 +21,10 @@ import companyEmployeesRouter from '@modules/suppliers/infra/http/routes/company
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
 import funnelTypesRouter from '@modules/suppliers/infra/http/routes/funnelTypes.routes';
 import supplierFunnelsRouter from '@modules/suppliers/infra/http/routes/supplierFunnels.routes';
+import financialFunnelDefaultInfoFieldsRouter from '@modules/suppliers/infra/http/routes/financialFunnelDefaultInfoFields.routes';
+import comercialFunnelDefaultInfoFieldsRouter from '@modules/suppliers/infra/http/routes/comercialFunnelDefaultInfoFields.routes';
+import productionFunnelDefaultInfoFieldsRouter from '@modules/suppliers/infra/http/routes/productionFunnelDefaultInfoFields.routes';
+import projectsFunnelDefaultInfoFieldsRouter from '@modules/suppliers/infra/http/routes/projectsFunnelDefaultInfoFields.routes';
 import weplanManagementModulesRouter from '@modules/weplan/infra/http/routes/weplanManagementModules.routes';
 import weplanProductsRouter from '@modules/weplan/infra/http/routes/weplanProducts.routes';
 import weplanContractOrdersRouter from '@modules/weplan/infra/http/routes/weplanContractOrders.routes';
@@ -57,6 +61,10 @@ routes.use('/wp/contract-orders', weplanContractOrdersRouter);
 routes.use('/wp-management-modules', weplanManagementModulesRouter);
 routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
+routes.use('/comercial/funnel', comercialFunnelDefaultInfoFieldsRouter);
+routes.use('/production/funnel', productionFunnelDefaultInfoFieldsRouter);
+routes.use('/projects/funnel', projectsFunnelDefaultInfoFieldsRouter);
+routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 
 routes.use('/finances', financesRouter);
 routes.use('/check-lists', checkListRouter);

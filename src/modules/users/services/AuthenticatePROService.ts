@@ -107,8 +107,8 @@ class AuthenticatePROService {
     const comercial = modules.filter(
       thisModule => thisModule.management_module === 'Comercial',
     );
-    const operations = modules.filter(
-      thisModule => thisModule.management_module === 'Operations',
+    const production = modules.filter(
+      thisModule => thisModule.management_module === 'Production',
     );
     const projects = modules.filter(
       thisModule => thisModule.management_module === 'Projects',
@@ -128,12 +128,12 @@ class AuthenticatePROService {
       }
     }
 
-    if (operations.length > 0) {
-      const operationsAccess = companyFunnels.find(
-        ciaFunnel => ciaFunnel.name === 'Operations',
+    if (production.length > 0) {
+      const productionAccess = companyFunnels.find(
+        ciaFunnel => ciaFunnel.name === 'Production',
       );
-      if (operationsAccess) {
-        employeeFunnels.push(operationsAccess);
+      if (productionAccess) {
+        employeeFunnels.push(productionAccess);
       }
     }
 

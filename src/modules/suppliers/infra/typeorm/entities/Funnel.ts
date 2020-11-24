@@ -12,6 +12,7 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import FunnelType from './FunnelType';
 import FunnelStage from './FunnelStage';
+import CompanyFunnelCardInfoField from './CompanyFunnelCardInfoField';
 // import CompanyFunnelCardInfoField from './CompanyFunnelCardInfoField';
 
 @Entity('funnels')
@@ -45,12 +46,12 @@ class Funnel {
   @OneToMany(() => FunnelStage, stage => stage.funnel, { eager: true })
   stages: FunnelStage[];
 
-  // @OneToMany(
-  //   () => CompanyFunnelCardInfoField,
-  //   funnel_card_info_field => funnel_card_info_field.funnel,
-  //   { eager: true },
-  // )
-  // company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
+  @OneToMany(
+    () => CompanyFunnelCardInfoField,
+    funnel_card_info_field => funnel_card_info_field.funnel,
+    { eager: true },
+  )
+  company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
 }
 
 export default Funnel;
