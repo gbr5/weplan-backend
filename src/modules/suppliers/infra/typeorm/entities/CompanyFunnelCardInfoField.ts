@@ -27,7 +27,7 @@ class CompanyFunnelCardInfoField {
   @Column()
   funnel_id: string;
 
-  @ManyToOne(() => Funnel, funnel => funnel.id)
+  @ManyToOne(() => Funnel, funnel => funnel.company_funnel_card_info_fields)
   @JoinColumn({ name: 'funnel_id' })
   funnel: Funnel;
 

@@ -9,6 +9,10 @@ import CompanyFunnelCardInfoFieldsController from '@modules/suppliers/infra/http
 import CompanyFunnelCardInfosController from '@modules/suppliers/infra/http/controllers/CompanyFunnelCardInfosController';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import ComercialFunnelCardDefaultInfoFieldsController from '../controllers/ComercialFunnelCardDefaultInfoFieldsController';
+import ProductionFunnelCardDefaultInfoFieldsController from '../controllers/ProductionFunnelCardDefaultInfoFieldsController';
+import ProjectFunnelCardDefaultInfoFieldsController from '../controllers/ProjectFunnelCardDefaultInfoFieldsController';
+import FinancialFunnelCardDefaultInfoFieldsController from '../controllers/FinancialFunnelCardDefaultInfoFieldsController';
 
 const supplierFunnelsRouter = Router();
 const funnelsController = new FunnelsController();
@@ -17,6 +21,10 @@ const stageCardsController = new StageCardsController();
 const eventCardsController = new EventCardsController();
 const companyFunnelCardInfoFieldsController = new CompanyFunnelCardInfoFieldsController();
 const companyFunnelCardInfosController = new CompanyFunnelCardInfosController();
+const comercialFunnelCardDefaultInfoFields = new ComercialFunnelCardDefaultInfoFieldsController();
+const productionFunnelCardDefaultInfoFields = new ProductionFunnelCardDefaultInfoFieldsController();
+const projectFunnelCardDefaultInfoFields = new ProjectFunnelCardDefaultInfoFieldsController();
+const financialFunnelCardDefaultInfoFields = new FinancialFunnelCardDefaultInfoFieldsController();
 
 supplierFunnelsRouter.use(ensureAuthenticated);
 
@@ -44,6 +52,33 @@ supplierFunnelsRouter.put(
 );
 
 supplierFunnelsRouter.delete('/:id', funnelsController.delete);
+
+// === Create Deafault Comercial Funnel Card Info Field === //
+
+supplierFunnelsRouter.post(
+  '/comercial/funnel/card/default-info-field/:company_id/:funnel_id',
+  comercialFunnelCardDefaultInfoFields.create,
+);
+// === Create Deafault Production Funnel Card Info Field === //
+
+supplierFunnelsRouter.post(
+  '/production/funnel/card/default-info-field/:company_id/:funnel_id',
+  productionFunnelCardDefaultInfoFields.create,
+);
+
+// === Create Deafault Project Funnel Card Info Field === //
+
+supplierFunnelsRouter.post(
+  '/project/funnel/card/default-info-field/:company_id/:funnel_id',
+  projectFunnelCardDefaultInfoFields.create,
+);
+
+// === Create Deafault Financial Funnel Card Info Field === //
+
+supplierFunnelsRouter.post(
+  '/financial/funnel/card/default-info-field/:company_id/:funnel_id',
+  financialFunnelCardDefaultInfoFields.create,
+);
 
 // === Funnel Stages === //
 

@@ -121,6 +121,42 @@ class CreateWeplanContractOrdersService {
               funnel_order: 5,
               name: 'Contrato Enviado',
             });
+            // Comercial Funnel Default Card Info Fields
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Cliente',
+              field_type: 'string',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Tipo de Evento',
+              field_type: 'string',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Data do Evento',
+              field_type: 'string',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Valor Esperado',
+              field_type: 'number',
+              isRequired: false,
+            });
+            this.companyFunnelCardInfoFieldsRepository.create({
+              company_id: user_id,
+              funnel_id: response.id,
+              name: 'Probabilidade',
+              field_type: 'number',
+              isRequired: false,
+            });
           });
       }
 

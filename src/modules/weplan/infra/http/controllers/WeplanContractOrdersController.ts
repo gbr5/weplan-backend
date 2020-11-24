@@ -13,6 +13,10 @@ export default class WeplanContractOrderController {
       CreateWeplanContractOrderService,
     );
 
+    console.log({
+      user_id,
+      products,
+    });
     const order = await createWeplanContractOrder.execute({
       user_id,
       products,
