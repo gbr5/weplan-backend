@@ -7,7 +7,6 @@ import CreateProductionFunnelCardDefaultInfoFieldsService from '@modules/supplie
 export default class ProductionFunnelCardDefaultInfoFieldsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { company_id, funnel_id } = req.body;
-    console.log(company_id, funnel_id);
 
     const createProductionFunnelCardDefaultInfoFields = container.resolve(
       CreateProductionFunnelCardDefaultInfoFieldsService,

@@ -7,7 +7,6 @@ import CreateProjectFunnelCardDefaultInfoFieldsService from '@modules/suppliers/
 export default class ProjectFunnelCardDefaultInfoFieldsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { company_id, funnel_id } = req.body;
-    console.log(company_id, funnel_id);
 
     const createProjectFunnelCardDefaultInfoFields = container.resolve(
       CreateProjectFunnelCardDefaultInfoFieldsService,

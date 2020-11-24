@@ -24,9 +24,7 @@ class CreateComercialFunnelCardDefaultInfoFieldService {
     company_id,
     funnel_id,
   }: IRequest): Promise<CompanyFunnelCardInfoField[]> {
-    console.log({ company_id, funnel_id });
     const funnelExists = await this.funnelsRepository.findById(funnel_id);
-    console.log({ funnelExists });
 
     if (!funnelExists) {
       throw new AppError('Funnel not found.');
