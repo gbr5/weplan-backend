@@ -129,6 +129,9 @@ import StageCardsRepository from '@modules/suppliers/infra/typeorm/repositories/
 import IEventCardsRepository from '@modules/suppliers/repositories/IEventCardsRepository';
 import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/EventCardsRepository';
 
+import ICardNotesRepository from '@modules/suppliers/repositories/ICardNotesRepository';
+import CardNotesRepository from '@modules/suppliers/infra/typeorm/repositories/CardNotesRepository';
+
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import CompanyEmployeesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeesRepository';
 
@@ -196,6 +199,10 @@ container.registerSingleton<IEventAppointmentsRepository>(
 container.registerSingleton<IStageCardAppointmentsRepository>(
   'StageCardAppointmentsRepository',
   StageCardAppointmentsRepository,
+);
+container.registerSingleton<ICardNotesRepository>(
+  'CardNotesRepository',
+  CardNotesRepository,
 );
 container.registerSingleton<ICheckListsRepository>(
   'CheckListsRepository',

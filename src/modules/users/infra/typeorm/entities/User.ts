@@ -35,6 +35,7 @@ import CheckList from '@modules/checklists/infra/typeorm/entities/CheckList';
 import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListTask';
 // import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
 // import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
+import CardNote from '@modules/suppliers/infra/typeorm/entities/CardNote';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -190,6 +191,9 @@ class User {
 
   @OneToMany(() => CheckListTask, task => task.owner)
   tasks: CheckListTask[];
+
+  @OneToMany(() => CardNote, note => note.note_author)
+  notes: CardNote[];
 
   // @OneToMany(
   //   () => CompanyFunnelCardInfoField,
