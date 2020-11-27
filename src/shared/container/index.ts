@@ -132,6 +132,9 @@ import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/
 import ICardNotesRepository from '@modules/suppliers/repositories/ICardNotesRepository';
 import CardNotesRepository from '@modules/suppliers/infra/typeorm/repositories/CardNotesRepository';
 
+import ICardParticipantsRepository from '@modules/suppliers/repositories/ICardParticipantsRepository';
+import CardParticipantsRepository from '@modules/suppliers/infra/typeorm/repositories/CardParticipantsRepository';
+
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import CompanyEmployeesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeesRepository';
 
@@ -217,6 +220,10 @@ container.registerSingleton<IStageCardAppointmentsRepository>(
 container.registerSingleton<ICardNotesRepository>(
   'CardNotesRepository',
   CardNotesRepository,
+);
+container.registerSingleton<ICardParticipantsRepository>(
+  'CardParticipantsRepository',
+  CardParticipantsRepository,
 );
 container.registerSingleton<ICheckListsRepository>(
   'CheckListsRepository',
