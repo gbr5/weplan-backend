@@ -129,6 +129,9 @@ import StageCardsRepository from '@modules/suppliers/infra/typeorm/repositories/
 import IEventCardsRepository from '@modules/suppliers/repositories/IEventCardsRepository';
 import EventCardsRepository from '@modules/suppliers/infra/typeorm/repositories/EventCardsRepository';
 
+import ICardNotesRepository from '@modules/suppliers/repositories/ICardNotesRepository';
+import CardNotesRepository from '@modules/suppliers/infra/typeorm/repositories/CardNotesRepository';
+
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import CompanyEmployeesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeesRepository';
 
@@ -153,6 +156,12 @@ import SupplierAppointmentDayIntervalsRepository from '@modules/appointments/inf
 import ISupplierProductRepository from '@modules/suppliers/repositories/ISupplierProductRepository';
 import SupplierProductRepository from '@modules/suppliers/infra/typeorm/repositories/SupplierProductsRepository';
 
+import ICompanyContactsRepository from '@modules/suppliers/repositories/ICompanyContactsRepository';
+import CompanyContactsRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyContactsRepository';
+
+import ICompanyContactInfosRepository from '@modules/suppliers/repositories/ICompanyContactInfosRepository';
+import CompanyContactInfosRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyContactInfosRepository';
+
 import IFriendGroupsRepository from '@modules/users/repositories/IFriendGroupsRepository';
 import FriendGroupsRepository from '@modules/users/infra/typeorm/repositories/FriendGroupsRepository';
 
@@ -171,6 +180,14 @@ import WeplanContractOrdersRepository from '@modules/weplan/infra/typeorm/reposi
 import IWeplanContractOrderProductsRepository from '@modules/weplan/repositories/IWeplanContractOrderProductsRepository';
 import WeplanContractOrderProductsRepository from '@modules/weplan/infra/typeorm/repositories/WeplanContractOrderProductsRepository';
 
+container.registerSingleton<ICompanyContactsRepository>(
+  'CompanyContactsRepository',
+  CompanyContactsRepository,
+);
+container.registerSingleton<ICompanyContactInfosRepository>(
+  'CompanyContactInfosRepository',
+  CompanyContactInfosRepository,
+);
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
@@ -196,6 +213,10 @@ container.registerSingleton<IEventAppointmentsRepository>(
 container.registerSingleton<IStageCardAppointmentsRepository>(
   'StageCardAppointmentsRepository',
   StageCardAppointmentsRepository,
+);
+container.registerSingleton<ICardNotesRepository>(
+  'CardNotesRepository',
+  CardNotesRepository,
 );
 container.registerSingleton<ICheckListsRepository>(
   'CheckListsRepository',
