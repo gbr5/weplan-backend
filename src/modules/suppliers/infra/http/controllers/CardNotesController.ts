@@ -41,7 +41,6 @@ export default class CardNotesController {
 
     const cardNote = container.resolve(UpdateCardNoteService);
 
-    console.log(id, note);
     await cardNote.execute(id, note);
 
     return res.json(classToClass(cardNote));

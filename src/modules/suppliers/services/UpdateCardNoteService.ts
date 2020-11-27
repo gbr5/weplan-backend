@@ -13,10 +13,7 @@ class UpdateCardNoteService {
   ) {}
 
   public async execute(id: string, note: string): Promise<CardNote> {
-    console.log(id, note);
-
     const cardNote = await this.cardNotesRepository.findById(id);
-    console.log(cardNote);
 
     if (!cardNote) {
       throw new AppError('CardNote not found.');
@@ -25,7 +22,6 @@ class UpdateCardNoteService {
     cardNote.note = note;
 
     const updatedCardNote = await this.cardNotesRepository.save(cardNote);
-    console.log(updatedCardNote, 'esses');
 
     return updatedCardNote;
   }

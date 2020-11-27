@@ -12,7 +12,6 @@ class DeleteCardNoteService {
 
   public async execute(id: string): Promise<void> {
     const cardNote = await this.cardNotesRepository.findById(id);
-    console.log('delete', id, cardNote);
 
     if (!cardNote) {
       throw new AppError('Event card relation not found.');
