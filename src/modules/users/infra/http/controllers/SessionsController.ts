@@ -46,7 +46,7 @@ export default class SessionsController {
         employee_avatar: user.avatar ? user.avatar : '',
       },
       person: {
-        id: user.employee.id,
+        id: user.employee_id,
         name: user.employee.name,
         email: user.employee.email,
         avatar_url: user.employee.getAvatarUrl()

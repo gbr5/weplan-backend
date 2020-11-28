@@ -37,11 +37,21 @@ export default class CompanyEmployeesController {
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
+    const user_name = req.query.name;
+    const employee_name = String(user_name);
     const reqParams = req.params;
     const { company_id } = reqParams;
     const listCompanyEmployees = container.resolve(ListCompanyEmployeesService);
 
     const employees = await listCompanyEmployees.execute(company_id);
+
+    const sortedEmployees = employees.filter(employee =>
+      employee.name.includes(employee_name),
+    );
+
+    if (sortedEmployees.length > 0) {
+      return res.json(classToClass(sortedEmployees));
+    }
 
     return res.json(classToClass(employees));
   }
