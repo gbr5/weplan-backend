@@ -3,14 +3,15 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
   JoinColumn,
   Column,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import CompanyContactInfo from './CompanyContactInfo';
+import CompanyContactWeplanUser from './CompanyContactWeplanUser';
 
 @Entity('company_contacts')
 class CompanyContact {
@@ -20,7 +21,7 @@ class CompanyContact {
   @Column('uuid')
   company_id: string;
 
-  @ManyToOne(() => User, company => company.contacts, { eager: true })
+  @OneToOne(() => User, company => company.contacts_company, { eager: true })
   @JoinColumn({ name: 'company_id' })
   company: User;
 
@@ -51,6 +52,9 @@ class CompanyContact {
     { eager: true },
   )
   contact_infos: CompanyContactInfo[];
+
+  @OneToOne(() => CompanyContactWeplanUser, contact => contact.companyContact)
+  companyContactWeplanUser: CompanyContactWeplanUser;
 }
 
 export default CompanyContact;
