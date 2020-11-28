@@ -37,6 +37,7 @@ import checkListRouter from '@modules/checklists/infra/http/routes/checkList.rou
 import cardCheckListRouter from '@modules/checklists/infra/http/routes/cardCheckList.routes';
 import cardParticipantsRouter from '@modules/suppliers/infra/http/routes/cardParticipants.routes';
 import companyContactWeplanUsersRouter from '@modules/suppliers/infra/http/routes/companyContactWeplanUsers.routes';
+import cardCustomersRouter from '@modules/suppliers/infra/http/routes/cardCustomers.routes';
 
 const routes = Router();
 
@@ -67,6 +68,7 @@ routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
 routes.use('/cards', cardsRouter);
 routes.use('/card/participants', cardParticipantsRouter);
+routes.use('/card/customers', cardCustomersRouter);
 routes.use('/company/contacts/', companyContactsRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);
 
