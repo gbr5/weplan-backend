@@ -38,6 +38,7 @@ import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListT
 import CardNote from '@modules/suppliers/infra/typeorm/entities/CardNote';
 import CompanyContact from '@modules/suppliers/infra/typeorm/entities/CompanyContact';
 import CardParticipant from '@modules/suppliers/infra/typeorm/entities/CardParticipant';
+import CompanyContactWeplanUser from '@modules/suppliers/infra/typeorm/entities/CompanyContactWeplanUser';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -200,8 +201,14 @@ class User {
   @OneToMany(() => CardParticipant, card => card.participant)
   card_participants: CardParticipant[];
 
-  @OneToMany(() => CompanyContact, contact => contact.company)
-  contacts: CompanyContact[];
+  @OneToOne(() => CompanyContact, contact => contact.company)
+  contacts_company: CompanyContact;
+
+  @OneToMany(
+    () => CompanyContactWeplanUser,
+    contact => contact.companyContactWeplanUser,
+  )
+  companyContactWeplanUsers: CompanyContactWeplanUser[];
 
   // @OneToMany(
   //   () => CompanyFunnelCardInfoField,
