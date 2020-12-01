@@ -192,6 +192,9 @@ import WeplanContractOrderProductsRepository from '@modules/weplan/infra/typeorm
 import ICardBudgetsRepository from '@modules/suppliers/repositories/ICardBudgetsRepository';
 import CardBudgetsRepository from '@modules/suppliers/infra/typeorm/repositories/CardBudgetsRepository';
 
+import ICardCustomerServiceOrdersRepository from '@modules/suppliers/repositories/ICardCustomerServiceOrdersRepository';
+import CardCustomerServiceOrdersRepository from '@modules/suppliers/infra/typeorm/repositories/CardCustomerServiceOrdersRepository';
+
 import ICustomerServiceOrdersRepository from '@modules/suppliers/repositories/ICustomerServiceOrdersRepository';
 import CustomerServiceOrdersRepository from '@modules/suppliers/infra/typeorm/repositories/CustomerServiceOrdersRepository';
 
@@ -254,6 +257,10 @@ container.registerSingleton<IStageCardAppointmentsRepository>(
 container.registerSingleton<ICardNotesRepository>(
   'CardNotesRepository',
   CardNotesRepository,
+);
+container.registerSingleton<ICardCustomerServiceOrdersRepository>(
+  'CardCustomerServiceOrdersRepository',
+  CardCustomerServiceOrdersRepository,
 );
 container.registerSingleton<ICardParticipantsRepository>(
   'CardParticipantsRepository',

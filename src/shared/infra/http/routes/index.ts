@@ -38,6 +38,7 @@ import cardCheckListRouter from '@modules/checklists/infra/http/routes/cardCheck
 import cardParticipantsRouter from '@modules/suppliers/infra/http/routes/cardParticipants.routes';
 import companyContactWeplanUsersRouter from '@modules/suppliers/infra/http/routes/companyContactWeplanUsers.routes';
 import cardCustomersRouter from '@modules/suppliers/infra/http/routes/cardCustomers.routes';
+import cardCustomerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/cardCustomerServiceOrders.routes';
 import cardBudgetsRouter from '@modules/suppliers/infra/http/routes/cardBudgets.routes';
 import customerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrders.routes';
 import companyDefaultServiceOrderFieldsRouter from '@modules/suppliers/infra/http/routes/companyDefaultServiceOrderFields.routes';
@@ -73,6 +74,7 @@ routes.use('/funnels', supplierFunnelsRouter);
 routes.use('/cards', cardsRouter);
 routes.use('/card/participants', cardParticipantsRouter);
 routes.use('/card/customers', cardCustomersRouter);
+routes.use('/card/customer-service-orders', cardCustomerServiceOrdersRouter);
 routes.use('/card/budgets', cardBudgetsRouter);
 routes.use('/company/contacts/', companyContactsRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);

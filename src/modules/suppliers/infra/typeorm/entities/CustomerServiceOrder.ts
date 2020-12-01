@@ -12,6 +12,7 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import CompanyContact from './CompanyContact';
 import CustomerServiceOrderFieldAnswer from './CustomerServiceOrderFieldAnswer';
+import CardCustomerServiceOrder from './CardCustomerServiceOrder';
 
 @Entity('customer_service_orders')
 class CustomerServiceOrder {
@@ -59,6 +60,13 @@ class CustomerServiceOrder {
     },
   )
   defaultFieldAnswers: CustomerServiceOrderFieldAnswer[];
+
+  @OneToMany(
+    () => CardCustomerServiceOrder,
+    customerServiceOrderCard =>
+      customerServiceOrderCard.cardCustomerServiceOrder,
+  )
+  customerServiceOrderCards: CardCustomerServiceOrder[];
 }
 
 export default CustomerServiceOrder;
