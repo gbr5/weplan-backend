@@ -39,6 +39,8 @@ import CardNote from '@modules/suppliers/infra/typeorm/entities/CardNote';
 import CompanyContact from '@modules/suppliers/infra/typeorm/entities/CompanyContact';
 import CardParticipant from '@modules/suppliers/infra/typeorm/entities/CardParticipant';
 import CompanyContactWeplanUser from '@modules/suppliers/infra/typeorm/entities/CompanyContactWeplanUser';
+import CustomerServiceOrder from '@modules/suppliers/infra/typeorm/entities/CustomerServiceOrder';
+import CompanyDefaultServiceOrderField from '@modules/suppliers/infra/typeorm/entities/CompanyDefaultServiceOrderField';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -209,6 +211,18 @@ class User {
     contact => contact.companyContactWeplanUser,
   )
   companyContactWeplanUsers: CompanyContactWeplanUser[];
+
+  @OneToMany(
+    () => CustomerServiceOrder,
+    customerServiceOrder => customerServiceOrder.company,
+  )
+  companyServiceOrders: CustomerServiceOrder[];
+
+  @OneToMany(
+    () => CompanyDefaultServiceOrderField,
+    companyDefaultServiceOrder => companyDefaultServiceOrder.company,
+  )
+  companyDefaultServiceOrderFields: CompanyDefaultServiceOrderField[];
 
   // @OneToMany(
   //   () => CompanyFunnelCardInfoField,

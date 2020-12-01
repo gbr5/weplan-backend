@@ -54,12 +54,6 @@ class CreateCardCustomerService {
       );
     }
 
-    console.log({
-      customer_id,
-      card_unique_name,
-      description,
-    });
-
     const cardCustomer = await this.cardCustomersRepository.create({
       customer_id,
       card_unique_name,

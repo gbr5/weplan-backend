@@ -189,9 +189,33 @@ import WeplanContractOrdersRepository from '@modules/weplan/infra/typeorm/reposi
 import IWeplanContractOrderProductsRepository from '@modules/weplan/repositories/IWeplanContractOrderProductsRepository';
 import WeplanContractOrderProductsRepository from '@modules/weplan/infra/typeorm/repositories/WeplanContractOrderProductsRepository';
 
+import ICardBudgetsRepository from '@modules/suppliers/repositories/ICardBudgetsRepository';
+import CardBudgetsRepository from '@modules/suppliers/infra/typeorm/repositories/CardBudgetsRepository';
+
+import ICustomerServiceOrdersRepository from '@modules/suppliers/repositories/ICustomerServiceOrdersRepository';
+import CustomerServiceOrdersRepository from '@modules/suppliers/infra/typeorm/repositories/CustomerServiceOrdersRepository';
+
+import ICompanyDefaultServiceOrderFieldsRepository from '@modules/suppliers/repositories/ICompanyDefaultServiceOrderFieldsRepository';
+import CompanyDefaultServiceOrderFieldsRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyDefaultServiceOrderFieldsRepository';
+
+import ICustomerServiceOrderFieldAnswersRepository from '@modules/suppliers/repositories/ICustomerServiceOrderFieldAnswersRepository';
+import CustomerServiceOrderFieldAnswersRepository from '@modules/suppliers/infra/typeorm/repositories/CustomerServiceOrderFieldAnswersRepository';
+
+container.registerSingleton<ICustomerServiceOrdersRepository>(
+  'CustomerServiceOrdersRepository',
+  CustomerServiceOrdersRepository,
+);
+container.registerSingleton<ICustomerServiceOrderFieldAnswersRepository>(
+  'CustomerServiceOrderFieldAnswersRepository',
+  CustomerServiceOrderFieldAnswersRepository,
+);
 container.registerSingleton<ICompanyContactsRepository>(
   'CompanyContactsRepository',
   CompanyContactsRepository,
+);
+container.registerSingleton<ICompanyDefaultServiceOrderFieldsRepository>(
+  'CompanyDefaultServiceOrderFieldsRepository',
+  CompanyDefaultServiceOrderFieldsRepository,
 );
 container.registerSingleton<ICompanyContactInfosRepository>(
   'CompanyContactInfosRepository',
@@ -238,6 +262,10 @@ container.registerSingleton<ICardParticipantsRepository>(
 container.registerSingleton<ICardCustomersRepository>(
   'CardCustomersRepository',
   CardCustomersRepository,
+);
+container.registerSingleton<ICardBudgetsRepository>(
+  'CardBudgetsRepository',
+  CardBudgetsRepository,
 );
 container.registerSingleton<ICheckListsRepository>(
   'CheckListsRepository',

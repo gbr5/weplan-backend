@@ -13,6 +13,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import CompanyContactInfo from './CompanyContactInfo';
 import CompanyContactWeplanUser from './CompanyContactWeplanUser';
 import CardCurstomer from './CardCustomer';
+import CustomerServiceOrder from './CustomerServiceOrder';
 
 @Entity('company_contacts')
 class CompanyContact {
@@ -59,6 +60,9 @@ class CompanyContact {
 
   @OneToMany(() => CardCurstomer, contactInfo => contactInfo.customer)
   customers: CardCurstomer[];
+
+  @OneToMany(() => CustomerServiceOrder, contactInfo => contactInfo.customer)
+  customerServiceOrders: CustomerServiceOrder[];
 }
 
 export default CompanyContact;
