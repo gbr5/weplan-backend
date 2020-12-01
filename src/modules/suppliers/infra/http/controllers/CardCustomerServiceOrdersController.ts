@@ -10,7 +10,6 @@ import UpdateCardCustomerServiceOrderService from '@modules/suppliers/services/U
 export default class CardCustomerServiceOrdersController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { customer_service_order_id, card_unique_name } = req.body;
-    console.log(customer_service_order_id, card_unique_name);
 
     const createCardCustomerServiceOrders = container.resolve(
       CreateCardCustomerServiceOrderService,
@@ -27,7 +26,6 @@ export default class CardCustomerServiceOrdersController {
   public async index(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { card_unique_name } = dataParams;
-    console.log(card_unique_name);
 
     const listCardCustomerServiceOrders = container.resolve(
       ListCardCustomerServiceOrdersService,

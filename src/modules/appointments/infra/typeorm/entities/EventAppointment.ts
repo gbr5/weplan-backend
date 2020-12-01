@@ -19,16 +19,16 @@ class EventAppointment {
   @Column('uuid')
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, appointment => appointment.id)
+  @ManyToOne(() => Appointment, appointment => appointment.eventAppointments)
   @JoinColumn({ name: 'appointment_id' })
-  Appointment: Appointment;
+  appointment: Appointment;
 
   @Column('uuid')
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.id)
+  @ManyToOne(() => Event, event => event.eventAppointments)
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
   @CreateDateColumn()
   created_at: Date;

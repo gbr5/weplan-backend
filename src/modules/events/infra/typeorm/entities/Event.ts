@@ -20,6 +20,7 @@ import EventOwner from './EventOwner';
 import EventMember from './EventMember';
 import EventInfo from './EventInfo';
 import WeplanGuest from './WeplanGuest';
+import EventServiceOrder from './EventServiceOrder';
 
 @Entity('events')
 class Event {
@@ -73,14 +74,17 @@ class Event {
   @OneToOne(() => EventInfo, event_info => event_info.event_id)
   Info: EventInfo;
 
-  @OneToOne(() => EventCard, card => card.event_id)
-  SupplierCard: EventCard;
+  @OneToOne(() => EventCard, card => card.event)
+  supplierCard: EventCard;
+
+  @OneToMany(() => EventAppointment, eventAppointment => eventAppointment.event)
+  eventAppointments: EventAppointment[];
 
   @OneToMany(
-    () => EventAppointment,
-    eventAppointment => eventAppointment.event_id,
+    () => EventServiceOrder,
+    eventServiceOrder => eventServiceOrder.event,
   )
-  Event: EventAppointment[];
+  eventServiceOrders: EventServiceOrder[];
 }
 
 export default Event;

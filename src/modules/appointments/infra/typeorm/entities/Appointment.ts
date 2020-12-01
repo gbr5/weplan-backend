@@ -72,13 +72,13 @@ class Appointment {
     () => EventAppointment,
     appointmentEvent => appointmentEvent.appointment_id,
   )
-  Event: EventAppointment;
+  eventAppointments: EventAppointment[];
 
   @OneToMany(
     () => StageCardAppointment,
-    appointmentStageCard => appointmentStageCard.appointment_id,
+    appointmentStageCard => appointmentStageCard.supplierCard,
   )
-  StageCard: StageCardAppointment;
+  stageCardAppointments: StageCardAppointment[];
 }
 
 export default Appointment;

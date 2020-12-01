@@ -7,9 +7,11 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EventServiceOrder from '@modules/events/infra/typeorm/entities/EventServiceOrder';
 import CompanyContact from './CompanyContact';
 import CustomerServiceOrderFieldAnswer from './CustomerServiceOrderFieldAnswer';
 import CardCustomerServiceOrder from './CardCustomerServiceOrder';
@@ -67,6 +69,13 @@ class CustomerServiceOrder {
       customerServiceOrderCard.cardCustomerServiceOrder,
   )
   customerServiceOrderCards: CardCustomerServiceOrder[];
+
+  @OneToOne(
+    () => EventServiceOrder,
+    eventServiceOrder => eventServiceOrder.serviceOrder,
+    { eager: true },
+  )
+  eventServiceOrder: EventServiceOrder;
 }
 
 export default CustomerServiceOrder;

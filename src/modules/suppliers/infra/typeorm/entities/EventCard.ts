@@ -27,9 +27,9 @@ class EventCard {
   @Column()
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.id)
+  @ManyToOne(() => Event, event => event.supplierCard)
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
   @CreateDateColumn()
   created_at: Date;

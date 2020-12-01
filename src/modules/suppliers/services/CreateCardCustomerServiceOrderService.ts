@@ -28,7 +28,6 @@ class CreateCardCustomerServiceOrderService {
       card_unique_name,
     );
 
-    console.log(cardExists);
     if (!cardExists) {
       throw new AppError('Card not found.');
     }
@@ -36,7 +35,6 @@ class CreateCardCustomerServiceOrderService {
     const customerServiceOrderExists = await this.customerServiceOrdersRepository.findById(
       customer_service_order_id,
     );
-    console.log(customerServiceOrderExists);
     if (!customerServiceOrderExists) {
       throw new AppError('Customer service order not found.');
     }
@@ -47,7 +45,6 @@ class CreateCardCustomerServiceOrderService {
         card_unique_name,
       },
     );
-    console.log(cardCustomerExists);
 
     if (cardCustomerExists) {
       throw new AppError(
@@ -59,7 +56,6 @@ class CreateCardCustomerServiceOrderService {
       customer_service_order_id,
       card_unique_name,
     });
-    console.log(cardCustomer);
 
     return cardCustomer;
   }

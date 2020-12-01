@@ -19,16 +19,16 @@ class StageCardAppointment {
   @Column()
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, appointment => appointment.id)
+  @ManyToOne(() => Appointment, appointment => appointment.eventAppointments)
   @JoinColumn({ name: 'appointment_id' })
-  Appointment: Appointment;
+  appointment: Appointment;
 
   @Column()
   card_id: string;
 
   @ManyToOne(() => StageCard, stageCard => stageCard.id)
   @JoinColumn({ name: 'card_id' })
-  SupplierCard: StageCard;
+  supplierCard: StageCard;
 
   @CreateDateColumn()
   created_at: Date;
