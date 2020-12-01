@@ -19,9 +19,9 @@ class UserSupplierCategories {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.supplierByCategories, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  Supplier: User;
+  supplier: User;
 
   @Column()
   sub_category_name: string;

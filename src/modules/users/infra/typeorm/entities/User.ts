@@ -41,6 +41,7 @@ import CardParticipant from '@modules/suppliers/infra/typeorm/entities/CardParti
 import CompanyContactWeplanUser from '@modules/suppliers/infra/typeorm/entities/CompanyContactWeplanUser';
 import CustomerServiceOrder from '@modules/suppliers/infra/typeorm/entities/CustomerServiceOrder';
 import CompanyDefaultServiceOrderField from '@modules/suppliers/infra/typeorm/entities/CompanyDefaultServiceOrderField';
+import UserSupplierCategories from '@modules/suppliers/infra/typeorm/entities/UserSupplierCategory';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -130,6 +131,9 @@ class User {
 
   @OneToOne(() => StageCard, card => card.card_owner)
   EventCard: StageCard;
+
+  @OneToMany(() => UserSupplierCategories, supplier => supplier.supplier)
+  supplierByCategories: UserSupplierCategories[];
 
   @OneToMany(
     () => SupplierAppointmentDaySchedule,
