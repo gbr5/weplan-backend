@@ -38,6 +38,10 @@ import cardCheckListRouter from '@modules/checklists/infra/http/routes/cardCheck
 import cardParticipantsRouter from '@modules/suppliers/infra/http/routes/cardParticipants.routes';
 import companyContactWeplanUsersRouter from '@modules/suppliers/infra/http/routes/companyContactWeplanUsers.routes';
 import cardCustomersRouter from '@modules/suppliers/infra/http/routes/cardCustomers.routes';
+import cardBudgetsRouter from '@modules/suppliers/infra/http/routes/cardBudgets.routes';
+import customerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrders.routes';
+import companyDefaultServiceOrderFieldsRouter from '@modules/suppliers/infra/http/routes/companyDefaultServiceOrderFields.routes';
+import customerServiceOrderFieldAnswersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrderFieldAnswers.routes';
 
 const routes = Router();
 
@@ -69,8 +73,18 @@ routes.use('/funnels', supplierFunnelsRouter);
 routes.use('/cards', cardsRouter);
 routes.use('/card/participants', cardParticipantsRouter);
 routes.use('/card/customers', cardCustomersRouter);
+routes.use('/card/budgets', cardBudgetsRouter);
 routes.use('/company/contacts/', companyContactsRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);
+routes.use('/company/customer-service-orders/', customerServiceOrdersRouter);
+routes.use(
+  '/company/customer-service-order/default-fields',
+  companyDefaultServiceOrderFieldsRouter,
+);
+routes.use(
+  '/company/customer-service-order/answers',
+  customerServiceOrderFieldAnswersRouter,
+);
 
 // Default funnel-card info-field
 routes.use('/comercial/funnel', comercialFunnelDefaultInfoFieldsRouter);

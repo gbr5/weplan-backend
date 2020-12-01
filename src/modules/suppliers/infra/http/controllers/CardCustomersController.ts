@@ -38,7 +38,6 @@ export default class CardCustomersController {
 
     const { id } = dataParams;
     const { description } = req.body;
-    console.log(id, description);
 
     const updateCardCustomer = container.resolve(UpdateCardCustomerService);
 

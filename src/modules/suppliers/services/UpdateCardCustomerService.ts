@@ -13,7 +13,6 @@ class UpdateCardCustomerService {
   ) {}
 
   public async execute(id: string, description: string): Promise<CardCustomer> {
-    console.log(id, description);
     const cardCustomer = await this.cardCustomersRepository.findById(id);
 
     if (!cardCustomer) {
