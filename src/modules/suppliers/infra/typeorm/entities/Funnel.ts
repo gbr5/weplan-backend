@@ -13,7 +13,6 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import FunnelType from './FunnelType';
 import FunnelStage from './FunnelStage';
 import CompanyFunnelCardInfoField from './CompanyFunnelCardInfoField';
-// import CompanyFunnelCardInfoField from './CompanyFunnelCardInfoField';
 
 @Entity('funnels')
 class Funnel {
@@ -23,7 +22,7 @@ class Funnel {
   @Column()
   name: string;
 
-  @Column()
+  @Column('uuid')
   supplier_id: string;
 
   @ManyToOne(() => User, user => user.id)
@@ -48,8 +47,7 @@ class Funnel {
 
   @OneToMany(
     () => CompanyFunnelCardInfoField,
-    funnel_card_info_field => funnel_card_info_field.funnel,
-    { eager: true },
+    funnel_card_info_field => funnel_card_info_field.funnel_id,
   )
   company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
 }

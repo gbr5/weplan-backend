@@ -15,6 +15,7 @@ import StageCardAppointment from '@modules/appointments/infra/typeorm/entities/S
 import CardCheckList from '@modules/checklists/infra/typeorm/entities/CardCheckList';
 import FunnelStage from './FunnelStage';
 import EventCard from './EventCard';
+import CompanyFunnelCardInfo from './CompanyFunnelCardInfo';
 // import CompanyFunnelCardInfo from './CompanyFunnelCardInfo';
 
 @Entity('stage_cards')
@@ -54,7 +55,7 @@ class StageCard {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => EventCard, card => card.Event, { eager: true })
+  @OneToOne(() => EventCard, card => card.card_unique_name)
   Event: EventCard;
 
   @OneToMany(() => StageCardAppointment, card => card.card_id)
@@ -65,14 +66,11 @@ class StageCard {
   })
   check_lists: CardCheckList[];
 
-  // @OneToMany(
-  //   () => CompanyFunnelCardInfo,
-  //   funnel_card_info => funnel_card_info.card,
-  //   {
-  //     eager: true,
-  //   },
-  // )
-  // funnel_card_infos: CompanyFunnelCardInfo[];
+  @OneToMany(
+    () => CompanyFunnelCardInfo,
+    funnel_card_info => funnel_card_info.card_unique_name,
+  )
+  funnel_card_infos: CompanyFunnelCardInfo[];
 }
 
 export default StageCard;

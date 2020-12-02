@@ -6,7 +6,7 @@ import ICreateCompanyEmployeeDTO from '@modules/suppliers/dtos/ICreateCompanyEmp
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import AppError from '@shared/errors/AppError';
 
-class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
+class CompanyEmployeesRepository implements ICompanyEmployeesRepository {
   private ormRepository: Repository<CompanyEmployee>;
 
   constructor() {
@@ -91,4 +91,4 @@ class CompanyEmployeeRepository implements ICompanyEmployeesRepository {
   }
 }
 
-export default CompanyEmployeeRepository;
+export default CompanyEmployeesRepository;

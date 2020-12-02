@@ -1,8 +1,8 @@
-import IStageCardDTO from './IListStageCardDTO';
+// import IStageCardDTO from './IListStageCardDTO';
 
 export default interface IFunnelStageDTO {
   id: string;
   name: string;
   funnel_order: number;
-  cards: IStageCardDTO[];
+  // cards: IStageCardDTO[];
 }

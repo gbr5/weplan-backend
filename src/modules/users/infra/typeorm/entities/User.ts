@@ -42,6 +42,8 @@ import CompanyContactWeplanUser from '@modules/suppliers/infra/typeorm/entities/
 import CustomerServiceOrder from '@modules/suppliers/infra/typeorm/entities/CustomerServiceOrder';
 import CompanyDefaultServiceOrderField from '@modules/suppliers/infra/typeorm/entities/CompanyDefaultServiceOrderField';
 import UserSupplierCategories from '@modules/suppliers/infra/typeorm/entities/UserSupplierCategory';
+import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
+import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -228,17 +230,17 @@ class User {
   )
   companyDefaultServiceOrderFields: CompanyDefaultServiceOrderField[];
 
-  // @OneToMany(
-  //   () => CompanyFunnelCardInfoField,
-  //   funnel_card_field => funnel_card_field.company,
-  // )
-  // company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
+  @OneToMany(
+    () => CompanyFunnelCardInfoField,
+    funnel_card_field => funnel_card_field.company_id,
+  )
+  company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
 
-  // @OneToMany(
-  //   () => CompanyFunnelCardInfo,
-  //   funnel_card_info => funnel_card_info.author,
-  // )
-  // funnel_card_infos: CompanyFunnelCardInfo[];
+  @OneToMany(
+    () => CompanyFunnelCardInfo,
+    funnel_card_info => funnel_card_info.user_id,
+  )
+  funnel_card_infos: CompanyFunnelCardInfo[];
 }
 
 export default User;
