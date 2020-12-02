@@ -36,7 +36,7 @@ class FunnelStage {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => StageCard, card => card.stage, { eager: true })
+  @OneToMany(() => StageCard, card => card.stage_id)
   cards: StageCard[];
 }
 
