@@ -80,7 +80,7 @@ routes.use('/card/customer-service-orders', cardCustomerServiceOrdersRouter);
 routes.use('/card/budgets', cardBudgetsRouter);
 routes.use('/company/contacts/', companyContactsRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);
-routes.use('/company/customer-service-orders/', customerServiceOrdersRouter);
+routes.use('/service-order/customer', customerServiceOrdersRouter);
 routes.use(
   '/company/customer-service-order/default-fields',
   companyDefaultServiceOrderFieldsRouter,
