@@ -31,7 +31,7 @@ class CreateCustomerServiceOrderService {
     try {
       const companyExists = await this.usersRepository.findById(company_id);
 
-      if (!companyExists || !companyExists.isCompany) {
+      if (!companyExists) {
         throw new AppError('Company not found!');
       }
 

@@ -43,6 +43,7 @@ import cardBudgetsRouter from '@modules/suppliers/infra/http/routes/cardBudgets.
 import customerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrders.routes';
 import companyDefaultServiceOrderFieldsRouter from '@modules/suppliers/infra/http/routes/companyDefaultServiceOrderFields.routes';
 import customerServiceOrderFieldAnswersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrderFieldAnswers.routes';
+import eventServiceOrdersRouter from '@modules/events/infra/http/routes/eventServiceOrders.routes';
 
 const routes = Router();
 
@@ -60,6 +61,7 @@ routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
 
 routes.use('/events', eventsRouter);
+routes.use('/event/service-orders', eventServiceOrdersRouter);
 routes.use('/event-types', eventTypesRouter);
 routes.use('/friends-events', friendsEventsRouter);
 
@@ -78,7 +80,7 @@ routes.use('/card/customer-service-orders', cardCustomerServiceOrdersRouter);
 routes.use('/card/budgets', cardBudgetsRouter);
 routes.use('/company/contacts/', companyContactsRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);
-routes.use('/company/customer-service-orders/', customerServiceOrdersRouter);
+routes.use('/service-order/customer', customerServiceOrdersRouter);
 routes.use(
   '/company/customer-service-order/default-fields',
   companyDefaultServiceOrderFieldsRouter,

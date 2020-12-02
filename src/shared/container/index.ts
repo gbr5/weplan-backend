@@ -204,9 +204,16 @@ import CompanyDefaultServiceOrderFieldsRepository from '@modules/suppliers/infra
 import ICustomerServiceOrderFieldAnswersRepository from '@modules/suppliers/repositories/ICustomerServiceOrderFieldAnswersRepository';
 import CustomerServiceOrderFieldAnswersRepository from '@modules/suppliers/infra/typeorm/repositories/CustomerServiceOrderFieldAnswersRepository';
 
+import IEventServiceOrdersRepository from '@modules/events/repositories/IEventServiceOrdersRepository';
+import EventServiceOrdersRepository from '@modules/events/infra/typeorm/repositories/EventServiceOrdersRepository';
+
 container.registerSingleton<ICustomerServiceOrdersRepository>(
   'CustomerServiceOrdersRepository',
   CustomerServiceOrdersRepository,
+);
+container.registerSingleton<IEventServiceOrdersRepository>(
+  'EventServiceOrdersRepository',
+  EventServiceOrdersRepository,
 );
 container.registerSingleton<ICustomerServiceOrderFieldAnswersRepository>(
   'CustomerServiceOrderFieldAnswersRepository',

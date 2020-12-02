@@ -15,11 +15,9 @@ class CardCustomerServiceOrdersRepository
   public async findByCard(
     card_unique_name: string,
   ): Promise<CardCustomerServiceOrder[]> {
-    console.log(card_unique_name, 'ccso repository');
     const findCardCustomerServiceOrders = await this.ormRepository.find({
       where: { card_unique_name },
     });
-    console.log(findCardCustomerServiceOrders);
 
     return findCardCustomerServiceOrders;
   }
