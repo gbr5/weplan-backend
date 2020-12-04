@@ -4,9 +4,11 @@ import { celebrate, Segments, Joi } from 'celebrate';
 import CardBudgetsController from '@modules/suppliers/infra/http/controllers/CardBudgetsController';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import CardBudgetInstallmentsController from '../controllers/CardBudgetInstallmentsController';
 
 const cardBudgetsRouter = Router();
 const cardBudgetsController = new CardBudgetsController();
+const cardBudgetInstallmentsController = new CardBudgetInstallmentsController();
 
 cardBudgetsRouter.use(ensureAuthenticated);
 
@@ -62,5 +64,40 @@ cardBudgetsRouter.put(
 );
 
 cardBudgetsRouter.delete('/:id', cardBudgetsController.delete);
+
+// Card Budget Installments
+
+cardBudgetsRouter.post(
+  '/installments/',
+  celebrate({
+    [Segments.BODY]: {
+      card_budget_id: Joi.string().required(),
+      value: Joi.number().required(),
+      due_date: Joi.date().required(),
+    },
+  }),
+  cardBudgetInstallmentsController.create,
+);
+
+cardBudgetsRouter.get(
+  '/installments/:card_budget_id',
+  cardBudgetInstallmentsController.index,
+);
+
+cardBudgetsRouter.put(
+  '/installments/:id',
+  celebrate({
+    [Segments.BODY]: {
+      value: Joi.number().required(),
+      due_date: Joi.date().required(),
+    },
+  }),
+  cardBudgetInstallmentsController.update,
+);
+
+cardBudgetsRouter.delete(
+  '/installments/:id',
+  cardBudgetInstallmentsController.delete,
+);
 
 export default cardBudgetsRouter;

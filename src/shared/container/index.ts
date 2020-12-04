@@ -30,6 +30,9 @@ import CheckListTasksRepository from '@modules/checklists/infra/typeorm/reposito
 import ICardCheckListsRepository from '@modules/checklists/repositories/ICardCheckListsRepository';
 import CardCheckListsRepository from '@modules/checklists/infra/typeorm/repositories/CardCheckListsRepository';
 
+import ICardBudgetInstallmentsRepository from '@modules/suppliers/repositories/ICardBudgetInstallmentsRepository';
+import CardBudgetInstallmentsRepository from '@modules/suppliers/infra/typeorm/repositories/CardBudgetInstallmentsRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
@@ -207,6 +210,10 @@ import CustomerServiceOrderFieldAnswersRepository from '@modules/suppliers/infra
 import IEventServiceOrdersRepository from '@modules/events/repositories/IEventServiceOrdersRepository';
 import EventServiceOrdersRepository from '@modules/events/infra/typeorm/repositories/EventServiceOrdersRepository';
 
+container.registerSingleton<ICardBudgetInstallmentsRepository>(
+  'CardBudgetInstallmentsRepository',
+  CardBudgetInstallmentsRepository,
+);
 container.registerSingleton<ICustomerServiceOrdersRepository>(
   'CustomerServiceOrdersRepository',
   CustomerServiceOrdersRepository,

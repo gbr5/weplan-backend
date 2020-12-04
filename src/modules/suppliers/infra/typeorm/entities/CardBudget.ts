@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import CompanyContact from './CompanyContact';
+import CardBudgetInstallment from './CardBudgetInstallment';
 
 @Entity('card_budgets')
 class CardBudget {
@@ -60,6 +62,13 @@ class CardBudget {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => CardBudgetInstallment,
+    budgetInstallment => budgetInstallment.cardBudget,
+    { eager: true },
+  )
+  installments: CardBudgetInstallment[];
 }
 
 export default CardBudget;
