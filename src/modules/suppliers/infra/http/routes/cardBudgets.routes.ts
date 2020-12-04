@@ -62,6 +62,15 @@ cardBudgetsRouter.put(
   }),
   cardBudgetsController.update,
 );
+cardBudgetsRouter.put(
+  '/validate/:id',
+  celebrate({
+    [Segments.BODY]: {
+      isValid: Joi.boolean().required(),
+    },
+  }),
+  cardBudgetsController.validate,
+);
 
 cardBudgetsRouter.delete('/:id', cardBudgetsController.delete);
 
