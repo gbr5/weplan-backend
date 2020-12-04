@@ -39,11 +39,21 @@ export default class CompanyContactsController {
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
+    const user_name = req.query.name;
+    const companyContactName = String(user_name);
     const reqParams = req.params;
     const { company_id } = reqParams;
     const listCompanyContacts = container.resolve(ListCompanyContactsService);
 
     const companyContacts = await listCompanyContacts.execute(company_id);
+
+    const sortedContacts = companyContacts.filter(contact =>
+      contact.name.includes(companyContactName),
+    );
+
+    if (sortedContacts.length > 0) {
+      return res.json(classToClass(sortedContacts));
+    }
 
     return res.json(classToClass(companyContacts));
   }
