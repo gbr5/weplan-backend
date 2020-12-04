@@ -9,6 +9,7 @@ import ListCompanyBudgetsService from '@modules/suppliers/services/ListCompanyBu
 import ListSalesPersonBudgetsService from '@modules/suppliers/services/ListSalesPersonBudgetsService';
 import DeleteCardBudgetService from '@modules/suppliers/services/DeleteCardBudgetService';
 import UpdateCardBudgetService from '@modules/suppliers/services/UpdateCardBudgetService';
+import ValidateCardBudgetService from '@modules/suppliers/services/ValidateCardBudgetService';
 
 export default class CardBudgetsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -123,6 +124,22 @@ export default class CardBudgetsController {
     });
 
     return res.json(classToClass(updatedCardBudget));
+  }
+
+  public async validate(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+
+    const { id } = dataParams;
+    const { isValid } = req.body;
+
+    const cardBudget = container.resolve(ValidateCardBudgetService);
+
+    const validatedCardBudget = await cardBudget.execute({
+      id,
+      isValid,
+    });
+
+    return res.json(classToClass(validatedCardBudget));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
