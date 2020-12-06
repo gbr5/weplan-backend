@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import ContactFile from '@modules/users/infra/typeorm/entities/ContactFile';
 import CompanyContactInfo from './CompanyContactInfo';
 import CompanyContactWeplanUser from './CompanyContactWeplanUser';
 import CardCurstomer from './CardCustomer';
@@ -70,6 +71,11 @@ class CompanyContact {
     contactInfo => contactInfo.outsideParticipant,
   )
   cardOutsideParticipants: CardOutsideParticipant[];
+
+  @OneToMany(() => ContactFile, contactFile => contactFile.contactFile, {
+    eager: true,
+  })
+  fileContacts: ContactFile[];
 }
 
 export default CompanyContact;

@@ -49,6 +49,8 @@ import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
 import UserBirthdate from './UserBirthdate';
 import UserContactInfo from './UserContactInfo';
+import UserFileCategory from './UserFileCategory';
+import UserFile from './UserFile';
 
 @Entity('users')
 class User {
@@ -109,6 +111,12 @@ class User {
 
   @OneToOne(() => Event, event => event.user_id)
   Event: Event;
+
+  @OneToMany(() => UserFileCategory, fileCategory => fileCategory.user)
+  fileCategories: UserFileCategory[];
+
+  @OneToMany(() => UserFile, file => file.user)
+  files: UserFile[];
 
   @OneToMany(() => EventOwner, owner => owner.owner_id)
   EventOwner: EventOwner;

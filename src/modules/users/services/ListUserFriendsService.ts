@@ -7,27 +7,12 @@ import IPersonInfoRepository from '../repositories/IPersonInfoRepository';
 // import IUserFriendDTO from '../dtos/IUserFriendDTO';
 import UserFriend from '../infra/typeorm/entities/UserFriend';
 
-interface IUserPersonInfoDTO {
-  id: string;
-  first_name: string;
-  last_name: string;
-}
-
 interface IGroupFriendInfoDTO {
   groupId: string;
   name: string;
   group_friendId: string;
 }
 
-interface IUserFriendDTOTest {
-  id: string;
-  name: string;
-  first_name: string;
-  last_name: string;
-  my_userId: string;
-  avatar: string;
-  friendGroup: IGroupFriendInfoDTO[];
-}
 interface IFriendDTOTest {
   id: string;
   name: string;

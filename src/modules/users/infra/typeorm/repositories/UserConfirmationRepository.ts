@@ -41,7 +41,7 @@ class UserConfirmationRepository implements IUserConfirmationRepository {
     sender_id: string,
   ): Promise<UserConfirmation | undefined> {
     const findUserConfirmation = await this.ormRepository.findOne({
-      where: { receiver_id },
+      where: { receiver_id, sender_id },
     });
 
     return findUserConfirmation;
