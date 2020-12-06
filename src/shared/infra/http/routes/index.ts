@@ -44,6 +44,7 @@ import customerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/cu
 import companyDefaultServiceOrderFieldsRouter from '@modules/suppliers/infra/http/routes/companyDefaultServiceOrderFields.routes';
 import customerServiceOrderFieldAnswersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrderFieldAnswers.routes';
 import eventServiceOrdersRouter from '@modules/events/infra/http/routes/eventServiceOrders.routes';
+import cardOutsideParticipantsRouter from '@modules/suppliers/infra/http/routes/cardOutsideParticipants.routes';
 
 const routes = Router();
 
@@ -75,6 +76,7 @@ routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
 routes.use('/cards', cardsRouter);
 routes.use('/card/participants', cardParticipantsRouter);
+routes.use('/card/outside-participants', cardOutsideParticipantsRouter);
 routes.use('/card/customers', cardCustomersRouter);
 routes.use('/card/customer-service-orders', cardCustomerServiceOrdersRouter);
 routes.use('/card/budgets', cardBudgetsRouter);

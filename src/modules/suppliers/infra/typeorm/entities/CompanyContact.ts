@@ -14,6 +14,7 @@ import CompanyContactInfo from './CompanyContactInfo';
 import CompanyContactWeplanUser from './CompanyContactWeplanUser';
 import CardCurstomer from './CardCustomer';
 import CustomerServiceOrder from './CustomerServiceOrder';
+import CardOutsideParticipant from './CardOutsideParticipant';
 
 @Entity('company_contacts')
 class CompanyContact {
@@ -63,6 +64,12 @@ class CompanyContact {
 
   @OneToMany(() => CustomerServiceOrder, contactInfo => contactInfo.customer)
   customerServiceOrders: CustomerServiceOrder[];
+
+  @OneToMany(
+    () => CardOutsideParticipant,
+    contactInfo => contactInfo.outsideParticipant,
+  )
+  cardOutsideParticipants: CardOutsideParticipant[];
 }
 
 export default CompanyContact;
