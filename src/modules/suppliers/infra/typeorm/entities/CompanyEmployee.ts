@@ -6,9 +6,11 @@ import {
   ManyToOne,
   JoinColumn,
   Column,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EmployeeFile from '@modules/users/infra/typeorm/entities/EmployeeFile';
 // import UserManagementModule from '@modules/users/infra/typeorm/entities/UserManagementModule';
 // import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 
@@ -54,6 +56,11 @@ class CompanyEmployee {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => EmployeeFile, contactFile => contactFile.employeeFile, {
+    eager: true,
+  })
+  fileEmployees: EmployeeFile[];
   // @OneToMany(
   //   () => UserManagementModule,
   //   managementModule => managementModule.companyEmployee,

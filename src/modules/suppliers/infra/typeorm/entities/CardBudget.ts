@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import BudgetFile from '@modules/users/infra/typeorm/entities/BudgetFile';
 import CompanyContact from './CompanyContact';
 import CardBudgetInstallment from './CardBudgetInstallment';
 
@@ -69,6 +70,11 @@ class CardBudget {
     { eager: true },
   )
   installments: CardBudgetInstallment[];
+
+  @OneToMany(() => BudgetFile, budgetFile => budgetFile.fileBudget, {
+    eager: true,
+  })
+  fileBudgets: BudgetFile[];
 }
 
 export default CardBudget;

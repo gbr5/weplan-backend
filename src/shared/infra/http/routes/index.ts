@@ -45,6 +45,13 @@ import companyDefaultServiceOrderFieldsRouter from '@modules/suppliers/infra/htt
 import customerServiceOrderFieldAnswersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrderFieldAnswers.routes';
 import eventServiceOrdersRouter from '@modules/events/infra/http/routes/eventServiceOrders.routes';
 import cardOutsideParticipantsRouter from '@modules/suppliers/infra/http/routes/cardOutsideParticipants.routes';
+import userFilesRouter from '@modules/users/infra/http/routes/userFiles.routes';
+import userFileCategoriesRouter from '@modules/users/infra/http/routes/userFileCategories.routes';
+import categoryFilesRouter from '@modules/users/infra/http/routes/categoryFiles.routes';
+import contactFilesRouter from '@modules/users/infra/http/routes/contactFiles.routes';
+import cardFilesRouter from '@modules/users/infra/http/routes/cardFiles.routes';
+import budgetFilesRouter from '@modules/users/infra/http/routes/budgetFiles.routes';
+import employeeFilesRouter from '@modules/users/infra/http/routes/employeeFiles.routes';
 
 const routes = Router();
 
@@ -60,6 +67,14 @@ routes.use('/company-info', companyInfoRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
+
+routes.use('/user/files', userFilesRouter);
+routes.use('/user/file/categories', userFileCategoriesRouter);
+routes.use('/category/files', categoryFilesRouter);
+routes.use('/contact/files', contactFilesRouter);
+routes.use('/card/files', cardFilesRouter);
+routes.use('/budget/files', budgetFilesRouter);
+routes.use('/employee/files', employeeFilesRouter);
 
 routes.use('/events', eventsRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);
