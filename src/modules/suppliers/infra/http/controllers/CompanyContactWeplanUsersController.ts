@@ -6,6 +6,7 @@ import CreateCompanyContactWeplanUserService from '@modules/suppliers/services/C
 import DeleteCompanyContactWeplanUserService from '@modules/suppliers/services/DeleteCompanyContactWeplanUserService';
 import UpdateCompanyContactWeplanUserService from '@modules/suppliers/services/UpdateCompanyContactWPUserService';
 import ShowCompanyContactWeplanUserService from '@modules/suppliers/services/ShowCompanyContactWeplanUserService';
+import ShowWeplanUserAsCompanyContactsService from '@modules/suppliers/services/ShowWeplanUserAsCompanyContactsService';
 
 export default class CompanyContactWeplanUsersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -34,6 +35,24 @@ export default class CompanyContactWeplanUsersController {
 
     const companyContactWeplanUser = await showCompanyContactWeplanUser.execute(
       company_contact_id,
+    );
+
+    return res.json(classToClass(companyContactWeplanUser));
+  }
+
+  public async showCompanyWPContact(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const reqParams = req.params;
+    const { user_id, company_id } = reqParams;
+    const showWeplanUserAsCompanyContactsService = container.resolve(
+      ShowWeplanUserAsCompanyContactsService,
+    );
+
+    const companyContactWeplanUser = await showWeplanUserAsCompanyContactsService.execute(
+      user_id,
+      company_id,
     );
 
     return res.json(classToClass(companyContactWeplanUser));

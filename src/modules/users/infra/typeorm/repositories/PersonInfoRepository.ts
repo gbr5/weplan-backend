@@ -20,6 +20,16 @@ class PersonInfoRepository implements IPersonInfoRepository {
     return personInfo;
   }
 
+  public async findByPersonId(
+    person_id: string,
+  ): Promise<PersonInfo | undefined> {
+    const personInfo = await this.ormRepository.findOne({
+      where: { person_id },
+    });
+
+    return personInfo;
+  }
+
   public async create(personData: ICreatePersonInfoDTO): Promise<PersonInfo> {
     const personInfo = this.ormRepository.create(personData);
 

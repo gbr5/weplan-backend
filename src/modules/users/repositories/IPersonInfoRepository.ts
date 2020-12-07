@@ -3,6 +3,7 @@ import ICreatePersonInfoDTO from '@modules/users/dtos/ICreatePersonInfoDTO';
 
 export default interface IPersonInfoRepository {
   findByUserId(id: string): Promise<PersonInfo | undefined>;
+  findByPersonId(person_id: string): Promise<PersonInfo | undefined>;
   create(data: ICreatePersonInfoDTO): Promise<PersonInfo>;
   save(personInfo: PersonInfo): Promise<PersonInfo>;
 }

@@ -50,6 +50,16 @@ class CreatePersonInfoService {
       );
     }
 
+    const checkIfPersonIdExists = await this.personInfoRepository.findByPersonId(
+      person_id,
+    );
+
+    if (checkIfPersonIdExists) {
+      throw new AppError(
+        'This person ID is already associated with another user!',
+      );
+    }
+
     const personInfo = await this.personInfoRepository.create({
       person_id,
       user_id,
