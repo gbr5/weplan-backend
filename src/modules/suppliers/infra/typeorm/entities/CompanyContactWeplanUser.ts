@@ -20,7 +20,9 @@ class CompanyContactWeplanUser {
   @Column('uuid')
   company_contact_id: string;
 
-  @OneToOne(() => CompanyContact, contact => contact.companyContactWeplanUser)
+  @OneToOne(() => CompanyContact, contact => contact.companyContactWeplanUser, {
+    eager: true,
+  })
   @JoinColumn({ name: 'company_contact_id' })
   companyContact: CompanyContact;
 

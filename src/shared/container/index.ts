@@ -215,16 +215,22 @@ import EventServiceOrdersRepository from '@modules/events/infra/typeorm/reposito
 
 import IUserFilesRepository from '@modules/users/repositories/IUserFilesRepository';
 import UserFilesRepository from '@modules/users/infra/typeorm/repositories/UserFilesRepository';
+
 import IUserFileCategoriesRepository from '@modules/users/repositories/IUserFileCategoriesRepository';
 import UserFileCategoriesRepository from '@modules/users/infra/typeorm/repositories/UserFileCategoriesRepository';
+
 import ICategoryFilesRepository from '@modules/users/repositories/ICategoryFilesRepository';
 import CategoryFilesRepository from '@modules/users/infra/typeorm/repositories/CategoryFilesRepository';
+
 import ICardFilesRepository from '@modules/users/repositories/ICardFilesRepository';
 import CardFilesRepository from '@modules/users/infra/typeorm/repositories/CardFilesRepository';
+
 import IContactFilesRepository from '@modules/users/repositories/IContactFilesRepository';
 import ContactFilesRepository from '@modules/users/infra/typeorm/repositories/ContactFilesRepository';
+
 import IBudgetFilesRepository from '@modules/users/repositories/IBudgetFilesRepository';
 import BudgetFilesRepository from '@modules/users/infra/typeorm/repositories/BudgetFilesRepository';
+
 import IEmployeeFilesRepository from '@modules/users/repositories/IEmployeeFilesRepository';
 import EmployeeFilesRepository from '@modules/users/infra/typeorm/repositories/EmployeeFilesRepository';
 

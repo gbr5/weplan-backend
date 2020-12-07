@@ -24,19 +24,13 @@ class CreateBudgetFileService {
     budget_id,
     file_id,
   }: ICreateBudgetFileDTO): Promise<BudgetFile> {
-    console.log({
-      budget_id,
-      file_id,
-    });
     const budgetExists = await this.cardbudgetsRepository.findById(budget_id);
-    console.log(budgetExists);
 
     if (!budgetExists) {
       throw new AppError('Budget not found!');
     }
 
     const fileExists = await this.userFilesRepository.findById(file_id);
-    console.log(fileExists);
 
     if (!fileExists) {
       throw new AppError('File not found!');
@@ -46,7 +40,6 @@ class CreateBudgetFileService {
       budget_id,
       file_id,
     });
-    console.log(file);
 
     return file;
   }

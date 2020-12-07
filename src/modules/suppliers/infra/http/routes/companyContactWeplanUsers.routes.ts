@@ -35,6 +35,11 @@ companyContactWeplanUsersRouter.get(
   ensureAuthenticated,
   companyContactWeplanUsersController.show,
 );
+companyContactWeplanUsersRouter.get(
+  '/show/:user_id/:company_id',
+  ensureAuthenticated,
+  companyContactWeplanUsersController.showCompanyWPContact,
+);
 companyContactWeplanUsersRouter.delete(
   '/:id',
   ensureAuthenticated,

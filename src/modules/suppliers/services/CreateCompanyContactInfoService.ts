@@ -23,21 +23,39 @@ class CreateCompanyContactInfoService {
     info,
   }: ICreateCompanyContactInfoDTO): Promise<CompanyContactInfo> {
     try {
-      const companyContactExists = await this.companyContactsRepository.findByCompanyIdAndName(
+      const companyContactExists = await this.companyContactsRepository.findById(
+        company_contact_id,
+      );
+
+      if (!companyContactExists) {
+        throw new AppError('Company not found!');
+      }
+
+      if (info_type === 'Email') {
+        const companyContacts = await this.companyContactsRepository.findByCompanyId(
+          companyContactExists.company_id,
+        );
+        companyContacts.find(contact => {
+          const emailExists = contact.contact_infos.find(
+            xInfo => xInfo.info_type === 'Email' && xInfo.info === info,
+          );
+
+          if (emailExists) {
+            throw new AppError(
+              'This email is already associated with another contact',
+            );
+          }
+          return '';
+        });
+      }
+
+      const company_contact = await this.companyContactInfosRepository.findByContactIdAndInfo(
         company_contact_id,
         info,
       );
 
-      if (companyContactExists) {
-        throw new AppError(`${info} is already registered to your contact.`);
-      }
-
-      const company_contact = await this.companyContactsRepository.findById(
-        company_contact_id,
-      );
-
-      if (!company_contact) {
-        throw new AppError('Company not found');
+      if (company_contact) {
+        throw new AppError('Info already exists!');
       }
 
       const companyContact = await this.companyContactInfosRepository.create({

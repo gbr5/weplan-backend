@@ -29,6 +29,13 @@ class UpdatePersonInfoService {
     if (!person_info) {
       throw new AppError('Person information not found.');
     }
+    const personID = await this.personInfoRepository.findByPersonId(person_id);
+
+    if (personID && personID.user_id !== person_info.user_id) {
+      throw new AppError(
+        'This person ID is already associated to another user.',
+      );
+    }
 
     person_info.person_id = person_id;
     person_info.first_name = first_name;
