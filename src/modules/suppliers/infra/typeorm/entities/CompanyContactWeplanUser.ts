@@ -29,7 +29,9 @@ class CompanyContactWeplanUser {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User, user => user)
+  @ManyToOne(() => User, user => user.companyContactWeplanUsers, {
+    eager: true,
+  })
   @JoinColumn({ name: 'user_id' })
   companyContactWeplanUser: User;
 
