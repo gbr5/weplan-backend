@@ -111,6 +111,11 @@ eventsRouter.get(
   eventWeplanSuppliers.index,
 );
 
+eventsRouter.get(
+  '/event-weplan-supplier/:event_id/:event_supplier_id',
+  eventWeplanSuppliers.show,
+);
+
 // === User Check List === //
 
 eventsRouter.post(
