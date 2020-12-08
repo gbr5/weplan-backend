@@ -11,7 +11,6 @@ interface IRequest {
   user_id: string;
   event_supplier_id: string;
   event_id: string;
-  my_id: string;
 }
 
 @injectable()
@@ -31,7 +30,6 @@ class CreateEventWeplanSupplierService {
     user_id,
     event_supplier_id,
     event_id,
-    my_id,
   }: IRequest): Promise<EventWeplanSupplier> {
     const eventSupplierExists = await this.eventSuppliersRepository.findByEventAndEventSupplierId(
       event_supplier_id,

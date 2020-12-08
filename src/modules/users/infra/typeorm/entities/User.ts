@@ -44,6 +44,7 @@ import CompanyDefaultServiceOrderField from '@modules/suppliers/infra/typeorm/en
 import UserSupplierCategories from '@modules/suppliers/infra/typeorm/entities/UserSupplierCategory';
 import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
 import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
+import EventWeplanSupplier from '@modules/events/infra/typeorm/entities/EventWeplanSupplier';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -112,6 +113,12 @@ class User {
   @OneToOne(() => Event, event => event.user_id)
   Event: Event;
 
+  @OneToMany(
+    () => EventWeplanSupplier,
+    supplier => supplier.weplanEventSupplier,
+  )
+  weplanEventSuppliers: EventWeplanSupplier[];
+
   @OneToMany(() => UserFileCategory, fileCategory => fileCategory.user)
   fileCategories: UserFileCategory[];
 
@@ -126,9 +133,9 @@ class User {
 
   @OneToMany(
     () => EventTypeSupplier,
-    event_type_supplier => event_type_supplier.user_id,
+    event_type_supplier => event_type_supplier.typeSupplier,
   )
-  EventTypeSupplier: EventTypeSupplier;
+  eventTypeSuppliers: EventTypeSupplier[];
 
   @OneToMany(() => EventPlanner, event_planner => event_planner.planner_id)
   EventPlanner: EventPlanner;
@@ -172,8 +179,8 @@ class User {
   @OneToMany(() => FriendGroup, owner => owner.user_id)
   OwnerFriendGroup: FriendGroup;
 
-  @OneToMany(() => UserFriend, friend => friend.friend_id)
-  friend: UserFriend;
+  @OneToMany(() => UserFriend, friend => friend.friend)
+  friends: UserFriend[];
 
   @OneToMany(() => UserFriend, user => user.user_id)
   user: UserFriend;

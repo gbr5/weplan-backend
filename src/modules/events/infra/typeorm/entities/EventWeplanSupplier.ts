@@ -21,23 +21,23 @@ class EventWeplanSupplier {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.weplanEventSuppliers, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  User: User;
+  weplanEventSupplier: User;
 
   @Column('uuid')
   event_id: string;
 
   @ManyToOne(() => Event, event => event.id)
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
   @Column('uuid')
   event_supplier_id: string;
 
   @OneToOne(() => EventSupplier)
   @JoinColumn({ name: 'event_supplier_id' })
-  EventSupplier: EventSupplier;
+  eventSupplier: EventSupplier;
 
   @CreateDateColumn()
   created_at: Date;

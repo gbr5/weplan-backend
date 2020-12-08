@@ -51,7 +51,8 @@ class EventSupplier {
 
   @OneToOne(
     () => EventWeplanSupplier,
-    eventWeplanSupplier => eventWeplanSupplier.User,
+    eventWeplanSupplier => eventWeplanSupplier.eventSupplier,
+    { eager: true },
   )
   eventWeplanSupplier: EventWeplanSupplier;
 

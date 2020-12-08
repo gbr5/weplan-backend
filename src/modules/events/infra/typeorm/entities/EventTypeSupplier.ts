@@ -12,23 +12,23 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import EventType from '@modules/events/infra/typeorm/entities/EventType';
 
 @Entity('event_type_suppliers')
-class EventSupplier {
+class EventTypeSupplier {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.eventTypeSuppliers, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  Supplier: User;
+  typeSupplier: User;
 
   @Column()
   event_type: string;
 
   @ManyToOne(() => EventType)
   @JoinColumn({ name: 'event_type' })
-  Type: EventType;
+  eventType: EventType;
 
   @CreateDateColumn()
   created_at: Date;
@@ -37,4 +37,4 @@ class EventSupplier {
   updated_at: Date;
 }
 
-export default EventSupplier;
+export default EventTypeSupplier;
