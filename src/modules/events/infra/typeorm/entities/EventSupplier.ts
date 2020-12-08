@@ -33,9 +33,12 @@ class EventSupplier {
   @Column()
   supplier_sub_category: string;
 
-  @ManyToOne(() => SupplierSubCategory, subCategory => subCategory.sub_category)
+  @ManyToOne(
+    () => SupplierSubCategory,
+    subCategory => subCategory.eventSupplierSubCategories,
+  )
   @JoinColumn({ name: 'supplier_sub_category' })
-  subCategory: SupplierSubCategory;
+  eventSupplierSubCategory: SupplierSubCategory;
 
   @Column('boolean')
   isHired: boolean;
@@ -58,9 +61,10 @@ class EventSupplier {
 
   @OneToMany(
     () => TransactionAgreement,
-    transactionAgreement => transactionAgreement.supplier,
+    transactionAgreement => transactionAgreement.supplierTransaction,
+    { eager: true },
   )
-  transactionAgreement: TransactionAgreement[];
+  transactionAgreements: TransactionAgreement[];
 }
 
 export default EventSupplier;

@@ -18,7 +18,7 @@ class Transaction {
   @Column('uuid')
   agreement_id: string;
 
-  @ManyToOne(() => TransactionAgreement)
+  @ManyToOne(() => TransactionAgreement, agreement => agreement.transactions)
   @JoinColumn({ name: 'agreement_id' })
   agreement: TransactionAgreement;
 

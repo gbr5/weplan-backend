@@ -12,19 +12,19 @@ class EventTypes {
   name: string;
 
   @OneToMany(() => Event, event => event.event_type)
-  Event: Event;
+  events: Event[];
 
   @OneToMany(
     () => EventTypeSupplier,
     event_type_supplier => event_type_supplier.event_type,
   )
-  Type: EventTypeSupplier;
+  eventTypeSuppliers: EventTypeSupplier[];
 
   @OneToMany(
     () => SupplierProduct,
     supplierProduct => supplierProduct.event_type_id,
   )
-  supplierProduct: SupplierProduct;
+  supplierProducts: SupplierProduct[];
 }
 
 export default EventTypes;

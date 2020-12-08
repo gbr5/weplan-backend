@@ -43,9 +43,9 @@ class Event {
   @Column()
   event_type: string;
 
-  @ManyToOne(() => EventType, event_type => event_type.name)
+  @ManyToOne(() => EventType, event_type => event_type.events)
   @JoinColumn({ name: 'event_type' })
-  Type: EventType;
+  eventType: EventType;
 
   @Column('timestamp with time zone')
   date: Date;

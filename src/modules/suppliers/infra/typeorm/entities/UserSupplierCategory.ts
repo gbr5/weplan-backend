@@ -19,19 +19,19 @@ class UserSupplierCategories {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, user => user.supplierByCategories, { eager: true })
+  @ManyToOne(() => User, user => user.userBySupplierCategories, { eager: true })
   @JoinColumn({ name: 'user_id' })
-  supplier: User;
+  userBySupplierCategory: User;
 
   @Column()
   sub_category_name: string;
 
   @ManyToOne(
     () => SupplierSubCategory,
-    supplierCategory => supplierCategory.sub_category,
+    supplierCategory => supplierCategory.userSupplierSubCategories,
   )
   @JoinColumn({ name: 'sub_category_name' })
-  SubCategory: SupplierSubCategory;
+  userSupplierSubCategory: SupplierSubCategory;
 
   @CreateDateColumn()
   created_at: Date;

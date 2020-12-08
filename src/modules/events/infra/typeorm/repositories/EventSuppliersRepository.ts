@@ -3,7 +3,6 @@ import { getRepository, Repository } from 'typeorm';
 import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
 import ICreateEventSupplierDTO from '@modules/events/dtos/ICreateEventSupplierDTO';
 import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
-import IHiredSupplierDTO from '@modules/events/dtos/IHiredSupplierDTO';
 
 interface IRequest {
   name: string;
@@ -44,10 +43,10 @@ class EventSuppliersRepository implements IEventSuppliersRepository {
 
   public async findByEventAndIsHired(
     event_id: string,
-  ): Promise<IHiredSupplierDTO[]> {
+  ): Promise<EventSupplier[]> {
     const findHiredSuppliers = await this.ormRepository.find({
       where: { event_id, isHired: true },
-      relations: ['transactionAgreement'],
+      relations: ['transactionAgreements'],
     });
 
     return findHiredSuppliers;

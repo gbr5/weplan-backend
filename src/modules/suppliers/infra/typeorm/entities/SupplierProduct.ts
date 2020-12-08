@@ -27,14 +27,20 @@ class SupplierProduct {
   @Column('uuid')
   sub_category_id: string;
 
-  @ManyToOne(() => SupplierSubCategory, { eager: true })
+  @ManyToOne(
+    () => SupplierSubCategory,
+    subCategory => subCategory.supplierProducts,
+    { eager: true },
+  )
   @JoinColumn({ name: 'sub_category_id' })
-  subCategory: SupplierSubCategory;
+  supplierProductSubCategory: SupplierSubCategory;
 
   @Column('uuid')
   event_type_id: string;
 
-  @ManyToOne(() => EventTypes, { eager: true })
+  @ManyToOne(() => EventTypes, eventType => eventType.supplierProducts, {
+    eager: true,
+  })
   @JoinColumn({ name: 'event_type_id' })
   eventType: EventTypes;
 
