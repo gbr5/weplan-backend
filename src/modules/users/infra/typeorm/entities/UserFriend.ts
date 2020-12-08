@@ -33,7 +33,9 @@ class UserFriend {
   @Column('uuid')
   friend_group: string;
 
-  @ManyToOne(() => FriendGroup, { eager: true })
+  @ManyToOne(() => FriendGroup, group => group.userFriendGroups, {
+    eager: true,
+  })
   @JoinColumn({ name: 'friend_group' })
   friendGroup: FriendGroup;
 

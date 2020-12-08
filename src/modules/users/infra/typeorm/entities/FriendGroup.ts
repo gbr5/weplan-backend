@@ -20,9 +20,9 @@ class FriendGroup {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.userFriendGroups)
   @JoinColumn({ name: 'user_id' })
-  FriendGroupOwner: User;
+  groupOwner: User;
 
   @Column()
   name: string;
@@ -33,8 +33,8 @@ class FriendGroup {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => UserFriend, userFriend => userFriend.friend_group)
-  userFriend: UserFriend[];
+  @OneToMany(() => UserFriend, userFriend => userFriend.friendGroup)
+  userFriendGroups: UserFriend[];
 }
 
 export default FriendGroup;

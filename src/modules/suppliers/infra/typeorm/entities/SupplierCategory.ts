@@ -24,9 +24,9 @@ class SupplierCategories {
 
   @OneToMany(
     () => SupplierSubCategory,
-    user_supplier_category => user_supplier_category.category_name,
+    user_supplier_category => user_supplier_category.supplierCategory,
   )
-  SubCategory: SupplierSubCategory;
+  subCategories: SupplierSubCategory[];
 }
 
 export default SupplierCategories;

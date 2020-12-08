@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import SupplierCategory from '@modules/suppliers/infra/typeorm/entities/SupplierCategory';
+import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
 import UserSupplierCategory from './UserSupplierCategory';
 import SupplierProduct from './SupplierProduct';
 
@@ -22,10 +23,10 @@ class SupplierSubCategories {
 
   @ManyToOne(
     () => SupplierCategory,
-    supplierCategory => supplierCategory.category,
+    supplierCategory => supplierCategory.subCategories,
   )
   @JoinColumn({ name: 'category_name' })
-  Category: SupplierCategory;
+  supplierCategory: SupplierCategory;
 
   @Column()
   sub_category: string;
@@ -38,15 +39,21 @@ class SupplierSubCategories {
 
   @OneToMany(
     () => UserSupplierCategory,
-    user_supplier_category => user_supplier_category.sub_category_name,
+    user_supplier_category => user_supplier_category.userSupplierSubCategory,
   )
-  Supplier: UserSupplierCategory;
+  userSupplierSubCategories: UserSupplierCategory[];
 
   @OneToMany(
     () => SupplierProduct,
-    supplierProduct => supplierProduct.sub_category_id,
+    supplierProduct => supplierProduct.supplierProductSubCategory,
   )
-  supplierProduct: SupplierProduct;
+  supplierProducts: SupplierProduct[];
+
+  @OneToMany(
+    () => EventSupplier,
+    eventSupplier => eventSupplier.eventSupplierSubCategory,
+  )
+  eventSupplierSubCategories: EventSupplier[];
 }
 
 export default SupplierSubCategories;

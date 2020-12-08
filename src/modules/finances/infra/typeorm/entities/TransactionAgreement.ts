@@ -20,9 +20,9 @@ class TransactionAgreement {
   @Column('uuid')
   supplier_id: string;
 
-  @ManyToOne(() => EventSupplier, supplier => supplier.transactionAgreement)
+  @ManyToOne(() => EventSupplier, supplier => supplier.transactionAgreements)
   @JoinColumn({ name: 'supplier_id' })
-  supplier: EventSupplier;
+  supplierTransaction: EventSupplier;
 
   @Column('numeric')
   amount: number;

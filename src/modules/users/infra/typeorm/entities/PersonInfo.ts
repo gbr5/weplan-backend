@@ -21,9 +21,9 @@ class PersonInfo {
   @Column('uuid')
   user_id: string;
 
-  @OneToOne(() => User, user => user.id)
+  @OneToOne(() => User, user => user.personInfo)
   @JoinColumn({ name: 'user_id' })
-  Person: User;
+  personUser: User;
 
   @Column()
   first_name: string;

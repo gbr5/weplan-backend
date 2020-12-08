@@ -98,11 +98,13 @@ class User {
     }
   }
 
-  @OneToOne(() => CompanyInfo, company_info => company_info.user_id)
-  CompanyInfo: CompanyInfo;
+  @OneToOne(() => CompanyInfo, company_info => company_info.company, {
+    eager: true,
+  })
+  companyInfo: CompanyInfo;
 
-  @OneToOne(() => PersonInfo, user => user.user_id)
-  PersonInfo: PersonInfo;
+  @OneToOne(() => PersonInfo, user => user.personUser, { eager: true })
+  personInfo: PersonInfo;
 
   @OneToOne(() => UserBirthdate, user_birthdate => user_birthdate.user_id)
   UserBirthdate: UserBirthdate;
@@ -149,8 +151,11 @@ class User {
   @OneToOne(() => StageCard, card => card.card_owner)
   EventCard: StageCard;
 
-  @OneToMany(() => UserSupplierCategories, supplier => supplier.supplier)
-  supplierByCategories: UserSupplierCategories[];
+  @OneToMany(
+    () => UserSupplierCategories,
+    supplier => supplier.userBySupplierCategory,
+  )
+  userBySupplierCategories: UserSupplierCategories[];
 
   @OneToMany(
     () => SupplierAppointmentDaySchedule,
@@ -176,8 +181,8 @@ class User {
   @OneToMany(() => WeplanGuest, guest => guest.user_id)
   WeplanGuest: WeplanGuest;
 
-  @OneToMany(() => FriendGroup, owner => owner.user_id)
-  OwnerFriendGroup: FriendGroup;
+  @OneToMany(() => FriendGroup, owner => owner.groupOwner)
+  userFriendGroups: FriendGroup[];
 
   @OneToMany(() => UserFriend, friend => friend.friend)
   friends: UserFriend[];
