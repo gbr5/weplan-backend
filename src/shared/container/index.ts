@@ -234,6 +234,20 @@ import BudgetFilesRepository from '@modules/users/infra/typeorm/repositories/Bud
 import IEmployeeFilesRepository from '@modules/users/repositories/IEmployeeFilesRepository';
 import EmployeeFilesRepository from '@modules/users/infra/typeorm/repositories/EmployeeFilesRepository';
 
+import IEventNotesRepository from '@modules/events/repositories/IEventNotesRepository';
+import EventNotesRepository from '@modules/events/infra/typeorm/repositories/EventNotesRepository';
+
+import IEventUserSupplierNotesRepository from '@modules/events/repositories/IEventUserSupplierNotesRepository';
+import EventUserSupplierNotesRepository from '@modules/events/infra/typeorm/repositories/EventUserSupplierNotesRepository';
+
+container.registerSingleton<IEventUserSupplierNotesRepository>(
+  'EventUserSupplierNotesRepository',
+  EventUserSupplierNotesRepository,
+);
+container.registerSingleton<IEventNotesRepository>(
+  'EventNotesRepository',
+  EventNotesRepository,
+);
 container.registerSingleton<IUserFilesRepository>(
   'UserFilesRepository',
   UserFilesRepository,
