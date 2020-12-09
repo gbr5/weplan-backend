@@ -21,6 +21,7 @@ import EventMember from './EventMember';
 import EventInfo from './EventInfo';
 import WeplanGuest from './WeplanGuest';
 import EventServiceOrder from './EventServiceOrder';
+import EventNote from './EventNote';
 
 @Entity('events')
 class Event {
@@ -85,6 +86,9 @@ class Event {
     eventServiceOrder => eventServiceOrder.event,
   )
   eventServiceOrders: EventServiceOrder[];
+
+  @OneToMany(() => EventNote, note => note.event)
+  eventNotes: EventNote[];
 }
 
 export default Event;

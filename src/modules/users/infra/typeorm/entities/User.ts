@@ -45,6 +45,7 @@ import UserSupplierCategories from '@modules/suppliers/infra/typeorm/entities/Us
 import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
 import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
 import EventWeplanSupplier from '@modules/events/infra/typeorm/entities/EventWeplanSupplier';
+import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -261,6 +262,9 @@ class User {
     funnel_card_info => funnel_card_info.user_id,
   )
   funnel_card_infos: CompanyFunnelCardInfo[];
+
+  @OneToMany(() => EventNote, eventNote => eventNote.user)
+  userEventNotes: EventNote[];
 }
 
 export default User;
