@@ -5,6 +5,7 @@ import { classToClass } from 'class-transformer';
 import CreateEventInfoService from '@modules/events/services/CreateEventInfoService';
 import ShowEventInfoService from '@modules/events/services/ShowEventInfoService';
 import UpdateEventInfoService from '@modules/events/services/UpdateEventInfoService';
+import UpdateEventNumberOfGuestsService from '@modules/events/services/UpdateEventNumberOfGuestsService';
 
 export default class EventInfosController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -78,6 +79,23 @@ export default class EventInfosController {
       city,
       address,
     });
+
+    return res.json(classToClass(eventInfo));
+  }
+
+  public async updateNumberOfGuests(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const { number_of_guests } = req.body;
+
+    const dataParams = req.params;
+
+    const { event_id } = dataParams;
+
+    const updateEventInfo = container.resolve(UpdateEventNumberOfGuestsService);
+
+    const eventInfo = await updateEventInfo.execute(event_id, number_of_guests);
 
     return res.json(classToClass(eventInfo));
   }

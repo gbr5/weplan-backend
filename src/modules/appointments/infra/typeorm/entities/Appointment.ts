@@ -48,7 +48,7 @@ class Appointment {
 
   @ManyToOne(() => User, host => host.id)
   @JoinColumn({ name: 'host_id' })
-  Host: User;
+  host: User;
 
   @CreateDateColumn()
   created_at: Date;
@@ -58,25 +58,25 @@ class Appointment {
 
   @OneToMany(
     () => WeplanAppointmentGuest,
-    weplanGuest => weplanGuest.appointment_id,
+    weplanGuest => weplanGuest.appointment,
   )
-  WeplanGuest: WeplanAppointmentGuest;
+  weplanGuestAppointments: WeplanAppointmentGuest[];
 
   @OneToMany(
     () => NonUserAppointmentGuest,
-    nonUserappointmentGuest => nonUserappointmentGuest.appointment_id,
+    nonUserappointmentGuest => nonUserappointmentGuest.appointment,
   )
-  NUGuest: NonUserAppointmentGuest;
+  nonUserAppointmentGuests: NonUserAppointmentGuest[];
 
   @OneToMany(
     () => EventAppointment,
-    appointmentEvent => appointmentEvent.appointment_id,
+    appointmentEvent => appointmentEvent.appointment,
   )
   eventAppointments: EventAppointment[];
 
   @OneToMany(
     () => StageCardAppointment,
-    appointmentStageCard => appointmentStageCard.supplierCard,
+    appointmentStageCard => appointmentStageCard.appointment,
   )
   stageCardAppointments: StageCardAppointment[];
 }

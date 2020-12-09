@@ -27,7 +27,7 @@ class EventSupplier {
   @Column('uuid')
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.id)
+  @ManyToOne(() => Event, event => event.eventSuppliers)
   @JoinColumn({ name: 'event_id' })
   event: Event;
 

@@ -5,7 +5,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
   Column,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
 import EventNote from './EventNote';
@@ -19,16 +19,19 @@ class EventUserSupplierNote {
   @Column('uuid')
   event_note_id: string;
 
-  @OneToMany(() => EventNote, note => note.eventUserSupplierNotes)
+  @ManyToOne(() => EventNote, note => note.eventUserSupplierNotes)
   @JoinColumn({ name: 'event_note_id' })
-  eventNote: EventNote;
+  eventUserSupplierNote: EventNote;
 
   @Column('uuid')
   event_supplier_id: string;
 
-  @OneToMany(
+  @ManyToOne(
     () => EventSupplier,
     eventSupplier => eventSupplier.eventSupplierNotes,
+    {
+      eager: true,
+    },
   )
   @JoinColumn({ name: 'event_supplier_id' })
   eventSupplierNote: EventSupplier;

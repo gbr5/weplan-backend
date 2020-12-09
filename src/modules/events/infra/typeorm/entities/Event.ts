@@ -22,6 +22,7 @@ import EventInfo from './EventInfo';
 import WeplanGuest from './WeplanGuest';
 import EventServiceOrder from './EventServiceOrder';
 import EventNote from './EventNote';
+import EventSupplier from './EventSupplier';
 
 @Entity('events')
 class Event {
@@ -63,20 +64,23 @@ class Event {
   @OneToMany(() => EventPlanner, event_planner => event_planner.event_id)
   Planner: EventPlanner[];
 
-  @OneToMany(() => EventOwner, event_owner => event_owner.event_id)
-  Owner: EventOwner[];
+  @OneToMany(() => EventOwner, event_owner => event_owner.event)
+  eventOwners: EventOwner[];
 
-  @OneToMany(() => EventMember, event_member => event_member.event_id)
-  Member: EventMember[];
+  @OneToMany(() => EventMember, event_member => event_member.event)
+  eventMembers: EventMember[];
 
   @OneToMany(() => WeplanGuest, guest => guest.event_id)
   WeplanGuest: WeplanGuest[];
 
-  @OneToOne(() => EventInfo, event_info => event_info.event_id)
-  Info: EventInfo;
+  @OneToOne(() => EventInfo, event_info => event_info.event, { eager: true })
+  eventInfo: EventInfo;
 
   @OneToOne(() => EventCard, card => card.event)
   supplierCard: EventCard;
+
+  @OneToMany(() => EventSupplier, card => card.event)
+  eventSuppliers: EventSupplier[];
 
   @OneToMany(() => EventAppointment, eventAppointment => eventAppointment.event)
   eventAppointments: EventAppointment[];

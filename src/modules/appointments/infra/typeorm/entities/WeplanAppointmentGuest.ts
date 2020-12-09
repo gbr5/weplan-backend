@@ -19,23 +19,26 @@ class WeplanAppointmentGuest {
   @Column()
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, appointment => appointment.id)
+  @ManyToOne(
+    () => Appointment,
+    appointment => appointment.weplanGuestAppointments,
+  )
   @JoinColumn({ name: 'appointment_id' })
-  Appointment: Appointment;
+  appointment: Appointment;
 
   @Column()
   guest_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.weplanAppointmentGuests)
   @JoinColumn({ name: 'guest_id' })
-  Guest: User;
+  guest: User;
 
   @Column()
   host_id: string;
 
-  @ManyToOne(() => User, Host => Host.id)
+  @ManyToOne(() => User, host => host.weplanAppointmentHosts)
   @JoinColumn({ name: 'host_id' })
-  Host: User;
+  host: User;
 
   @CreateDateColumn()
   created_at: Date;

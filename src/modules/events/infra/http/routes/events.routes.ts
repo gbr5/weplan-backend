@@ -324,5 +324,14 @@ eventsRouter.put(
   }),
   eventInfos.update,
 );
+eventsRouter.put(
+  '/update-number-of-guests/:event_id/',
+  celebrate({
+    [Segments.BODY]: {
+      number_of_guests: Joi.number(),
+    },
+  }),
+  eventInfos.updateNumberOfGuests,
+);
 
 export default eventsRouter;

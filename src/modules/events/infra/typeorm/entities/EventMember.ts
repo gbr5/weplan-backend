@@ -6,29 +6,35 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
+import UserEventMemberNote from './UserEventMemberNote';
 
 @Entity('event_members')
 class EventMember {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   event_id: string;
 
-  @ManyToOne(() => Event, { eager: true })
+  @ManyToOne(() => Event, eventMember => eventMember.eventMembers, {
+    eager: true,
+  })
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
-  @Column()
+  @Column('uuid')
   member_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, userMember => userMember.userEventMembers, {
+    eager: true,
+  })
   @JoinColumn({ name: 'member_id' })
-  Member: User;
+  userEventMember: User;
 
   @Column('numeric')
   number_of_guests: number;
@@ -38,6 +44,9 @@ class EventMember {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => UserEventMemberNote, member => member.memberNote)
+  memberNotes: UserEventMemberNote[];
 }
 
 export default EventMember;

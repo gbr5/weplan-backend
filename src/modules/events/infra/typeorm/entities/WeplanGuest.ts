@@ -21,23 +21,25 @@ class WeplanGuest {
   @Column()
   guest_id: string;
 
-  @OneToOne(() => Guest, { eager: true })
+  @OneToOne(() => Guest, guest => guest.weplanGuest)
   @JoinColumn({ name: 'guest_id' })
-  Guest: Guest;
+  guest: Guest;
 
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, userGuest => userGuest.weplanUserGuests, {
+    eager: true,
+  })
   @JoinColumn({ name: 'user_id' })
-  UserGuest: User;
+  weplanUserGuest: User;
 
   @Column()
   event_id: string;
 
   @ManyToOne(() => Event, { eager: true })
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
   @CreateDateColumn()
   created_at: Date;

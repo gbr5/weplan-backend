@@ -43,16 +43,16 @@ class ListUserEventService {
 
     eventsAsOwner.map(owner => {
       const userEventOwner = {
-        id: owner.Event.id,
+        id: owner.event.id,
         userEvent_id: owner.owner_id,
-        name: owner.Event.name,
-        trimmed_name: owner.Event.trimmed_name,
+        name: owner.event.name,
+        trimmed_name: owner.event.trimmed_name,
         number_of_guests: owner.number_of_guests,
         isOwner: true,
-        owner_master: owner.Event.user_id,
+        owner_master: owner.event.user_id,
         isGuest: false,
-        event_type: owner.Event.event_type,
-        date: owner.Event.date,
+        event_type: owner.event.event_type,
+        date: owner.event.date,
       };
       userEvents.push(userEventOwner);
 
@@ -60,16 +60,16 @@ class ListUserEventService {
     });
     eventsAsMember.map(member => {
       const userEventMember = {
-        id: member.Event.id,
+        id: member.event.id,
         userEvent_id: member.member_id,
-        name: member.Event.name,
-        trimmed_name: member.Event.trimmed_name,
+        name: member.event.name,
+        trimmed_name: member.event.trimmed_name,
         number_of_guests: member.number_of_guests,
         isOwner: false,
-        owner_master: member.Event.user_id,
+        owner_master: member.event.user_id,
         isGuest: false,
-        event_type: member.Event.event_type,
-        date: member.Event.date,
+        event_type: member.event.event_type,
+        date: member.event.date,
       };
       userEvents.push(userEventMember);
 
@@ -77,16 +77,16 @@ class ListUserEventService {
     });
     eventsAsGuest.map(guest => {
       const userEventMember = {
-        id: guest.Event.id,
-        userEvent_id: guest.Guest.id,
-        name: guest.Event.name,
-        trimmed_name: guest.Event.trimmed_name,
+        id: guest.event.id,
+        userEvent_id: guest.guest.id,
+        name: guest.event.name,
+        trimmed_name: guest.event.trimmed_name,
         number_of_guests: 0,
         isOwner: false,
-        owner_master: guest.Event.user_id,
+        owner_master: guest.event.user_id,
         isGuest: false,
-        event_type: guest.Event.event_type,
-        date: guest.Event.date,
+        event_type: guest.event.event_type,
+        date: guest.event.date,
       };
       userEvents.push(userEventMember);
 

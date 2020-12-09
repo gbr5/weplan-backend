@@ -11,6 +11,7 @@ import {
 
 import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
 import Transaction from '@modules/finances/infra/typeorm/entities/Transaction';
+import UserEventTransactionAgreementNote from '@modules/events/infra/typeorm/entities/UserEventTransactionAgreementNote';
 
 @Entity('transaction_agreements')
 class TransactionAgreement {
@@ -41,6 +42,13 @@ class TransactionAgreement {
     eager: true,
   })
   transactions: Transaction[];
+
+  @OneToMany(
+    () => UserEventTransactionAgreementNote,
+    transactionAgreementNote =>
+      transactionAgreementNote.transactionAgreementNote,
+  )
+  transactionAgreementNotes: UserEventTransactionAgreementNote[];
 }
 
 export default TransactionAgreement;

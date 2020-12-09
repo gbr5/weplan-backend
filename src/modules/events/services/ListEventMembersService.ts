@@ -2,35 +2,33 @@ import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
 import IEventMembersRepository from '@modules/events/repositories/IEventMembersRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import IEventMemberDTO from '../dtos/IEventMemberDTO';
+import EventMember from '../infra/typeorm/entities/EventMember';
 
 @injectable()
 class ListEventMembersService {
   constructor(
     @inject('EventMembersRepository')
     private eventMembersRepository: IEventMembersRepository,
-
-    @inject('CacheProvider')
-    private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(event_id: string): Promise<IEventMemberDTO[]> {
-    const EventMembers = await this.eventMembersRepository.findByEvent(
+  public async execute(event_id: string): Promise<EventMember[]> {
+    const eventMembers = await this.eventMembersRepository.findByEvent(
       event_id,
     );
-    const users = ([] as unknown) as Promise<IEventMemberDTO[]>;
+    // const users = ([] as unknown) as Promise<IEventMemberDTO[]>;
 
-    EventMembers.map(async member => {
-      (await users).push({
-        id: member.member_id,
-        name: member.Member.name,
-        avatar: member.Member.avatar ? member.Member.avatar : '',
-        number_of_guests: member.number_of_guests,
-      });
-    });
+    // EventMembers.map(async member => {
+    //   (await users).push({
+    //     id: member.member_id,
+    //     name: member.userEventMember.name,
+    //     avatar: member.userEventMember.avatar
+    //       ? member.userEventMember.avatar
+    //       : '',
+    //     number_of_guests: member.number_of_guests,
+    //   });
+    // });
 
-    return users;
+    return eventMembers;
   }
 }
 
