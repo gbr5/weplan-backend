@@ -31,16 +31,19 @@ class NonUserAppointmentGuest {
   @Column()
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, appointment => appointment.id)
+  @ManyToOne(
+    () => Appointment,
+    appointment => appointment.nonUserAppointmentGuests,
+  )
   @JoinColumn({ name: 'appointment_id' })
-  Appointment: Appointment;
+  appointment: Appointment;
 
   @Column()
   supplier_id: string;
 
-  @ManyToOne(() => User, Host => Host.id)
+  @ManyToOne(() => User, host => host.nonUserAppointmentHosts)
   @JoinColumn({ name: 'supplier_id' })
-  Host: User;
+  host: User;
 
   @CreateDateColumn()
   created_at: Date;

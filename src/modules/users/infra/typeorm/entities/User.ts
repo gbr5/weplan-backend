@@ -46,6 +46,8 @@ import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entitie
 import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
 import EventWeplanSupplier from '@modules/events/infra/typeorm/entities/EventWeplanSupplier';
 import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
+import EventNoteAccess from '@modules/events/infra/typeorm/entities/EventNoteAccess';
+import Guest from '@modules/events/infra/typeorm/entities/Guest';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -128,11 +130,11 @@ class User {
   @OneToMany(() => UserFile, file => file.user)
   files: UserFile[];
 
-  @OneToMany(() => EventOwner, owner => owner.owner_id)
-  EventOwner: EventOwner;
+  @OneToMany(() => EventOwner, owner => owner.userEventOwner)
+  userEventOwners: EventOwner[];
 
-  @OneToMany(() => EventMember, member => member.member_id)
-  EventMember: EventMember;
+  @OneToMany(() => EventMember, member => member.userEventMember)
+  userEventMembers: EventMember[];
 
   @OneToMany(
     () => EventTypeSupplier,
@@ -173,14 +175,17 @@ class User {
   @OneToMany(() => Appointment, appointment => appointment.host_id)
   Appointment: Appointment;
 
-  @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.guest_id)
-  Guest: WeplanAppointmentGuest;
+  @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.guest)
+  weplanAppointmentGuests: WeplanAppointmentGuest[];
 
-  @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.host_id)
-  Host: WeplanAppointmentGuest;
+  @OneToMany(() => Guest, guest => guest.host)
+  hostGuests: Guest[];
 
-  @OneToMany(() => WeplanGuest, guest => guest.user_id)
-  WeplanGuest: WeplanGuest;
+  @OneToMany(() => WeplanAppointmentGuest, weplanGuest => weplanGuest.host)
+  weplanAppointmentHosts: WeplanAppointmentGuest[];
+
+  @OneToMany(() => WeplanGuest, guest => guest.weplanUserGuest)
+  weplanUserGuests: WeplanGuest[];
 
   @OneToMany(() => FriendGroup, owner => owner.groupOwner)
   userFriendGroups: FriendGroup[];
@@ -193,9 +198,9 @@ class User {
 
   @OneToMany(
     () => NonUserAppointmentGuest,
-    nonUserappointmentGuest => nonUserappointmentGuest.supplier_id,
+    nonUserappointmentGuest => nonUserappointmentGuest.host,
   )
-  NUGuest: NonUserAppointmentGuest;
+  nonUserAppointmentHosts: NonUserAppointmentGuest[];
 
   @OneToMany(() => SupplierAppointmentDayOff, supplier => supplier.supplier_id)
   SupplierAppointmentDayOff: SupplierAppointmentDayOff;
@@ -263,8 +268,11 @@ class User {
   )
   funnel_card_infos: CompanyFunnelCardInfo[];
 
-  @OneToMany(() => EventNote, eventNote => eventNote.user)
+  @OneToMany(() => EventNote, eventNote => eventNote.userEventNote)
   userEventNotes: EventNote[];
+
+  @OneToMany(() => EventNoteAccess, eventNote => eventNote.userAccessNote)
+  userAccessNotes: EventNoteAccess[];
 }
 
 export default User;

@@ -7,11 +7,13 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
 import WeplanGuest from './WeplanGuest';
+import UserEventGuestNote from './UserEventGuestNote';
 
 @Entity('guests')
 class Guest {
@@ -37,9 +39,9 @@ class Guest {
   @Column()
   host_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, host => host.hostGuests, { eager: true })
   @JoinColumn({ name: 'host_id' })
-  Host: User;
+  host: User;
 
   @Column('boolean')
   confirmed: boolean;
@@ -53,8 +55,11 @@ class Guest {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => WeplanGuest, guest => guest.guest_id)
-  WeplanGuest: WeplanGuest;
+  @OneToOne(() => WeplanGuest, guest => guest.guest, { eager: true })
+  weplanGuest: WeplanGuest;
+
+  @OneToMany(() => UserEventGuestNote, guest => guest.guestNote)
+  guestNotes: UserEventGuestNote[];
 }
 
 export default Guest;

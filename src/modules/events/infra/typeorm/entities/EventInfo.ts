@@ -18,9 +18,9 @@ class EventInfo {
   @Column()
   event_id: string;
 
-  @OneToOne(() => Event, event => event.id)
+  @OneToOne(() => Event, event => event.eventInfo)
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
   @Column('numeric')
   number_of_guests: number;

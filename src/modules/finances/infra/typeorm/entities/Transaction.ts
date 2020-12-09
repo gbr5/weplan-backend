@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import TransactionAgreement from '@modules/finances/infra/typeorm/entities/TransactionAgreement';
+import UserEventTransactionNote from '@modules/events/infra/typeorm/entities/UserEventTransactionNote';
 
 @Entity('transactions')
 class Transaction {
@@ -36,6 +38,12 @@ class Transaction {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => UserEventTransactionNote,
+    transaction => transaction.transactionNote,
+  )
+  transactionNotes: UserEventTransactionNote[];
 }
 
 export default Transaction;

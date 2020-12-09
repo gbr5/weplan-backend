@@ -6,10 +6,12 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import CheckList from '@modules/checklists/infra/typeorm/entities/CheckList';
+import UserEventTaskNote from '@modules/events/infra/typeorm/entities/UserEventTaskNote';
 
 @Entity('check_list_tasks')
 class CheckListTask {
@@ -53,6 +55,9 @@ class CheckListTask {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => UserEventTaskNote, task => task.taskNote)
+  taskNotes: UserEventTaskNote[];
 }
 
 export default CheckListTask;
