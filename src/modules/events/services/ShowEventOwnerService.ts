@@ -3,10 +3,11 @@ import { injectable, inject } from 'tsyringe';
 
 import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import AppError from '@shared/errors/AppError';
 import EventOwner from '../infra/typeorm/entities/EventOwner';
 
 @injectable()
-class ListEventOwnersService {
+class ShowEventOwnerService {
   constructor(
     @inject('EventOwnersRepository')
     private eventOwnersRepository: IEventOwnersRepository,
@@ -15,11 +16,21 @@ class ListEventOwnersService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(event_id: string): Promise<EventOwner[]> {
-    const eventOwners = await this.eventOwnersRepository.findByEvent(event_id);
+  public async execute(
+    event_id: string,
+    owner_id: string,
+  ): Promise<EventOwner> {
+    const eventOwner = await this.eventOwnersRepository.findByEventAndOwnerId(
+      event_id,
+      owner_id,
+    );
 
-    return eventOwners;
+    if (!eventOwner) {
+      throw new AppError('Event owner not found.');
+    }
+
+    return eventOwner;
   }
 }
 
-export default ListEventOwnersService;
+export default ShowEventOwnerService;

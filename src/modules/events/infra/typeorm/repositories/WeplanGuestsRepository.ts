@@ -11,6 +11,12 @@ class WeplanGuestRepository implements IWeplanGuestsRepository {
     this.ormRepository = getRepository(WeplanGuest);
   }
 
+  public async findById(id: string): Promise<WeplanGuest | undefined> {
+    const findWeplanGuest = await this.ormRepository.findOne(id);
+
+    return findWeplanGuest;
+  }
+
   public async findByGuestId(
     guest_id: string,
   ): Promise<WeplanGuest | undefined> {

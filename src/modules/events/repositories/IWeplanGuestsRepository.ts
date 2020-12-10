@@ -6,6 +6,7 @@ export default interface IWeplanGuestsRepository {
   findByEventId(event_id: string): Promise<WeplanGuest[]>;
   findByUserId(user_id: string): Promise<WeplanGuest[]>;
   findByGuestId(guest_id: string): Promise<WeplanGuest | undefined>;
+  findById(id: string): Promise<WeplanGuest | undefined>;
   findByEventAndUserId(
     event_id: string,
     user_id: string,
