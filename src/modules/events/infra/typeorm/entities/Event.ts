@@ -23,6 +23,7 @@ import WeplanGuest from './WeplanGuest';
 import EventServiceOrder from './EventServiceOrder';
 import EventNote from './EventNote';
 import EventSupplier from './EventSupplier';
+import Guest from './Guest';
 
 @Entity('events')
 class Event {
@@ -72,6 +73,9 @@ class Event {
 
   @OneToMany(() => WeplanGuest, guest => guest.event_id)
   WeplanGuest: WeplanGuest[];
+
+  @OneToMany(() => Guest, guest => guest.event)
+  eventGuests: Guest[];
 
   @OneToOne(() => EventInfo, event_info => event_info.event, { eager: true })
   eventInfo: EventInfo;

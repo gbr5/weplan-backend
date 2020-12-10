@@ -55,6 +55,8 @@ import employeeFilesRouter from '@modules/users/infra/http/routes/employeeFiles.
 import eventNotesRouter from '@modules/events/infra/http/routes/eventNotes.routes';
 import eventUserSupplierNotesRouter from '@modules/events/infra/http/routes/eventUserSupplierNotes.routes';
 import weplanGuestsRouter from '@modules/events/infra/http/routes/weplanGuests.routes';
+import nextEventRouter from '@modules/events/infra/http/routes/nextEvent.routes';
+import listEventsRouter from '@modules/events/infra/http/routes/listEvents.routes';
 
 const routes = Router();
 
@@ -79,6 +81,8 @@ routes.use('/card/files', cardFilesRouter);
 routes.use('/budget/files', budgetFilesRouter);
 routes.use('/employee/files', employeeFilesRouter);
 
+routes.use('/my-next-event', nextEventRouter);
+routes.use('/list/events', listEventsRouter);
 routes.use('/events', eventsRouter);
 routes.use('/event/weplan-guests', weplanGuestsRouter);
 routes.use('/event/notes', eventNotesRouter);

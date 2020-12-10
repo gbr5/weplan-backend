@@ -7,6 +7,7 @@ import ListEventOwnersService from '@modules/events/services/ListEventOwnersServ
 import DeleteEventOwnerService from '@modules/events/services/DeleteEventOwnerService';
 import UpdateEventOwnerService from '@modules/events/services/UpdateEventOwnerService';
 import ShowEventOwnerService from '@modules/events/services/ShowEventOwnerService';
+import ListEventsAsOwnerService from '@modules/events/services/ListEventsAsOwnerService';
 
 export default class EventOwnersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -54,6 +55,16 @@ export default class EventOwnersController {
     const listEventOwners = container.resolve(ListEventOwnersService);
 
     const owners = await listEventOwners.execute(event_id);
+
+    return res.json(classToClass(owners));
+  }
+
+  public async listAsOwner(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
+
+    const listEventOwners = container.resolve(ListEventsAsOwnerService);
+
+    const owners = await listEventOwners.execute(user_id);
 
     return res.json(classToClass(owners));
   }

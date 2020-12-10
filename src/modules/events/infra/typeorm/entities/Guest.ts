@@ -29,14 +29,14 @@ class Guest {
   @Column()
   description: string;
 
-  @Column()
+  @Column('uuid')
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.id)
+  @ManyToOne(() => Event, event => event.eventGuests)
   @JoinColumn({ name: 'event_id' })
-  Event: Event;
+  event: Event;
 
-  @Column()
+  @Column('uuid')
   host_id: string;
 
   @ManyToOne(() => User, host => host.hostGuests, { eager: true })
@@ -55,7 +55,7 @@ class Guest {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => WeplanGuest, guest => guest.guest, { eager: true })
+  @OneToOne(() => WeplanGuest, guest => guest.guest)
   weplanGuest: WeplanGuest;
 
   @OneToMany(() => UserEventGuestNote, guest => guest.guestNote)

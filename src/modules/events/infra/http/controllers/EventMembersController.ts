@@ -6,6 +6,7 @@ import CreateEventMemberService from '@modules/events/services/CreateEventMember
 import ListEventMembersService from '@modules/events/services/ListEventMembersService';
 import DeleteEventMemberService from '@modules/events/services/DeleteEventMemberService';
 import UpdateEventMemberService from '@modules/events/services/UpdateEventMemberService';
+import ListEventsAsMemberService from '@modules/events/services/ListEventsAsMemberService';
 
 export default class EventMembersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -51,6 +52,16 @@ export default class EventMembersController {
     const listEventMembers = container.resolve(ListEventMembersService);
 
     const members = await listEventMembers.execute(event_id);
+
+    return res.json(classToClass(members));
+  }
+
+  public async listAsMember(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
+
+    const listEventMembers = container.resolve(ListEventsAsMemberService);
+
+    const members = await listEventMembers.execute(user_id);
 
     return res.json(classToClass(members));
   }
