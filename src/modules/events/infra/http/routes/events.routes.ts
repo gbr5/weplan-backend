@@ -15,6 +15,7 @@ import EventMembersController from '@modules/events/infra/http/controllers/Event
 import EventInfosController from '@modules/events/infra/http/controllers/EventInfosController';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
+import WeplanGuestConfirmationController from '../controllers/WeplanGuestConfirmationController';
 
 const eventsRouter = Router();
 const events = new EventsController();
@@ -28,6 +29,7 @@ const eventPlanners = new EventPlannersController();
 const eventOwners = new EventOwnersController();
 const eventMembers = new EventMembersController();
 const eventInfos = new EventInfosController();
+const weplanGuestConfirmation = new WeplanGuestConfirmationController();
 const upload = multer(uploadConfig.multer);
 
 eventsRouter.use(ensureAuthenticated);
@@ -209,7 +211,7 @@ eventsRouter.put(
       confirmed: Joi.boolean().required(),
     },
   }),
-  guests.updateWeplanGuest,
+  weplanGuestConfirmation.updateWeplanGuest,
 );
 
 eventsRouter.delete('/guests/:id', guests.delete);
@@ -261,6 +263,7 @@ eventsRouter.put(
 
 eventsRouter.delete('/:event_id/event-owners/:owner_id', eventOwners.delete);
 eventsRouter.get('/:event_id/event-owners/', eventOwners.index);
+eventsRouter.get('/event-owner/:event_id/:owner_id/', eventOwners.show);
 
 // === Event Members === //
 

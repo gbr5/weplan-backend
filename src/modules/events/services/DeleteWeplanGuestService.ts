@@ -7,17 +7,17 @@ import IWeplanGuestsRepository from '@modules/events/repositories/IWeplanGuestsR
 class DeleteWeplanGuestService {
   constructor(
     @inject('WeplanGuestsRepository')
-    private guestsRepository: IWeplanGuestsRepository,
+    private weplanGuestsRepository: IWeplanGuestsRepository,
   ) {}
 
-  public async execute(guest_id: string): Promise<void> {
-    const guest = await this.guestsRepository.findByGuestId(guest_id);
+  public async execute(id: string): Promise<void> {
+    const guest = await this.weplanGuestsRepository.findById(id);
 
     if (!guest) {
       throw new AppError('WeplanGuest not found.');
     }
 
-    await this.guestsRepository.delete(guest);
+    await this.weplanGuestsRepository.delete(guest);
   }
 }
 
