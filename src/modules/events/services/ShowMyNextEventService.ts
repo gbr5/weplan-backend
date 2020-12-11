@@ -6,8 +6,13 @@ import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRep
 import IEventMembersRepository from '@modules/events/repositories/IEventMembersRepository';
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
-import EventOwner from '../infra/typeorm/entities/EventOwner';
-import EventMember from '../infra/typeorm/entities/EventMember';
+import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
+import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
+import IGuestsRepository from '../repositories/IGuestsRepository';
+import IEventNotesRepository from '../repositories/IEventNotesRepository';
+import IUserCheckListsRepository from '../repositories/IUserCheckListsRepository';
+import IEventSupplierRepository from '../repositories/IEventSuppliersRepository';
+import IShowEventDTO from '../dtos/IShowEventDTO';
 
 @injectable()
 class ShowMyNextEventService {
@@ -17,12 +22,24 @@ class ShowMyNextEventService {
 
     @inject('EventMembersRepository')
     private eventMembersRepository: IEventMembersRepository,
+
+    @inject('EventSuppliersRepository')
+    private eventSuppliersRepository: IEventSupplierRepository,
+
+    @inject('GuestsRepository')
+    private guestsRepository: IGuestsRepository,
+
+    @inject('EventNotesRepository')
+    private eventNotesRepository: IEventNotesRepository,
+
+    @inject('UserCheckListsRepository')
+    private userCheckListsRepository: IUserCheckListsRepository,
   ) {}
 
-  public async execute(user_id: string): Promise<Event | undefined> {
+  public async execute(user_id: string): Promise<IShowEventDTO | undefined> {
     const today = new Date();
-    const members = await this.eventMembersRepository.findByMemberId(user_id);
-    const eventMembers = members.filter(
+    const eMembers = await this.eventMembersRepository.findByMemberId(user_id);
+    const eventMembers = eMembers.filter(
       member => differenceInDays(new Date(member.event.date), today) > 0,
     );
 
@@ -30,8 +47,8 @@ class ShowMyNextEventService {
       throw new AppError('Event not found.');
     }
 
-    const owners = await this.eventOwnersRepository.findByOwnerId(user_id);
-    const eventOwners = owners.filter(
+    const eOwners = await this.eventOwnersRepository.findByOwnerId(user_id);
+    const eventOwners = eOwners.filter(
       owner => differenceInDays(new Date(owner.event.date), today) > 0,
     );
 
@@ -39,7 +56,7 @@ class ShowMyNextEventService {
       throw new AppError('Event not found.');
     }
 
-    const nextEvent: Event[] = [];
+    const nextEvents: Event[] = [];
 
     const nextOwnerEvent = eventOwners
       .sort((a: EventOwner, b: EventOwner) => {
@@ -74,11 +91,11 @@ class ShowMyNextEventService {
       .find(e => e);
 
     if (!nextMemberEvent && nextOwnerEvent) {
-      nextEvent.push(nextOwnerEvent.event);
+      nextEvents.push(nextOwnerEvent.event);
     }
 
     if (nextMemberEvent && !nextOwnerEvent) {
-      nextEvent.push(nextMemberEvent.event);
+      nextEvents.push(nextMemberEvent.event);
     }
 
     if (nextMemberEvent && nextOwnerEvent) {
@@ -88,7 +105,7 @@ class ShowMyNextEventService {
           new Date(nextMemberEvent.event.date),
         ) < 0
       ) {
-        nextEvent.push(nextOwnerEvent.event);
+        nextEvents.push(nextOwnerEvent.event);
       }
       if (
         differenceInDays(
@@ -96,11 +113,25 @@ class ShowMyNextEventService {
           new Date(nextMemberEvent.event.date),
         ) > 0
       ) {
-        nextEvent.push(nextMemberEvent.event);
+        nextEvents.push(nextMemberEvent.event);
       }
     }
+    const event = nextEvents[0];
 
-    return nextEvent[0];
+    const eventNotes = await this.eventNotesRepository.findByEvent(event.id);
+    const suppliers = await this.eventSuppliersRepository.findByEvent(event.id);
+    const guests = await this.guestsRepository.findByEvent(event.id);
+    const checkLists = await this.userCheckListsRepository.findByEvent(
+      event.id,
+    );
+
+    return {
+      event,
+      checkLists,
+      eventNotes,
+      guests,
+      suppliers,
+    };
   }
 }
 

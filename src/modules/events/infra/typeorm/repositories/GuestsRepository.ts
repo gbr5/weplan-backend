@@ -40,6 +40,12 @@ class GuestRepository implements IGuestsRepository {
     return findGuest;
   }
 
+  public async findByIDs(data: string[]): Promise<Guest[]> {
+    const findGuest = await this.ormRepository.findByIds(data);
+
+    return findGuest;
+  }
+
   public async findByEvent(event_id: string): Promise<Guest[]> {
     const findGuest = await this.ormRepository.find({
       where: { event_id },

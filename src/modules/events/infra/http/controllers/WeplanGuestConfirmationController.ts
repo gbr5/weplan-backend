@@ -11,12 +11,10 @@ export default class WeplanGuestConfirmationController {
     const { id } = dataParams;
     const user_id = req.user.id;
 
-    const { confirmed } = req.body;
     const updateGuest = container.resolve(WeplanGuestConfirmationService);
 
     const updatedEventGuest = await updateGuest.execute({
       id,
-      confirmed,
       user_id,
     });
 
