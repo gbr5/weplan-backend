@@ -55,7 +55,7 @@ class Guest {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => WeplanGuest, guest => guest.guest)
+  @OneToOne(() => WeplanGuest, guest => guest.guest, { eager: true })
   weplanGuest: WeplanGuest;
 
   @OneToMany(() => UserEventGuestNote, guest => guest.guestNote)
