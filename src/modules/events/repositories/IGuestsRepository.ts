@@ -10,6 +10,7 @@ export default interface IGuestsRepository {
   ): Promise<Guest | undefined>;
   findByGuestId(id: string): Promise<Guest | undefined>;
   findByEvent(event_id: string): Promise<Guest[]>;
+  findByIDs(data: string[]): Promise<Guest[]>;
   findByHostIdAndEvent(event_id: string, host_id: string): Promise<Guest[]>;
   save(guest: Guest): Promise<Guest>;
   delete(guest: Guest): Promise<void>;

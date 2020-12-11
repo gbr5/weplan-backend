@@ -6,7 +6,6 @@ import Guest from '@modules/events/infra/typeorm/entities/Guest';
 import IWeplanGuestsRepository from '../repositories/IWeplanGuestsRepository';
 
 interface IRequest {
-  confirmed: boolean;
   id: string;
   user_id: string;
 }
@@ -20,7 +19,7 @@ class WeplanGuestConfirmationService {
     private weplanGuestsRepository: IWeplanGuestsRepository,
   ) {}
 
-  public async execute({ confirmed, id, user_id }: IRequest): Promise<Guest> {
+  public async execute({ id, user_id }: IRequest): Promise<Guest> {
     const guest = await this.guestsRepository.findByGuestId(id);
 
     if (!guest) {
@@ -35,7 +34,7 @@ class WeplanGuestConfirmationService {
       throw new AppError('Guest not found.');
     }
 
-    guest.confirmed = confirmed;
+    guest.confirmed = !guest.confirmed;
 
     const updatedGuest = await this.guestsRepository.save(guest);
 

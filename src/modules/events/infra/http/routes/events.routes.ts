@@ -206,11 +206,6 @@ eventsRouter.put(
 
 eventsRouter.put(
   '/weplan-user-guest/:id',
-  celebrate({
-    [Segments.BODY]: {
-      confirmed: Joi.boolean().required(),
-    },
-  }),
   weplanGuestConfirmation.updateWeplanGuest,
 );
 
