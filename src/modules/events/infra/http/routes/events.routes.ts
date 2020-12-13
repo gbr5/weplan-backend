@@ -58,6 +58,15 @@ eventsRouter.put(
   }),
   events.update,
 );
+eventsRouter.put(
+  '/name/:event_id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+    },
+  }),
+  events.updateName,
+);
 
 eventsRouter.delete('/:event_id', events.delete);
 
@@ -254,6 +263,17 @@ eventsRouter.put(
     },
   }),
   eventOwners.update,
+);
+
+eventsRouter.put(
+  '/master-number-of-guests/:event_id',
+  celebrate({
+    [Segments.BODY]: {
+      description: Joi.string(),
+      number_of_guests: Joi.number(),
+    },
+  }),
+  eventOwners.updateEventMaster,
 );
 
 eventsRouter.delete('/:event_id/event-owners/:owner_id', eventOwners.delete);

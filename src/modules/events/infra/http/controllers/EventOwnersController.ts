@@ -8,6 +8,7 @@ import DeleteEventOwnerService from '@modules/events/services/DeleteEventOwnerSe
 import UpdateEventOwnerService from '@modules/events/services/UpdateEventOwnerService';
 import ShowEventOwnerService from '@modules/events/services/ShowEventOwnerService';
 import ListEventsAsOwnerService from '@modules/events/services/ListEventsAsOwnerService';
+import UpdateEventMasterService from '@modules/events/services/UpdateEventMasterService';
 
 export default class EventOwnersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -43,6 +44,25 @@ export default class EventOwnersController {
       event_id,
       description,
       number_of_guests,
+    });
+
+    return res.json(classToClass(owner));
+  }
+
+  public async updateEventMaster(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const { number_of_guests, description } = req.body;
+    const reqParams = req.params;
+    const { event_id } = reqParams;
+
+    const updateEventOwner = container.resolve(UpdateEventMasterService);
+
+    const owner = await updateEventOwner.execute({
+      event_id,
+      number_of_guests,
+      description,
     });
 
     return res.json(classToClass(owner));
