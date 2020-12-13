@@ -2,25 +2,43 @@ import { injectable, inject } from 'tsyringe';
 
 import EventInfo from '@modules/events/infra/typeorm/entities/EventInfo';
 import IEventInfosRepository from '@modules/events/repositories/IEventInfosRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import ICreateEventInfoDTO from '@modules/events/dtos/ICreateEventInfoDTO';
+import AppError from '@shared/errors/AppError';
+import IEventsRepository from '../repositories/IEventsRepository';
+import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
 
 @injectable()
 class CreateEventInfoService {
   constructor(
     @inject('EventInfosRepository')
-    private userCheckListsRepository: IEventInfosRepository,
+    private eventInfoRepository: IEventInfosRepository,
 
-    @inject('NotificationsRepository')
-    private notificationsRepository: INotificationRepository,
+    @inject('EventsRepository')
+    private eventRepository: IEventsRepository,
 
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
+    @inject('EventOwnersRepository')
+    private eventOwnerRepository: IEventOwnersRepository,
   ) {}
 
   public async execute(data: ICreateEventInfoDTO): Promise<EventInfo> {
-    const eventInfo = await this.userCheckListsRepository.create(data);
+    const event = await this.eventRepository.findById(data.event_id);
+    if (!event) {
+      throw new AppError('Event not found!');
+    }
+    const eventMaster = await this.eventOwnerRepository.findByEventAndOwnerId(
+      data.event_id,
+      event.user_id,
+    );
+    if (!eventMaster) {
+      throw new AppError('Event master not found!');
+    }
+
+    eventMaster.number_of_guests = data.number_of_guests;
+
+    await this.eventOwnerRepository.save(eventMaster);
+    console.log(eventMaster);
+
+    const eventInfo = await this.eventInfoRepository.create(data);
 
     return eventInfo;
   }
