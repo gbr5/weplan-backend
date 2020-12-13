@@ -36,7 +36,6 @@ class CreateEventInfoService {
     eventMaster.number_of_guests = data.number_of_guests;
 
     await this.eventOwnerRepository.save(eventMaster);
-    console.log(eventMaster);
 
     const eventInfo = await this.eventInfoRepository.create(data);
 

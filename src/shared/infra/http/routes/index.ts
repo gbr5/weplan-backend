@@ -57,6 +57,7 @@ import eventUserSupplierNotesRouter from '@modules/events/infra/http/routes/even
 import weplanGuestsRouter from '@modules/events/infra/http/routes/weplanGuests.routes';
 import nextEventRouter from '@modules/events/infra/http/routes/nextEvent.routes';
 import listEventsRouter from '@modules/events/infra/http/routes/listEvents.routes';
+import eventNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventNumberOfGuests.routes';
 
 const routes = Router();
 
@@ -85,6 +86,7 @@ routes.use('/my-next-event', nextEventRouter);
 routes.use('/list/events', listEventsRouter);
 routes.use('/events', eventsRouter);
 routes.use('/event/weplan-guests', weplanGuestsRouter);
+routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
 routes.use('/event/notes', eventNotesRouter);
 routes.use('/event/user/supplier-notes', eventUserSupplierNotesRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);
