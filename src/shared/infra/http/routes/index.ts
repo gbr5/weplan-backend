@@ -58,6 +58,8 @@ import weplanGuestsRouter from '@modules/events/infra/http/routes/weplanGuests.r
 import nextEventRouter from '@modules/events/infra/http/routes/nextEvent.routes';
 import listEventsRouter from '@modules/events/infra/http/routes/listEvents.routes';
 import eventNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventNumberOfGuests.routes';
+import eventOwnerNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventOwnerNumberOfGuests.routes';
+import eventMemberNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventMemberNumberOfGuests.routes';
 
 const routes = Router();
 
@@ -87,6 +89,8 @@ routes.use('/list/events', listEventsRouter);
 routes.use('/events', eventsRouter);
 routes.use('/event/weplan-guests', weplanGuestsRouter);
 routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
+routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
+routes.use('/member/number-of-guests', eventMemberNumberOfGuestsRouter);
 routes.use('/event/notes', eventNotesRouter);
 routes.use('/event/user/supplier-notes', eventUserSupplierNotesRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);
