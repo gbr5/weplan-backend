@@ -9,7 +9,7 @@ const eventNumberOfGuestsController = new EventNumberOfGuestsController();
 eventNumberOfGuestsRouter.use(ensureAuthenticated);
 
 eventNumberOfGuestsRouter.put(
-  '/:event_id',
+  '/update/:event_id',
   eventNumberOfGuestsController.update,
 );
 
