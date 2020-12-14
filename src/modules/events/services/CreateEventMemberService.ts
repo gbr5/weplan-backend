@@ -48,7 +48,6 @@ class CreateEventMemberService {
       member_id,
     );
 
-    console.log(ownerExists);
     if (ownerExists) {
       throw new AppError(
         'This user is already associated with a owner of this event.',
