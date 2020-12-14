@@ -4,8 +4,10 @@ import AppError from '@shared/errors/AppError';
 
 import WeplanGuest from '@modules/events/infra/typeorm/entities/WeplanGuest';
 import IWeplanGuestsRepository from '@modules/events/repositories/IWeplanGuestsRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
+import IGuestsRepository from '../repositories/IGuestsRepository';
+import IEventsRepository from '../repositories/IEventsRepository';
+import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
+import IEventMembersRepository from '../repositories/IEventMembersRepository';
 
 interface IRequest {
   user_id: string;
@@ -17,13 +19,19 @@ interface IRequest {
 class CreateWeplanGuestService {
   constructor(
     @inject('WeplanGuestsRepository')
-    private guestsRepository: IWeplanGuestsRepository,
+    private weplanGuestsRepository: IWeplanGuestsRepository,
 
-    @inject('NotificationsRepository')
-    private notificationsRepository: INotificationRepository,
+    @inject('GuestsRepository')
+    private guestsRepository: IGuestsRepository,
 
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
+    @inject('EventsRepository')
+    private eventsRepository: IEventsRepository,
+
+    @inject('EventOwnersRepository')
+    private ownersRepository: IEventOwnersRepository,
+
+    @inject('EventMembersRepository')
+    private membersRepository: IEventMembersRepository,
   ) {}
 
   public async execute({
@@ -31,16 +39,49 @@ class CreateWeplanGuestService {
     guest_id,
     event_id,
   }: IRequest): Promise<WeplanGuest> {
-    const guestExists = await this.guestsRepository.findByEventAndUserId(
+    const eventExists = await this.eventsRepository.findById(event_id);
+
+    if (!eventExists) {
+      throw new AppError('Event not found.');
+    }
+
+    const ownerExists = await this.ownersRepository.findByEventAndOwnerId(
       event_id,
       user_id,
     );
 
-    if (guestExists) {
+    if (ownerExists) {
+      throw new AppError(
+        'This user is already associated with a owner in this event.',
+      );
+    }
+
+    const memberExists = await this.membersRepository.findByEventAndMemberId(
+      event_id,
+      user_id,
+    );
+
+    if (memberExists) {
+      throw new AppError(
+        'This user is already associated with a member in this event.',
+      );
+    }
+    const guestExists = await this.guestsRepository.findByGuestId(guest_id);
+
+    if (!guestExists) {
+      throw new AppError('Guest not found.');
+    }
+
+    const weplanGguestExists = await this.weplanGuestsRepository.findByEventAndUserId(
+      event_id,
+      user_id,
+    );
+
+    if (weplanGguestExists) {
       throw new AppError('The guest that you have chosen, already exists.');
     }
 
-    const guest = await this.guestsRepository.create({
+    const guest = await this.weplanGuestsRepository.create({
       user_id,
       guest_id,
       event_id,

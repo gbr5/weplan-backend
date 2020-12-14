@@ -4,8 +4,9 @@ import AppError from '@shared/errors/AppError';
 
 import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
 import IEventMembersRepository from '@modules/events/repositories/IEventMembersRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
+import IEventsRepository from '../repositories/IEventsRepository';
+import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
+import IGuestsRepository from '../repositories/IGuestsRepository';
 
 interface IRequest {
   user_id: string;
@@ -20,11 +21,14 @@ class CreateEventMemberService {
     @inject('EventMembersRepository')
     private membersRepository: IEventMembersRepository,
 
-    @inject('NotificationsRepository')
-    private notificationsRepository: INotificationRepository,
+    @inject('EventOwnersRepository')
+    private ownersRepository: IEventOwnersRepository,
 
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
+    @inject('GuestsRepository')
+    private guestsRepository: IGuestsRepository,
+
+    @inject('EventsRepository')
+    private eventsRepository: IEventsRepository,
   ) {}
 
   public async execute({
@@ -33,6 +37,35 @@ class CreateEventMemberService {
     member_id,
     number_of_guests,
   }: IRequest): Promise<EventMember> {
+    const eventExists = await this.eventsRepository.findById(event_id);
+
+    if (!eventExists) {
+      throw new AppError('Event not found.');
+    }
+
+    const ownerExists = await this.ownersRepository.findByEventAndOwnerId(
+      event_id,
+      member_id,
+    );
+
+    if (ownerExists) {
+      throw new AppError(
+        'This user is already associated with a owner of this event.',
+      );
+    }
+
+    const eventGuests = await this.guestsRepository.findByEvent(event_id);
+    const guestExists = eventGuests.find(
+      guest =>
+        guest.weplanGuest && guest.weplanGuest.weplanUserGuest.id === member_id,
+    );
+
+    if (guestExists) {
+      throw new AppError(
+        'This user is already associated with a guest of this event.',
+      );
+    }
+
     const memberExists = await this.membersRepository.findByEventAndMemberId(
       event_id,
       member_id,
@@ -46,11 +79,6 @@ class CreateEventMemberService {
       event_id,
       member_id,
       number_of_guests,
-    });
-
-    await this.notificationsRepository.create({
-      recipient_id: user_id,
-      content: 'Cerimonialista adicionado com sucesso.',
     });
 
     return member;

@@ -19,7 +19,9 @@ class ListUserService {
       throw new AppError('Company information not found.');
     }
 
-    return users;
+    const sortedUsers = users.filter(user => user.personInfo);
+
+    return sortedUsers;
   }
 }
 

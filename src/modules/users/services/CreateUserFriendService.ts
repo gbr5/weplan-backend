@@ -2,10 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import IUserFriendsRepository from '@modules/users/repositories/IUserFriendsRepository';
-import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
-import IFriendGroupsRepository from '../repositories/IFriendGroupsRepository';
 
 interface IRequest {
   user_id: string;
@@ -18,15 +15,6 @@ class CreateUserFriendService {
   constructor(
     @inject('UserFriendsRepository')
     private userFriendsRepository: IUserFriendsRepository,
-
-    @inject('FriendGroupsRepository')
-    private friendGroupsRepository: IFriendGroupsRepository,
-
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
-
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
