@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
 import IEventMembersRepository from '../repositories/IEventMembersRepository';
 import IListUserEvent from '../dtos/IListUserEvent';
@@ -22,9 +21,6 @@ class ListUserEventService {
 
     @inject('WeplanGuestsRepository')
     private weplanGuestsRepository: IWeplanGuestsRepository,
-
-    @inject('CacheProvider')
-    private cacheUser: ICacheProvider,
   ) {}
 
   public async execute({ user_id }: IRequest): Promise<IListUserEvent[]> {
@@ -39,6 +35,7 @@ class ListUserEventService {
     const eventsAsGuest = await this.weplanGuestsRepository.findByUserId(
       user_id,
     );
+
     const userEvents = [{} as IListUserEvent];
 
     eventsAsOwner.map(owner => {
@@ -76,9 +73,9 @@ class ListUserEventService {
       return userEventMember;
     });
     eventsAsGuest.map(guest => {
-      const userEventMember = {
+      const userEventGuest = {
         id: guest.event.id,
-        userEvent_id: guest.guest.id,
+        userEvent_id: guest.user_id,
         name: guest.event.name,
         trimmed_name: guest.event.trimmed_name,
         number_of_guests: 0,
@@ -88,9 +85,9 @@ class ListUserEventService {
         event_type: guest.event.event_type,
         date: guest.event.date,
       };
-      userEvents.push(userEventMember);
+      userEvents.push(userEventGuest);
 
-      return userEventMember;
+      return userEventGuest;
     });
 
     return userEvents;
