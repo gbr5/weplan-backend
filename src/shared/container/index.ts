@@ -240,6 +240,61 @@ import EventNotesRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventUserSupplierNotesRepository from '@modules/events/repositories/IEventUserSupplierNotesRepository';
 import EventUserSupplierNotesRepository from '@modules/events/infra/typeorm/repositories/EventUserSupplierNotesRepository';
 
+import IMainTransactionsRepository from '@modules/transactions/repositories/IMainTransactionsRepository';
+import MainTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/MainTransactionsRepository';
+
+import IEventTransactionsRepository from '@modules/transactions/repositories/IEventTransactionsRepository';
+import EventTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventTransactionsRepository';
+
+import IEventSupplierMainTransactionsRepository from '@modules/transactions/repositories/IEventSupplierMainTransactionsRepository';
+import EventSupplierMainTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventSupplierMainTransactionsRepository';
+
+import IEventOwnerPaymentTransactionsRepository from '@modules/transactions/repositories/IEventOwnerPaymentTransactionsRepository';
+import EventOwnerPaymentTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventOwnerPaymentTransactionsRepository';
+
+import IEventOwnerPaymentsRepository from '@modules/transactions/repositories/IEventOwnerPaymentsRepository';
+import EventOwnerPaymentsRepository from '@modules/transactions/infra/typeorm/repositories/EventOwnerPaymentsRepository';
+
+import IEventMemberPaymentTransactionsRepository from '@modules/transactions/repositories/IEventMemberPaymentTransactionsRepository';
+import EventMemberPaymentTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberPaymentTransactionsRepository';
+
+import IEventMemberPaymentsRepository from '@modules/transactions/repositories/IEventMemberPaymentsRepository';
+import EventMemberPaymentsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberPaymentsRepository';
+
+container.registerSingleton<IEventMemberPaymentsRepository>(
+  'EventMemberPaymentsRepository',
+  EventMemberPaymentsRepository,
+);
+
+container.registerSingleton<IEventMemberPaymentTransactionsRepository>(
+  'EventMemberPaymentTransactionsRepository',
+  EventMemberPaymentTransactionsRepository,
+);
+
+container.registerSingleton<IEventOwnerPaymentsRepository>(
+  'EventOwnerPaymentsRepository',
+  EventOwnerPaymentsRepository,
+);
+
+container.registerSingleton<IEventOwnerPaymentTransactionsRepository>(
+  'EventOwnerPaymentTransactionsRepository',
+  EventOwnerPaymentTransactionsRepository,
+);
+
+container.registerSingleton<IEventSupplierMainTransactionsRepository>(
+  'EventSupplierMainTransactionsRepository',
+  EventSupplierMainTransactionsRepository,
+);
+
+container.registerSingleton<IEventTransactionsRepository>(
+  'EventTransactionsRepository',
+  EventTransactionsRepository,
+);
+
+container.registerSingleton<IMainTransactionsRepository>(
+  'MainTransactionsRepository',
+  MainTransactionsRepository,
+);
 container.registerSingleton<IEventUserSupplierNotesRepository>(
   'EventUserSupplierNotesRepository',
   EventUserSupplierNotesRepository,

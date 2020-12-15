@@ -60,6 +60,13 @@ import listEventsRouter from '@modules/events/infra/http/routes/listEvents.route
 import eventNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventNumberOfGuests.routes';
 import eventOwnerNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventOwnerNumberOfGuests.routes';
 import eventMemberNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventMemberNumberOfGuests.routes';
+import mainTransactionRouter from '@modules/transactions/infra/http/routes/mainTransactions.routes';
+import eventTransactionRouter from '@modules/transactions/infra/http/routes/eventTransactions.routes';
+import eventSupplierMainTransactionRouter from '@modules/transactions/infra/http/routes/eventSupplierMainTransactions.routes';
+import eventOwnerPaymentTransactionRouter from '@modules/transactions/infra/http/routes/eventOwnerPaymentTransactions.routes';
+import eventMemberPaymentTransactionRouter from '@modules/transactions/infra/http/routes/eventMemberPaymentTransactions.routes';
+import eventOwnerPaymentRouter from '@modules/transactions/infra/http/routes/eventOwnerPayments.routes';
+import eventMemberPaymentRouter from '@modules/transactions/infra/http/routes/eventMemberPayments.routes';
 
 const routes = Router();
 
@@ -132,5 +139,35 @@ routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 routes.use('/finances', financesRouter);
 routes.use('/check-lists', checkListRouter);
 routes.use('/card/check-lists', cardCheckListRouter);
+
+// Main Transactions
+routes.use('/main-transactions', mainTransactionRouter);
+
+// Event Transactions
+routes.use('/event-transactions', eventTransactionRouter);
+
+// Event Supplier Main Transactions
+routes.use(
+  '/event-supplier-main-transactions',
+  eventSupplierMainTransactionRouter,
+);
+
+// Event Owner Payments
+routes.use('/event-owner-payments', eventOwnerPaymentRouter);
+
+// Event Member Payments
+routes.use('/event-member-payments', eventMemberPaymentRouter);
+
+// Event Owner Payment Transactions
+routes.use(
+  '/event-owner-payment-transactions',
+  eventOwnerPaymentTransactionRouter,
+);
+
+// Event Member Payment Transactions
+routes.use(
+  '/event-member-payment-transactions',
+  eventMemberPaymentTransactionRouter,
+);
 
 export default routes;
