@@ -14,6 +14,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
 import WeplanGuest from './WeplanGuest';
 import UserEventGuestNote from './UserEventGuestNote';
+import GuestContactInfo from './GuestContactInfo';
 
 @Entity('guests')
 class Guest {
@@ -60,6 +61,11 @@ class Guest {
 
   @OneToMany(() => UserEventGuestNote, guest => guest.guestNote)
   guestNotes: UserEventGuestNote[];
+
+  @OneToMany(() => GuestContactInfo, guest => guest.guestContactInfo, {
+    eager: true,
+  })
+  guestContactInfos: GuestContactInfo[];
 }
 
 export default Guest;
