@@ -246,6 +246,9 @@ import MainTransactionsRepository from '@modules/transactions/infra/typeorm/repo
 import IEventTransactionsRepository from '@modules/transactions/repositories/IEventTransactionsRepository';
 import EventTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventTransactionsRepository';
 
+import IUserTransactionsRepository from '@modules/transactions/repositories/IUserTransactionsRepository';
+import UserTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/UserTransactionsRepository';
+
 import IEventSupplierMainTransactionsRepository from '@modules/transactions/repositories/IEventSupplierMainTransactionsRepository';
 import EventSupplierMainTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventSupplierMainTransactionsRepository';
 
@@ -289,6 +292,11 @@ container.registerSingleton<IEventSupplierMainTransactionsRepository>(
 container.registerSingleton<IEventTransactionsRepository>(
   'EventTransactionsRepository',
   EventTransactionsRepository,
+);
+
+container.registerSingleton<IUserTransactionsRepository>(
+  'UserTransactionsRepository',
+  UserTransactionsRepository,
 );
 
 container.registerSingleton<IMainTransactionsRepository>(

@@ -67,6 +67,7 @@ import eventOwnerPaymentTransactionRouter from '@modules/transactions/infra/http
 import eventMemberPaymentTransactionRouter from '@modules/transactions/infra/http/routes/eventMemberPaymentTransactions.routes';
 import eventOwnerPaymentRouter from '@modules/transactions/infra/http/routes/eventOwnerPayments.routes';
 import eventMemberPaymentRouter from '@modules/transactions/infra/http/routes/eventMemberPayments.routes';
+import userTransactionRouter from '@modules/transactions/infra/http/routes/userTransactions.routes';
 
 const routes = Router();
 
@@ -142,6 +143,9 @@ routes.use('/card/check-lists', cardCheckListRouter);
 
 // Main Transactions
 routes.use('/main-transactions', mainTransactionRouter);
+
+// Event Transactions
+routes.use('/user-transactions', userTransactionRouter);
 
 // Event Transactions
 routes.use('/event-transactions', eventTransactionRouter);
