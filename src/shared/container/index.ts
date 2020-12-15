@@ -264,6 +264,14 @@ import EventMemberPaymentTransactionsRepository from '@modules/transactions/infr
 import IEventMemberPaymentsRepository from '@modules/transactions/repositories/IEventMemberPaymentsRepository';
 import EventMemberPaymentsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberPaymentsRepository';
 
+import IGuestContactInfosRepository from '@modules/events/repositories/IGuestContactInfosRepository';
+import GuestContactInfosRepository from '@modules/events/infra/typeorm/repositories/GuestContactInfosRepository';
+
+container.registerSingleton<IGuestContactInfosRepository>(
+  'GuestContactInfosRepository',
+  GuestContactInfosRepository,
+);
+
 container.registerSingleton<IEventMemberPaymentsRepository>(
   'EventMemberPaymentsRepository',
   EventMemberPaymentsRepository,

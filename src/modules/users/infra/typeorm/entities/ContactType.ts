@@ -1,3 +1,4 @@
+import GuestContactInfo from '@modules/events/infra/typeorm/entities/GuestContactInfo';
 import {
   Entity,
   Column,
@@ -24,6 +25,9 @@ class ContactType {
 
   @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
   ContactInfo: UserContactInfo;
+
+  @OneToMany(() => GuestContactInfo, guest => guest.contactType)
+  guestContactTypes: GuestContactInfo[];
 }
 
 export default ContactType;

@@ -68,6 +68,7 @@ import eventMemberPaymentTransactionRouter from '@modules/transactions/infra/htt
 import eventOwnerPaymentRouter from '@modules/transactions/infra/http/routes/eventOwnerPayments.routes';
 import eventMemberPaymentRouter from '@modules/transactions/infra/http/routes/eventMemberPayments.routes';
 import userTransactionRouter from '@modules/transactions/infra/http/routes/userTransactions.routes';
+import guestContactInfosRouter from '@modules/events/infra/http/routes/guestContactInfos.routes';
 
 const routes = Router();
 
@@ -80,6 +81,7 @@ routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
 routes.use('/company-info', companyInfoRouter);
+routes.use('/guest-contact-info', guestContactInfosRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
