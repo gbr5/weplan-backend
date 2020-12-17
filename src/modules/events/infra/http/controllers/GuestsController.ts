@@ -73,11 +73,11 @@ export default class GuestsController {
 
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { event_id, first_name, last_name } = dataParams;
+    const { id } = dataParams;
 
     const showGuest = container.resolve(ShowGuestService);
 
-    const guest = await showGuest.execute(event_id, first_name, last_name);
+    const guest = await showGuest.execute(id);
 
     return res.json(classToClass(guest));
   }

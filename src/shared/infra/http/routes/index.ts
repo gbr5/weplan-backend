@@ -69,12 +69,14 @@ import eventOwnerPaymentRouter from '@modules/transactions/infra/http/routes/eve
 import eventMemberPaymentRouter from '@modules/transactions/infra/http/routes/eventMemberPayments.routes';
 import userTransactionRouter from '@modules/transactions/infra/http/routes/userTransactions.routes';
 import guestContactInfosRouter from '@modules/events/infra/http/routes/guestContactInfos.routes';
+import guestsRouter from '@modules/events/infra/http/routes/guests.routes';
 
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
 
 routes.use('/users', usersRouter);
+routes.use('/event-guests', guestsRouter);
 routes.use('/user/modules', userManagementModulesRouter);
 routes.use('/user/confirmations', userConfirmationsRouter);
 routes.use('/sessions', sessionsRouter);
