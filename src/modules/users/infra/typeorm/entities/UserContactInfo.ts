@@ -30,9 +30,9 @@ class UserContactInfo {
   @Column('uuid')
   user_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.userContacts)
   @JoinColumn({ name: 'user_id' })
-  users: User;
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;

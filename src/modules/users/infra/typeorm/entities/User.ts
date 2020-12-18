@@ -145,8 +145,10 @@ class User {
   @OneToMany(() => EventPlanner, event_planner => event_planner.planner_id)
   EventPlanner: EventPlanner;
 
-  @OneToMany(() => UserContactInfo, contact_info => contact_info.user_id)
-  Contacts: UserContactInfo;
+  @OneToMany(() => UserContactInfo, contact_info => contact_info.user, {
+    eager: true,
+  })
+  userContacts: UserContactInfo[];
 
   @OneToMany(() => Funnel, funnel => funnel.supplier_id)
   Funnel: Funnel;
