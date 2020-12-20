@@ -118,12 +118,11 @@ class ShowMyNextEventService {
     }
     const event = nextEvents[0];
 
-    const eventNotes = await this.eventNotesRepository.findByEvent(event.id);
-    const suppliers = await this.eventSuppliersRepository.findByEvent(event.id);
-    const guests = await this.guestsRepository.findByEvent(event.id);
-    const checkLists = await this.userCheckListsRepository.findByEvent(
-      event.id,
-    );
+    const eventId = event ? event.id : '1';
+    const eventNotes = await this.eventNotesRepository.findByEvent(eventId);
+    const suppliers = await this.eventSuppliersRepository.findByEvent(eventId);
+    const guests = await this.guestsRepository.findByEvent(eventId);
+    const checkLists = await this.userCheckListsRepository.findByEvent(eventId);
 
     return {
       event,
