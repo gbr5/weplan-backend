@@ -18,6 +18,7 @@ export default class EventInfosController {
       city,
       duration,
       address,
+      dress_code,
     } = req.body;
     const dataParams = req.params;
     const { event_id } = dataParams;
@@ -34,6 +35,7 @@ export default class EventInfosController {
       local_state,
       city,
       address,
+      dress_code,
     });
 
     return res.json(classToClass(eventInfo));
@@ -60,6 +62,7 @@ export default class EventInfosController {
       local_state,
       city,
       address,
+      dress_code,
     } = req.body;
 
     const dataParams = req.params;
@@ -78,6 +81,7 @@ export default class EventInfosController {
       local_state,
       city,
       address,
+      dress_code,
     });
 
     return res.json(classToClass(eventInfo));

@@ -8,4 +8,5 @@ export default interface ICreateEventInfoDTO {
   local_state: string;
   city: string;
   address: string;
+  dress_code: string;
 }
