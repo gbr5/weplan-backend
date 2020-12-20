@@ -46,6 +46,9 @@ class EventInfo {
   @Column()
   address: string;
 
+  @Column()
+  dress_code: string;
+
   @CreateDateColumn()
   created_at: Date;
 

@@ -23,12 +23,15 @@ class UpdateEventInfoService {
     local_state,
     city,
     address,
+    dress_code,
   }: ICreateEventInfoDTO): Promise<EventInfo> {
     const eventInfo = await this.eventInfosRepository.findByEvent(event_id);
 
     if (!eventInfo) {
       throw new AppError('Event informations not found.');
     }
+
+    const dressCode = dress_code || 'Free';
 
     eventInfo.number_of_guests = number_of_guests;
     eventInfo.duration = duration;
@@ -38,6 +41,7 @@ class UpdateEventInfoService {
     eventInfo.local_state = local_state;
     eventInfo.city = city;
     eventInfo.address = address;
+    eventInfo.dress_code = dressCode;
 
     const updatedEventInfo = await this.eventInfosRepository.save(eventInfo);
 
