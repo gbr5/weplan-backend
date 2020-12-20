@@ -55,15 +55,14 @@ export default class UserContactInfoController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { contact_info } = req.body;
     const dataParams = req.params;
-    const { user_id, contact_type } = dataParams;
+    const { id } = dataParams;
     const updateUserContactInfo = container.resolve(
       UpdateUserContactInfoService,
     );
 
     const userContactInfo = await updateUserContactInfo.execute({
       contact_info,
-      user_id,
-      contact_type,
+      id,
     });
 
     return res.json(classToClass(userContactInfo));

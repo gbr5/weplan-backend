@@ -33,6 +33,27 @@ class CreateUserContactInfoService {
       );
     }
 
+    if (
+      contact_type === 'Website' ||
+      contact_type === 'Instagram' ||
+      contact_type === 'Facebook' ||
+      contact_type === 'Linkedin' ||
+      contact_type === 'Twitter'
+    ) {
+      const completeUrl = contact_info.includes('https://');
+
+      if (!completeUrl) {
+        const completeContactInfo = `https://${contact_info}`;
+        const userContactInfo = await this.userContactInfosRepository.create({
+          contact_info: completeContactInfo,
+          contact_type,
+          user_id,
+        });
+
+        return userContactInfo;
+      }
+    }
+
     const userContactInfo = await this.userContactInfosRepository.create({
       contact_info,
       contact_type,

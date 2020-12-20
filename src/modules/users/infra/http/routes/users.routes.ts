@@ -30,21 +30,19 @@ usersRouter.post(
   }),
   usersController.create,
 );
-
 usersRouter.get('/:user_id', usersController.show);
 usersRouter.get('/', usersController.index);
 usersRouter.put(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
     },
   }),
   usersController.update,
 );
-
 usersRouter.patch(
   '/avatar/:user_id',
   ensureAuthenticated,
@@ -64,7 +62,6 @@ usersRouter.post(
   }),
   friendGroupsController.create,
 );
-
 usersRouter.get(
   '/friend-groups/list',
   ensureAuthenticated,
@@ -99,7 +96,6 @@ usersRouter.post(
   }),
   userFriendsController.create,
 );
-
 usersRouter.get(
   '/friends/list',
   ensureAuthenticated,
@@ -112,6 +108,3 @@ usersRouter.delete(
 );
 
 export default usersRouter;
-
-// Rota: Aqui só pode ter funções para receber a requisição,
-// chamar outro arquivo, devolver uma resposta

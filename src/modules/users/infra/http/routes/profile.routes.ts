@@ -39,13 +39,8 @@ profileRouter.post(
 );
 
 profileRouter.put(
-  '/contact-info/:user_id/:contact_type',
+  '/contact-info/edit/:id',
   ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      contact_info: Joi.string().required(),
-    },
-  }),
   userContactInfosController.update,
 );
 
