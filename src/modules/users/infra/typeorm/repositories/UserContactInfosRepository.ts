@@ -31,6 +31,12 @@ class UserContactInfoRepository implements IUserContactInfosRepository {
     return userContactInfo;
   }
 
+  public async findById(id: string): Promise<UserContactInfo | undefined> {
+    const userContactInfo = await this.ormRepository.findOne(id);
+
+    return userContactInfo;
+  }
+
   public async create(
     userContactData: ICreateUserContactInfoDTO,
   ): Promise<UserContactInfo> {

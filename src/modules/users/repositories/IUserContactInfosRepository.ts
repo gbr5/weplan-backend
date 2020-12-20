@@ -7,6 +7,7 @@ export default interface IUserContactInfoRepository {
     user_id: string,
     contact_type: string,
   ): Promise<UserContactInfo | undefined>;
+  findById(id: string): Promise<UserContactInfo | undefined>;
   create(data: ICreateUserContactInfoDTO): Promise<UserContactInfo>;
   save(userContactInfo: UserContactInfo): Promise<UserContactInfo>;
 }
