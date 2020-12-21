@@ -1,3 +1,4 @@
+import WeplanGuest from '@modules/events/infra/typeorm/entities/WeplanGuest';
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
 import {
   Entity,
@@ -40,6 +41,10 @@ class UserConfirmation {
   @ManyToOne(() => CompanyEmployee, employee => employee.confirmations)
   @JoinColumn({ name: 'receiver_id' })
   employeeReceiver: CompanyEmployee;
+
+  @ManyToOne(() => WeplanGuest, guest => guest.userConfirmations)
+  @JoinColumn({ name: 'receiver_id' })
+  weplanGuestReceiver: WeplanGuest;
 
   @OneToMany(
     () => UserConfirmationFile,
