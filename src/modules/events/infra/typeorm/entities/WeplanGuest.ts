@@ -7,9 +7,11 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 import Guest from './Guest';
 import Event from './Event';
 
@@ -46,6 +48,13 @@ class WeplanGuest {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => UserConfirmation,
+    confirmation => confirmation.weplanGuestReceiver,
+    { eager: true },
+  )
+  userConfirmations: UserConfirmation[];
 }
 
 export default WeplanGuest;
