@@ -267,6 +267,14 @@ import EventMemberPaymentsRepository from '@modules/transactions/infra/typeorm/r
 import IGuestContactInfosRepository from '@modules/events/repositories/IGuestContactInfosRepository';
 import GuestContactInfosRepository from '@modules/events/infra/typeorm/repositories/GuestContactInfosRepository';
 
+import IUserConfirmationFilesRepository from '@modules/users/repositories/IUserConfirmationFilesRepository';
+import UserConfirmationFilesRepository from '@modules/users/infra/typeorm/repositories/UserConfirmationFilesRepository';
+
+container.registerSingleton<IUserConfirmationFilesRepository>(
+  'UserConfirmationFilesRepository',
+  UserConfirmationFilesRepository,
+);
+
 container.registerSingleton<IGuestContactInfosRepository>(
   'GuestContactInfosRepository',
   GuestContactInfosRepository,

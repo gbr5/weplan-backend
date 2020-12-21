@@ -16,6 +16,7 @@ import CategoryFile from './CategoryFile';
 import CardFile from './CardFile';
 import ContactFile from './ContactFile';
 import EmployeeFile from './EmployeeFile';
+import UserConfirmationFile from './UserConfirmationFile';
 
 @Entity('user_files')
 class UserFile {
@@ -70,6 +71,12 @@ class UserFile {
 
   @OneToMany(() => EmployeeFile, employee => employee.file)
   employeeFiles: EmployeeFile[];
+
+  @OneToMany(
+    () => UserConfirmationFile,
+    userConfirmation => userConfirmation.file,
+  )
+  userConfirmationFiles: UserConfirmationFile[];
 }
 
 export default UserFile;

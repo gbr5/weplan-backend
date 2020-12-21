@@ -5,9 +5,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
-  ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import UserConfirmationFile from './UserConfirmationFile';
 
 @Entity('user_confirmations')
 class UserConfirmation {
@@ -35,9 +36,17 @@ class UserConfirmation {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => CompanyEmployee, employee => employee.id)
+  @OneToMany(() => CompanyEmployee, employee => employee.id)
   @JoinColumn({ name: 'receiver_id' })
-  employeeReceiver: CompanyEmployee;
+  employeeReceiver: CompanyEmployee[];
+
+  @OneToMany(
+    () => UserConfirmationFile,
+    userConfirmationFile => userConfirmationFile.userConfirmation,
+    { eager: true },
+  )
+  @JoinColumn({ name: 'receiver_id' })
+  userConfirmationFiles: UserConfirmationFile[];
 }
 
 export default UserConfirmation;
