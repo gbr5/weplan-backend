@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EmployeeFile from '@modules/users/infra/typeorm/entities/EmployeeFile';
+import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 // import UserManagementModule from '@modules/users/infra/typeorm/entities/UserManagementModule';
 // import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 
@@ -71,15 +72,14 @@ class CompanyEmployee {
   // )
   // modules: UserManagementModule[];
 
-  // @OneToMany(
-  //   () => UserConfirmation,
-  //   confirmation => confirmation.employeeReceiver,
-  //   {
-  //     cascade: true,
-  //     eager: true,
-  //   },
-  // )
-  // confirmation: UserConfirmation[];
+  @OneToMany(
+    () => UserConfirmation,
+    confirmation => confirmation.employeeReceiver,
+    {
+      eager: true,
+    },
+  )
+  confirmations: UserConfirmation[];
 }
 
 export default CompanyEmployee;
