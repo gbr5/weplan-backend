@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   JoinColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import UserConfirmationFile from './UserConfirmationFile';
 
@@ -36,9 +37,9 @@ class UserConfirmation {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => CompanyEmployee, employee => employee.id)
+  @ManyToOne(() => CompanyEmployee, employee => employee.confirmations)
   @JoinColumn({ name: 'receiver_id' })
-  employeeReceiver: CompanyEmployee[];
+  employeeReceiver: CompanyEmployee;
 
   @OneToMany(
     () => UserConfirmationFile,
