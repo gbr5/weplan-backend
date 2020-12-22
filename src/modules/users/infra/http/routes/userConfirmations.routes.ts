@@ -23,7 +23,7 @@ userConfirmationRouter.get(
   companyEmployeeConfirmationController.show,
 );
 userConfirmationRouter.get(
-  '/receiver/:receiver_id',
+  '/list/receiver/:receiver_id',
   companyEmployeeConfirmationController.listReceiver,
 );
 userConfirmationRouter.get(

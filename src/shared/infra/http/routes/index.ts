@@ -71,6 +71,7 @@ import userTransactionRouter from '@modules/transactions/infra/http/routes/userT
 import guestContactInfosRouter from '@modules/events/infra/http/routes/guestContactInfos.routes';
 import guestsRouter from '@modules/events/infra/http/routes/guests.routes';
 import userConfirmationFilesRouter from '@modules/events/infra/http/routes/userConfirmationFiles.routes';
+import wpGuestConfirmationsRouter from '@modules/users/infra/http/controllers/wpGuestConfirmationsRouter';
 
 const routes = Router();
 
@@ -80,6 +81,7 @@ routes.use('/users', usersRouter);
 routes.use('/event-guests', guestsRouter);
 routes.use('/user/modules', userManagementModulesRouter);
 routes.use('/user/confirmations', userConfirmationsRouter);
+routes.use('/wp-guest/confirmations', wpGuestConfirmationsRouter);
 routes.use('/user/confirmation-files', userConfirmationFilesRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
