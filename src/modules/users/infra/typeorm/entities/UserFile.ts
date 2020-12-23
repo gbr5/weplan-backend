@@ -61,7 +61,7 @@ class UserFile {
   }
 
   @OneToMany(() => CategoryFile, category => category.file)
-  categoryFiles: CategoryFile[];
+  fileCategories: CategoryFile[];
 
   @OneToMany(() => CardFile, card => card.file)
   cardFiles: CardFile[];

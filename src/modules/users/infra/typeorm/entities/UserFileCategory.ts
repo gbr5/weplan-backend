@@ -42,7 +42,7 @@ class UserFileCategory {
   @OneToMany(() => CategoryFile, categoryFile => categoryFile.fileCategory, {
     eager: true,
   })
-  fileCategories: CategoryFile[];
+  categoryFiles: CategoryFile[];
 }
 
 export default UserFileCategory;
