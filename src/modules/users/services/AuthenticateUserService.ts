@@ -80,6 +80,12 @@ class AuthenticateUserService {
           description: 'Atas de reuniões com fornecedores e/ou parceiros.',
           color: 'rgba(176, 242, 232, 1)',
         }),
+        this.userFileCategoriesRepository.create({
+          user_id: user.id,
+          name: 'Outros',
+          description: 'Demais arquivos.',
+          color: 'rgba(250, 252, 232, 1)',
+        }),
       ]);
     } else {
       const transactionsCategory = userFileCategories.find(
@@ -99,6 +105,9 @@ class AuthenticateUserService {
       );
       const minutesOfMeetingsCategory = userFileCategories.find(
         category => category.name === 'Atas de Reuniões',
+      );
+      const othersCategory = userFileCategories.find(
+        category => category.name === 'Outros',
       );
 
       if (!transactionsCategory) {
@@ -147,6 +156,14 @@ class AuthenticateUserService {
           name: 'Atas de Reuniões',
           description: 'Atas de reuniões com fornecedores e/ou parceiros.',
           color: 'rgba(176, 242, 232, 1)',
+        });
+      }
+      if (!othersCategory) {
+        await this.userFileCategoriesRepository.create({
+          user_id: user.id,
+          name: 'Outros',
+          description: 'Demais arquivos.',
+          color: 'rgba(250, 252, 232, 1)',
         });
       }
     }
