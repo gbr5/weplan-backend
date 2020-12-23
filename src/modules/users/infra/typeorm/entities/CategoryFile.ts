@@ -19,14 +19,14 @@ class CategoryFile {
   @Column('uuid')
   file_id: string;
 
-  @ManyToOne(() => UserFile, file => file.categoryFiles, { eager: true })
+  @ManyToOne(() => UserFile, file => file.fileCategories, { eager: true })
   @JoinColumn({ name: 'file_id' })
   file: UserFile;
 
   @Column('uuid')
   category_id: string;
 
-  @ManyToOne(() => UserFileCategory, category => category.fileCategories)
+  @ManyToOne(() => UserFileCategory, category => category.categoryFiles)
   @JoinColumn({ name: 'category_id' })
   fileCategory: UserFileCategory;
 
