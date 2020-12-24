@@ -72,6 +72,7 @@ import guestContactInfosRouter from '@modules/events/infra/http/routes/guestCont
 import guestsRouter from '@modules/events/infra/http/routes/guests.routes';
 import userConfirmationFilesRouter from '@modules/events/infra/http/routes/userConfirmationFiles.routes';
 import wpGuestConfirmationsRouter from '@modules/users/infra/http/controllers/wpGuestConfirmationsRouter';
+import eventInvitationsRouter from '@modules/users/infra/http/routes/eventInvitations.routes';
 
 const routes = Router();
 
@@ -108,6 +109,7 @@ routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
 routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
 routes.use('/member/number-of-guests', eventMemberNumberOfGuestsRouter);
 routes.use('/event/notes', eventNotesRouter);
+routes.use('/event/invitations', eventInvitationsRouter);
 routes.use('/event/user/supplier-notes', eventUserSupplierNotesRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);
 routes.use('/event-types', eventTypesRouter);
