@@ -11,13 +11,19 @@ class DeleteUserConfirmationService {
   ) {}
 
   public async execute(id: string): Promise<void> {
-    const userConfirmation = await this.userConfirmationRepository.findById(id);
+    try {
+      const userConfirmation = await this.userConfirmationRepository.findById(
+        id,
+      );
 
-    if (!userConfirmation) {
-      throw new AppError('No confirmation found.');
+      if (!userConfirmation) {
+        throw new AppError('No confirmation found.');
+      }
+
+      await this.userConfirmationRepository.delete(userConfirmation);
+    } catch (error) {
+      throw new AppError(error);
     }
-
-    await this.userConfirmationRepository.delete(userConfirmation);
   }
 }
 
