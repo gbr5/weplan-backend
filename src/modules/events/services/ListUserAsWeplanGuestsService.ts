@@ -20,7 +20,11 @@ class ListWeplanGuestsService {
       user_id,
     );
 
-    const guestIds = weplanGuests.map(guest => guest.guest_id);
+    const invitedAsGuest = weplanGuests.filter(
+      guest => guest.userConfirmations.length > 0,
+    );
+
+    const guestIds = invitedAsGuest.map(guest => guest.guest_id);
 
     const guests = await this.guestsRepository.findByIDs(guestIds);
 
