@@ -73,6 +73,7 @@ import guestsRouter from '@modules/events/infra/http/routes/guests.routes';
 import userConfirmationFilesRouter from '@modules/events/infra/http/routes/userConfirmationFiles.routes';
 import wpGuestConfirmationsRouter from '@modules/users/infra/http/controllers/wpGuestConfirmationsRouter';
 import eventInvitationsRouter from '@modules/users/infra/http/routes/eventInvitations.routes';
+import weplanGuestMessagesRouter from '@modules/users/infra/http/routes/weplanGuestMessages.routes';
 
 const routes = Router();
 
@@ -92,6 +93,8 @@ routes.use('/guest-contact-info', guestContactInfosRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
+
+routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
 
 routes.use('/user/files', userFilesRouter);
 routes.use('/user/file/categories', userFileCategoriesRouter);
