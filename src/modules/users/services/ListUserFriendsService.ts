@@ -33,13 +33,19 @@ class ListUserFriendsService {
     private personInfoRepository: IPersonInfoRepository,
 
     @inject('CacheProvider')
-    private cacheUser: ICacheProvider,
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute(user_id: string): Promise<UserFriend[]> {
-    const userFriends = await this.userFriendsRepository.findAllFriends(
-      user_id,
-    );
+    const cacheKey = `user-friends:${user_id}`;
+
+    let userFriends = await this.cacheProvider.recover<UserFriend[]>(cacheKey);
+
+    if (!userFriends) {
+      userFriends = await this.userFriendsRepository.findAllFriends(user_id);
+
+      await this.cacheProvider.save(cacheKey, userFriends);
+    }
 
     const friendsIds = userFriends.map(user => user.friend_id);
     const groupedFriendsIds: string[] = [];
