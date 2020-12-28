@@ -12,13 +12,23 @@ class ListContactTypesService {
     private contactTypesRepository: IContactTypesRepository,
 
     @inject('CacheProvider')
-    private cacheUser: ICacheProvider,
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute(): Promise<ContactType[]> {
-    const ContactTypes = await this.contactTypesRepository.findAll();
+    const cacheKey = `contact-types`;
 
-    return ContactTypes;
+    let contactTypes = await this.cacheProvider.recover<ContactType[]>(
+      cacheKey,
+    );
+
+    if (!contactTypes) {
+      contactTypes = await this.contactTypesRepository.findAll();
+
+      await this.cacheProvider.save(cacheKey, contactTypes);
+    }
+
+    return contactTypes;
   }
 }
 
