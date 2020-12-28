@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 
 import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { classToClass } from 'class-transformer';
 import EventOwner from '../infra/typeorm/entities/EventOwner';
 
 @injectable()
@@ -12,13 +13,23 @@ class ListEventsAsOwnerService {
     private eventOwnersRepository: IEventOwnersRepository,
 
     @inject('CacheProvider')
-    private cacheUser: ICacheProvider,
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute(user_id: string): Promise<EventOwner[]> {
-    const eventOwners = await this.eventOwnersRepository.findByOwnerId(user_id);
+    const cacheKey = `events-as-owner:${user_id}`;
 
-    return eventOwners;
+    let eventsAsOwner = await this.cacheProvider.recover<EventOwner[]>(
+      cacheKey,
+    );
+
+    if (!eventsAsOwner) {
+      eventsAsOwner = await this.eventOwnersRepository.findByOwnerId(user_id);
+
+      await this.cacheProvider.save(cacheKey, classToClass(eventsAsOwner));
+    }
+
+    return eventsAsOwner;
   }
 }
 
