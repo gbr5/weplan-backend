@@ -21,25 +21,25 @@ class ListWePlanGuestMessagesService {
   ) {}
 
   public async execute(wp_guest_id: string): Promise<IResponse> {
-    const cacheKey = `wp-guest-messages:${wp_guest_id}`;
+    // const cacheKey = `wp-guest-messages:${wp_guest_id}`;
 
-    let wpGuestMessages = await this.cacheProvider.recover<IResponse>(cacheKey);
+    // let wpGuestMessages = await this.cacheProvider.recover<IResponse>(cacheKey);
 
-    if (!wpGuestMessages) {
-      const wpGuestSentMessages = await this.userConfirmationRepository.findBySenderId(
-        wp_guest_id,
-      );
-      const wpGuestReceivedMessages = await this.userConfirmationRepository.findByReceiverId(
-        wp_guest_id,
-      );
+    // if (!wpGuestMessages) {
+    const wpGuestSentMessages = await this.userConfirmationRepository.findBySenderId(
+      wp_guest_id,
+    );
+    const wpGuestReceivedMessages = await this.userConfirmationRepository.findByReceiverId(
+      wp_guest_id,
+    );
 
-      wpGuestMessages = {
-        wpGuestSentMessages,
-        wpGuestReceivedMessages,
-      };
+    const wpGuestMessages = {
+      wpGuestSentMessages,
+      wpGuestReceivedMessages,
+    };
 
-      await this.cacheProvider.save(cacheKey, wpGuestMessages);
-    }
+    //   await this.cacheProvider.save(cacheKey, wpGuestMessages);
+    // }
 
     return wpGuestMessages;
   }

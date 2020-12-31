@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import AppError from '@shared/errors/AppError';
 import UserFile from '../infra/typeorm/entities/UserFile';
 import IUserConfirmationFilesRepository from '../repositories/IUserConfirmationFilesRepository';
@@ -19,6 +20,9 @@ class CreateWePlanGuestMessageService {
   constructor(
     @inject('UserConfirmationRepository')
     private userConfirmationRepository: IUserConfirmationRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
 
     @inject('UserConfirmationFilesRepository')
     private userConfirmationFilesRepository: IUserConfirmationFilesRepository,
@@ -50,6 +54,8 @@ class CreateWePlanGuestMessageService {
           }),
         ]);
       }
+
+      await this.cacheProvider.invalidate(`wp-guest-messages:${receiver_id}`);
 
       return wePlanGuestMessage;
     } catch (error) {
