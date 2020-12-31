@@ -37,15 +37,17 @@ class ListUserFriendsService {
   ) {}
 
   public async execute(user_id: string): Promise<UserFriend[]> {
-    const cacheKey = `user-friends:${user_id}`;
+    // const cacheKey = `user-friends:${user_id}`;
 
-    let userFriends = await this.cacheProvider.recover<UserFriend[]>(cacheKey);
+    // let userFriends = await this.cacheProvider.recover<UserFriend[]>(cacheKey);
 
-    if (!userFriends) {
-      userFriends = await this.userFriendsRepository.findAllFriends(user_id);
+    // if (!userFriends) {
+    const userFriends = await this.userFriendsRepository.findAllFriends(
+      user_id,
+    );
 
-      await this.cacheProvider.save(cacheKey, userFriends);
-    }
+    //   await this.cacheProvider.save(cacheKey, userFriends);
+    // }
 
     const friendsIds = userFriends.map(user => user.friend_id);
     const groupedFriendsIds: string[] = [];

@@ -12,11 +12,11 @@ class ListFriendGroupsService {
   ) {}
 
   public async execute(user_id: string): Promise<FriendGroup[]> {
-    const FriendGroups = await this.friendGroupsRepository.findAllGroups(
+    const friendGroups = await this.friendGroupsRepository.findAllGroups(
       user_id,
     );
 
-    return FriendGroups;
+    return friendGroups;
   }
 }
 

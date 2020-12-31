@@ -23,11 +23,11 @@ class ListWeplanGuestsService {
 
     weplanGuests.map(async guest => {
       (await users).push({
-        guest_id: guest.Guest.id,
-        event_name: guest.Event.name,
-        host: guest.Event.user_id,
-        date: guest.Event.date,
-        confirmed: guest.Guest.confirmed,
+        guest_id: guest.guest.id,
+        event_name: guest.event.name,
+        host: guest.event.user_id,
+        date: guest.event.date,
+        confirmed: guest.guest.confirmed,
       });
     });
 

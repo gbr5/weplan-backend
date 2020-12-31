@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 
 import IWeplanGuestsRepository from '@modules/events/repositories/IWeplanGuestsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import { classToClass } from 'class-transformer';
+// import { classToClass } from 'class-transformer';
 import Guest from '../infra/typeorm/entities/Guest';
 import IGuestsRepository from '../repositories/IGuestsRepository';
 
@@ -21,28 +21,28 @@ class ListWeplanGuestsService {
   ) {}
 
   public async execute(user_id: string): Promise<Guest[]> {
-    const cacheKey = `events-as-weplan-guest:${user_id}`;
+    // const cacheKey = `events-as-weplan-guest:${user_id}`;
 
-    let eventsAsWeplanGuest = await this.cacheProvider.recover<Guest[]>(
-      cacheKey,
+    // let eventsAsWeplanGuest = await this.cacheProvider.recover<Guest[]>(
+    //   cacheKey,
+    // );
+
+    // if (!eventsAsWeplanGuest) {
+    const weplanGuests = await this.weplanGuestsRepository.findByUserId(
+      user_id,
     );
 
-    if (!eventsAsWeplanGuest) {
-      const weplanGuests = await this.weplanGuestsRepository.findByUserId(
-        user_id,
-      );
+    const invitedAsGuest = weplanGuests.filter(
+      guest => guest.userConfirmations.length > 0,
+    );
+    const guestIds = invitedAsGuest.map(guest => guest.guest_id);
 
-      const invitedAsGuest = weplanGuests.filter(
-        guest => guest.userConfirmations.length > 0,
-      );
-      const guestIds = invitedAsGuest.map(guest => guest.guest_id);
-
-      eventsAsWeplanGuest = await this.guestsRepository.findByIDs(guestIds);
-      await this.cacheProvider.save(
-        cacheKey,
-        classToClass(eventsAsWeplanGuest),
-      );
-    }
+    const eventsAsWeplanGuest = await this.guestsRepository.findByIDs(guestIds);
+    //   await this.cacheProvider.save(
+    //     cacheKey,
+    //     classToClass(eventsAsWeplanGuest),
+    //   );
+    // }
 
     return eventsAsWeplanGuest;
   }

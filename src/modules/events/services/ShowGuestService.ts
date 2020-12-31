@@ -17,21 +17,21 @@ class ShowGuestService {
   ) {}
 
   public async execute(id: string): Promise<Guest> {
-    const cacheKey = `guest:${id}`;
+    // const cacheKey = `guest:${id}`;
 
-    let guest = await this.cacheProvider.recover<Guest>(cacheKey);
-    console.log(guest, cacheKey);
+    // let guest = await this.cacheProvider.recover<Guest>(cacheKey);
+    // console.log(guest, cacheKey);
 
-    if (!guest) {
-      const updatedGuest = await this.guestsRepository.findByGuestId(id);
+    // if (!guest) {
+    const updatedGuest = await this.guestsRepository.findByGuestId(id);
 
-      if (!updatedGuest) {
-        throw new AppError('Guest not found.');
-      }
-      guest = updatedGuest;
-
-      await this.cacheProvider.save(cacheKey, guest);
+    if (!updatedGuest) {
+      throw new AppError('Guest not found.');
     }
+    const guest = updatedGuest;
+
+    // await this.cacheProvider.save(cacheKey, guest);
+    // }
 
     return guest;
   }
