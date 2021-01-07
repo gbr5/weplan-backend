@@ -19,7 +19,7 @@ class BudgetFile {
   @Column('uuid')
   file_id: string;
 
-  @ManyToOne(() => UserFile, file => file.categoryFiles, { eager: true })
+  @ManyToOne(() => UserFile, file => file.budgetFiles, { eager: true })
   @JoinColumn({ name: 'file_id' })
   file: UserFile;
 

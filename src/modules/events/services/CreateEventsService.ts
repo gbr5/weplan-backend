@@ -1,4 +1,4 @@
-import { startOfHour, isBefore, format } from 'date-fns';
+import { isBefore, format } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -8,13 +8,7 @@ import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IEventOwnersRepository from '../repositories/IEventOwnersRepository';
-
-interface IRequest {
-  name: string;
-  user_id: string;
-  event_type: string;
-  date: Date;
-}
+import ICreateEventDTO from '../dtos/ICreateEventDTO';
 
 @injectable()
 class CreateEventService {
@@ -34,11 +28,14 @@ class CreateEventService {
 
   public async execute({
     name,
+    trimmed_name,
     user_id,
     event_type,
     date,
-  }: IRequest): Promise<Event> {
-    const eventDate = startOfHour(date);
+    isDateDefined,
+    isPublished,
+  }: ICreateEventDTO): Promise<Event> {
+    const eventDate = new Date(date);
 
     if (isBefore(eventDate, Date.now())) {
       throw new AppError("You can't create an event on a past date.");
@@ -52,28 +49,14 @@ class CreateEventService {
       );
     }
 
-    const eventName = name
-      .toLowerCase()
-      .split(' ')
-      .map(word => {
-        return word[0].toUpperCase() + word.slice(1);
-      })
-      .join(' ');
-
-    const trimmed_name = name
-      .toLowerCase()
-      .split(' ')
-      .map(word => {
-        return word[0].toUpperCase() + word.slice(1);
-      })
-      .join('');
-
     const event = await this.eventsRepository.create({
-      name: eventName,
+      name,
       trimmed_name,
       user_id,
       event_type,
       date: eventDate,
+      isDateDefined,
+      isPublished,
     });
 
     await this.eventOwnersRepository.create({

@@ -24,6 +24,7 @@ import EventServiceOrder from './EventServiceOrder';
 import EventNote from './EventNote';
 import EventSupplier from './EventSupplier';
 import Guest from './Guest';
+import EventDate from './EventDate';
 
 @Entity('events')
 class Event {
@@ -32,6 +33,12 @@ class Event {
 
   @Column()
   name: string;
+
+  @Column('boolean')
+  isDateDefined: boolean;
+
+  @Column('boolean')
+  isPublished: boolean;
 
   @Column()
   trimmed_name: string;
@@ -97,6 +104,9 @@ class Event {
 
   @OneToMany(() => EventNote, note => note.event)
   eventNotes: EventNote[];
+
+  @OneToMany(() => EventDate, eventDate => eventDate.event, { eager: true })
+  eventDates: EventDate[];
 }
 
 export default Event;

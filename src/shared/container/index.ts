@@ -270,6 +270,14 @@ import GuestContactInfosRepository from '@modules/events/infra/typeorm/repositor
 import IUserConfirmationFilesRepository from '@modules/users/repositories/IUserConfirmationFilesRepository';
 import UserConfirmationFilesRepository from '@modules/users/infra/typeorm/repositories/UserConfirmationFilesRepository';
 
+import IEventDatesRepository from '@modules/events/repositories/IEventDatesRepository';
+import EventDatesRepository from '@modules/events/infra/typeorm/repositories/EventDatesRepository';
+
+container.registerSingleton<IEventDatesRepository>(
+  'EventDatesRepository',
+  EventDatesRepository,
+);
+
 container.registerSingleton<IUserConfirmationFilesRepository>(
   'UserConfirmationFilesRepository',
   UserConfirmationFilesRepository,

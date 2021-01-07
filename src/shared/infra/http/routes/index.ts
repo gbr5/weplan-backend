@@ -74,6 +74,7 @@ import userConfirmationFilesRouter from '@modules/events/infra/http/routes/userC
 import wpGuestConfirmationsRouter from '@modules/users/infra/http/controllers/wpGuestConfirmationsRouter';
 import eventInvitationsRouter from '@modules/users/infra/http/routes/eventInvitations.routes';
 import weplanGuestMessagesRouter from '@modules/users/infra/http/routes/weplanGuestMessages.routes';
+import eventDatesRouter from '@modules/events/infra/http/routes/eventDates.routes';
 
 const routes = Router();
 
@@ -81,6 +82,7 @@ routes.use('/appointments', appointmentsRouter);
 
 routes.use('/users', usersRouter);
 routes.use('/event-guests', guestsRouter);
+routes.use('/event/dates', eventDatesRouter);
 routes.use('/user/modules', userManagementModulesRouter);
 routes.use('/user/confirmations', userConfirmationsRouter);
 routes.use('/wp-guest/confirmations', wpGuestConfirmationsRouter);

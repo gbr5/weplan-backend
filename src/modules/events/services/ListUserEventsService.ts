@@ -50,6 +50,8 @@ class ListUserEventService {
         isGuest: false,
         event_type: owner.event.event_type,
         date: owner.event.date,
+        isDateDefined: owner.event.isDateDefined,
+        isPublished: owner.event.isPublished,
       };
       userEvents.push(userEventOwner);
 
@@ -67,6 +69,8 @@ class ListUserEventService {
         isGuest: false,
         event_type: member.event.event_type,
         date: member.event.date,
+        isDateDefined: member.event.isDateDefined,
+        isPublished: member.event.isPublished,
       };
       userEvents.push(userEventMember);
 
@@ -84,6 +88,8 @@ class ListUserEventService {
         isGuest: false,
         event_type: guest.event.event_type,
         date: guest.event.date,
+        isDateDefined: guest.event.isDateDefined,
+        isPublished: guest.event.isPublished,
       };
       userEvents.push(userEventGuest);
 

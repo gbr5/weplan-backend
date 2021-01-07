@@ -11,16 +11,27 @@ import UpdateEventNameService from '@modules/events/services/UpdateEventNameServ
 
 export default class EventsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, event_type, date } = req.body;
+    const { name, event_type, date, isDateDefined } = req.body;
     const user_id = req.user.id;
 
     const createEvents = container.resolve(CreateEventsService);
 
+    const trimmed_name = name
+      .toLowerCase()
+      .split(' ')
+      // .map((word: string) => {
+      //   return word[0].toUpperCase() + word.slice(1);
+      // })
+      .join('');
+
     const event = await createEvents.execute({
       name,
+      trimmed_name,
       event_type,
       date,
       user_id,
+      isDateDefined,
+      isPublished: false,
     });
 
     return res.json(classToClass(event));

@@ -20,7 +20,6 @@ class ShowGuestService {
     // const cacheKey = `guest:${id}`;
 
     // let guest = await this.cacheProvider.recover<Guest>(cacheKey);
-    // console.log(guest, cacheKey);
 
     // if (!guest) {
     const updatedGuest = await this.guestsRepository.findByGuestId(id);
