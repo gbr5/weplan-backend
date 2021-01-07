@@ -42,6 +42,7 @@ eventsRouter.post(
       name: Joi.string().required(),
       event_type: Joi.string().required(),
       date: Joi.date(),
+      isDateDefined: Joi.boolean(),
     },
   }),
   events.create,

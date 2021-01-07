@@ -9,4 +9,6 @@ export default interface IListUserEvent {
   isGuest: boolean;
   event_type: string;
   date: Date;
+  isDateDefined: boolean;
+  isPublished: boolean;
 }
