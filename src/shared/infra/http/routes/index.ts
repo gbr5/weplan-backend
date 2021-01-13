@@ -77,6 +77,7 @@ import weplanGuestMessagesRouter from '@modules/users/infra/http/routes/weplanGu
 import eventDatesRouter from '@modules/events/infra/http/routes/eventDates.routes';
 import userProfileRouter from '@modules/users/infra/http/routes/userProfile.routes';
 import eventFilesRouter from '@modules/events/infra/http/routes/eventFiles.routes';
+import userImagesRouter from '@modules/users/infra/http/routes/userImages.routes';
 
 const routes = Router();
 
@@ -100,6 +101,8 @@ routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
 
 routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
+
+routes.use('/user/images', userImagesRouter);
 
 routes.use('/user/files', userFilesRouter);
 routes.use('/user/file/categories', userFileCategoriesRouter);

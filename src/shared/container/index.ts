@@ -276,6 +276,14 @@ import EventDatesRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventFilesRepository from '@modules/events/repositories/IEventFilesRepository';
 import EventFilesRepository from '@modules/events/infra/typeorm/repositories/EventFilesRepository';
 
+import IUserImagesRepository from '@modules/users/repositories/IUserImagesRepository';
+import UserImagesRepository from '@modules/users/infra/typeorm/repositories/UserImagesRepository';
+
+container.registerSingleton<IUserImagesRepository>(
+  'UserImagesRepository',
+  UserImagesRepository,
+);
+
 container.registerSingleton<IEventFilesRepository>(
   'EventFilesRepository',
   EventFilesRepository,
