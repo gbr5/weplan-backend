@@ -132,6 +132,8 @@ class ShowMyNextEventService {
       guests,
       suppliers,
       eventDates: event.eventDates,
+      eventFiles: event.eventFiles,
+      eventImages: event.eventImages,
       event_avatar_url: event_avatar_url || 'n/a',
     };
   }
