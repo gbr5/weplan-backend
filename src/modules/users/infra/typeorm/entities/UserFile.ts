@@ -12,6 +12,7 @@ import uploadConfig from '@config/upload';
 import { Expose } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EventFile from '@modules/events/infra/typeorm/entities/EventFile';
 import CategoryFile from './CategoryFile';
 import CardFile from './CardFile';
 import ContactFile from './ContactFile';
@@ -81,6 +82,9 @@ class UserFile {
     userConfirmation => userConfirmation.file,
   )
   userConfirmationFiles: UserConfirmationFile[];
+
+  @OneToMany(() => EventFile, event => event.file)
+  eventFiles: EventFile[];
 }
 
 export default UserFile;

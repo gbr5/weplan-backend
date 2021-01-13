@@ -9,6 +9,8 @@ import {
   OneToOne,
   OneToMany,
 } from 'typeorm';
+import uploadConfig from '@config/upload';
+import { Expose } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventCard from '@modules/suppliers/infra/typeorm/entities/EventCard';
@@ -25,6 +27,7 @@ import EventNote from './EventNote';
 import EventSupplier from './EventSupplier';
 import Guest from './Guest';
 import EventDate from './EventDate';
+import EventFile from './EventFile';
 
 @Entity('events')
 class Event {
@@ -60,11 +63,29 @@ class Event {
   @Column('timestamp with time zone')
   date: Date;
 
+  @Column()
+  avatar: string;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    if (!this.avatar) {
+      return null;
+    }
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+      case 's3':
+        return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.avatar}`;
+      default:
+        return null;
+    }
+  }
 
   @OneToMany(() => UserCheckList, user_check_list => user_check_list.event_id)
   CheckList: UserCheckList[];
@@ -107,6 +128,9 @@ class Event {
 
   @OneToMany(() => EventDate, eventDate => eventDate.event, { eager: true })
   eventDates: EventDate[];
+
+  @OneToMany(() => EventFile, eventFile => eventFile.event, { eager: true })
+  eventFiles: EventFile[];
 }
 
 export default Event;

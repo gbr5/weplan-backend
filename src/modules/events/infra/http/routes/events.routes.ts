@@ -16,9 +16,11 @@ import EventInfosController from '@modules/events/infra/http/controllers/EventIn
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 import WeplanGuestConfirmationController from '../controllers/WeplanGuestConfirmationController';
+import EventAvatarController from '../controllers/EventAvatarController';
 
 const eventsRouter = Router();
 const events = new EventsController();
+const eventAvatar = new EventAvatarController();
 const eventSuppliers = new EventSuppliersController();
 const hiredSuppliers = new HiredSuppliersController();
 const eventWeplanSuppliers = new EventWeplanSuppliersController();
@@ -70,6 +72,13 @@ eventsRouter.put(
 );
 
 eventsRouter.delete('/:event_id', events.delete);
+
+eventsRouter.patch(
+  '/avatar/:event_id',
+  ensureAuthenticated,
+  upload.single('avatar'),
+  eventAvatar.update,
+);
 
 // === Hired Suppliers === //
 

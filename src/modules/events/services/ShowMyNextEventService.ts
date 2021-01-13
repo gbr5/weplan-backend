@@ -123,6 +123,7 @@ class ShowMyNextEventService {
     const suppliers = await this.eventSuppliersRepository.findByEvent(eventId);
     const guests = await this.guestsRepository.findByEvent(eventId);
     const checkLists = await this.userCheckListsRepository.findByEvent(eventId);
+    const event_avatar_url = event.getAvatarUrl();
 
     return {
       event,
@@ -130,6 +131,8 @@ class ShowMyNextEventService {
       eventNotes,
       guests,
       suppliers,
+      eventDates: event.eventDates,
+      event_avatar_url: event_avatar_url || 'n/a',
     };
   }
 }

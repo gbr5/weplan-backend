@@ -273,6 +273,14 @@ import UserConfirmationFilesRepository from '@modules/users/infra/typeorm/reposi
 import IEventDatesRepository from '@modules/events/repositories/IEventDatesRepository';
 import EventDatesRepository from '@modules/events/infra/typeorm/repositories/EventDatesRepository';
 
+import IEventFilesRepository from '@modules/events/repositories/IEventFilesRepository';
+import EventFilesRepository from '@modules/events/infra/typeorm/repositories/EventFilesRepository';
+
+container.registerSingleton<IEventFilesRepository>(
+  'EventFilesRepository',
+  EventFilesRepository,
+);
+
 container.registerSingleton<IEventDatesRepository>(
   'EventDatesRepository',
   EventDatesRepository,
