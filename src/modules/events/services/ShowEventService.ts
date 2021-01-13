@@ -8,6 +8,7 @@ import IGuestsRepository from '../repositories/IGuestsRepository';
 import IEventNotesRepository from '../repositories/IEventNotesRepository';
 import IUserCheckListsRepository from '../repositories/IUserCheckListsRepository';
 import IShowEventDTO from '../dtos/IShowEventDTO';
+import IEventDatesRepository from '../repositories/IEventDatesRepository';
 
 @injectable()
 class ShowEventService {
@@ -24,6 +25,9 @@ class ShowEventService {
     @inject('EventNotesRepository')
     private eventNotesRepository: IEventNotesRepository,
 
+    @inject('EventDatesRepository')
+    private eventDatesRepository: IEventDatesRepository,
+
     @inject('UserCheckListsRepository')
     private userCheckListsRepository: IUserCheckListsRepository,
   ) {}
@@ -36,18 +40,21 @@ class ShowEventService {
     }
 
     const eventNotes = await this.eventNotesRepository.findByEvent(event.id);
+    const eventDates = await this.eventDatesRepository.findByEventId(event.id);
     const suppliers = await this.eventSuppliersRepository.findByEvent(event.id);
     const guests = await this.guestsRepository.findByEvent(event.id);
     const checkLists = await this.userCheckListsRepository.findByEvent(
       event.id,
     );
-
+    const event_avatar_url = event.getAvatarUrl();
     return {
       event,
       checkLists,
       eventNotes,
+      eventDates,
       guests,
       suppliers,
+      event_avatar_url: event_avatar_url || 'n/a',
     };
   }
 }

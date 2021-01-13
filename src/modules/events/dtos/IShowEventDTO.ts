@@ -12,4 +12,5 @@ export default interface IShowEventDTO {
   suppliers: EventSupplier[];
   eventNotes: EventNote[];
   eventDates: EventDate[];
+  event_avatar_url: string;
 }

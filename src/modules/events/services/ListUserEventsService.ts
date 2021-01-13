@@ -39,6 +39,7 @@ class ListUserEventService {
     const userEvents = [{} as IListUserEvent];
 
     eventsAsOwner.map(owner => {
+      const event_avatar_url = owner.event.getAvatarUrl();
       const userEventOwner = {
         id: owner.event.id,
         userEvent_id: owner.owner_id,
@@ -52,12 +53,14 @@ class ListUserEventService {
         date: owner.event.date,
         isDateDefined: owner.event.isDateDefined,
         isPublished: owner.event.isPublished,
+        event_avatar_url: event_avatar_url || 'n/a',
       };
       userEvents.push(userEventOwner);
 
       return userEventOwner;
     });
     eventsAsMember.map(member => {
+      const event_avatar_url = member.event.getAvatarUrl();
       const userEventMember = {
         id: member.event.id,
         userEvent_id: member.member_id,
@@ -71,12 +74,14 @@ class ListUserEventService {
         date: member.event.date,
         isDateDefined: member.event.isDateDefined,
         isPublished: member.event.isPublished,
+        event_avatar_url: event_avatar_url || 'n/a',
       };
       userEvents.push(userEventMember);
 
       return userEventMember;
     });
     eventsAsGuest.map(guest => {
+      const event_avatar_url = guest.event.getAvatarUrl();
       const userEventGuest = {
         id: guest.event.id,
         userEvent_id: guest.user_id,
@@ -90,6 +95,7 @@ class ListUserEventService {
         date: guest.event.date,
         isDateDefined: guest.event.isDateDefined,
         isPublished: guest.event.isPublished,
+        event_avatar_url: event_avatar_url || 'n/a',
       };
       userEvents.push(userEventGuest);
 

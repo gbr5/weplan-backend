@@ -75,6 +75,8 @@ import wpGuestConfirmationsRouter from '@modules/users/infra/http/controllers/wp
 import eventInvitationsRouter from '@modules/users/infra/http/routes/eventInvitations.routes';
 import weplanGuestMessagesRouter from '@modules/users/infra/http/routes/weplanGuestMessages.routes';
 import eventDatesRouter from '@modules/events/infra/http/routes/eventDates.routes';
+import userProfileRouter from '@modules/users/infra/http/routes/userProfile.routes';
+import eventFilesRouter from '@modules/events/infra/http/routes/eventFiles.routes';
 
 const routes = Router();
 
@@ -90,6 +92,7 @@ routes.use('/user/confirmation-files', userConfirmationFilesRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
+routes.use('/user-profile', userProfileRouter);
 routes.use('/company-info', companyInfoRouter);
 routes.use('/guest-contact-info', guestContactInfosRouter);
 routes.use('/person-info', personInfoRouter);
@@ -114,6 +117,7 @@ routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
 routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
 routes.use('/member/number-of-guests', eventMemberNumberOfGuestsRouter);
 routes.use('/event/notes', eventNotesRouter);
+routes.use('/event/files', eventFilesRouter);
 routes.use('/event/invitations', eventInvitationsRouter);
 routes.use('/event/user/supplier-notes', eventUserSupplierNotesRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);

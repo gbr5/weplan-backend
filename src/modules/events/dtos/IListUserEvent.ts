@@ -11,4 +11,5 @@ export default interface IListUserEvent {
   date: Date;
   isDateDefined: boolean;
   isPublished: boolean;
+  event_avatar_url: string;
 }
