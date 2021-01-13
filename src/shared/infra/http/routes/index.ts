@@ -78,6 +78,8 @@ import eventDatesRouter from '@modules/events/infra/http/routes/eventDates.route
 import userProfileRouter from '@modules/users/infra/http/routes/userProfile.routes';
 import eventFilesRouter from '@modules/events/infra/http/routes/eventFiles.routes';
 import userImagesRouter from '@modules/users/infra/http/routes/userImages.routes';
+import eventImagesRouter from '@modules/events/infra/http/routes/eventImages.routes';
+import imageParticipantsRouter from '@modules/users/infra/http/routes/imageParticipants.routes';
 
 const routes = Router();
 
@@ -103,6 +105,7 @@ routes.use('/contact-types', contactTypesRouter);
 routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
 
 routes.use('/user/images', userImagesRouter);
+routes.use('/image/participants', imageParticipantsRouter);
 
 routes.use('/user/files', userFilesRouter);
 routes.use('/user/file/categories', userFileCategoriesRouter);
@@ -121,6 +124,7 @@ routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
 routes.use('/member/number-of-guests', eventMemberNumberOfGuestsRouter);
 routes.use('/event/notes', eventNotesRouter);
 routes.use('/event/files', eventFilesRouter);
+routes.use('/event/images', eventImagesRouter);
 routes.use('/event/invitations', eventInvitationsRouter);
 routes.use('/event/user/supplier-notes', eventUserSupplierNotesRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);

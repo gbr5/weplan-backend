@@ -28,6 +28,7 @@ import EventSupplier from './EventSupplier';
 import Guest from './Guest';
 import EventDate from './EventDate';
 import EventFile from './EventFile';
+import EventImage from './EventImage';
 
 @Entity('events')
 class Event {
@@ -131,6 +132,9 @@ class Event {
 
   @OneToMany(() => EventFile, eventFile => eventFile.event, { eager: true })
   eventFiles: EventFile[];
+
+  @OneToMany(() => EventImage, eventImage => eventImage.event, { eager: true })
+  eventImages: EventImage[];
 }
 
 export default Event;

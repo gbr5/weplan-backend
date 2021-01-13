@@ -6,11 +6,14 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import uploadConfig from '@config/upload';
 import { Expose } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EventImage from '@modules/events/infra/typeorm/entities/EventImage';
+import ImageParticipant from './ImageParticipant';
 
 @Entity('user_images')
 class UserImage {
@@ -53,6 +56,18 @@ class UserImage {
         return null;
     }
   }
+
+  @OneToMany(() => EventImage, eventImage => eventImage.image)
+  eventImages: EventImage[];
+
+  @OneToMany(
+    () => ImageParticipant,
+    imageParticipant => imageParticipant.image,
+    {
+      eager: true,
+    },
+  )
+  imageParticipants: ImageParticipant[];
 }
 
 export default UserImage;
