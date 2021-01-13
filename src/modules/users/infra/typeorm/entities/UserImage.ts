@@ -60,13 +60,7 @@ class UserImage {
   @OneToMany(() => EventImage, eventImage => eventImage.image)
   eventImages: EventImage[];
 
-  @OneToMany(
-    () => ImageParticipant,
-    imageParticipant => imageParticipant.image,
-    {
-      eager: true,
-    },
-  )
+  @OneToMany(() => ImageParticipant, imageParticipant => imageParticipant.image)
   imageParticipants: ImageParticipant[];
 }
 
