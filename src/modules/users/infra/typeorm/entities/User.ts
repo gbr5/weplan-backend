@@ -55,6 +55,8 @@ import UserBirthdate from './UserBirthdate';
 import UserContactInfo from './UserContactInfo';
 import UserFileCategory from './UserFileCategory';
 import UserFile from './UserFile';
+import ImageParticipant from './ImageParticipant';
+import UserImage from './UserImage';
 
 @Entity('users')
 class User {
@@ -275,6 +277,12 @@ class User {
 
   @OneToMany(() => EventNoteAccess, eventNote => eventNote.userAccessNote)
   userAccessNotes: EventNoteAccess[];
+
+  @OneToMany(() => UserImage, userImage => userImage.user)
+  userImages: UserImage[];
+
+  @OneToMany(() => ImageParticipant, imageParticipant => imageParticipant.user)
+  imageParticipants: ImageParticipant[];
 }
 
 export default User;
