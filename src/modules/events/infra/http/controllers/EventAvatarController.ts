@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import UpdateEventAvatarService from '@modules/events/services/UpdateEventAvatarService';
+import AppError from '@shared/errors/AppError';
 
 export default class EventAvatarController {
   public async update(req: Request, res: Response): Promise<Response> {
@@ -15,6 +16,11 @@ export default class EventAvatarController {
       avatarFilename: req.file.filename,
     });
 
-    return res.json(event);
+    const avatar = event.getAvatarUrl();
+
+    if (!avatar) {
+      throw new AppError('Avatar not found.');
+    }
+    return res.json(avatar);
   }
 }
