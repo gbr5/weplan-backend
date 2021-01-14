@@ -79,7 +79,9 @@ import userProfileRouter from '@modules/users/infra/http/routes/userProfile.rout
 import eventFilesRouter from '@modules/events/infra/http/routes/eventFiles.routes';
 import userImagesRouter from '@modules/users/infra/http/routes/userImages.routes';
 import eventImagesRouter from '@modules/events/infra/http/routes/eventImages.routes';
+import eventIsPublishedRouter from '@modules/events/infra/http/routes/eventIsPublished.routes';
 import imageParticipantsRouter from '@modules/users/infra/http/routes/imageParticipants.routes';
+import eventIsDateDefinedRouter from '@modules/events/infra/http/routes/eventIsDateDefined.routes';
 
 const routes = Router();
 
@@ -118,6 +120,8 @@ routes.use('/employee/files', employeeFilesRouter);
 routes.use('/my-next-event', nextEventRouter);
 routes.use('/list/events', listEventsRouter);
 routes.use('/events', eventsRouter);
+routes.use('/event/is-published', eventIsPublishedRouter);
+routes.use('/event/is-date-defined', eventIsDateDefinedRouter);
 routes.use('/event/weplan-guests', weplanGuestsRouter);
 routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
 routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
