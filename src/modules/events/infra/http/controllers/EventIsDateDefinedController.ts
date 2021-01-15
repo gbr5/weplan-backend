@@ -8,7 +8,7 @@ export default class EventIsDateDefinedController {
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { event_id } = dataParams;
-    const { date } = req.body;
+    const { date, isDateDefined } = req.body;
 
     const updateEventIsDateDefinedService = container.resolve(
       UpdateEventIsDateDefinedService,
@@ -17,6 +17,7 @@ export default class EventIsDateDefinedController {
     const event = await updateEventIsDateDefinedService.execute({
       event_id,
       date,
+      isDateDefined,
     });
 
     return res.json(classToClass(event));
