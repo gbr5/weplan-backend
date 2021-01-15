@@ -8,7 +8,6 @@ export default class EventIsPublishedController {
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { event_id } = dataParams;
-    console.log(event_id);
 
     const updateEventIsPublishedService = container.resolve(
       UpdateEventIsPublishedService,
