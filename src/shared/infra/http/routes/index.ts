@@ -82,6 +82,9 @@ import eventImagesRouter from '@modules/events/infra/http/routes/eventImages.rou
 import eventIsPublishedRouter from '@modules/events/infra/http/routes/eventIsPublished.routes';
 import imageParticipantsRouter from '@modules/users/infra/http/routes/imageParticipants.routes';
 import eventIsDateDefinedRouter from '@modules/events/infra/http/routes/eventIsDateDefined.routes';
+import eventDatesVotingRouter from '@modules/events/infra/http/routes/eventDatesVoting.routes';
+import eventDateVotesRouter from '@modules/events/infra/http/routes/eventDateVotes.routes';
+import eventDateVotingTypeRouter from '@modules/events/infra/http/routes/eventDateVotingType.routes';
 
 const routes = Router();
 
@@ -90,6 +93,9 @@ routes.use('/appointments', appointmentsRouter);
 routes.use('/users', usersRouter);
 routes.use('/event-guests', guestsRouter);
 routes.use('/event/dates', eventDatesRouter);
+routes.use('/event/dates/voting', eventDatesVotingRouter);
+routes.use('/event/date/voting-type', eventDateVotingTypeRouter);
+routes.use('/event/date/vote', eventDateVotesRouter);
 routes.use('/user/modules', userManagementModulesRouter);
 routes.use('/user/confirmations', userConfirmationsRouter);
 routes.use('/wp-guest/confirmations', wpGuestConfirmationsRouter);

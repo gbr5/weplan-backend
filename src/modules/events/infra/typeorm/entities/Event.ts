@@ -44,6 +44,12 @@ class Event {
   @Column('boolean')
   isPublished: boolean;
 
+  @Column('boolean', { default: false })
+  eventDatesVoting: boolean;
+
+  @Column({ default: 'single' })
+  date_voting_type: string;
+
   @Column()
   trimmed_name: string;
 

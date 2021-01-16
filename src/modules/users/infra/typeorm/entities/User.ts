@@ -48,6 +48,7 @@ import EventWeplanSupplier from '@modules/events/infra/typeorm/entities/EventWep
 import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
 import EventNoteAccess from '@modules/events/infra/typeorm/entities/EventNoteAccess';
 import Guest from '@modules/events/infra/typeorm/entities/Guest';
+import EventDateVote from '@modules/events/infra/typeorm/entities/EventDateVote';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -283,6 +284,9 @@ class User {
 
   @OneToMany(() => ImageParticipant, imageParticipant => imageParticipant.user)
   imageParticipants: ImageParticipant[];
+
+  @OneToMany(() => EventDateVote, userEventDateVote => userEventDateVote.user)
+  userEventDateVotes: EventDateVote[];
 }
 
 export default User;
