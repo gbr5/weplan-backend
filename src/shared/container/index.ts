@@ -285,6 +285,14 @@ import EventImagesRepository from '@modules/events/infra/typeorm/repositories/Ev
 import IImageParticipantsRepository from '@modules/users/repositories/IImageParticipantsRepository';
 import ImageParticipantsRepository from '@modules/users/infra/typeorm/repositories/ImageParticipantsRepository';
 
+import IEventDateVotesRepository from '@modules/events/repositories/IEventDateVotesRepository';
+import EventDateVotesRepository from '@modules/events/infra/typeorm/repositories/EventDateVotesRepository';
+
+container.registerSingleton<IEventDateVotesRepository>(
+  'EventDateVotesRepository',
+  EventDateVotesRepository,
+);
+
 container.registerSingleton<IImageParticipantsRepository>(
   'ImageParticipantsRepository',
   ImageParticipantsRepository,

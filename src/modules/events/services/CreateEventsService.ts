@@ -36,7 +36,15 @@ class CreateEventService {
     isPublished,
   }: ICreateEventDTO): Promise<Event> {
     const eventDate = new Date(date);
-
+    console.log({
+      name,
+      trimmed_name,
+      user_id,
+      event_type,
+      date,
+      isDateDefined,
+      isPublished,
+    });
     if (isBefore(eventDate, Date.now())) {
       throw new AppError("You can't create an event on a past date.");
     }

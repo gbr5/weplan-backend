@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import Event from './Event';
+import EventDateVote from './EventDateVote';
 
 @Entity('event_dates')
 class EventDate {
@@ -30,6 +32,11 @@ class EventDate {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => EventDateVote, eventDateVote => eventDateVote.eventDate, {
+    eager: true,
+  })
+  eventDateVotes: EventDateVote[];
 }
 
 export default EventDate;
