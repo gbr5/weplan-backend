@@ -56,8 +56,8 @@ export default class UsersController {
 
     const deleteUserFile = container.resolve(DeleteUserFileService);
 
-    const file = await deleteUserFile.execute(id);
+    await deleteUserFile.execute(id);
 
-    return res.json(classToClass(file));
+    return res.status(200).send();
   }
 }

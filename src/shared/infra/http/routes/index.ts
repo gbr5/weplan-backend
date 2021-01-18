@@ -2,6 +2,9 @@ import { Router } from 'express';
 
 import appointmentsRouter from '@modules/appointments/infra/http/routes/appointments.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import activationUserRouter from '@modules/users/infra/http/routes/activationUser.routes';
+import deleteUserRouter from '@modules/users/infra/http/routes/deleteUser.routes';
+import terminateUserRouter from '@modules/users/infra/http/routes/terminateUser.routes';
 import userConfirmationsRouter from '@modules/users/infra/http/routes/userConfirmations.routes';
 import userManagementModulesRouter from '@modules/users/infra/http/routes/userManagementModules.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
@@ -91,6 +94,9 @@ const routes = Router();
 routes.use('/appointments', appointmentsRouter);
 
 routes.use('/users', usersRouter);
+routes.use('/user/activation', activationUserRouter);
+routes.use('/user/delete', deleteUserRouter);
+routes.use('/user/terminate', terminateUserRouter);
 routes.use('/event-guests', guestsRouter);
 routes.use('/event/dates', eventDatesRouter);
 routes.use('/event/dates/voting', eventDatesVotingRouter);
