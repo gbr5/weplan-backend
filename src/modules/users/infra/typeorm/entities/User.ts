@@ -80,6 +80,12 @@ class User {
   @Column('boolean')
   isCompany: boolean;
 
+  @Column('boolean')
+  isActive: boolean;
+
+  @Column('boolean')
+  isDeleted: boolean;
+
   @Column()
   avatar: string;
 

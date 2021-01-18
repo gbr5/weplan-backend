@@ -44,8 +44,8 @@ export default class UsersController {
       DeleteImageParticipantService,
     );
 
-    const file = await deleteImageParticipant.execute(id);
+    await deleteImageParticipant.execute(id);
 
-    return res.json(classToClass(file));
+    return res.status(200).send();
   }
 }
