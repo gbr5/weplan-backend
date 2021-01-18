@@ -55,6 +55,8 @@ class ShowEventService {
       guests,
       suppliers,
       event_avatar_url: event_avatar_url || 'n/a',
+      eventFiles: event.eventFiles,
+      eventImages: event.eventImages,
     };
   }
 }
