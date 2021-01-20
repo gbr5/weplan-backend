@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 @injectable()
-class SendForgotPasswordEmailService {
+class SendActivationAccountEmailService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -30,31 +30,44 @@ class SendForgotPasswordEmailService {
     if (!user) {
       throw new AppError('User does not exists.');
     }
-    console.log(user);
 
     const { token } = await this.userTokensRepository.generate(user.id);
 
-    const forgotPasswordTemplate = path.resolve(
+    const accountActivationTemplate = path.resolve(
       __dirname,
       '..',
       'views',
-      'forgot_password.hbs',
+      'activate_account.hbs',
     );
+    console.log({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[WePlan] Ativação de conta',
+      templateData: {
+        file: accountActivationTemplate,
+        variables: {
+          name: user.name,
+          link: `${process.env.APP_WEB_URL}/wellcome?token=${token}`,
+        },
+      },
+    });
     await this.mailProvider.sendMail({
       to: {
         name: user.name,
         email: user.email,
       },
-      subject: '[WePlan] Recuperação de senha',
+      subject: '[WePlan] Ativação de conta',
       templateData: {
-        file: forgotPasswordTemplate,
+        file: accountActivationTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/wellcome?token=${token}`,
         },
       },
     });
   }
 }
 
-export default SendForgotPasswordEmailService;
+export default SendActivationAccountEmailService;

@@ -14,7 +14,7 @@ export default {
 
   default: {
     from: {
-      email: 'guy@we-plan.io',
+      email: 'gbrobbe@gmail.com',
       name: 'Guy da WePlan',
     },
   },

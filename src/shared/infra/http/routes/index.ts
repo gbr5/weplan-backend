@@ -88,6 +88,7 @@ import eventIsDateDefinedRouter from '@modules/events/infra/http/routes/eventIsD
 import eventDatesVotingRouter from '@modules/events/infra/http/routes/eventDatesVoting.routes';
 import eventDateVotesRouter from '@modules/events/infra/http/routes/eventDateVotes.routes';
 import eventDateVotingTypeRouter from '@modules/events/infra/http/routes/eventDateVotingType.routes';
+import suspendAccountRouter from '@modules/users/infra/http/routes/suspendAccount.routes';
 
 const routes = Router();
 
@@ -95,6 +96,7 @@ routes.use('/appointments', appointmentsRouter);
 
 routes.use('/users', usersRouter);
 routes.use('/user/activation', activationUserRouter);
+routes.use('/user/suspend', suspendAccountRouter);
 routes.use('/user/delete', deleteUserRouter);
 routes.use('/user/terminate', terminateUserRouter);
 routes.use('/event-guests', guestsRouter);
