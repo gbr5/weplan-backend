@@ -4,6 +4,8 @@ import crypto from 'crypto';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
+const FILE_MAX_SIZE = 5 * 1024 * 1024;
+
 interface IUploadConfig {
   driver: 's3' | 'disk';
 
@@ -20,6 +22,7 @@ interface IUploadConfig {
     aws: {
       bucket: string;
     };
+    limits: number;
   };
 }
 
@@ -43,6 +46,7 @@ export default {
 
   config: {
     disk: {},
+    limits: FILE_MAX_SIZE,
     aws: {
       bucket: 'weplan-user',
     },

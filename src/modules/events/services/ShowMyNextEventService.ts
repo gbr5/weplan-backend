@@ -43,18 +43,10 @@ class ShowMyNextEventService {
       member => differenceInDays(new Date(member.event.date), today) > 0,
     );
 
-    if (!eventMembers) {
-      throw new AppError('Event not found.');
-    }
-
     const eOwners = await this.eventOwnersRepository.findByOwnerId(user_id);
     const eventOwners = eOwners.filter(
       owner => differenceInDays(new Date(owner.event.date), today) > 0,
     );
-
-    if (!eventOwners) {
-      throw new AppError('Event not found.');
-    }
 
     const nextEvents: Event[] = [];
 
@@ -118,11 +110,16 @@ class ShowMyNextEventService {
     }
     const event = nextEvents[0];
 
-    const eventId = event ? event.id : '1';
-    const eventNotes = await this.eventNotesRepository.findByEvent(eventId);
-    const suppliers = await this.eventSuppliersRepository.findByEvent(eventId);
-    const guests = await this.guestsRepository.findByEvent(eventId);
-    const checkLists = await this.userCheckListsRepository.findByEvent(eventId);
+    if (!event) {
+      throw new AppError('Event not found');
+    }
+
+    const eventNotes = await this.eventNotesRepository.findByEvent(event.id);
+    const suppliers = await this.eventSuppliersRepository.findByEvent(event.id);
+    const guests = await this.guestsRepository.findByEvent(event.id);
+    const checkLists = await this.userCheckListsRepository.findByEvent(
+      event.id,
+    );
     const event_avatar_url = event.getAvatarUrl();
 
     return {
