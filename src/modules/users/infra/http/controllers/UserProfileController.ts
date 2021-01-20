@@ -7,11 +7,11 @@ import ShowUserProfileService from '@modules/users/services/ShowUserProfileServi
 export default class UserProfileController {
   public async show(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
-    const { user_id } = reqParams;
+    const { email } = reqParams;
 
     const showProfile = container.resolve(ShowUserProfileService);
 
-    const user = await showProfile.execute(user_id);
+    const user = await showProfile.execute(email);
 
     return res.json(classToClass(user));
   }
