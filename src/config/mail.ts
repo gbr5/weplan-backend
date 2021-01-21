@@ -14,8 +14,8 @@ export default {
 
   default: {
     from: {
-      email: 'gbrobbe@gmail.com',
-      name: 'Guy da WePlan',
+      email: 'guy@weplan.world',
+      name: 'Guy do WePlan',
     },
   },
 } as IMailConfig;
