@@ -25,7 +25,6 @@ class SendActivationAccountEmailService {
 
   public async execute({ email }: IRequest): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
-    console.log(email);
 
     if (!user) {
       throw new AppError('User does not exists.');
@@ -39,20 +38,6 @@ class SendActivationAccountEmailService {
       'views',
       'activate_account.hbs',
     );
-    console.log({
-      to: {
-        name: user.name,
-        email: user.email,
-      },
-      subject: '[WePlan] Ativação de conta',
-      templateData: {
-        file: accountActivationTemplate,
-        variables: {
-          name: user.name,
-          link: `${process.env.APP_WEB_URL}/wellcome?token=${token}`,
-        },
-      },
-    });
     await this.mailProvider.sendMail({
       to: {
         name: user.name,

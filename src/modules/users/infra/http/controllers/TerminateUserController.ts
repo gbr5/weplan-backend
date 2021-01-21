@@ -7,7 +7,6 @@ export default class TerminateUserController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { user_id } = reqParams;
-    console.log(user_id);
 
     const terminateUser = container.resolve(TerminateUserService);
 
