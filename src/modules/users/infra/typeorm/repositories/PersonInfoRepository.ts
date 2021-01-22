@@ -20,6 +20,17 @@ class PersonInfoRepository implements IPersonInfoRepository {
     return personInfo;
   }
 
+  public async findByFirstAndLastName(
+    first_name: string,
+    last_name: string,
+  ): Promise<PersonInfo | undefined> {
+    const personInfo = await this.ormRepository.findOne({
+      where: { first_name, last_name },
+    });
+
+    return personInfo;
+  }
+
   public async findByPersonId(
     person_id: string,
   ): Promise<PersonInfo | undefined> {
