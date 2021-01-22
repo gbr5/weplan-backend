@@ -48,7 +48,7 @@ class SendActivationAccountEmailService {
         file: accountActivationTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB_URL}/wellcome?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/wellcome?token=${token}&email=${email}`,
         },
       },
     });
