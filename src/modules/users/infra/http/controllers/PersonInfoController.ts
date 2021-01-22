@@ -52,7 +52,10 @@ export default class PersonInfoController {
       last_name,
     });
 
-    return res.json(classToClass(personInfo));
+    if (personInfo) {
+      return res.json(classToClass(personInfo));
+    }
+    return res.json();
   }
 
   public async update(req: Request, res: Response): Promise<Response> {

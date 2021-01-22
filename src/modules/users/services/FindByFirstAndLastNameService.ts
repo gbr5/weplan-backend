@@ -1,6 +1,5 @@
 import { injectable, inject } from 'tsyringe';
 
-import AppError from '@shared/errors/AppError';
 import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
 
 import PersonInfo from '@modules/users/infra/typeorm/entities/PersonInfo';
@@ -20,15 +19,11 @@ class FindByFirstAndLastNameService {
   public async execute({
     first_name,
     last_name,
-  }: IRequest): Promise<PersonInfo> {
+  }: IRequest): Promise<PersonInfo | undefined> {
     const personInfo = await this.personInfoRepository.findByFirstAndLastName(
       first_name,
       last_name,
     );
-
-    if (!personInfo) {
-      throw new AppError('PersonInfo not found.');
-    }
 
     return personInfo;
   }

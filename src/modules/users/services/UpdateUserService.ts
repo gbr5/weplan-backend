@@ -23,7 +23,6 @@ class UpdateUserService {
     if (!user) {
       throw new AppError('Company information not found.');
     }
-    console.log('oi');
 
     user.email = email;
     user.name = name;
