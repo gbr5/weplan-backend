@@ -42,10 +42,12 @@ export default class UsersController {
 
     const users = await listUser.execute();
 
-    const sortedUsers = users.filter(user => user.name.includes(userName));
+    const sortedUsersByName = users.filter(user =>
+      user.name.includes(userName),
+    );
 
-    if (sortedUsers.length > 0) {
-      return res.json(classToClass(sortedUsers));
+    if (sortedUsersByName.length > 0) {
+      return res.json(classToClass(sortedUsersByName));
     }
 
     return res.json(classToClass(users));

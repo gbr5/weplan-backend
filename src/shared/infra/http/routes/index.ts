@@ -89,12 +89,14 @@ import eventDatesVotingRouter from '@modules/events/infra/http/routes/eventDates
 import eventDateVotesRouter from '@modules/events/infra/http/routes/eventDateVotes.routes';
 import eventDateVotingTypeRouter from '@modules/events/infra/http/routes/eventDateVotingType.routes';
 import suspendAccountRouter from '@modules/users/infra/http/routes/suspendAccount.routes';
+import findUserByNameOrEmailRouter from '@modules/users/infra/http/routes/findUserByNameOrEmail.routes';
 
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
 
 routes.use('/users', usersRouter);
+routes.use('/user/name-or-email', findUserByNameOrEmailRouter);
 routes.use('/user/activation', activationUserRouter);
 routes.use('/user/suspend', suspendAccountRouter);
 routes.use('/user/delete', deleteUserRouter);

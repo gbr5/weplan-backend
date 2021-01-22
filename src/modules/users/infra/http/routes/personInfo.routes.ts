@@ -23,6 +23,10 @@ personInfoRouter.get(
   ensureAuthenticated,
   personInfoController.show,
 );
+personInfoRouter.get(
+  '/:first_name/:last_name',
+  personInfoController.findByFirstAndLastName,
+);
 personInfoRouter.put(
   '/edit',
   ensureAuthenticated,
