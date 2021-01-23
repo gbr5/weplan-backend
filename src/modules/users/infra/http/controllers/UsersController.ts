@@ -37,6 +37,11 @@ export default class UsersController {
   public async index(req: Request, res: Response): Promise<Response> {
     const user_name = req.query.name;
     const userName = String(user_name);
+    const unique_name = req.query.uniqueName;
+    const uniqueName = String(unique_name);
+    const user_email = req.query.email;
+    const email = String(user_email);
+    const user_id = req.user.id;
 
     const listUser = container.resolve(ListUserService);
 
@@ -48,6 +53,24 @@ export default class UsersController {
 
     if (sortedUsersByName.length > 0) {
       return res.json(classToClass(sortedUsersByName));
+    }
+
+    const filteredUsers = users.filter(user => user.id !== user_id);
+
+    const findUserByEmail = filteredUsers.filter(
+      xUser => xUser.email === email,
+    );
+
+    if (findUserByEmail.length === 1) {
+      return res.json(classToClass(findUserByEmail));
+    }
+
+    const findUserByUniqueName = filteredUsers.filter(
+      xUser => xUser.name === uniqueName,
+    );
+
+    if (findUserByUniqueName.length === 1) {
+      return res.json(classToClass(findUserByUniqueName));
     }
 
     return res.json(classToClass(users));

@@ -31,7 +31,7 @@ usersRouter.post(
   usersController.create,
 );
 usersRouter.get('/:user_id', usersController.show);
-usersRouter.get('/', usersController.index);
+usersRouter.get('/', ensureAuthenticated, usersController.index);
 usersRouter.put(
   '/',
   ensureAuthenticated,
