@@ -50,6 +50,7 @@ eventsRouter.post(
   events.create,
 );
 eventsRouter.get('/:event_id', events.show);
+eventsRouter.get('/by-name/:trimmed_name', events.showByName);
 
 eventsRouter.put(
   '/:event_id',
