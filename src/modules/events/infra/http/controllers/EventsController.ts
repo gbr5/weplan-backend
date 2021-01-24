@@ -5,6 +5,7 @@ import { classToClass } from 'class-transformer';
 import CreateEventsService from '@modules/events/services/CreateEventsService';
 import UpdateEventService from '@modules/events/services/UpdateEventService';
 import ShowEventsService from '@modules/events/services/ShowEventService';
+import ShowEventByNameService from '@modules/events/services/ShowEventByNameService';
 import ListUserEventsService from '@modules/events/services/ListUserEventsService';
 import DeleteEventService from '@modules/events/services/DeleteEventService';
 import UpdateEventNameService from '@modules/events/services/UpdateEventNameService';
@@ -53,6 +54,16 @@ export default class EventsController {
     const showEvents = container.resolve(ShowEventsService);
 
     const event = await showEvents.execute(event_id);
+
+    return res.json(classToClass(event));
+  }
+
+  public async showByName(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+    const { trimmed_name } = dataParams;
+    const showEvents = container.resolve(ShowEventByNameService);
+
+    const event = await showEvents.execute(trimmed_name);
 
     return res.json(classToClass(event));
   }

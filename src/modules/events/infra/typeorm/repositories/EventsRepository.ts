@@ -38,9 +38,9 @@ class EventsRepository implements IEventsRepository {
     return findEvent;
   }
 
-  public async findByName(name: string): Promise<Event | undefined> {
+  public async findByName(trimmed_name: string): Promise<Event | undefined> {
     const findEvent = await this.ormRepository.findOne({
-      where: { name },
+      where: { trimmed_name },
     });
 
     return findEvent;
