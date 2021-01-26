@@ -14,6 +14,7 @@ import { Expose } from 'class-transformer';
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventImage from '@modules/events/infra/typeorm/entities/EventImage';
 import ImageParticipant from './ImageParticipant';
+import CategoryImage from './CategoryImage';
 
 @Entity('user_images')
 class UserImage {
@@ -62,6 +63,9 @@ class UserImage {
 
   @OneToMany(() => ImageParticipant, imageParticipant => imageParticipant.image)
   imageParticipants: ImageParticipant[];
+
+  @OneToMany(() => CategoryImage, categoryImage => categoryImage.image)
+  imageCategories: CategoryImage[];
 }
 
 export default UserImage;

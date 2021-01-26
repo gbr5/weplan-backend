@@ -4,13 +4,13 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   ManyToOne,
-  // OneToMany,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-// import CategoryImage from './CategoryImage';
+import CategoryImage from './CategoryImage';
 
 @Entity('user_image_categories')
 class UserImageCategory {
@@ -39,10 +39,14 @@ class UserImageCategory {
   @UpdateDateColumn()
   updated_at: Date;
 
-  // @OneToMany(() => CategoryImage, categoryImage => categoryImage.imageCategory, {
-  //   eager: true,
-  // })
-  // categoryImages: CategoryImage[];
+  @OneToMany(
+    () => CategoryImage,
+    categoryImage => categoryImage.imageCategory,
+    {
+      eager: true,
+    },
+  )
+  categoryImages: CategoryImage[];
 }
 
 export default UserImageCategory;

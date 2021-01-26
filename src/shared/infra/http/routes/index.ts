@@ -91,6 +91,7 @@ import eventDateVotingTypeRouter from '@modules/events/infra/http/routes/eventDa
 import suspendAccountRouter from '@modules/users/infra/http/routes/suspendAccount.routes';
 import findUserByNameOrEmailRouter from '@modules/users/infra/http/routes/findUserByNameOrEmail.routes';
 import userImageCategoriesRouter from '@modules/users/infra/http/routes/userImageCategories.routes';
+import categoryImagesRouter from '@modules/users/infra/http/routes/categoryImages.routes';
 
 const routes = Router();
 
@@ -125,7 +126,7 @@ routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
 
 routes.use('/user/images', userImagesRouter);
 routes.use('/user/image/categories', userImageCategoriesRouter);
-
+routes.use('/category/images', categoryImagesRouter);
 routes.use('/image/participants', imageParticipantsRouter);
 
 routes.use('/user/files', userFilesRouter);
