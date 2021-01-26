@@ -58,6 +58,7 @@ import UserFileCategory from './UserFileCategory';
 import UserFile from './UserFile';
 import ImageParticipant from './ImageParticipant';
 import UserImage from './UserImage';
+import UserImageCategory from './UserImageCategory';
 
 @Entity('users')
 class User {
@@ -293,6 +294,12 @@ class User {
 
   @OneToMany(() => EventDateVote, userEventDateVote => userEventDateVote.user)
   userEventDateVotes: EventDateVote[];
+
+  @OneToMany(
+    () => UserImageCategory,
+    userUserImageCategory => userUserImageCategory.user,
+  )
+  imageCategories: UserImageCategory[];
 }
 
 export default User;
