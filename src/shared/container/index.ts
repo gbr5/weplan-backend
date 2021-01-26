@@ -291,6 +291,14 @@ import EventDateVotesRepository from '@modules/events/infra/typeorm/repositories
 import IUserImageCategoriesRepository from '@modules/users/repositories/IUserImageCategoriesRepository';
 import UserImageCategoriesRepository from '@modules/users/infra/typeorm/repositories/UserImageCategoriesRepository';
 
+import ICategoryImagesRepository from '@modules/users/repositories/ICategoryImagesRepository';
+import CategoryImagesRepository from '@modules/users/infra/typeorm/repositories/CategoryImagesRepository';
+
+container.registerSingleton<ICategoryImagesRepository>(
+  'CategoryImagesRepository',
+  CategoryImagesRepository,
+);
+
 container.registerSingleton<IUserImageCategoriesRepository>(
   'UserImageCategoriesRepository',
   UserImageCategoriesRepository,

@@ -6,7 +6,7 @@ import CreateCategoryFileService from '@modules/users/services/CreateCategoryFil
 import DeleteCategoryFileService from '@modules/users/services/DeleteCategoryFileService';
 import ListCategoryFilesService from '@modules/users/services/ListCategoryFilesService';
 
-export default class CategorysController {
+export default class CategoryFilesController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { category_id, file_id } = req.body;
 
