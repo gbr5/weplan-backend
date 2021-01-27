@@ -92,6 +92,8 @@ import suspendAccountRouter from '@modules/users/infra/http/routes/suspendAccoun
 import findUserByNameOrEmailRouter from '@modules/users/infra/http/routes/findUserByNameOrEmail.routes';
 import userImageCategoriesRouter from '@modules/users/infra/http/routes/userImageCategories.routes';
 import categoryImagesRouter from '@modules/users/infra/http/routes/categoryImages.routes';
+import listEventImagesRouter from '@modules/events/infra/http/routes/listEventImages.routes';
+import listUserAsImageParticipantsRouter from '@modules/events/infra/http/routes/listUserAsImageParticipants.routes';
 
 const routes = Router();
 
@@ -123,6 +125,9 @@ routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
 
 routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
+
+routes.use('/user/event/images', listEventImagesRouter);
+routes.use('/user/image/participants', listUserAsImageParticipantsRouter);
 
 routes.use('/user/images', userImagesRouter);
 routes.use('/user/image/categories', userImageCategoriesRouter);
