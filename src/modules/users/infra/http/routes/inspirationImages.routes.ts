@@ -14,7 +14,7 @@ inspirationImagesRouter.post(
 );
 
 inspirationImagesRouter.get(
-  '/:user_id',
+  '/',
   ensureAuthenticated,
   inspirationImagesController.list,
 );

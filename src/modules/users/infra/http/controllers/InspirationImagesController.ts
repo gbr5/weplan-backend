@@ -26,8 +26,7 @@ export default class InspirationImagesController {
   }
 
   public async list(req: Request, res: Response): Promise<Response> {
-    const reqParams = req.params;
-    const { user_id } = reqParams;
+    const user_id = req.user.id;
 
     const listInspirationImage = container.resolve(
       ListInspirationImagesService,

@@ -6,5 +6,6 @@ const userProfileRouter = Router();
 const userscontroller = new UserProfileController();
 
 userProfileRouter.get('/:email', userscontroller.show);
+userProfileRouter.get('/by-id/:id', userscontroller.showById);
 
 export default userProfileRouter;
