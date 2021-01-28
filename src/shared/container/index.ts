@@ -294,6 +294,22 @@ import UserImageCategoriesRepository from '@modules/users/infra/typeorm/reposito
 import ICategoryImagesRepository from '@modules/users/repositories/ICategoryImagesRepository';
 import CategoryImagesRepository from '@modules/users/infra/typeorm/repositories/CategoryImagesRepository';
 
+import IInspirationImagesRepository from '@modules/users/repositories/IInspirationImagesRepository';
+import InspirationImagesRepository from '@modules/users/infra/typeorm/repositories/InspirationImagesRepository';
+
+import IEventInspirationImagesRepository from '@modules/events/repositories/IEventInspirationImagesRepository';
+import EventInspirationImagesRepository from '@modules/events/infra/typeorm/repositories/EventInspirationImagesRepository';
+
+container.registerSingleton<IEventInspirationImagesRepository>(
+  'EventInspirationImagesRepository',
+  EventInspirationImagesRepository,
+);
+
+container.registerSingleton<IInspirationImagesRepository>(
+  'InspirationImagesRepository',
+  InspirationImagesRepository,
+);
+
 container.registerSingleton<ICategoryImagesRepository>(
   'CategoryImagesRepository',
   CategoryImagesRepository,

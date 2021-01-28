@@ -15,6 +15,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import EventImage from '@modules/events/infra/typeorm/entities/EventImage';
 import ImageParticipant from './ImageParticipant';
 import CategoryImage from './CategoryImage';
+import InspirationImage from './InspirationImage';
 
 @Entity('user_images')
 class UserImage {
@@ -69,6 +70,12 @@ class UserImage {
 
   @OneToMany(() => CategoryImage, categoryImage => categoryImage.image)
   imageCategories: CategoryImage[];
+
+  @OneToMany(
+    () => InspirationImage,
+    inspirationImages => inspirationImages.image,
+  )
+  inspirationImages: InspirationImage[];
 }
 
 export default UserImage;

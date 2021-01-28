@@ -94,6 +94,8 @@ import userImageCategoriesRouter from '@modules/users/infra/http/routes/userImag
 import categoryImagesRouter from '@modules/users/infra/http/routes/categoryImages.routes';
 import listEventImagesRouter from '@modules/events/infra/http/routes/listEventImages.routes';
 import listUserAsImageParticipantsRouter from '@modules/events/infra/http/routes/listUserAsImageParticipants.routes';
+import inspirationImagesRouter from '@modules/users/infra/http/routes/inspirationImages.routes';
+import eventInspirationImagesRouter from '@modules/events/infra/http/routes/eventInspirationImages.routes';
 
 const routes = Router();
 
@@ -128,6 +130,9 @@ routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
 
 routes.use('/user/event/images', listEventImagesRouter);
 routes.use('/user/image/participants', listUserAsImageParticipantsRouter);
+
+routes.use('/inspiration/images', inspirationImagesRouter);
+routes.use('/event/inspiration/images', eventInspirationImagesRouter);
 
 routes.use('/user/images', userImagesRouter);
 routes.use('/user/image/categories', userImageCategoriesRouter);

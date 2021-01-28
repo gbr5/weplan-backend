@@ -29,6 +29,7 @@ import Guest from './Guest';
 import EventDate from './EventDate';
 import EventFile from './EventFile';
 import EventImage from './EventImage';
+import EventInspirationImage from './EventInspirationImage';
 
 @Entity('events')
 class Event {
@@ -141,6 +142,13 @@ class Event {
 
   @OneToMany(() => EventImage, eventImage => eventImage.event, { eager: true })
   eventImages: EventImage[];
+
+  @OneToMany(
+    () => EventInspirationImage,
+    eventInspirationImage => eventInspirationImage.event,
+    { eager: true },
+  )
+  eventInspirationImages: EventInspirationImage[];
 }
 
 export default Event;
