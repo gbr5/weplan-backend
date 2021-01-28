@@ -146,7 +146,6 @@ class Event {
   @OneToMany(
     () => EventInspirationImage,
     eventInspirationImage => eventInspirationImage.event,
-    { eager: true },
   )
   eventInspirationImages: EventInspirationImage[];
 }
