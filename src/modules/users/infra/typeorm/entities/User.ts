@@ -59,6 +59,7 @@ import UserFile from './UserFile';
 import ImageParticipant from './ImageParticipant';
 import UserImage from './UserImage';
 import UserImageCategory from './UserImageCategory';
+import InspirationImage from './InspirationImage';
 
 @Entity('users')
 class User {
@@ -300,6 +301,12 @@ class User {
     userUserImageCategory => userUserImageCategory.user,
   )
   imageCategories: UserImageCategory[];
+
+  @OneToMany(
+    () => InspirationImage,
+    userInspirationImage => userInspirationImage.user,
+  )
+  userInspirationImages: InspirationImage[];
 }
 
 export default User;
