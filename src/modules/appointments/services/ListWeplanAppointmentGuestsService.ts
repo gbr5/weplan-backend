@@ -12,7 +12,7 @@ class ListWeplanAppointmentGuestService {
   ) {}
 
   public async execute(supplier_id: string): Promise<WeplanAppointmentGuest[]> {
-    const weplanAppointmentGuests = await this.weplanAppointmentGuestsRepository.findByHostId(
+    const weplanAppointmentGuests = await this.weplanAppointmentGuestsRepository.findByUserId(
       supplier_id,
     );
 

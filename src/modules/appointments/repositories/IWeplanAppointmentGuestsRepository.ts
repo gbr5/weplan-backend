@@ -10,7 +10,7 @@ export default interface IWeplanAppointmentGuestsRepository {
   //   guest_id: string,
   //   host_id: string,
   // ): Promise<WeplanAppointmentGuest | undefined>;
-  findByHostId(host_id: string): Promise<WeplanAppointmentGuest[]>;
+  findByUserId(user_id: string): Promise<WeplanAppointmentGuest[]>;
   findById(id: string): Promise<WeplanAppointmentGuest | undefined>;
   delete(data: ICreateWeplanAppointmentGuestDTO): Promise<void>;
 }

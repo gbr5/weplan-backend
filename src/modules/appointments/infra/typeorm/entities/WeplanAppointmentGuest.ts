@@ -29,7 +29,7 @@ class WeplanAppointmentGuest {
   @Column()
   guest_id: string;
 
-  @ManyToOne(() => User, user => user.weplanAppointmentGuests)
+  @ManyToOne(() => User, user => user.weplanAppointmentGuests, { eager: true })
   @JoinColumn({ name: 'guest_id' })
   guest: User;
 

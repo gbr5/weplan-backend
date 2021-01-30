@@ -3,6 +3,10 @@ import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointment
 import IFindAllInMonthSupplierDTO from '@modules/appointments/dtos/IFindAllInMonthSupplierDTO';
 import IFindAllInDaySupplierDTO from '@modules/appointments/dtos/IFindAllInDaySupplierDTO';
 
+interface IIdsDTO {
+  id: string;
+}
+
 export default interface IAppointmentsRepository {
   create(data: ICreateAppointmentDTO): Promise<Appointment>;
   findAllInMonthFromSupplier(
@@ -19,6 +23,7 @@ export default interface IAppointmentsRepository {
   ): Promise<Appointment | undefined>;
   findById(id: string): Promise<Appointment | undefined>;
   findByHostId(host_id: string): Promise<Appointment[]>;
+  findByIds(ids: IIdsDTO[]): Promise<Appointment[]>;
   save(data: ICreateAppointmentDTO): Promise<Appointment>;
   delete(data: ICreateAppointmentDTO): Promise<void>;
 }
