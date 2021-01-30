@@ -21,11 +21,11 @@ class WeplanAppointmentGuestsRepository
     return findWeplanAppointmentGuest;
   }
 
-  public async findByHostId(
-    host_id: string,
+  public async findByUserId(
+    user_id: string,
   ): Promise<WeplanAppointmentGuest[]> {
     const findWeplanAppointmentGuest = await this.ormRepository.find({
-      where: { host_id },
+      where: { guest_id: user_id },
     });
 
     return findWeplanAppointmentGuest;

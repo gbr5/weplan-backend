@@ -8,6 +8,10 @@ import IFindAllInDaySupplierDTO from '@modules/appointments/dtos/IFindAllInDaySu
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 
+interface IIdsDTO {
+  id: string;
+}
+
 class AppointmentsRepository implements IAppointmentsRepository {
   private ormRepository: Repository<Appointment>;
 
@@ -20,6 +24,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
       where: { host_id },
       order: { date: 'ASC' },
     });
+
+    return findAppointment;
+  }
+
+  public async findByIds(ids: IIdsDTO[]): Promise<Appointment[]> {
+    const findAppointment = await this.ormRepository.findByIds(ids);
 
     return findAppointment;
   }

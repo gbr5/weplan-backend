@@ -14,7 +14,7 @@ import WeplanAppointmentGuestsController from '@modules/appointments/infra/http/
 import EventAppointmentsController from '@modules/appointments/infra/http/controllers/EventAppointmentsController';
 import StageCardAppointmentsController from '@modules/appointments/infra/http/controllers/StageCardAppointmentsController';
 
-import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
+// import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
@@ -31,7 +31,8 @@ const weplanAppointmentGuestsController = new WeplanAppointmentGuestsController(
 const eventAppointmentsController = new EventAppointmentsController();
 const stageCardAppointmentsController = new StageCardAppointmentsController();
 
-const supplierAppointmentController = new SupplierAppointmentController();
+// const supplierAppointmentController = new SupplierAppointmentController();
+
 appointmentsRouter.use(ensureAuthenticated);
 
 // === Appointment Types === //
@@ -84,7 +85,7 @@ appointmentsRouter.put(
 
 appointmentsRouter.delete('/:id', appointmentsController.delete);
 
-appointmentsRouter.get('/my-appointments', supplierAppointmentController.index);
+appointmentsRouter.get('/my-appointments', appointmentsController.index);
 
 // === Supplier Appointment's, with a non User Guest === //
 

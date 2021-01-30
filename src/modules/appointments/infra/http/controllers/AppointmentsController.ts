@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 import DeleteAppointmentService from '@modules/appointments/services/DeleteAppointmentService';
-import ListSupplierAppointmentsService from '@modules/appointments/services/ListSupplierAppointmentsService';
+import ListAllUserAppointmentsService from '@modules/appointments/services/ListAllUserAppointmentsService';
 import UpdateAppointmentService from '@modules/appointments/services/UpdateAppointmentService';
 
 import { classToClass } from 'class-transformer';
@@ -82,11 +82,11 @@ export default class AppointmentsController {
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
-    const host_id = req.user.id;
+    const user_id = req.user.id;
 
-    const listAppointments = container.resolve(ListSupplierAppointmentsService);
+    const listAppointments = container.resolve(ListAllUserAppointmentsService);
 
-    const appointments = await listAppointments.execute(host_id);
+    const appointments = await listAppointments.execute(user_id);
 
     return res.json(classToClass(appointments));
   }

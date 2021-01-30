@@ -63,6 +63,7 @@ class Appointment {
   @OneToMany(
     () => WeplanAppointmentGuest,
     weplanGuest => weplanGuest.appointment,
+    { eager: true },
   )
   weplanGuestAppointments: WeplanAppointmentGuest[];
 
