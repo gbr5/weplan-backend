@@ -300,6 +300,14 @@ import InspirationImagesRepository from '@modules/users/infra/typeorm/repositori
 import IEventInspirationImagesRepository from '@modules/events/repositories/IEventInspirationImagesRepository';
 import EventInspirationImagesRepository from '@modules/events/infra/typeorm/repositories/EventInspirationImagesRepository';
 
+import IAppointmentFilesRepository from '@modules/appointments/repositories/IAppointmentFilesRepository';
+import AppointmentFilesRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentFilesRepository';
+
+container.registerSingleton<IAppointmentFilesRepository>(
+  'AppointmentFilesRepository',
+  AppointmentFilesRepository,
+);
+
 container.registerSingleton<IEventInspirationImagesRepository>(
   'EventInspirationImagesRepository',
   EventInspirationImagesRepository,

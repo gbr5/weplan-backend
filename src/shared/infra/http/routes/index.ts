@@ -14,11 +14,9 @@ import companyInfoRouter from '@modules/users/infra/http/routes/companyInfo.rout
 import personInfoRouter from '@modules/users/infra/http/routes/personInfo.routes';
 import userBirthdateRouter from '@modules/users/infra/http/routes/userBirthdate.routes';
 import contactTypesRouter from '@modules/users/infra/http/routes/contactTypes.routes';
-
 import eventsRouter from '@modules/events/infra/http/routes/events.routes';
 import eventTypesRouter from '@modules/events/infra/http/routes/eventTypes.routes';
 import friendsEventsRouter from '@modules/events/infra/http/routes/friendsEvents.routes';
-
 import suppliersRouter from '@modules/suppliers/infra/http/routes/suppliers.routes';
 import companyEmployeesRouter from '@modules/suppliers/infra/http/routes/companyEmployees.routes';
 import supplierCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierCategories.routes';
@@ -33,9 +31,7 @@ import projectsFunnelDefaultInfoFieldsRouter from '@modules/suppliers/infra/http
 import weplanManagementModulesRouter from '@modules/weplan/infra/http/routes/weplanManagementModules.routes';
 import weplanProductsRouter from '@modules/weplan/infra/http/routes/weplanProducts.routes';
 import weplanContractOrdersRouter from '@modules/weplan/infra/http/routes/weplanContractOrders.routes';
-
 import financesRouter from '@modules/finances/infra/http/routes/finances.routes';
-
 import checkListRouter from '@modules/checklists/infra/http/routes/checkList.routes';
 import cardCheckListRouter from '@modules/checklists/infra/http/routes/cardCheckList.routes';
 import cardParticipantsRouter from '@modules/suppliers/infra/http/routes/cardParticipants.routes';
@@ -96,10 +92,12 @@ import listEventImagesRouter from '@modules/events/infra/http/routes/listEventIm
 import listUserAsImageParticipantsRouter from '@modules/events/infra/http/routes/listUserAsImageParticipants.routes';
 import inspirationImagesRouter from '@modules/users/infra/http/routes/inspirationImages.routes';
 import eventInspirationImagesRouter from '@modules/events/infra/http/routes/eventInspirationImages.routes';
+import appointmentFilesRouter from '@modules/appointments/infra/http/routes/appointmentFiles.routes';
 
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
+routes.use('/appointment/files', appointmentFilesRouter);
 
 routes.use('/users', usersRouter);
 routes.use('/user/name-or-email', findUserByNameOrEmailRouter);
