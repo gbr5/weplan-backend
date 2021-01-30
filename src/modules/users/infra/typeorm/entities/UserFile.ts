@@ -13,6 +13,7 @@ import { Expose } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EventFile from '@modules/events/infra/typeorm/entities/EventFile';
+import AppointmentFile from '@modules/appointments/infra/typeorm/entities/AppointmentFile';
 import CategoryFile from './CategoryFile';
 import CardFile from './CardFile';
 import ContactFile from './ContactFile';
@@ -85,6 +86,9 @@ class UserFile {
 
   @OneToMany(() => EventFile, event => event.file)
   eventFiles: EventFile[];
+
+  @OneToMany(() => AppointmentFile, appointment => appointment.file)
+  appointmentFiles: AppointmentFile[];
 }
 
 export default UserFile;
