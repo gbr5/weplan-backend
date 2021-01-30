@@ -5,5 +5,6 @@ export default interface ICreatAppointmentDTO {
   address: string;
   appointment_type: string;
   weplanGuest: boolean;
+  guest: boolean;
   host_id: string;
 }

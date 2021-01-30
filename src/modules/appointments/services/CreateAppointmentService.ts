@@ -30,6 +30,7 @@ class CreateAppointmentService {
     host_id,
     appointment_type,
     weplanGuest,
+    guest,
     duration_minutes,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const host = await this.usersRepository.findById(host_id);
@@ -60,6 +61,7 @@ class CreateAppointmentService {
       address,
       appointment_type,
       weplanGuest,
+      guest,
       host_id,
     });
 

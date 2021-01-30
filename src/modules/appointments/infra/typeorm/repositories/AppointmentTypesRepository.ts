@@ -17,6 +17,12 @@ class AppointmentTypesRepository implements IAppointmentTypesRepository {
     return findAppointmentType;
   }
 
+  public async find(): Promise<AppointmentType[]> {
+    const findAppointmentTypes = await this.ormRepository.find();
+
+    return findAppointmentTypes;
+  }
+
   public async create(name: string): Promise<AppointmentType> {
     const appointmentType = this.ormRepository.create({
       name,

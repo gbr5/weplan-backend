@@ -20,6 +20,7 @@ class UpdateAppointmentService {
     address: string,
     appointment_type: string,
     weplanGuest: boolean,
+    guest: boolean,
   ): Promise<Appointment> {
     const findAppointment = await this.appointmentsRepository.findById(id);
 
@@ -33,6 +34,8 @@ class UpdateAppointmentService {
     findAppointment.address = address;
     findAppointment.appointment_type = appointment_type;
     findAppointment.weplanGuest = weplanGuest;
+    findAppointment.weplanGuest = weplanGuest;
+    findAppointment.guest = guest;
 
     const updatedAppointment = await this.appointmentsRepository.save(
       findAppointment,
