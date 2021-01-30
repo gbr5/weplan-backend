@@ -46,6 +46,8 @@ appointmentsRouter.post(
   appointmentTypesController.create,
 );
 
+appointmentsRouter.get('/types', appointmentTypesController.index);
+
 // === Appointment === //
 
 appointmentsRouter.post(
@@ -57,6 +59,7 @@ appointmentsRouter.post(
       address: Joi.string().required(),
       appointment_type: Joi.string().required(),
       weplanGuest: Joi.boolean().required(),
+      guest: Joi.boolean().required(),
       duration_minutes: Joi.number().required(),
     },
   }),
@@ -72,6 +75,7 @@ appointmentsRouter.put(
       address: Joi.string().required(),
       appointment_type: Joi.string().required(),
       weplanGuest: Joi.boolean().required(),
+      guest: Joi.boolean().required(),
       duration_minutes: Joi.number().required(),
     },
   }),

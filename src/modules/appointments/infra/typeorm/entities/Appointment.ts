@@ -43,6 +43,9 @@ class Appointment {
   @Column('boolean')
   weplanGuest: boolean;
 
+  @Column('boolean')
+  guest: boolean;
+
   @Column()
   host_id: string;
 

@@ -17,6 +17,7 @@ export default class AppointmentsController {
       date,
       duration_minutes,
       weplanGuest,
+      guest,
     } = req.body;
     const host_id = req.user.id;
 
@@ -29,6 +30,7 @@ export default class AppointmentsController {
       host_id,
       appointment_type,
       weplanGuest,
+      guest,
       duration_minutes,
     });
 
@@ -45,6 +47,7 @@ export default class AppointmentsController {
       address,
       appointment_type,
       weplanGuest,
+      guest,
     } = req.body;
 
     const updateAppointmentService = container.resolve(
@@ -59,6 +62,7 @@ export default class AppointmentsController {
       address,
       appointment_type,
       weplanGuest,
+      guest,
     );
 
     return res.json(classToClass(appointment));
