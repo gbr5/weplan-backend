@@ -93,11 +93,14 @@ import listUserAsImageParticipantsRouter from '@modules/events/infra/http/routes
 import inspirationImagesRouter from '@modules/users/infra/http/routes/inspirationImages.routes';
 import eventInspirationImagesRouter from '@modules/events/infra/http/routes/eventInspirationImages.routes';
 import appointmentFilesRouter from '@modules/appointments/infra/http/routes/appointmentFiles.routes';
+import listUserAppointmentsRouter from '@modules/appointments/infra/http/routes/listUserAppointments.routes';
 
 const routes = Router();
 
 routes.use('/appointments', appointmentsRouter);
 routes.use('/appointment/files', appointmentFilesRouter);
+
+routes.use('/user-appointments', listUserAppointmentsRouter);
 
 routes.use('/users', usersRouter);
 routes.use('/user/name-or-email', findUserByNameOrEmailRouter);
