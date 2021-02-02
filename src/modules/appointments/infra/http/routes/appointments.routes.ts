@@ -14,7 +14,7 @@ import WeplanAppointmentGuestsController from '@modules/appointments/infra/http/
 import EventAppointmentsController from '@modules/appointments/infra/http/controllers/EventAppointmentsController';
 import StageCardAppointmentsController from '@modules/appointments/infra/http/controllers/StageCardAppointmentsController';
 
-// import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
+import SupplierAppointmentController from '@modules/appointments/infra/http/controllers/SupplierAppointmentController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const appointmentsRouter = Router();
@@ -22,6 +22,7 @@ const appointmentsController = new AppointmentsController();
 const supplierNonUserAppointmentsController = new SupplierNonUserAppointmentsController();
 const weplanUsersAppointmentsController = new WeplanUsersAppointmentsController();
 const supplierWeekDayAppointmentsController = new SupplierWeekDayAppointmentsController();
+const supplierAppointmentController = new SupplierAppointmentController();
 const supplierAppointmentDaysOffController = new SupplierAppointmentDaysOffController();
 const supplierAppointmentDaySchedulesController = new SupplierAppointmentDaySchedulesController();
 const supplierAppointmentDayIntervalsController = new SupplierAppointmentDayIntervalsController();
@@ -85,7 +86,7 @@ appointmentsRouter.put(
 
 appointmentsRouter.delete('/:id', appointmentsController.delete);
 
-appointmentsRouter.get('/my-appointments', appointmentsController.index);
+appointmentsRouter.get('/my-appointments', supplierAppointmentController.index);
 
 // === Supplier Appointment's, with a non User Guest === //
 
