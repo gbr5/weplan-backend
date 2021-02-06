@@ -12,7 +12,7 @@ export default class WeplanUsersAppointmentsController {
       date,
       address,
       appointment_type,
-      guest_id,
+      guests,
       duration_minutes,
     } = req.body;
     const host_id = req.user.id;
@@ -30,7 +30,7 @@ export default class WeplanUsersAppointmentsController {
       host_id,
       appointment_type,
       weplanGuest,
-      guest_id,
+      guests,
     });
 
     return res.json(classToClass(appointment));
