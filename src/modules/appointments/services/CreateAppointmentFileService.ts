@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import AppointmentFile from '@modules/appointments/infra/typeorm/entities/AppointmentFile';
-import ICreateAppointmentFileDTO from '@modules/appointments/dtos/ICreateAppointmentFileDTO';
+import ICreateAppointmentFilesDTO from '@modules/appointments/dtos/ICreateAppointmentFilesDTO';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IAppointmentFilesRepository from '../repositories/IAppointmentFilesRepository';
@@ -23,8 +23,8 @@ class CreateAppointmentService {
 
   public async execute({
     appointment_id,
-    file_id,
-  }: ICreateAppointmentFileDTO): Promise<AppointmentFile> {
+    files,
+  }: ICreateAppointmentFilesDTO): Promise<AppointmentFile[]> {
     const appointment = await this.appointmentsRepository.findById(
       appointment_id,
     );
@@ -33,23 +33,24 @@ class CreateAppointmentService {
       throw new AppError('Appointment not found.');
     }
 
-    const findAppointmentFile = await this.appointmentFilesRepository.findByFileAndAppointment(
-      {
-        file_id,
-        appointment_id,
-      },
-    );
-
-    if (findAppointmentFile) {
-      throw new AppError('This file is already attached to this appointment.');
-    }
-
-    const appointmentFile = await this.appointmentFilesRepository.create({
-      file_id,
-      appointment_id,
+    const appointmentFiles = Promise.all([
+      files.map(async file => {
+        return this.appointmentFilesRepository.create({
+          file_id: file.id,
+          appointment_id,
+        });
+      }),
+    ]);
+    const xFiles: AppointmentFile[] = [];
+    (await appointmentFiles).map(file => {
+      file.map(async xFile => {
+        xFiles.push(await xFile);
+        return xFile;
+      });
+      return file;
     });
 
-    return appointmentFile;
+    return xFiles;
   }
 }
 

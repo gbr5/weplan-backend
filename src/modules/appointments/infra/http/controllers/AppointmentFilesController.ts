@@ -7,14 +7,14 @@ import DeleteAppointmentFileService from '@modules/appointments/services/DeleteA
 
 export default class AppointmentFilesController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { file_id, appointment_id } = req.body;
+    const { files, appointment_id } = req.body;
 
     const createAppointmentFile = container.resolve(
       CreateAppointmentFileService,
     );
 
     const appointmentFile = await createAppointmentFile.execute({
-      file_id,
+      files,
       appointment_id,
     });
 
