@@ -9,7 +9,7 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import IAppointmentFilesRepository from '../repositories/IAppointmentFilesRepository';
 
 @injectable()
-class CreateAppointmentService {
+class CreateAppointmentFileService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
@@ -54,4 +54,4 @@ class CreateAppointmentService {
   }
 }
 
-export default CreateAppointmentService;
+export default CreateAppointmentFileService;
