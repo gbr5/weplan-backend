@@ -7,6 +7,7 @@ import ListAllUserAppointmentsService from '@modules/appointments/services/ListA
 import UpdateAppointmentService from '@modules/appointments/services/UpdateAppointmentService';
 
 import { classToClass } from 'class-transformer';
+import ShowAppointmentService from '@modules/appointments/services/ShowAppointmentService';
 
 export default class AppointmentsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -87,6 +88,17 @@ export default class AppointmentsController {
     const listAppointments = container.resolve(ListAllUserAppointmentsService);
 
     const appointments = await listAppointments.execute(user_id);
+
+    return res.json(classToClass(appointments));
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const showAppointment = container.resolve(ShowAppointmentService);
+
+    const appointments = await showAppointment.execute(id);
 
     return res.json(classToClass(appointments));
   }

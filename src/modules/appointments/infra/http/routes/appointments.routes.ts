@@ -87,6 +87,7 @@ appointmentsRouter.put(
 appointmentsRouter.delete('/:id', appointmentsController.delete);
 
 appointmentsRouter.get('/my-appointments', supplierAppointmentController.index);
+appointmentsRouter.get('/show/:id', appointmentsController.show);
 
 // === Supplier Appointment's, with a non User Guest === //
 
