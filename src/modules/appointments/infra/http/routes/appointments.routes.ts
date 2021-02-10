@@ -283,7 +283,7 @@ appointmentsRouter.post(
 );
 
 appointmentsRouter.get(
-  '/event-appointments',
+  '/event-appointments/:event_id',
   eventAppointmentsController.index,
 );
 
