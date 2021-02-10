@@ -11,9 +11,9 @@ class ListSupplierEventAppointmentService {
     private eventAppointmentsRepository: IEventAppointmentsRepository,
   ) {}
 
-  public async execute(supplier_id: string): Promise<EventAppointment[]> {
-    const eventAppointments = await this.eventAppointmentsRepository.findBySupplierId(
-      supplier_id,
+  public async execute(event_id: string): Promise<EventAppointment[]> {
+    const eventAppointments = await this.eventAppointmentsRepository.findByEventId(
+      event_id,
     );
 
     return eventAppointments;

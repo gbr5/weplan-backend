@@ -19,7 +19,9 @@ class EventAppointment {
   @Column('uuid')
   appointment_id: string;
 
-  @ManyToOne(() => Appointment, appointment => appointment.eventAppointments)
+  @ManyToOne(() => Appointment, appointment => appointment.eventAppointments, {
+    eager: true,
+  })
   @JoinColumn({ name: 'appointment_id' })
   appointment: Appointment;
 

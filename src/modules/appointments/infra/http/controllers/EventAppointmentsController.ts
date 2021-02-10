@@ -9,13 +9,14 @@ import { classToClass } from 'class-transformer';
 
 export default class EventAppointmentsController {
   public async index(req: Request, res: Response): Promise<Response> {
-    const supplier_id = req.user.id;
+    const reqParams = req.params;
+    const { event_id } = reqParams;
 
     const listEventAppointments = container.resolve(
       ListEventAppointmentsService,
     );
 
-    const eventAppointments = await listEventAppointments.execute(supplier_id);
+    const eventAppointments = await listEventAppointments.execute(event_id);
 
     return res.json(classToClass(eventAppointments));
   }

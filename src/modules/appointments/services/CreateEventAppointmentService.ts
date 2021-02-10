@@ -6,8 +6,8 @@ import EventAppointment from '@modules/appointments/infra/typeorm/entities/Event
 import ICreateEventAppointmentDTO from '@modules/appointments/dtos/ICreateEventAppointmentDTO';
 import IEventAppointmentsRepository from '@modules/appointments/repositories/IEventAppointmentsRepository';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
+import IEventsRepository from '@modules/events/repositories/IEventsRepository';
 
 // Dependency Inversion (SOLID principles)
 @injectable()
@@ -22,8 +22,8 @@ class CreateEventAppointmentService {
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
 
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('EventsRepository')
+    private eventsRepository: IEventsRepository,
   ) {}
 
   public async execute({
@@ -33,7 +33,7 @@ class CreateEventAppointmentService {
     const appointment = await this.appointmentsRepository.findById(
       appointment_id,
     );
-    const event = await this.usersRepository.findById(event_id);
+    const event = await this.eventsRepository.findById(event_id);
 
     if (!appointment) {
       throw new AppError('Appointment not found.');
