@@ -303,6 +303,14 @@ import EventInspirationImagesRepository from '@modules/events/infra/typeorm/repo
 import IAppointmentFilesRepository from '@modules/appointments/repositories/IAppointmentFilesRepository';
 import AppointmentFilesRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentFilesRepository';
 
+import IAppointmentRemindersRepository from '@modules/appointments/repositories/IAppointmentRemindersRepository';
+import AppointmentRemindersRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRemindersRepository';
+
+container.registerSingleton<IAppointmentRemindersRepository>(
+  'AppointmentRemindersRepository',
+  AppointmentRemindersRepository,
+);
+
 container.registerSingleton<IAppointmentFilesRepository>(
   'AppointmentFilesRepository',
   AppointmentFilesRepository,

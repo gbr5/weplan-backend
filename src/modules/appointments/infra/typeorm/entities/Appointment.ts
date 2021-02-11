@@ -16,6 +16,7 @@ import NonUserAppointmentGuest from './NonUserAppointmentGuest';
 import EventAppointment from './EventAppointment';
 import StageCardAppointment from './StageCardAppointment';
 import AppointmentFile from './AppointmentFile';
+import AppointmentReminder from './AppointmentReminder';
 
 @Entity('appointments')
 class Appointment {
@@ -91,6 +92,13 @@ class Appointment {
     { eager: true },
   )
   appointmentFiles: AppointmentFile[];
+
+  @OneToMany(
+    () => AppointmentReminder,
+    appointmentReminders => appointmentReminders.appointment,
+    { eager: true },
+  )
+  appointmentReminders: AppointmentReminder[];
 }
 
 export default Appointment;
