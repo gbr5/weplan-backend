@@ -96,6 +96,7 @@ import appointmentFilesRouter from '@modules/appointments/infra/http/routes/appo
 import listUserAppointmentsRouter from '@modules/appointments/infra/http/routes/listUserAppointments.routes';
 import appointmentWPParticipantsRouter from '@modules/appointments/infra/http/routes/appointmentWPParticipants.routes';
 import appointmentRemindersRouter from '@modules/appointments/infra/http/routes/appointmentReminders.routes';
+import externalGuestsRouter from '@modules/events/infra/http/routes/externalGuests.routes';
 
 const routes = Router();
 
@@ -105,6 +106,7 @@ routes.use('/appointment/reminders', appointmentRemindersRouter);
 routes.use('/appointment/wp-participants', appointmentWPParticipantsRouter);
 
 routes.use('/user-appointments', listUserAppointmentsRouter);
+routes.use('/external-guests', externalGuestsRouter);
 
 routes.use('/users', usersRouter);
 routes.use('/user/name-or-email', findUserByNameOrEmailRouter);
