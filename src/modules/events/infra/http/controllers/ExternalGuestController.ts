@@ -26,6 +26,6 @@ export default class GuestConfirmationController {
       id,
     });
 
-    return res.json(updatedEventGuest);
+    return res.json(classToClass(updatedEventGuest));
   }
 }
