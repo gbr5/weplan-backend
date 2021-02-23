@@ -97,6 +97,7 @@ import listUserAppointmentsRouter from '@modules/appointments/infra/http/routes/
 import appointmentWPParticipantsRouter from '@modules/appointments/infra/http/routes/appointmentWPParticipants.routes';
 import appointmentRemindersRouter from '@modules/appointments/infra/http/routes/appointmentReminders.routes';
 import externalGuestsRouter from '@modules/events/infra/http/routes/externalGuests.routes';
+import sendMassInvitationRouter from '@modules/weplan/infra/http/routes/SendMassInvitation.routes';
 
 const routes = Router();
 
@@ -107,6 +108,7 @@ routes.use('/appointment/wp-participants', appointmentWPParticipantsRouter);
 
 routes.use('/user-appointments', listUserAppointmentsRouter);
 routes.use('/external-guests', externalGuestsRouter);
+routes.use('/mass-invitation', sendMassInvitationRouter);
 
 routes.use('/users', usersRouter);
 routes.use('/user/name-or-email', findUserByNameOrEmailRouter);

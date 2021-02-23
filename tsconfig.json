@@ -8,6 +8,8 @@
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
     "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
@@ -16,6 +18,11 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "noImplicitAny": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/@types"
+    ],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }
