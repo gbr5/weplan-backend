@@ -46,8 +46,6 @@ class SendMassInvitationService {
     eventName,
     eventTrimmedName,
   }: ISendMassInvitation): Promise<void> {
-    console.log({ guests, eventName, eventTrimmedName });
-
     // const sesRestrictions = await this.client
     //   .getSendQuota()
     //   .promise()
