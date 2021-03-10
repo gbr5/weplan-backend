@@ -10,8 +10,8 @@ import { inject, injectable } from 'tsyringe';
 //
 
 interface IGuest {
-  email: string;
   id: string;
+  email: string;
   host_name: string;
   first_name: string;
 }
@@ -78,7 +78,7 @@ class SendMassInvitationService {
               },
               Body: {
                 Text: {
-                  Data: `Olá ${guest.first_name}, ${guest.host_name} convidou você para seu evento ${eventName}. Acesse http://weplan.party/event/${eventTrimmedName}/${guest.id} para vizualizar os detalhes`,
+                  Data: `Olá ${guest.first_name}, ${guest.host_name} convidou você para seu evento ${eventName}. Acesse ${process.env.APP_WEB_URL}/event/${eventTrimmedName}/${guest.id} para vizualizar os detalhes`,
                 },
               },
             },

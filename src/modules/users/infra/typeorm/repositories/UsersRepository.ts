@@ -41,6 +41,16 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  public async findByTrimmedName(
+    trimmed_name: string,
+  ): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { trimmed_name },
+    });
+
+    return user;
+  }
+
   public async findAllSuppliers({
     except_user_id,
   }: IFindAllSuppliersDTO): Promise<User[]> {

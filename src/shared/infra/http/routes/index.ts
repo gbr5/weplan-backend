@@ -98,8 +98,21 @@ import appointmentWPParticipantsRouter from '@modules/appointments/infra/http/ro
 import appointmentRemindersRouter from '@modules/appointments/infra/http/routes/appointmentReminders.routes';
 import externalGuestsRouter from '@modules/events/infra/http/routes/externalGuests.routes';
 import sendMassInvitationRouter from '@modules/weplan/infra/http/routes/SendMassInvitation.routes';
+import importGuestsWithWhatsappAndEmail from '@modules/events/infra/http/routes/importGuestsWithWhatsappAndEmail.routes';
+import eventSupplierSubCategoriesRouter from '@modules/suppliers/infra/http/routes/eventSupplierSubCategories.routes';
+import eventSuppliersBySubCategoriesRouter from '@modules/suppliers/infra/http/routes/eventSuppliersBySubCategories.routes';
+import showSupplierByTrimmedNameRouter from '@modules/suppliers/infra/http/routes/showSupplierByTrimmedName.routes';
 
 const routes = Router();
+
+// ==> Public Pages
+routes.use('/event-suppliers-sub-categories', eventSupplierSubCategoriesRouter);
+routes.use('/show-supplier', showSupplierByTrimmedNameRouter);
+routes.use(
+  '/event-suppliers-by-sub-category',
+  eventSuppliersBySubCategoriesRouter,
+);
+// ==> End
 
 routes.use('/appointments', appointmentsRouter);
 routes.use('/appointment/files', appointmentFilesRouter);
@@ -134,6 +147,7 @@ routes.use('/guest-contact-info', guestContactInfosRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);
+routes.use('/guest-list/whatsapp/email', importGuestsWithWhatsappAndEmail);
 
 routes.use('/weplan-guest-messages', weplanGuestMessagesRouter);
 
