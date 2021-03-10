@@ -25,13 +25,14 @@ export default class UserSupplierCategoriesController {
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
-    const sub_category_name = req.params;
+    const reqParams = req.params;
+    const { sub_category_name } = reqParams;
     const listSuppliersByCategory = container.resolve(
       ListSuppliersByCategoryService,
     );
 
     const userSupplierCategories = await listSuppliersByCategory.execute(
-      sub_category_name.sub_category,
+      sub_category_name,
     );
 
     return res.json(classToClass(userSupplierCategories));
