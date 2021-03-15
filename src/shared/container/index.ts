@@ -318,6 +318,14 @@ import ContactPageLinksRepository from '@modules/contactPages/infra/typeorm/repo
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
 import UserFormsRepository from '@modules/forms/infra/typeorm/repositories/UserFormsRepository';
 
+import IFormFieldsRepository from '@modules/forms/repositories/IFormFieldsRepository';
+import FormFieldsRepository from '@modules/forms/infra/typeorm/repositories/FormFieldsRepository';
+
+container.registerSingleton<IFormFieldsRepository>(
+  'FormFieldsRepository',
+  FormFieldsRepository,
+);
+
 container.registerSingleton<IUserFormsRepository>(
   'UserFormsRepository',
   UserFormsRepository,

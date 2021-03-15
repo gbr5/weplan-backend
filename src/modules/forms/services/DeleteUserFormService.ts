@@ -4,7 +4,7 @@ import IUserFormsRepository from '@modules/forms/repositories/IUserFormsReposito
 import AppError from '@shared/errors/AppError';
 
 @injectable()
-class UpdateUserFormService {
+class DeleteUserFormService {
   constructor(
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
@@ -21,4 +21,4 @@ class UpdateUserFormService {
   }
 }
 
-export default UpdateUserFormService;
+export default DeleteUserFormService;
