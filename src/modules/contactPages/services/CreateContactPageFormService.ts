@@ -2,25 +2,29 @@ import { injectable, inject } from 'tsyringe';
 
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
+import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IContactPagePostsRepository from '../repositories/IContactPagePostsRepository';
-import ContactPagePost from '../infra/typeorm/entities/ContactPagePost';
+import IContactPageFormsRepository from '../repositories/IContactPageFormsRepository';
+import ContactPageForm from '../infra/typeorm/entities/ContactPageForm';
 
 interface IRequest {
   user_id: string;
   contact_page_id: string;
-  image_url: string;
-  destination_url: string;
+  form_id: string;
+  isActive: boolean;
 }
 
 @injectable()
-class CreateContactPagePostService {
+class CreateContactPageFormService {
   constructor(
-    @inject('ContactPagePostsRepository')
-    private contactPagePostsRepository: IContactPagePostsRepository,
+    @inject('ContactPageFormsRepository')
+    private contactPageFormsRepository: IContactPageFormsRepository,
 
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
+
+    @inject('UserFormsRepository')
+    private userFormsRepository: IUserFormsRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -29,9 +33,9 @@ class CreateContactPagePostService {
   public async execute({
     user_id,
     contact_page_id,
-    image_url,
-    destination_url,
-  }: IRequest): Promise<ContactPagePost> {
+    form_id,
+    isActive,
+  }: IRequest): Promise<ContactPageForm> {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
@@ -45,19 +49,24 @@ class CreateContactPagePostService {
     if (!userContactPage) {
       throw new AppError('Contact page not found!');
     }
+    const userForm = await this.userFormsRepository.findById(form_id);
 
-    if (user.id !== userContactPage.user_id) {
+    if (!userForm) {
+      throw new AppError('User form not found!');
+    }
+
+    if (user.id !== userForm.user_id || user.id !== userContactPage.user_id) {
       throw new AppError('User not found!');
     }
 
-    const contactPagePost = await this.contactPagePostsRepository.create({
+    const contactPageForm = await this.contactPageFormsRepository.create({
       contact_page_id,
-      image_url,
-      destination_url,
+      form_id,
+      isActive,
     });
 
-    return contactPagePost;
+    return contactPageForm;
   }
 }
 
-export default CreateContactPagePostService;
+export default CreateContactPageFormService;

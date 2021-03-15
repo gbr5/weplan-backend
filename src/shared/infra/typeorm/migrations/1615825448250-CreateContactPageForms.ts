@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserForms1615777199343
+export default class CreateContactPageForms1615825448250
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_forms',
+        name: 'contact_page_forms',
         columns: [
           {
             name: 'id',
@@ -15,24 +15,12 @@ export default class CreateUserForms1615777199343
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'user_id',
+            name: 'contact_page_id',
             type: 'uuid',
           },
           {
-            name: 'slug',
-            type: 'varchar',
-          },
-          {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'title',
-            type: 'varchar',
-          },
-          {
-            name: 'message',
-            type: 'varchar',
+            name: 'form_id',
+            type: 'uuid',
           },
           {
             name: 'isActive',
@@ -51,9 +39,17 @@ export default class CreateUserForms1615777199343
         ],
         foreignKeys: [
           {
-            name: 'UserForms',
-            columnNames: ['user_id'],
-            referencedTableName: 'users',
+            name: 'ContactPageForms',
+            columnNames: ['contact_page_id'],
+            referencedTableName: 'user_contact_pages',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'FormContactPages',
+            columnNames: ['form_id'],
+            referencedTableName: 'user_forms',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -64,6 +60,6 @@ export default class CreateUserForms1615777199343
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_forms');
+    await queryRunner.dropTable('contact_page_forms');
   }
 }

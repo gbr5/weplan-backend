@@ -30,7 +30,10 @@ class CreateUserFormService {
       throw new AppError('User not found.');
     }
 
-    const userForm = await this.userFormsRepository.findBySlug(slug);
+    const userForm = await this.userFormsRepository.findByUserIdAndSlug({
+      slug,
+      user_id,
+    });
 
     if (userForm) {
       throw new AppError(

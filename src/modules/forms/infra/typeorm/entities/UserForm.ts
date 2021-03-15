@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import FormField from '@modules/forms/infra/typeorm/entities/FormField';
+import ContactPageForm from '@modules/contactPages/infra/typeorm/entities/ContactPageForm';
 
 @Entity('user_forms')
 class UserForm {
@@ -49,6 +50,9 @@ class UserForm {
     eager: true,
   })
   fields: FormField[];
+
+  @OneToMany(() => ContactPageForm, post => post.form)
+  contactPages: ContactPageForm[];
 }
 
 export default UserForm;

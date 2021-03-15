@@ -9,7 +9,8 @@ import DeleteUserFormService from '@modules/forms/services/DeleteUserFormService
 
 export default class UserFormsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { user_id, slug, name, title, message, isActive } = req.body;
+    const user_id = req.user.id;
+    const { slug, name, title, message, isActive } = req.body;
     const createUserForms = container.resolve(CreateUserFormService);
 
     const form = await createUserForms.execute({
@@ -27,11 +28,13 @@ export default class UserFormsController {
   public async update(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { id } = dataParams;
+    const user_id = req.user.id;
     const { slug, name, title, message, isActive } = req.body;
     const updateUserForms = container.resolve(UpdateUserFormService);
 
     const form = await updateUserForms.execute({
       id,
+      user_id,
       slug,
       name,
       title,
@@ -44,21 +47,22 @@ export default class UserFormsController {
 
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { slug } = dataParams;
+    const { name, slug } = dataParams;
 
     const updateUserForm = container.resolve(ShowUserFormService);
 
-    const form = await updateUserForm.execute(slug);
+    const form = await updateUserForm.execute(slug, name);
 
     return res.json(classToClass(form));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
-    const showUserForms = container.resolve(DeleteUserFormService);
+    const deleteUserForms = container.resolve(DeleteUserFormService);
 
-    await showUserForms.execute(id);
+    await deleteUserForms.execute(id, user_id);
 
     return res.status(200).send();
   }

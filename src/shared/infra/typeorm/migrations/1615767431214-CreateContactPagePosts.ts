@@ -39,7 +39,7 @@ export default class CreateContactPagePosts1615767431214
         ],
         foreignKeys: [
           {
-            name: 'UserContactPagePosts',
+            name: 'ContactPagePosts',
             columnNames: ['contact_page_id'],
             referencedTableName: 'user_contact_pages',
             referencedColumnNames: ['id'],

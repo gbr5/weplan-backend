@@ -39,8 +39,11 @@ class CreateUserContactPageService {
       throw new AppError('User not found.');
     }
 
-    const userContactPage = await this.userContactPagesRepository.findBySlug(
-      slug,
+    const userContactPage = await this.userContactPagesRepository.findByUserIdAndSlug(
+      {
+        slug,
+        user_id,
+      },
     );
 
     if (userContactPage) {

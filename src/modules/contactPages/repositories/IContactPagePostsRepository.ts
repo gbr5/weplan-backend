@@ -6,5 +6,5 @@ export default interface IContactPagePostsRepository {
   findById(id: string): Promise<ContactPagePost | undefined>;
   findByContactPageId(contact_page_id: string): Promise<ContactPagePost[]>;
   save(contactPage: ContactPagePost): Promise<ContactPagePost>;
-  delete(contactPage_id: string): Promise<void>;
+  delete(id: string): Promise<void>;
 }
