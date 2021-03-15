@@ -306,6 +306,14 @@ import AppointmentFilesRepository from '@modules/appointments/infra/typeorm/repo
 import IAppointmentRemindersRepository from '@modules/appointments/repositories/IAppointmentRemindersRepository';
 import AppointmentRemindersRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRemindersRepository';
 
+import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
+import UserContactPagesRepository from '@modules/contactPages/infra/typeorm/repositories/UserContactPagesRepository';
+
+container.registerSingleton<IUserContactPagesRepository>(
+  'UserContactPagesRepository',
+  UserContactPagesRepository,
+);
+
 container.registerSingleton<IAppointmentRemindersRepository>(
   'AppointmentRemindersRepository',
   AppointmentRemindersRepository,

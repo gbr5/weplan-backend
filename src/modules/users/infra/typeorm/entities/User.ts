@@ -49,6 +49,7 @@ import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
 import EventNoteAccess from '@modules/events/infra/typeorm/entities/EventNoteAccess';
 import Guest from '@modules/events/infra/typeorm/entities/Guest';
 import EventDateVote from '@modules/events/infra/typeorm/entities/EventDateVote';
+import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -307,6 +308,9 @@ class User {
     userInspirationImage => userInspirationImage.user,
   )
   userInspirationImages: InspirationImage[];
+
+  @OneToMany(() => UserContactPage, userContactPage => userContactPage.user)
+  contactPages: UserContactPage[];
 }
 
 export default User;

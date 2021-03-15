@@ -102,6 +102,7 @@ import importGuestsWithWhatsappAndEmail from '@modules/events/infra/http/routes/
 import eventSupplierSubCategoriesRouter from '@modules/suppliers/infra/http/routes/eventSupplierSubCategories.routes';
 import eventSuppliersBySubCategoriesRouter from '@modules/suppliers/infra/http/routes/eventSuppliersBySubCategories.routes';
 import showSupplierByTrimmedNameRouter from '@modules/suppliers/infra/http/routes/showSupplierByTrimmedName.routes';
+import userContactPagesRouter from '@modules/contactPages/infra/http/routes/userContactPages.routes';
 
 const routes = Router();
 
@@ -112,6 +113,7 @@ routes.use(
   '/event-suppliers-by-sub-category',
   eventSuppliersBySubCategoriesRouter,
 );
+routes.use('/user-contact-page', userContactPagesRouter);
 // ==> End
 
 routes.use('/appointments', appointmentsRouter);
