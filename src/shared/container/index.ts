@@ -306,6 +306,38 @@ import AppointmentFilesRepository from '@modules/appointments/infra/typeorm/repo
 import IAppointmentRemindersRepository from '@modules/appointments/repositories/IAppointmentRemindersRepository';
 import AppointmentRemindersRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentRemindersRepository';
 
+import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
+import UserContactPagesRepository from '@modules/contactPages/infra/typeorm/repositories/UserContactPagesRepository';
+
+import IContactPagePostsRepository from '@modules/contactPages/repositories/IContactPagePostsRepository';
+import ContactPagePostsRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPagePostsRepository';
+
+import IContactPageLinksRepository from '@modules/contactPages/repositories/IContactPageLinksRepository';
+import ContactPageLinksRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageLinksRepository';
+
+import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
+import UserFormsRepository from '@modules/forms/infra/typeorm/repositories/UserFormsRepository';
+
+container.registerSingleton<IUserFormsRepository>(
+  'UserFormsRepository',
+  UserFormsRepository,
+);
+
+container.registerSingleton<IContactPageLinksRepository>(
+  'ContactPageLinksRepository',
+  ContactPageLinksRepository,
+);
+
+container.registerSingleton<IContactPagePostsRepository>(
+  'ContactPagePostsRepository',
+  ContactPagePostsRepository,
+);
+
+container.registerSingleton<IUserContactPagesRepository>(
+  'UserContactPagesRepository',
+  UserContactPagesRepository,
+);
+
 container.registerSingleton<IAppointmentRemindersRepository>(
   'AppointmentRemindersRepository',
   AppointmentRemindersRepository,
