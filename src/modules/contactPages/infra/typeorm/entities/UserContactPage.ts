@@ -6,9 +6,11 @@ import {
   JoinColumn,
   Column,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import ContactPagePost from './ContactPagePost';
 
 @Entity('user_contact_pages')
 class UserContactPage {
@@ -45,6 +47,11 @@ class UserContactPage {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => ContactPagePost, post => post.contactPage, {
+    eager: true,
+  })
+  posts: ContactPagePost[];
 }
 
 export default UserContactPage;

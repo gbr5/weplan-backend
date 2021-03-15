@@ -103,6 +103,7 @@ import eventSupplierSubCategoriesRouter from '@modules/suppliers/infra/http/rout
 import eventSuppliersBySubCategoriesRouter from '@modules/suppliers/infra/http/routes/eventSuppliersBySubCategories.routes';
 import showSupplierByTrimmedNameRouter from '@modules/suppliers/infra/http/routes/showSupplierByTrimmedName.routes';
 import userContactPagesRouter from '@modules/contactPages/infra/http/routes/userContactPages.routes';
+import contactPagePostsRouter from '@modules/contactPages/infra/http/routes/contactPagePosts.routes';
 
 const routes = Router();
 
@@ -114,6 +115,7 @@ routes.use(
   eventSuppliersBySubCategoriesRouter,
 );
 routes.use('/user-contact-page', userContactPagesRouter);
+routes.use('/contact-page-post', contactPagePostsRouter);
 // ==> End
 
 routes.use('/appointments', appointmentsRouter);
