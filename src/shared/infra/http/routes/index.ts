@@ -105,10 +105,11 @@ import showSupplierByTrimmedNameRouter from '@modules/suppliers/infra/http/route
 import userContactPagesRouter from '@modules/contactPages/infra/http/routes/userContactPages.routes';
 import contactPagePostsRouter from '@modules/contactPages/infra/http/routes/contactPagePosts.routes';
 import contactPageLinksRouter from '@modules/contactPages/infra/http/routes/contactPageLinks.routes';
+import userFormsRouter from '@modules/forms/infra/http/routes/userForms.routes';
 
 const routes = Router();
 
-// ==> Public Pages
+// ==> Used by Public Pages
 routes.use('/event-suppliers-sub-categories', eventSupplierSubCategoriesRouter);
 routes.use('/show-supplier', showSupplierByTrimmedNameRouter);
 routes.use(
@@ -118,6 +119,7 @@ routes.use(
 routes.use('/user-contact-page', userContactPagesRouter);
 routes.use('/contact-page-post', contactPagePostsRouter);
 routes.use('/contact-page-link', contactPageLinksRouter);
+routes.use('/user-form', userFormsRouter);
 // ==> End
 
 routes.use('/appointments', appointmentsRouter);
