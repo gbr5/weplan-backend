@@ -312,6 +312,14 @@ import UserContactPagesRepository from '@modules/contactPages/infra/typeorm/repo
 import IContactPagePostsRepository from '@modules/contactPages/repositories/IContactPagePostsRepository';
 import ContactPagePostsRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPagePostsRepository';
 
+import IContactPageLinksRepository from '@modules/contactPages/repositories/IContactPageLinksRepository';
+import ContactPageLinksRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageLinksRepository';
+
+container.registerSingleton<IContactPageLinksRepository>(
+  'ContactPageLinksRepository',
+  ContactPageLinksRepository,
+);
+
 container.registerSingleton<IContactPagePostsRepository>(
   'ContactPagePostsRepository',
   ContactPagePostsRepository,

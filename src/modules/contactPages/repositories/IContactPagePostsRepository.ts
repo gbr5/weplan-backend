@@ -3,6 +3,7 @@ import ICreateContactPagePostDTO from '@modules/contactPages/dtos/ICreateContact
 
 export default interface IContactPagePostsRepository {
   create(data: ICreateContactPagePostDTO): Promise<ContactPagePost>;
+  findById(id: string): Promise<ContactPagePost | undefined>;
   findByContactPageId(contact_page_id: string): Promise<ContactPagePost[]>;
   save(contactPage: ContactPagePost): Promise<ContactPagePost>;
   delete(contactPage_id: string): Promise<void>;

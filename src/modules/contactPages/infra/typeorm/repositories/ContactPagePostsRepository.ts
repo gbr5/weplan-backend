@@ -10,6 +10,12 @@ class ContactPagePostsRepository implements IContactPagePostsRepository {
     this.ormRepository = getRepository(ContactPagePost);
   }
 
+  public async findById(id: string): Promise<ContactPagePost | undefined> {
+    const findContactPagePost = await this.ormRepository.findOne(id);
+
+    return findContactPagePost;
+  }
+
   public async findByContactPageId(
     contact_page_id: string,
   ): Promise<ContactPagePost[]> {

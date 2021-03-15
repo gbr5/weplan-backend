@@ -7,7 +7,7 @@ import ICreateContactPagePostDTO from '../dtos/ICreateContactPagePostDTO';
 import ContactPagePost from '../infra/typeorm/entities/ContactPagePost';
 
 @injectable()
-class CreateUserContactPageService {
+class CreateContactPagePostService {
   constructor(
     @inject('ContactPagePostsRepository')
     private contactPagePostsRepository: IContactPagePostsRepository,
@@ -39,4 +39,4 @@ class CreateUserContactPageService {
   }
 }
 
-export default CreateUserContactPageService;
+export default CreateContactPagePostService;

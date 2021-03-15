@@ -11,6 +11,7 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import ContactPagePost from './ContactPagePost';
+import ContactPageLink from './ContactPageLink';
 
 @Entity('user_contact_pages')
 class UserContactPage {
@@ -52,6 +53,11 @@ class UserContactPage {
     eager: true,
   })
   posts: ContactPagePost[];
+
+  @OneToMany(() => ContactPageLink, link => link.contactPage, {
+    eager: true,
+  })
+  links: ContactPageLink[];
 }
 
 export default UserContactPage;
