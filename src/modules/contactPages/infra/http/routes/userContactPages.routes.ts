@@ -14,6 +14,7 @@ userContactPagesRouter.post(
   userContactPagesController.create,
 );
 userContactPagesRouter.get('/:slug', userContactPagesController.show);
-// userContactPagesRouter.delete('/:id', userContactPagesController.delete);
+userContactPagesRouter.put('/:id', userContactPagesController.update);
+userContactPagesRouter.delete('/:id', userContactPagesController.delete);
 
 export default userContactPagesRouter;

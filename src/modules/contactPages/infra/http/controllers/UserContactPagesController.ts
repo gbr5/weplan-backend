@@ -4,8 +4,8 @@ import { classToClass } from 'class-transformer';
 
 import CreateUserContactPageService from '@modules/contactPages/services/CreateUserContactPageService';
 import ShowUserContactPageService from '@modules/contactPages/services/ShowUserContactPageService';
-// import ListUserContactPagesService from '@modules/contactPages/services/ListUserContactPagesService';
-// import DeleteUserContactPageService from '@modules/contactPages/services/DeleteUserContactPageService';
+import UpdateUserContactPageService from '@modules/contactPages/services/UpdateUserContactPageService';
+import DeleteUserContactPageService from '@modules/contactPages/services/DeleteUserContactPageService';
 
 export default class UserContactPagesController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -35,6 +35,27 @@ export default class UserContactPagesController {
     return res.json(contactPage);
   }
 
+  public async update(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+    const { id } = dataParams;
+    const { slug, image_url, title, cta_label, cta_url, isActive } = req.body;
+    const updateUserContactPages = container.resolve(
+      UpdateUserContactPageService,
+    );
+
+    const contactPage = await updateUserContactPages.execute({
+      id,
+      slug,
+      image_url,
+      title,
+      cta_label,
+      cta_url,
+      isActive,
+    });
+
+    return res.json(contactPage);
+  }
+
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
     const { slug } = dataParams;
@@ -46,13 +67,15 @@ export default class UserContactPagesController {
     return res.json(classToClass(contactPage));
   }
 
-  // public async delete(req: Request, res: Response): Promise<Response> {
-  //   const dataParams = req.params;
-  //   const { id } = dataParams;
-  //   const showUserContactPages = container.resolve(DeleteUserContactPageService);
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+    const { id } = dataParams;
+    const showUserContactPages = container.resolve(
+      DeleteUserContactPageService,
+    );
 
-  //   await showUserContactPages.execute(id);
+    await showUserContactPages.execute(id);
 
-  //   return res.status(200).send();
-  // }
+    return res.status(200).send();
+  }
 }
