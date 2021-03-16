@@ -7,6 +7,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
@@ -14,6 +15,7 @@ import ContactPagePost from './ContactPagePost';
 import ContactPageLink from './ContactPageLink';
 import ContactPageForm from './ContactPageForm';
 import ContactPageCampaign from './ContactPageCampaign';
+import ContactPageSEO from './ContactPageSEO';
 
 @Entity('user_contact_pages')
 class UserContactPage {
@@ -70,6 +72,11 @@ class UserContactPage {
     eager: true,
   })
   campaigns: ContactPageCampaign[];
+
+  @OneToOne(() => ContactPageSEO, seo => seo.contactPage, {
+    eager: true,
+  })
+  seo: ContactPageSEO;
 }
 
 export default UserContactPage;
