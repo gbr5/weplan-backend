@@ -108,6 +108,7 @@ import contactPageLinksRouter from '@modules/contactPages/infra/http/routes/cont
 import userFormsRouter from '@modules/forms/infra/http/routes/userForms.routes';
 import formFieldsRouter from '@modules/forms/infra/http/routes/formFields.routes';
 import contactPageFormsRouter from '@modules/contactPages/infra/http/routes/contactPageForms.routes';
+import contactPageCampaignsRouter from '@modules/contactPages/infra/http/routes/contactPageCampaigns.routes';
 
 const routes = Router();
 
@@ -119,6 +120,7 @@ routes.use(
   eventSuppliersBySubCategoriesRouter,
 );
 routes.use('/user-contact-page', userContactPagesRouter);
+routes.use('/contact-page-campaign', contactPageCampaignsRouter);
 routes.use('/contact-page-form', contactPageFormsRouter);
 routes.use('/contact-page-post', contactPagePostsRouter);
 routes.use('/contact-page-link', contactPageLinksRouter);

@@ -3,15 +3,12 @@ import { injectable, inject } from 'tsyringe';
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IContactPageFormsRepository from '../repositories/IContactPageFormsRepository';
 import ContactPageForm from '../infra/typeorm/entities/ContactPageForm';
+import ICreateContactPageFormDTO from '../dtos/ICreateContactPageFormDTO';
 
-interface IRequest {
+interface IRequest extends ICreateContactPageFormDTO {
   user_id: string;
-  contact_page_id: string;
-  form_id: string;
-  isActive: boolean;
 }
 
 @injectable()
@@ -25,9 +22,6 @@ class CreateContactPageFormService {
 
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
-
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
   ) {}
 
   public async execute({
@@ -36,12 +30,6 @@ class CreateContactPageFormService {
     form_id,
     isActive,
   }: IRequest): Promise<ContactPageForm> {
-    const user = await this.usersRepository.findById(user_id);
-
-    if (!user) {
-      throw new AppError('User not found!');
-    }
-
     const userContactPage = await this.userContactPagesRepository.findById(
       contact_page_id,
     );
@@ -55,7 +43,7 @@ class CreateContactPageFormService {
       throw new AppError('User form not found!');
     }
 
-    if (user.id !== userForm.user_id || user.id !== userContactPage.user_id) {
+    if (user_id !== userForm.user_id || user_id !== userContactPage.user_id) {
       throw new AppError('User not found!');
     }
 

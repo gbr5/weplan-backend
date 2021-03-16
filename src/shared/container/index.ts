@@ -324,6 +324,14 @@ import FormFieldsRepository from '@modules/forms/infra/typeorm/repositories/Form
 import IContactPageFormsRepository from '@modules/contactPages/repositories/IContactPageFormsRepository';
 import ContactPageFormsRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageFormsRepository';
 
+import IContactPageCampaignsRepository from '@modules/contactPages/repositories/IContactPageCampaignsRepository';
+import ContactPageCampaignsRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageCampaignsRepository';
+
+container.registerSingleton<IContactPageCampaignsRepository>(
+  'ContactPageCampaignsRepository',
+  ContactPageCampaignsRepository,
+);
+
 container.registerSingleton<IContactPageFormsRepository>(
   'ContactPageFormsRepository',
   ContactPageFormsRepository,

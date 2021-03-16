@@ -2,19 +2,12 @@ import { injectable, inject } from 'tsyringe';
 
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IContactPageLinksRepository from '../repositories/IContactPageLinksRepository';
 import ContactPageLink from '../infra/typeorm/entities/ContactPageLink';
+import ICreateContactPageLinkDTO from '../dtos/ICreateContactPageLinkDTO';
 
-interface IRequest {
+interface IRequest extends ICreateContactPageLinkDTO {
   user_id: string;
-  contact_page_id: string;
-  label: string;
-  url: string;
-  text_color: string;
-  background_color: string;
-  position: number;
-  isActive: boolean;
 }
 
 @injectable()
@@ -25,9 +18,6 @@ class CreateContactPageLinkService {
 
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
-
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
   ) {}
 
   public async execute({
@@ -40,12 +30,6 @@ class CreateContactPageLinkService {
     position,
     isActive,
   }: IRequest): Promise<ContactPageLink> {
-    const user = await this.usersRepository.findById(user_id);
-
-    if (!user) {
-      throw new AppError('User not found!');
-    }
-
     const userContactPage = await this.userContactPagesRepository.findById(
       contact_page_id,
     );
@@ -54,7 +38,7 @@ class CreateContactPageLinkService {
       throw new AppError('Contact page not found!');
     }
 
-    if (user.id !== userContactPage.user_id) {
+    if (user_id !== userContactPage.user_id) {
       throw new AppError('User not found!');
     }
 
