@@ -9,7 +9,7 @@ const userFormsController = new UserFormsController();
 // userFormsRouter.use(ensureAuthenticated);
 
 userFormsRouter.post('/', ensureAuthenticated, userFormsController.create);
-userFormsRouter.get('/:slug', userFormsController.show);
+userFormsRouter.get('/:name/:slug', userFormsController.show);
 userFormsRouter.put('/:id', userFormsController.update);
 userFormsRouter.delete('/:id', userFormsController.delete);
 

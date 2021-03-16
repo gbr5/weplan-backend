@@ -7,6 +7,7 @@ import DeleteContactPageLinkService from '@modules/contactPages/services/DeleteC
 
 export default class ContactPageLinksController {
   public async create(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const {
       contact_page_id,
       label,
@@ -22,6 +23,7 @@ export default class ContactPageLinksController {
     );
 
     const link = await createContactPageLinks.execute({
+      user_id,
       contact_page_id,
       label,
       url,
@@ -35,6 +37,7 @@ export default class ContactPageLinksController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
     const {
@@ -52,6 +55,7 @@ export default class ContactPageLinksController {
 
     const link = await updateContactPageLinks.execute({
       id,
+      user_id,
       label,
       url,
       text_color,
@@ -64,13 +68,14 @@ export default class ContactPageLinksController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
     const deleteContactPageLinks = container.resolve(
       DeleteContactPageLinkService,
     );
 
-    await deleteContactPageLinks.execute(id);
+    await deleteContactPageLinks.execute(id, user_id);
 
     return res.status(200).send();
   }

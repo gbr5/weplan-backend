@@ -21,7 +21,6 @@ export default class CreateUserContactPages1615762501952
           {
             name: 'slug',
             type: 'varchar',
-            isUnique: true,
           },
           {
             name: 'image_url',

@@ -55,7 +55,7 @@ export default class CreateContactPageLinks1615771121481
         ],
         foreignKeys: [
           {
-            name: 'UserContactPageLinks',
+            name: 'ContactPageLinks',
             columnNames: ['contact_page_id'],
             referencedTableName: 'user_contact_pages',
             referencedColumnNames: ['id'],

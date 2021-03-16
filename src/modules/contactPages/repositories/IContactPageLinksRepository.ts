@@ -6,5 +6,5 @@ export default interface IContactPageLinksRepository {
   findById(id: string): Promise<ContactPageLink | undefined>;
   findByContactPageId(contact_page_id: string): Promise<ContactPageLink[]>;
   save(contactPage: ContactPageLink): Promise<ContactPageLink>;
-  delete(contactPage_id: string): Promise<void>;
+  delete(id: string): Promise<void>;
 }

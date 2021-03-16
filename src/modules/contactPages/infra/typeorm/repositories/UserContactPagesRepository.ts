@@ -1,6 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import ICreateUserContactPageDTO from '@modules/contactPages/dtos/ICreateUserContactPageDTO';
+import IFindContactPageByUserIdAndSlugDTO from '@modules/contactPages/dtos/IFindContactPageByUserIdAndSlugDTO';
+import IFindContactPageByUserNameAndSlugDTO from '@modules/contactPages/dtos/IFindContactPageByUserNameAndSlugDTO';
 import UserContactPage from '../entities/UserContactPage';
 
 class UserContactPagesRepository implements IUserContactPagesRepository {
@@ -16,9 +18,25 @@ class UserContactPagesRepository implements IUserContactPagesRepository {
     return findUserContactPage;
   }
 
-  public async findBySlug(slug: string): Promise<UserContactPage | undefined> {
+  public async findByUserIdAndSlug({
+    user_id,
+    slug,
+  }: IFindContactPageByUserIdAndSlugDTO): Promise<UserContactPage | undefined> {
     const findUserContactPage = await this.ormRepository.findOne({
-      where: { slug },
+      where: { user_id, slug },
+    });
+
+    return findUserContactPage;
+  }
+
+  public async findByUserNameAndSlug({
+    name,
+    slug,
+  }: IFindContactPageByUserNameAndSlugDTO): Promise<
+    UserContactPage | undefined
+  > {
+    const findUserContactPage = await this.ormRepository.findOne({
+      where: { trimmed_name: name, slug },
     });
 
     return findUserContactPage;

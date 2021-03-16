@@ -13,7 +13,7 @@ userContactPagesRouter.post(
   ensureAuthenticated,
   userContactPagesController.create,
 );
-userContactPagesRouter.get('/:slug', userContactPagesController.show);
+userContactPagesRouter.get('/:name/:slug', userContactPagesController.show);
 userContactPagesRouter.put('/:id', userContactPagesController.update);
 userContactPagesRouter.delete('/:id', userContactPagesController.delete);
 

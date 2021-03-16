@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
 import ICreateUserFormDTO from '@modules/forms/dtos/ICreateUserFormDTO';
+import IFindFormByUserIdAndSlugDTO from '@modules/forms/dtos/IFindFormByUserIdAndSlugDTO';
 import UserForm from '../entities/UserForm';
 
 class UserFormsRepository implements IUserFormsRepository {
@@ -16,9 +17,12 @@ class UserFormsRepository implements IUserFormsRepository {
     return findUserForm;
   }
 
-  public async findBySlug(slug: string): Promise<UserForm | undefined> {
+  public async findByUserIdAndSlug({
+    slug,
+    user_id,
+  }: IFindFormByUserIdAndSlugDTO): Promise<UserForm | undefined> {
     const findUserForm = await this.ormRepository.findOne({
-      where: { slug },
+      where: { user_id, slug },
     });
 
     return findUserForm;

@@ -14,11 +14,19 @@ class DeleteContactPageLinkService {
     private userContactPagesRepository: IUserContactPagesRepository,
   ) {}
 
-  public async execute(id: string): Promise<void> {
+  public async execute(id: string, user_id: string): Promise<void> {
     const link = await this.contactPageLinksRepository.findById(id);
 
     if (!link) {
       throw new AppError('Contact page link not found!');
+    }
+
+    const contactPage = await this.userContactPagesRepository.findById(
+      link.contact_page_id,
+    );
+
+    if (!contactPage || contactPage.user_id !== user_id) {
+      throw new AppError('Contact page not found!');
     }
 
     await this.contactPageLinksRepository.delete(id);

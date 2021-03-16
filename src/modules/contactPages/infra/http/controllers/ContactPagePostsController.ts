@@ -7,6 +7,7 @@ import DeleteContactPagePostService from '@modules/contactPages/services/DeleteC
 
 export default class ContactPagePostsController {
   public async create(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const { contact_page_id, image_url, destination_url } = req.body;
 
     const createContactPagePosts = container.resolve(
@@ -14,6 +15,7 @@ export default class ContactPagePostsController {
     );
 
     const post = await createContactPagePosts.execute({
+      user_id,
       contact_page_id,
       image_url,
       destination_url,
@@ -23,6 +25,7 @@ export default class ContactPagePostsController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
     const { image_url, destination_url } = req.body;
@@ -33,6 +36,7 @@ export default class ContactPagePostsController {
 
     const post = await updateContactPagePosts.execute({
       id,
+      user_id,
       image_url,
       destination_url,
     });
@@ -41,13 +45,14 @@ export default class ContactPagePostsController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
     const deleteContactPagePosts = container.resolve(
       DeleteContactPagePostService,
     );
 
-    await deleteContactPagePosts.execute(id);
+    await deleteContactPagePosts.execute(id, user_id);
 
     return res.status(200).send();
   }

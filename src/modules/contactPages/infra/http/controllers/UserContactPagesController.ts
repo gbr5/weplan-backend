@@ -9,15 +9,8 @@ import DeleteUserContactPageService from '@modules/contactPages/services/DeleteU
 
 export default class UserContactPagesController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const {
-      user_id,
-      slug,
-      image_url,
-      title,
-      cta_label,
-      cta_url,
-      isActive,
-    } = req.body;
+    const user_id = req.user.id;
+    const { slug, image_url, title, cta_label, cta_url, isActive } = req.body;
     const createUserContactPages = container.resolve(
       CreateUserContactPageService,
     );
@@ -36,6 +29,7 @@ export default class UserContactPagesController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
     const { slug, image_url, title, cta_label, cta_url, isActive } = req.body;
@@ -45,6 +39,7 @@ export default class UserContactPagesController {
 
     const contactPage = await updateUserContactPages.execute({
       id,
+      user_id,
       slug,
       image_url,
       title,
@@ -58,23 +53,24 @@ export default class UserContactPagesController {
 
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { slug } = dataParams;
+    const { name, slug } = dataParams;
 
     const updateUserContactPage = container.resolve(ShowUserContactPageService);
 
-    const contactPage = await updateUserContactPage.execute(slug);
+    const contactPage = await updateUserContactPage.execute({ slug, name });
 
     return res.json(classToClass(contactPage));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
     const showUserContactPages = container.resolve(
       DeleteUserContactPageService,
     );
 
-    await showUserContactPages.execute(id);
+    await showUserContactPages.execute(id, user_id);
 
     return res.status(200).send();
   }

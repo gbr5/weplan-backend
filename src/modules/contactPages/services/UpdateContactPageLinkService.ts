@@ -3,9 +3,11 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import IContactPageLinksRepository from '../repositories/IContactPageLinksRepository';
 import ContactPageLink from '../infra/typeorm/entities/ContactPageLink';
+import IUserContactPagesRepository from '../repositories/IUserContactPagesRepository';
 
 interface IRequest {
   id: string;
+  user_id: string;
   label: string;
   url: string;
   text_color: string;
@@ -19,10 +21,14 @@ class UpdateContactPageLinkService {
   constructor(
     @inject('ContactPageLinksRepository')
     private contactPageLinksRepository: IContactPageLinksRepository,
+
+    @inject('UserContactPagesRepository')
+    private userContactPagesRepository: IUserContactPagesRepository,
   ) {}
 
   public async execute({
     id,
+    user_id,
     label,
     url,
     text_color,
@@ -34,6 +40,14 @@ class UpdateContactPageLinkService {
 
     if (!link) {
       throw new AppError('Contact page link not found!');
+    }
+
+    const contactPage = await this.userContactPagesRepository.findById(
+      link.contact_page_id,
+    );
+
+    if (!contactPage || contactPage.user_id !== user_id) {
+      throw new AppError('Contact page not found!');
     }
 
     link.label = label;
