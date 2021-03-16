@@ -327,6 +327,14 @@ import ContactPageFormsRepository from '@modules/contactPages/infra/typeorm/repo
 import IContactPageCampaignsRepository from '@modules/contactPages/repositories/IContactPageCampaignsRepository';
 import ContactPageCampaignsRepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageCampaignsRepository';
 
+import IContactPageSEORepository from '@modules/contactPages/repositories/IContactPageSEORepository';
+import ContactPageSEORepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageSEORepository';
+
+container.registerSingleton<IContactPageSEORepository>(
+  'ContactPageSEORepository',
+  ContactPageSEORepository,
+);
+
 container.registerSingleton<IContactPageCampaignsRepository>(
   'ContactPageCampaignsRepository',
   ContactPageCampaignsRepository,
