@@ -6,10 +6,11 @@ import {
   JoinColumn,
   Column,
   ManyToOne,
-  // OneToMany,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import FormField from '@modules/forms/infra/typeorm/entities/FormField';
 
 @Entity('user_forms')
 class UserForm {
@@ -44,10 +45,10 @@ class UserForm {
   @UpdateDateColumn()
   updated_at: Date;
 
-  // @OneToMany(() => FormPost, post => post.contactPage, {
-  //   eager: true,
-  // })
-  // posts: FormPost[];
+  @OneToMany(() => FormField, post => post.form, {
+    eager: true,
+  })
+  fields: FormField[];
 }
 
 export default UserForm;
