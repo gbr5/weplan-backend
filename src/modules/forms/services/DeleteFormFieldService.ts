@@ -26,6 +26,7 @@ class DeleteFormFieldService {
     if (!form) {
       throw new AppError('Form not found.');
     }
+    await this.formFieldsRepository.delete(id);
 
     const fieldsToUpdate = form.fields
       .filter(thisField => thisField.position >= formField.position)
@@ -41,8 +42,6 @@ class DeleteFormFieldService {
         return this.formFieldsRepository.save(thisField);
       }),
     ]);
-
-    await this.formFieldsRepository.delete(id);
   }
 }
 
