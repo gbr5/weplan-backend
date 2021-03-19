@@ -1,7 +1,7 @@
 export default interface ICreateFormFieldDTO {
   name: string;
-  form_id: string;
   position: number;
+  form_id: string;
   isRequired: boolean;
   title: string;
   placeholder: string;

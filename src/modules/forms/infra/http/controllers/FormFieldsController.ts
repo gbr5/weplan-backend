@@ -7,23 +7,15 @@ import DeleteFormFieldService from '@modules/forms/services/DeleteFormFieldServi
 
 export default class FormFieldsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const {
-      name,
-      form_id,
-      position,
-      placeholder,
-      title,
-      type,
-      isRequired,
-    } = req.body;
+    const { name, form_id, placeholder, title, type, isRequired } = req.body;
     const createFormFields = container.resolve(CreateFormFieldService);
 
     const form = await createFormFields.execute({
       name,
       form_id,
-      position,
       placeholder,
       title,
+      position: 1,
       type,
       isRequired,
     });
