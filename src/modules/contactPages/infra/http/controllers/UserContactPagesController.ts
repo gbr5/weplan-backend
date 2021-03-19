@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateUserContactPageService from '@modules/contactPages/services/CreateUserContactPageService';
 import ShowUserContactPageService from '@modules/contactPages/services/ShowUserContactPageService';
+import ListUserContactPagesService from '@modules/contactPages/services/ListUserContactPagesService';
 import UpdateUserContactPageService from '@modules/contactPages/services/UpdateUserContactPageService';
 import DeleteUserContactPageService from '@modules/contactPages/services/DeleteUserContactPageService';
 
@@ -55,11 +56,21 @@ export default class UserContactPagesController {
     const dataParams = req.params;
     const { name, slug } = dataParams;
 
-    const updateUserContactPage = container.resolve(ShowUserContactPageService);
+    const showUserContactPage = container.resolve(ShowUserContactPageService);
 
-    const contactPage = await updateUserContactPage.execute({ slug, name });
+    const contactPage = await showUserContactPage.execute({ slug, name });
 
     return res.json(classToClass(contactPage));
+  }
+
+  public async list(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
+
+    const listUserContactPage = container.resolve(ListUserContactPagesService);
+
+    const contactPages = await listUserContactPage.execute(user_id);
+
+    return res.json(classToClass(contactPages));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
