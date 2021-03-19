@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import FormField from '@modules/forms/infra/typeorm/entities/FormField';
 import IFormFieldsRepository from '@modules/forms/repositories/IFormFieldsRepository';
 import AppError from '@shared/errors/AppError';
+import IUserFormsRepository from '../repositories/IUserFormsRepository';
 
 interface IRequest {
   id: string;
@@ -18,7 +19,10 @@ interface IRequest {
 class UpdateFormFieldService {
   constructor(
     @inject('FormFieldsRepository')
-    private userFormsRepository: IFormFieldsRepository,
+    private formFieldsRepository: IFormFieldsRepository,
+
+    @inject('UserFormsRepository')
+    private userFormsRepository: IUserFormsRepository,
   ) {}
 
   public async execute({
@@ -30,28 +34,38 @@ class UpdateFormFieldService {
     type,
     isRequired,
   }: IRequest): Promise<FormField> {
-    const userForm = await this.userFormsRepository.findById(id);
+    const userForm = await this.formFieldsRepository.findById(id);
 
     if (!userForm) {
-      throw new AppError('Contact page not found.');
+      throw new AppError('Form field not found.');
+    }
+
+    const form = await this.userFormsRepository.findById(userForm.form_id);
+
+    if (!form) {
+      throw new AppError('Form not found.');
     }
 
     if (userForm.position !== position) {
-      const positionExists = await this.userFormsRepository.findByFormIdAndPosition(
-        {
-          position,
-          form_id: userForm.id,
-        },
-      );
+      const fieldsToUpdate = form.fields
+        .filter(thisField => thisField.position >= position)
+        .map(thisField => {
+          return {
+            ...thisField,
+            position: Number(thisField.position) + 1,
+          };
+        });
 
-      if (positionExists) {
-        throw new AppError('This position is already taken.');
-      }
+      Promise.all([
+        fieldsToUpdate.map(thisField => {
+          return this.formFieldsRepository.save(thisField);
+        }),
+      ]);
       userForm.position = position;
     }
 
     if (userForm.name !== name) {
-      const nameExists = await this.userFormsRepository.findByFormIdAndName({
+      const nameExists = await this.formFieldsRepository.findByFormIdAndName({
         name,
         form_id: userForm.id,
       });
@@ -67,9 +81,9 @@ class UpdateFormFieldService {
     userForm.type = type;
     userForm.isRequired = isRequired;
 
-    const form = await this.userFormsRepository.save(userForm);
+    const updatedForm = await this.formFieldsRepository.save(userForm);
 
-    return form;
+    return updatedForm;
   }
 }
 

@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import FormField from '@modules/forms/infra/typeorm/entities/FormField';
 import IFormFieldsRepository from '@modules/forms/repositories/IFormFieldsRepository';
 import AppError from '@shared/errors/AppError';
+import { sortFormFields } from '@config/sortFormFields';
 import ICreateFormFieldDTO from '../dtos/ICreateFormFieldDTO';
 import IUserFormsRepository from '../repositories/IUserFormsRepository';
 
@@ -18,7 +19,6 @@ class CreateFormFieldService {
 
   public async execute({
     form_id,
-    position,
     placeholder,
     name,
     title,
@@ -30,18 +30,12 @@ class CreateFormFieldService {
     if (!form) {
       throw new AppError('Form not found.');
     }
-
-    const formField = await this.formFieldsRepository.findByFormIdAndPosition({
-      form_id,
-      position,
-    });
-
-    if (formField) {
-      throw new AppError(
-        'A field with the same position already exists. Try another one!',
-      );
-    }
-
+    const sortedFields = sortFormFields(form.fields).reverse();
+    const position =
+      sortedFields && sortedFields.length > 0
+        ? Number(sortedFields[0].position) + 1
+        : 1;
+    console.log(sortedFields);
     const nameExists = await this.formFieldsRepository.findByFormIdAndName({
       form_id,
       name,
@@ -49,9 +43,10 @@ class CreateFormFieldService {
 
     if (nameExists) {
       throw new AppError(
-        'A field with the same name already exists. Try another one!',
+        'A field with the same name already exists for this form. Try another one!',
       );
     }
+    console.log('estou aqui');
 
     const newField = await this.formFieldsRepository.create({
       form_id,
