@@ -63,8 +63,8 @@ class UpdateFormFieldService {
           }),
         ]);
       }
-      if (position > form.fields.length + 1) {
-        userForm.position = form.fields.length + 1;
+      if (position > form.fields.length) {
+        userForm.position = form.fields.length;
       } else {
         userForm.position = position;
       }
