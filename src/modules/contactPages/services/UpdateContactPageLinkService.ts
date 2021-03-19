@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import IContactPageLinksRepository from '../repositories/IContactPageLinksRepository';
 import ContactPageLink from '../infra/typeorm/entities/ContactPageLink';
 import IUserContactPagesRepository from '../repositories/IUserContactPagesRepository';
@@ -24,6 +25,9 @@ class UpdateContactPageLinkService {
 
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
+
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute({
@@ -36,6 +40,12 @@ class UpdateContactPageLinkService {
     position,
     isActive,
   }: IRequest): Promise<ContactPageLink> {
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+
+    if (!employee) {
+      throw new AppError('Contact page link not found!');
+    }
+
     const link = await this.contactPageLinksRepository.findById(id);
 
     if (!link) {
@@ -46,7 +56,7 @@ class UpdateContactPageLinkService {
       link.contact_page_id,
     );
 
-    if (!contactPage || contactPage.user_id !== user_id) {
+    if (!contactPage || contactPage.user_id !== employee.company_id) {
       throw new AppError('Contact page not found!');
     }
 

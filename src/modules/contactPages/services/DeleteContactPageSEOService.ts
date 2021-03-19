@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import IContactPageSEORepository from '../repositories/IContactPageSEORepository';
 
 @injectable()
@@ -12,9 +13,18 @@ class DeleteContactPageSEOService {
 
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
+
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute(id: string, user_id: string): Promise<void> {
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+
+    if (!employee) {
+      throw new AppError('Contact page seo not found!');
+    }
+
     const seo = await this.contactPageSEORepository.findById(id);
 
     if (!seo) {
@@ -25,7 +35,7 @@ class DeleteContactPageSEOService {
       seo.contact_page_id,
     );
 
-    if (!contactPage || contactPage.user_id !== user_id) {
+    if (!contactPage || contactPage.user_id !== employee.company_id) {
       throw new AppError('Contact page not found!');
     }
 

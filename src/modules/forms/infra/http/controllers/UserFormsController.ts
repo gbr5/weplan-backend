@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateUserFormService from '@modules/forms/services/CreateUserFormService';
 import ShowUserFormService from '@modules/forms/services/ShowUserFormService';
+import ListUserFormsService from '@modules/forms/services/ListUserFormsService';
 import UpdateUserFormService from '@modules/forms/services/UpdateUserFormService';
 import DeleteUserFormService from '@modules/forms/services/DeleteUserFormService';
 
@@ -47,11 +48,21 @@ export default class UserFormsController {
 
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { name, slug } = dataParams;
+    const { id } = dataParams;
 
-    const updateUserForm = container.resolve(ShowUserFormService);
+    const showUserForm = container.resolve(ShowUserFormService);
 
-    const form = await updateUserForm.execute(slug, name);
+    const form = await showUserForm.execute(id);
+
+    return res.json(classToClass(form));
+  }
+
+  public async list(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
+
+    const listUserForms = container.resolve(ListUserFormsService);
+
+    const form = await listUserForms.execute(user_id);
 
     return res.json(classToClass(form));
   }
@@ -60,9 +71,9 @@ export default class UserFormsController {
     const user_id = req.user.id;
     const dataParams = req.params;
     const { id } = dataParams;
-    const deleteUserForms = container.resolve(DeleteUserFormService);
+    const deleteUserForm = container.resolve(DeleteUserFormService);
 
-    await deleteUserForms.execute(id, user_id);
+    await deleteUserForm.execute(id, user_id);
 
     return res.status(200).send();
   }

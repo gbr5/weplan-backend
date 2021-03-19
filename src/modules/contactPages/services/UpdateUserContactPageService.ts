@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 
 interface IRequest {
   id: string;
@@ -22,8 +22,8 @@ class UpdateUserContactPageService {
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
 
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute({
@@ -36,8 +36,8 @@ class UpdateUserContactPageService {
     cta_url,
     isActive,
   }: IRequest): Promise<UserContactPage> {
-    const user = await this.usersRepository.findById(user_id);
-    if (!user) {
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+    if (!employee) {
       throw new AppError('User not found.');
     }
 
@@ -47,7 +47,7 @@ class UpdateUserContactPageService {
       throw new AppError('Contact page not found.');
     }
 
-    if (user_id !== userContactPage.user_id || user.id !== user_id) {
+    if (employee.company_id !== userContactPage.user_id) {
       throw new AppError('User not found.');
     }
 

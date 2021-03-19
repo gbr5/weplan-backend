@@ -110,6 +110,7 @@ import formFieldsRouter from '@modules/forms/infra/http/routes/formFields.routes
 import contactPageFormsRouter from '@modules/contactPages/infra/http/routes/contactPageForms.routes';
 import contactPageCampaignsRouter from '@modules/contactPages/infra/http/routes/contactPageCampaigns.routes';
 import contactPageSEORouter from '@modules/contactPages/infra/http/routes/contactPageSEO.routes';
+import externalPageUserFormsRouter from '@modules/forms/infra/http/routes/externalPageUserForms.routes';
 
 const routes = Router();
 
@@ -126,9 +127,10 @@ routes.use('/contact-page-campaign', contactPageCampaignsRouter);
 routes.use('/contact-page-form', contactPageFormsRouter);
 routes.use('/contact-page-post', contactPagePostsRouter);
 routes.use('/contact-page-link', contactPageLinksRouter);
+routes.use('/external-user-form', externalPageUserFormsRouter);
+// ==> End
 routes.use('/user-form', userFormsRouter);
 routes.use('/form-field', formFieldsRouter);
-// ==> End
 
 routes.use('/appointments', appointmentsRouter);
 routes.use('/appointment/files', appointmentFilesRouter);

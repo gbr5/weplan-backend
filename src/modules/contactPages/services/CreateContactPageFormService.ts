@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import IContactPageFormsRepository from '../repositories/IContactPageFormsRepository';
 import ContactPageForm from '../infra/typeorm/entities/ContactPageForm';
 import ICreateContactPageFormDTO from '../dtos/ICreateContactPageFormDTO';
@@ -22,6 +23,9 @@ class CreateContactPageFormService {
 
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
+
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute({
@@ -30,6 +34,11 @@ class CreateContactPageFormService {
     form_id,
     isActive,
   }: IRequest): Promise<ContactPageForm> {
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+
+    if (!employee) {
+      throw new AppError('User not found!');
+    }
     const userContactPage = await this.userContactPagesRepository.findById(
       contact_page_id,
     );
@@ -43,7 +52,10 @@ class CreateContactPageFormService {
       throw new AppError('User form not found!');
     }
 
-    if (user_id !== userForm.user_id || user_id !== userContactPage.user_id) {
+    if (
+      employee.company_id !== userForm.user_id ||
+      employee.company_id !== userContactPage.user_id
+    ) {
       throw new AppError('User not found!');
     }
 

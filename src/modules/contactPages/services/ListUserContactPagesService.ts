@@ -1,11 +1,12 @@
 import { injectable, inject } from 'tsyringe';
 
+import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 
 @injectable()
-class UpdateUserContactPageService {
+class ListUserContactPagesService {
   constructor(
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
@@ -14,24 +15,19 @@ class UpdateUserContactPageService {
     private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
-  public async execute(id: string, user_id: string): Promise<void> {
+  public async execute(user_id: string): Promise<UserContactPage[]> {
     const employee = await this.companyEmployeesRepository.findById(user_id);
+
     if (!employee) {
-      throw new AppError('User not found.');
+      throw new AppError('User not found!');
     }
 
-    const userContactPage = await this.userContactPagesRepository.findById(id);
+    const userContactPages = await this.userContactPagesRepository.findByUserId(
+      employee.company_id,
+    );
 
-    if (!userContactPage) {
-      throw new AppError('Contact page not found.');
-    }
-
-    if (employee.company_id !== userContactPage.user_id) {
-      throw new AppError('User not found.');
-    }
-
-    await this.userContactPagesRepository.delete(id);
+    return userContactPages;
   }
 }
 
-export default UpdateUserContactPageService;
+export default ListUserContactPagesService;

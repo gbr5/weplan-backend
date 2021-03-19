@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import UserForm from '@modules/forms/infra/typeorm/entities/UserForm';
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import ICreateUserFormDTO from '../dtos/ICreateUserFormDTO';
 
 @injectable()
@@ -12,8 +12,8 @@ class CreateUserFormService {
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
 
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute({
@@ -24,15 +24,16 @@ class CreateUserFormService {
     message,
     isActive,
   }: ICreateUserFormDTO): Promise<UserForm> {
-    const user = await this.usersRepository.findById(user_id);
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+    console.log(employee);
 
-    if (!user) {
+    if (!employee) {
       throw new AppError('User not found.');
     }
 
     const userForm = await this.userFormsRepository.findByUserIdAndSlug({
       slug,
-      user_id,
+      user_id: employee.company_id,
     });
 
     if (userForm) {
@@ -42,7 +43,7 @@ class CreateUserFormService {
     }
 
     const form = await this.userFormsRepository.create({
-      user_id,
+      user_id: employee.company_id,
       slug,
       name,
       title,

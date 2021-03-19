@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import IUserContactPagesRepository from '@modules/contactPages/repositories/IUserContactPagesRepository';
 import AppError from '@shared/errors/AppError';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import IContactPageCampaignsRepository from '../repositories/IContactPageCampaignsRepository';
 
 @injectable()
@@ -12,9 +13,18 @@ class DeleteContactPageCampaignService {
 
     @inject('UserContactPagesRepository')
     private userContactPagesRepository: IUserContactPagesRepository,
+
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute(id: string, user_id: string): Promise<void> {
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+
+    if (!employee) {
+      throw new AppError('User not found!');
+    }
+
     const post = await this.contactPageCampaignsRepository.findById(id);
 
     if (!post) {
@@ -25,7 +35,7 @@ class DeleteContactPageCampaignService {
       post.contact_page_id,
     );
 
-    if (!contactPage || contactPage.user_id !== user_id) {
+    if (!contactPage || contactPage.user_id !== employee.company_id) {
       throw new AppError('Contact page not found!');
     }
 

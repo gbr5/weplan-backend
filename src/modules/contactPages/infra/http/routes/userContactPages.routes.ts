@@ -14,6 +14,11 @@ userContactPagesRouter.post(
   userContactPagesController.create,
 );
 userContactPagesRouter.get('/:name/:slug', userContactPagesController.show);
+userContactPagesRouter.get(
+  '/',
+  ensureAuthenticated,
+  userContactPagesController.list,
+);
 userContactPagesRouter.put(
   '/:id',
   ensureAuthenticated,
