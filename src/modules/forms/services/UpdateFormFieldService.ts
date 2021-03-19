@@ -56,12 +56,18 @@ class UpdateFormFieldService {
           };
         });
 
-      Promise.all([
-        fieldsToUpdate.map(thisField => {
-          return this.formFieldsRepository.save(thisField);
-        }),
-      ]);
-      userForm.position = position;
+      if (fieldsToUpdate.length > 0) {
+        Promise.all([
+          fieldsToUpdate.map(thisField => {
+            return this.formFieldsRepository.save(thisField);
+          }),
+        ]);
+      }
+      if (position > form.fields.length + 1) {
+        userForm.position = form.fields.length + 1;
+      } else {
+        userForm.position = position;
+      }
     }
 
     if (userForm.name !== name) {
