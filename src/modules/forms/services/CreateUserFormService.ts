@@ -7,6 +7,7 @@ import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompan
 import ICreateUserFormDTO from '../dtos/ICreateUserFormDTO';
 import IFormStylesRepository from '../repositories/IFormStylesRepository';
 import IFormFieldsRepository from '../repositories/IFormFieldsRepository';
+import IFormEmailNotificationsRepository from '../repositories/IFormEmailNotificationsRepository';
 
 @injectable()
 class CreateUserFormService {
@@ -19,6 +20,9 @@ class CreateUserFormService {
 
     @inject('FormFieldsRepository')
     private formFieldsRepository: IFormFieldsRepository,
+
+    @inject('FormEmailNotificationsRepository')
+    private formEmailNotificationsRepository: IFormEmailNotificationsRepository,
 
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
@@ -68,32 +72,11 @@ class CreateUserFormService {
         position: 1,
         isRequired: true,
       }),
-      await this.formFieldsRepository.create({
+      await this.formEmailNotificationsRepository.create({
         form_id: form.id,
-        title: 'E-mail para contato',
-        name: 'email',
-        placeholder: 'E-mail',
-        type: 'email',
-        position: 2,
-        isRequired: true,
-      }),
-      await this.formFieldsRepository.create({
-        form_id: form.id,
-        title: 'Telefone para contato',
-        name: 'phone',
-        placeholder: ' ',
-        type: 'number',
-        position: 3,
-        isRequired: false,
-      }),
-      await this.formFieldsRepository.create({
-        form_id: form.id,
-        title: 'Como podemos ajudá-lo?',
-        name: 'text',
-        placeholder: 'Sua mensagem ...',
-        type: 'email',
-        position: 4,
-        isRequired: true,
+        subject: `[Nova Mensagem - ${form.name}] | We Plan PRO`,
+        message: `Você recebeu uma nova mensagem por meio do formulário ${form.name}`,
+        notification_type: 'internal_message',
       }),
       await this.formStylesRepository.create({
         form_id: form.id,
@@ -103,6 +86,33 @@ class CreateUserFormService {
         button_text_color: '#050115',
       }),
     ]);
+    await this.formFieldsRepository.create({
+      form_id: form.id,
+      title: 'E-mail para contato',
+      name: 'email',
+      placeholder: 'E-mail',
+      type: 'email',
+      position: 2,
+      isRequired: true,
+    });
+    await this.formFieldsRepository.create({
+      form_id: form.id,
+      title: 'Telefone para contato',
+      name: 'phone',
+      placeholder: ' ',
+      type: 'number',
+      position: 3,
+      isRequired: false,
+    });
+    await this.formFieldsRepository.create({
+      form_id: form.id,
+      title: 'Como podemos ajudá-lo?',
+      name: 'text',
+      placeholder: 'Sua mensagem ...',
+      type: 'email',
+      position: 4,
+      isRequired: true,
+    });
 
     const updatedForm = await this.userFormsRepository.findById(form.id);
 
