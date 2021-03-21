@@ -330,6 +330,38 @@ import ContactPageCampaignsRepository from '@modules/contactPages/infra/typeorm/
 import IContactPageSEORepository from '@modules/contactPages/repositories/IContactPageSEORepository';
 import ContactPageSEORepository from '@modules/contactPages/infra/typeorm/repositories/ContactPageSEORepository';
 
+import IFormSuccessMessageRepository from '@modules/forms/repositories/IFormSuccessMessageRepository';
+import FormSuccessMessageRepository from '@modules/forms/infra/typeorm/repositories/FormSuccessMessageRepository';
+
+import IFormEmailNotificationsRepository from '@modules/forms/repositories/IFormEmailNotificationsRepository';
+import FormEmailNotificationsRepository from '@modules/forms/infra/typeorm/repositories/FormEmailNotificationsRepository';
+
+import IFormEmailNotificationRecipientsRepository from '@modules/forms/repositories/IFormEmailNotificationRecipientsRepository';
+import FormEmailNotificationRecipientsRepository from '@modules/forms/infra/typeorm/repositories/FormEmailNotificationRecipientsRepository';
+
+import IFormStylesRepository from '@modules/forms/repositories/IFormStylesRepository';
+import FormStylesRepository from '@modules/forms/infra/typeorm/repositories/FormStylesRepository';
+
+container.registerSingleton<IFormStylesRepository>(
+  'FormStylesRepository',
+  FormStylesRepository,
+);
+
+container.registerSingleton<IFormEmailNotificationRecipientsRepository>(
+  'FormEmailNotificationRecipientsRepository',
+  FormEmailNotificationRecipientsRepository,
+);
+
+container.registerSingleton<IFormEmailNotificationsRepository>(
+  'FormEmailNotificationsRepository',
+  FormEmailNotificationsRepository,
+);
+
+container.registerSingleton<IFormSuccessMessageRepository>(
+  'FormSuccessMessageRepository',
+  FormSuccessMessageRepository,
+);
+
 container.registerSingleton<IContactPageSEORepository>(
   'ContactPageSEORepository',
   ContactPageSEORepository,

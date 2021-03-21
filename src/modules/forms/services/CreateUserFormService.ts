@@ -5,12 +5,20 @@ import IUserFormsRepository from '@modules/forms/repositories/IUserFormsReposito
 import AppError from '@shared/errors/AppError';
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import ICreateUserFormDTO from '../dtos/ICreateUserFormDTO';
+import IFormStylesRepository from '../repositories/IFormStylesRepository';
+import IFormFieldsRepository from '../repositories/IFormFieldsRepository';
 
 @injectable()
 class CreateUserFormService {
   constructor(
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
+
+    @inject('FormStylesRepository')
+    private formStylesRepository: IFormStylesRepository,
+
+    @inject('FormFieldsRepository')
+    private formFieldsRepository: IFormFieldsRepository,
 
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
@@ -25,7 +33,6 @@ class CreateUserFormService {
     isActive,
   }: ICreateUserFormDTO): Promise<UserForm> {
     const employee = await this.companyEmployeesRepository.findById(user_id);
-    console.log(employee);
 
     if (!employee) {
       throw new AppError('User not found.');
@@ -51,7 +58,55 @@ class CreateUserFormService {
       isActive,
     });
 
-    return form;
+    Promise.all([
+      await this.formFieldsRepository.create({
+        form_id: form.id,
+        title: 'Nome Completo',
+        name: 'name',
+        placeholder: 'Nome',
+        type: 'text',
+        position: 1,
+        isRequired: true,
+      }),
+      await this.formFieldsRepository.create({
+        form_id: form.id,
+        title: 'E-mail para contato',
+        name: 'email',
+        placeholder: 'E-mail',
+        type: 'email',
+        position: 2,
+        isRequired: true,
+      }),
+      await this.formFieldsRepository.create({
+        form_id: form.id,
+        title: 'Telefone para contato',
+        name: 'phone',
+        placeholder: ' ',
+        type: 'number',
+        position: 3,
+        isRequired: false,
+      }),
+      await this.formFieldsRepository.create({
+        form_id: form.id,
+        title: 'Como podemos ajudá-lo?',
+        name: 'text',
+        placeholder: 'Sua mensagem ...',
+        type: 'email',
+        position: 4,
+        isRequired: true,
+      }),
+      await this.formStylesRepository.create({
+        form_id: form.id,
+        background_color: '#c9c9c9',
+        text_color: '#050115',
+        button_color: '#ff9900',
+        button_text_color: '#050115',
+      }),
+    ]);
+
+    const updatedForm = await this.userFormsRepository.findById(form.id);
+
+    return updatedForm || form;
   }
 }
 

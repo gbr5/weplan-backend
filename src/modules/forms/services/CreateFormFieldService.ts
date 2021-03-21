@@ -35,7 +35,6 @@ class CreateFormFieldService {
       sortedFields && sortedFields.length > 0
         ? Number(sortedFields[0].position) + 1
         : 1;
-    console.log(sortedFields);
     const nameExists = await this.formFieldsRepository.findByFormIdAndName({
       form_id,
       name,
@@ -46,7 +45,6 @@ class CreateFormFieldService {
         'A field with the same name already exists for this form. Try another one!',
       );
     }
-    console.log('estou aqui');
 
     const newField = await this.formFieldsRepository.create({
       form_id,

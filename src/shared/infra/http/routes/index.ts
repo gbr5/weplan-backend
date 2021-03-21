@@ -111,6 +111,10 @@ import contactPageFormsRouter from '@modules/contactPages/infra/http/routes/cont
 import contactPageCampaignsRouter from '@modules/contactPages/infra/http/routes/contactPageCampaigns.routes';
 import contactPageSEORouter from '@modules/contactPages/infra/http/routes/contactPageSEO.routes';
 import externalPageUserFormsRouter from '@modules/forms/infra/http/routes/externalPageUserForms.routes';
+import formSuccessMessageRouter from '@modules/forms/infra/http/routes/formSuccessMessage.routes';
+import formEmailNotificationsRouter from '@modules/forms/infra/http/routes/formEmailNotifications.routes';
+import formEmailNotificationRecipientsRouter from '@modules/forms/infra/http/routes/formEmailNotificationRecipients.routes';
+import formStylesRouter from '@modules/forms/infra/http/routes/formStyles.routes';
 
 const routes = Router();
 
@@ -131,6 +135,13 @@ routes.use('/external-user-form', externalPageUserFormsRouter);
 // ==> End
 routes.use('/user-form', userFormsRouter);
 routes.use('/form-field', formFieldsRouter);
+routes.use('/form-styles', formStylesRouter);
+routes.use('/form-email-notification', formEmailNotificationsRouter);
+routes.use(
+  '/form-email-notification-recipient',
+  formEmailNotificationRecipientsRouter,
+);
+routes.use('/form-success-message', formSuccessMessageRouter);
 
 routes.use('/appointments', appointmentsRouter);
 routes.use('/appointment/files', appointmentFilesRouter);
