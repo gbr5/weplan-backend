@@ -29,7 +29,8 @@ class DeleteFormFieldService {
     await this.formFieldsRepository.delete(id);
 
     const fieldsToUpdate = form.fields
-      .filter(thisField => thisField.position >= formField.position)
+      .filter(thisField => thisField.id !== formField.id)
+      .filter(thisField => thisField.position > formField.position)
       .map(thisField => {
         return {
           ...thisField,
