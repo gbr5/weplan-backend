@@ -7,11 +7,15 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import FormField from '@modules/forms/infra/typeorm/entities/FormField';
 import ContactPageForm from '@modules/contactPages/infra/typeorm/entities/ContactPageForm';
+import FormSuccessMessage from './FormSuccessMessage';
+import FormEmailNotification from './FormEmailNotification';
+import FormStyles from './FormStyles';
 
 @Entity('user_forms')
 class UserForm {
@@ -46,13 +50,32 @@ class UserForm {
   @UpdateDateColumn()
   updated_at: Date;
 
+  @OneToMany(() => ContactPageForm, post => post.form)
+  contactPages: ContactPageForm[];
+
   @OneToMany(() => FormField, post => post.form, {
     eager: true,
   })
   fields: FormField[];
 
-  @OneToMany(() => ContactPageForm, post => post.form)
-  contactPages: ContactPageForm[];
+  @OneToMany(
+    () => FormEmailNotification,
+    emailNotification => emailNotification.form,
+    {
+      eager: true,
+    },
+  )
+  emailNotifications: FormEmailNotification[];
+
+  @OneToOne(() => FormSuccessMessage, successMessage => successMessage.form, {
+    eager: true,
+  })
+  successMessage: FormSuccessMessage;
+
+  @OneToOne(() => FormStyles, styles => styles.form, {
+    eager: true,
+  })
+  styles: FormStyles;
 }
 
 export default UserForm;

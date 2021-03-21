@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 
 @injectable()
 class DeleteUserFormService {
@@ -10,14 +10,14 @@ class DeleteUserFormService {
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
 
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute(id: string, user_id: string): Promise<void> {
-    const user = await this.usersRepository.findById(user_id);
+    const employee = await this.companyEmployeesRepository.findById(user_id);
 
-    if (!user) {
+    if (!employee) {
       throw new AppError('User not found.');
     }
 
@@ -27,7 +27,7 @@ class DeleteUserFormService {
       throw new AppError('Form not found.');
     }
 
-    if (user_id !== userForm.user_id || user.id !== user_id) {
+    if (employee.company_id !== userForm.user_id) {
       throw new AppError('User not found.');
     }
 
