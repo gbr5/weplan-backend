@@ -8,6 +8,7 @@ import ICreateUserFormDTO from '../dtos/ICreateUserFormDTO';
 import IFormStylesRepository from '../repositories/IFormStylesRepository';
 import IFormFieldsRepository from '../repositories/IFormFieldsRepository';
 import IFormEmailNotificationsRepository from '../repositories/IFormEmailNotificationsRepository';
+import IFormSuccessMessageRepository from '../repositories/IFormSuccessMessageRepository';
 
 @injectable()
 class CreateUserFormService {
@@ -20,6 +21,9 @@ class CreateUserFormService {
 
     @inject('FormFieldsRepository')
     private formFieldsRepository: IFormFieldsRepository,
+
+    @inject('FormSuccessMessageRepository')
+    private formSuccessMessageRepository: IFormSuccessMessageRepository,
 
     @inject('FormEmailNotificationsRepository')
     private formEmailNotificationsRepository: IFormEmailNotificationsRepository,
@@ -78,6 +82,11 @@ class CreateUserFormService {
         message: `Você recebeu uma nova mensagem por meio do formulário ${form.name}`,
         notification_type: 'internal_message',
       }),
+      await this.formSuccessMessageRepository.create({
+        form_id: form.id,
+        title: `Formulário enviado com sucesso!`,
+        message: `Em breve entraremos em contato.`,
+      }),
       await this.formStylesRepository.create({
         form_id: form.id,
         background_color: '#c9c9c9',
@@ -107,9 +116,9 @@ class CreateUserFormService {
     await this.formFieldsRepository.create({
       form_id: form.id,
       title: 'Como podemos ajudá-lo?',
-      name: 'text',
+      name: 'message',
       placeholder: 'Sua mensagem ...',
-      type: 'email',
+      type: 'text',
       position: 4,
       isRequired: true,
     });

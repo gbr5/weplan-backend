@@ -31,7 +31,7 @@ class CreateFormEmailNotificationRecipientService {
       throw new AppError('Form email notification not found.');
     }
 
-    const findEmailAlreadyRegistered = formEmailNotification.emailNotificationRecipients.find(
+    const findEmailAlreadyRegistered = formEmailNotification.recipients.find(
       notification => notification.email === email,
     );
 

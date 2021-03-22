@@ -342,6 +342,14 @@ import FormEmailNotificationRecipientsRepository from '@modules/forms/infra/type
 import IFormStylesRepository from '@modules/forms/repositories/IFormStylesRepository';
 import FormStylesRepository from '@modules/forms/infra/typeorm/repositories/FormStylesRepository';
 
+import IFormLandingPageRepository from '@modules/forms/repositories/IFormLandingPageRepository';
+import FormLandingPageRepository from '@modules/forms/infra/typeorm/repositories/FormLandingPageRepository';
+
+container.registerSingleton<IFormLandingPageRepository>(
+  'FormLandingPageRepository',
+  FormLandingPageRepository,
+);
+
 container.registerSingleton<IFormStylesRepository>(
   'FormStylesRepository',
   FormStylesRepository,
