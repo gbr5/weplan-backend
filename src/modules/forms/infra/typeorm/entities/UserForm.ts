@@ -16,6 +16,7 @@ import ContactPageForm from '@modules/contactPages/infra/typeorm/entities/Contac
 import FormSuccessMessage from './FormSuccessMessage';
 import FormEmailNotification from './FormEmailNotification';
 import FormStyles from './FormStyles';
+import FormLandingPage from './FormLandingPage';
 
 @Entity('user_forms')
 class UserForm {
@@ -76,6 +77,11 @@ class UserForm {
     eager: true,
   })
   styles: FormStyles;
+
+  @OneToOne(() => FormLandingPage, landingPage => landingPage.form, {
+    eager: true,
+  })
+  landingPage: FormLandingPage;
 }
 
 export default UserForm;

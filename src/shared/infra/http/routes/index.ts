@@ -115,6 +115,7 @@ import formSuccessMessageRouter from '@modules/forms/infra/http/routes/formSucce
 import formEmailNotificationsRouter from '@modules/forms/infra/http/routes/formEmailNotifications.routes';
 import formEmailNotificationRecipientsRouter from '@modules/forms/infra/http/routes/formEmailNotificationRecipients.routes';
 import formStylesRouter from '@modules/forms/infra/http/routes/formStyles.routes';
+import formLandingPageRouter from '@modules/forms/infra/http/routes/formLandingPage.routes';
 
 const routes = Router();
 
@@ -136,6 +137,7 @@ routes.use('/external-user-form', externalPageUserFormsRouter);
 routes.use('/user-form', userFormsRouter);
 routes.use('/form-field', formFieldsRouter);
 routes.use('/form-styles', formStylesRouter);
+routes.use('/form-landing-page', formLandingPageRouter);
 routes.use('/form-email-notification', formEmailNotificationsRouter);
 routes.use(
   '/form-email-notification-recipient',
