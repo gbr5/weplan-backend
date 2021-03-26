@@ -60,11 +60,33 @@ class UpdateContactPageLinkService {
       throw new AppError('Contact page not found!');
     }
 
+    if (link.position !== position) {
+      const linksToUpdate = contactPage.links
+        .filter(thisLink => thisLink.position >= position)
+        .map(thisLink => {
+          return {
+            ...thisLink,
+            position: Number(thisLink) + 1,
+          };
+        });
+      if (linksToUpdate.length > 0) {
+        Promise.all([
+          linksToUpdate.map(thisLink => {
+            return this.contactPageLinksRepository.save(thisLink);
+          }),
+        ]);
+      }
+      if (position > contactPage.links.length) {
+        link.position = contactPage.links.length;
+      } else {
+        link.position = position;
+      }
+    }
+
     link.label = label;
     link.url = url;
     link.text_color = text_color;
     link.background_color = background_color;
-    link.position = position;
     link.isActive = isActive;
 
     await this.contactPageLinksRepository.save(link);
