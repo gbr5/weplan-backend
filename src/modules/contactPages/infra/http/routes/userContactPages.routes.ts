@@ -7,8 +7,8 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 
-const userContactPagesRouter = Router();
 const upload = multer(uploadConfig.multer);
+const userContactPagesRouter = Router();
 const userContactPagesController = new UserContactPagesController();
 const contactPageMainImageController = new ContactPageMainImageController();
 

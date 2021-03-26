@@ -118,6 +118,7 @@ import formStylesRouter from '@modules/forms/infra/http/routes/formStyles.routes
 import formLandingPageRouter from '@modules/forms/infra/http/routes/formLandingPage.routes';
 import sendFormEmailNotificationsRouter from '@modules/forms/infra/http/routes/sendFormEmailNotifications.routes';
 import userExternalContactPagesRouter from '@modules/contactPages/infra/http/routes/userExternalContactPages.routes';
+import contactPageImagePostRouter from '@modules/contactPages/infra/http/routes/contactPageImagePost.routes';
 
 const routes = Router();
 
@@ -134,6 +135,7 @@ routes.use('/contact-page-seo', contactPageSEORouter);
 routes.use('/contact-page-campaign', contactPageCampaignsRouter);
 routes.use('/contact-page-form', contactPageFormsRouter);
 routes.use('/contact-page-post', contactPagePostsRouter);
+routes.use('/contact-page-image-post', contactPageImagePostRouter);
 routes.use('/contact-page-link', contactPageLinksRouter);
 routes.use('/external-user-form', externalPageUserFormsRouter);
 routes.use('/send-form-results', sendFormEmailNotificationsRouter);
