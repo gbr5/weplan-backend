@@ -35,7 +35,7 @@ class DeleteContactPagePostService {
       post.contact_page_id,
     );
 
-    if (!contactPage || contactPage.user_id !== user_id) {
+    if (!contactPage || contactPage.user_id !== employee.company.id) {
       throw new AppError('Contact page not found!');
     }
 
