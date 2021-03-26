@@ -56,6 +56,7 @@ export default class SessionsController {
       company: {
         id: user.company.id,
         name: user.company.name,
+        trimmed_name: user.company.trimmed_name,
         email: user.company.email,
         avatar_url: user.company.getAvatarUrl()
           ? user.company.getAvatarUrl()

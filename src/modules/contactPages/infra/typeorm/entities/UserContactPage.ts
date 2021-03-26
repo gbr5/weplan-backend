@@ -10,6 +10,9 @@ import {
   OneToOne,
 } from 'typeorm';
 
+import uploadConfig from '@config/upload';
+import { Expose } from 'class-transformer';
+
 import User from '@modules/users/infra/typeorm/entities/User';
 import ContactPagePost from './ContactPagePost';
 import ContactPageLink from './ContactPageLink';
@@ -52,6 +55,24 @@ class UserContactPage {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'main_image_url' })
+  getImageUrl(): string | null {
+    if (!this.image_url) {
+      return null;
+    }
+    if (this.image_url.includes('https://')) {
+      return this.image_url;
+    }
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.image_url}`;
+      case 's3':
+        return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.image_url}`;
+      default:
+        return null;
+    }
+  }
 
   @OneToMany(() => ContactPagePost, post => post.contactPage, {
     eager: true,
