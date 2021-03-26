@@ -14,7 +14,6 @@ export default class ContactPageLinksController {
       url,
       text_color,
       background_color,
-      position,
       isActive,
     } = req.body;
 
@@ -29,7 +28,6 @@ export default class ContactPageLinksController {
       url,
       text_color,
       background_color,
-      position,
       isActive,
     });
 
