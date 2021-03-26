@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import UserForm from '@modules/forms/infra/typeorm/entities/UserForm';
 import IUserFormsRepository from '@modules/forms/repositories/IUserFormsRepository';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 
 interface IRequest {
   id: string;
@@ -21,8 +21,8 @@ class UpdateUserFormService {
     @inject('UserFormsRepository')
     private userFormsRepository: IUserFormsRepository,
 
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('CompanyEmployeesRepository')
+    private companyEmployeesRepository: ICompanyEmployeesRepository,
   ) {}
 
   public async execute({
@@ -34,8 +34,8 @@ class UpdateUserFormService {
     message,
     isActive,
   }: IRequest): Promise<UserForm> {
-    const user = await this.usersRepository.findById(user_id);
-    if (!user) {
+    const employee = await this.companyEmployeesRepository.findById(user_id);
+    if (!employee) {
       throw new AppError('User not found.');
     }
 
@@ -45,7 +45,7 @@ class UpdateUserFormService {
       throw new AppError('Contact page not found.');
     }
 
-    if (user_id !== userForm.user_id || user.id !== user_id) {
+    if (employee.company.id !== userForm.user_id) {
       throw new AppError('User not found.');
     }
 

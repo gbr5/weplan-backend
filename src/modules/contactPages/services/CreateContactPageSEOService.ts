@@ -46,7 +46,7 @@ class CreateContactPageSEOService {
       throw new AppError('Contact page not found!');
     }
 
-    if (user_id !== userContactPage.user_id) {
+    if (employee.company.id !== userContactPage.user_id) {
       throw new AppError('User not found!');
     }
 

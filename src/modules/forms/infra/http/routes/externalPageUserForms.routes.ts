@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import UserFormsController from '@modules/forms/infra/http/controllers/UserFormsController';
+import ExternalPageUserFormsController from '@modules/forms/infra/http/controllers/ExternalPageUserFormsController';
 
 const externalPageUserFormsRouter = Router();
-const externalPageUserFormsController = new UserFormsController();
+const externalPageUserFormsController = new ExternalPageUserFormsController();
 
 externalPageUserFormsRouter.get(
   '/:name/:slug',
