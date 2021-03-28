@@ -7,11 +7,11 @@ import ShowExternalPageUserFormService from '@modules/forms/services/ShowExterna
 export default class ExternalPageUserFormsController {
   public async show(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
-    const { name, slug } = dataParams;
+    const { id } = dataParams;
 
     const showUserForm = container.resolve(ShowExternalPageUserFormService);
 
-    const form = await showUserForm.execute(slug, name);
+    const form = await showUserForm.execute(id);
 
     return res.json(classToClass(form));
   }

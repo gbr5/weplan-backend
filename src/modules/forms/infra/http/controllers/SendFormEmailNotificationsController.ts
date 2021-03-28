@@ -6,7 +6,7 @@ import SendFormEmailNotificationsService from '@modules/forms/services/SendFormE
 
 export default class SendFormEmailNotificationsController {
   public async post(req: Request, res: Response): Promise<Response> {
-    const { form_id, username, formResults } = req.body;
+    const { form_id, formResults } = req.body;
 
     const sendFormEmailNotificationsService = container.resolve(
       SendFormEmailNotificationsService,
@@ -14,7 +14,6 @@ export default class SendFormEmailNotificationsController {
 
     const form = await sendFormEmailNotificationsService.execute({
       form_id,
-      trimmed_name: username,
       formResults,
     });
 

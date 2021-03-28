@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateFormSuccessMessageService from '@modules/forms/services/CreateFormSuccessMessageService';
 import UpdateFormSuccessMessageService from '@modules/forms/services/UpdateFormSuccessMessageService';
+import ShowFormSuccessMessageService from '@modules/forms/services/ShowFormSuccessMessageService';
 import DeleteFormSuccessMessageService from '@modules/forms/services/DeleteFormSuccessMessageService';
 
 export default class FormSuccessMessageController {
@@ -34,6 +35,18 @@ export default class FormSuccessMessageController {
       message,
       title,
     });
+
+    return res.json(form);
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+    const { id } = dataParams;
+    const showFormSuccessMessage = container.resolve(
+      ShowFormSuccessMessageService,
+    );
+
+    const form = await showFormSuccessMessage.execute(id);
 
     return res.json(form);
   }

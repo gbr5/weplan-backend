@@ -13,7 +13,16 @@ formSuccessMessageRouter.post(
   ensureAuthenticated,
   formSuccessMessageController.create,
 );
-formSuccessMessageRouter.put('/:id', formSuccessMessageController.update);
-formSuccessMessageRouter.delete('/:id', formSuccessMessageController.delete);
+formSuccessMessageRouter.get('/:id', formSuccessMessageController.show);
+formSuccessMessageRouter.put(
+  '/:id',
+  ensureAuthenticated,
+  formSuccessMessageController.update,
+);
+formSuccessMessageRouter.delete(
+  '/:id',
+  ensureAuthenticated,
+  formSuccessMessageController.delete,
+);
 
 export default formSuccessMessageRouter;
