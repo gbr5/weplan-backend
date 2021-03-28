@@ -12,7 +12,6 @@ interface IFormResultFieldDTO {
 interface ISendFormEmailNotificationsDTO {
   form_id: string;
   formResults: IFormResultFieldDTO[];
-  trimmed_name: string;
 }
 
 @injectable()
@@ -34,12 +33,7 @@ class SendFormEmailNotificationsService {
   async execute({
     form_id,
     formResults,
-    trimmed_name,
   }: ISendFormEmailNotificationsDTO): Promise<void> {
-    const user = await this.usersRepository.findByTrimmedName(trimmed_name);
-    if (!user) {
-      throw new AppError('User not found!');
-    }
     const form = await this.userFormsRepository.findById(form_id);
     if (!form) {
       throw new AppError('Form not found!');
@@ -70,7 +64,7 @@ class SendFormEmailNotificationsService {
       const ccoAdresses = internalMessage.recipients
         .filter(recipient => recipient.sending_type === 'cco')
         .map(recipient => recipient.email);
-      const response = await this.client
+      await this.client
         .sendEmail({
           Source: 'WePlan Forms <guy@weplan.world>',
           Destination: {
@@ -99,7 +93,7 @@ class SendFormEmailNotificationsService {
     if (externalMessage) {
       const toAddress =
         formResults.find(result => result.name === 'email')?.value || '';
-      const response = await this.client
+      await this.client
         .sendEmail({
           Source: 'WePlan Forms <guy@weplan.world>',
           Destination: {
