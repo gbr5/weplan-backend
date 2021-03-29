@@ -39,12 +39,18 @@ class SendFormEmailNotificationsService {
       throw new AppError('Form not found!');
     }
     const eString = JSON.stringify(formResults);
-    const resultMessage = eString
+
+    const results = eString
       .replace(/\[/g, '')
       .replace(/\]/g, '')
-      .replace(/\{/g, '')
-      .replace(/\}/g, '')
-      .replace(/,/g, '\t');
+      .replace(/"/g, '')
+      .replace(/\b,/g, ';')
+      .replace(/name:/g, '')
+      .replace(/value:/g, '')
+      .replace(/{/g, '')
+      .replace(/}/g, '')
+      .replace(/;/g, ': ')
+      .replace(/,/g, '\n');
 
     const internalMessage = form.emailNotifications.find(
       email => email.notification_type === 'internal_message',
@@ -53,7 +59,7 @@ class SendFormEmailNotificationsService {
     if (internalMessage) {
       const message = `
         ${internalMessage.message}\n
-        ${resultMessage}
+        ${results}
       `;
       const toAdresses = internalMessage.recipients
         .filter(recipient => recipient.sending_type === 'to')
