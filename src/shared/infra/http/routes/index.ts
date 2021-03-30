@@ -119,6 +119,7 @@ import formLandingPageRouter from '@modules/forms/infra/http/routes/formLandingP
 import sendFormEmailNotificationsRouter from '@modules/forms/infra/http/routes/sendFormEmailNotifications.routes';
 import userExternalContactPagesRouter from '@modules/contactPages/infra/http/routes/userExternalContactPages.routes';
 import contactPageImagePostRouter from '@modules/contactPages/infra/http/routes/contactPageImagePost.routes';
+import authenticateUserWithGoogleRouter from '@modules/users/infra/http/routes/authenticateUserWithGoogle.routes';
 
 const routes = Router();
 
@@ -140,6 +141,10 @@ routes.use('/contact-page-link', contactPageLinksRouter);
 routes.use('/external-user-form', externalPageUserFormsRouter);
 routes.use('/send-form-results', sendFormEmailNotificationsRouter);
 // ==> End
+
+// ==> Google Authentication
+routes.use('/google-sessions', authenticateUserWithGoogleRouter);
+
 routes.use('/user-form', userFormsRouter);
 routes.use('/form-field', formFieldsRouter);
 routes.use('/form-styles', formStylesRouter);
