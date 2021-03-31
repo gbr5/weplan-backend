@@ -25,7 +25,7 @@ class Funnel {
   @Column('uuid')
   supplier_id: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, user => user.supplierFunnels)
   @JoinColumn({ name: 'supplier_id' })
   Supplier: User;
 

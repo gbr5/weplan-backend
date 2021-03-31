@@ -14,7 +14,7 @@ class UserManagementModule {
   @Column('uuid')
   user_id: string;
 
-  @Column('uuid')
+  @Column()
   management_module: string;
 
   @Column('integer')

@@ -62,11 +62,7 @@ companyEmployeesRouter.get(
   companyEmployeesController.index,
 );
 companyEmployeesRouter.get(
-  '/user/:employee_id',
-  companyEmployeesController.listUserEmployee,
-);
-companyEmployeesRouter.get(
-  '/employee/:employee_id/:company_id',
+  '/employee/:employee_id',
   companyEmployeesController.show,
 );
 companyEmployeesRouter.delete(
