@@ -38,9 +38,11 @@ class CompanyEmployee {
   @Column('uuid')
   employee_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, employeeUser => employeeUser.userAsEmployee, {
+    eager: true,
+  })
   @JoinColumn({ name: 'employee_id' })
-  employee: User;
+  employeeUser: User;
 
   @Column('uuid')
   company_id: string;
@@ -58,10 +60,10 @@ class CompanyEmployee {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => EmployeeFile, contactFile => contactFile.employeeFile, {
+  @OneToMany(() => EmployeeFile, employeeFiles => employeeFiles.employee, {
     eager: true,
   })
-  fileEmployees: EmployeeFile[];
+  files: EmployeeFile[];
   // @OneToMany(
   //   () => UserManagementModule,
   //   managementModule => managementModule.companyEmployee,

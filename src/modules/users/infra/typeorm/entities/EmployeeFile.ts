@@ -26,9 +26,9 @@ class EmployeeFile {
   @Column('uuid')
   employee_id: string;
 
-  @ManyToOne(() => CompanyEmployee, contact => contact.fileEmployees)
+  @ManyToOne(() => CompanyEmployee, contact => contact.files)
   @JoinColumn({ name: 'employee_id' })
-  employeeFile: CompanyEmployee;
+  employee: CompanyEmployee;
 
   @CreateDateColumn()
   created_at: Date;

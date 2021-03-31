@@ -136,6 +136,9 @@ class User {
   )
   weplanEventSuppliers: EventWeplanSupplier[];
 
+  @OneToMany(() => Funnel, funnel => funnel.Supplier, { eager: true })
+  supplierFunnels: Funnel[];
+
   @OneToMany(() => UserFileCategory, fileCategory => fileCategory.user)
   fileCategories: UserFileCategory[];
 
@@ -219,8 +222,8 @@ class User {
   @OneToMany(() => SupplierAppointmentDayOff, supplier => supplier.supplier_id)
   SupplierAppointmentDayOff: SupplierAppointmentDayOff;
 
-  @OneToMany(() => CompanyEmployee, employee => employee.employee_id)
-  employee: CompanyEmployee;
+  @OneToMany(() => CompanyEmployee, employee => employee.employeeUser)
+  userAsEmployee: CompanyEmployee;
 
   @OneToMany(() => CompanyEmployee, company => company.company_id)
   company: CompanyEmployee;

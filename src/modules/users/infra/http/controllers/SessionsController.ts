@@ -4,7 +4,6 @@ import { classToClass } from 'class-transformer';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import AuthenticateEnterpriseService from '@modules/users/services/AuthenticateEnterpriseService';
-import AuthenticatePROService from '@modules/users/services/AuthenticatePROService';
 
 export default class SessionsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -18,61 +17,6 @@ export default class SessionsController {
     });
 
     return res.json({ user: classToClass(user), token });
-  }
-
-  public async createPRO(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
-
-    const authenticateUser = container.resolve(AuthenticatePROService);
-
-    const {
-      funnels,
-      personInfo,
-      companyInfo,
-      modules,
-      user,
-      confirmation,
-      token,
-    } = await authenticateUser.execute({
-      email,
-      password,
-    });
-
-    return res.json({
-      userEmployee: {
-        id: user.id,
-        email: user.email,
-        position: user.position,
-        employee_avatar: user.avatar ? user.avatar : '',
-      },
-      person: {
-        id: user.employee.id,
-        name: user.employee.name,
-        email: user.employee.email,
-        avatar_url: user.employee.getAvatarUrl()
-          ? user.employee.getAvatarUrl()
-          : '',
-      },
-      company: {
-        id: user.company.id,
-        name: user.company.name,
-        trimmed_name: user.company.trimmed_name,
-        email: user.company.email,
-        avatar_url: user.company.getAvatarUrl()
-          ? user.company.getAvatarUrl()
-          : '',
-      },
-      companyInfo: {
-        name: companyInfo.name,
-        company_id: companyInfo.company_id,
-        logo_url: companyInfo.logo_url ? companyInfo.logo_url : '',
-      },
-      personInfo,
-      modules,
-      funnels,
-      confirmation,
-      token,
-    });
   }
 
   public async createEnterprise(

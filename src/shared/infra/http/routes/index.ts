@@ -6,7 +6,6 @@ import activationUserRouter from '@modules/users/infra/http/routes/activationUse
 import deleteUserRouter from '@modules/users/infra/http/routes/deleteUser.routes';
 import terminateUserRouter from '@modules/users/infra/http/routes/terminateUser.routes';
 import userConfirmationsRouter from '@modules/users/infra/http/routes/userConfirmations.routes';
-import userManagementModulesRouter from '@modules/users/infra/http/routes/userManagementModules.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import passwordRouter from '@modules/users/infra/http/routes/password.routes';
 import profileRouter from '@modules/users/infra/http/routes/profile.routes';
@@ -120,6 +119,10 @@ import sendFormEmailNotificationsRouter from '@modules/forms/infra/http/routes/s
 import userExternalContactPagesRouter from '@modules/contactPages/infra/http/routes/userExternalContactPages.routes';
 import contactPageImagePostRouter from '@modules/contactPages/infra/http/routes/contactPageImagePost.routes';
 import authenticateUserWithGoogleRouter from '@modules/users/infra/http/routes/authenticateUserWithGoogle.routes';
+import userManagementModuleRouter from '@modules/users/infra/http/routes/userManagementModules.routes';
+import employeeManagementModuleRouter from '@modules/users/infra/http/routes/employeeManagementModules.routes';
+import employeeSessionsRouter from '@modules/users/infra/http/routes/employeeSessions.routes';
+import authenticateEmployeePROWithGoogleRouter from '@modules/users/infra/http/routes/authenticateEmployeePROWithGoogle.routes';
 
 const routes = Router();
 
@@ -144,6 +147,18 @@ routes.use('/send-form-results', sendFormEmailNotificationsRouter);
 
 // ==> Google Authentication
 routes.use('/google-sessions', authenticateUserWithGoogleRouter);
+
+// EmployeeAthentication
+routes.use('/employee-pro-sessions', employeeSessionsRouter);
+routes.use(
+  '/google-employee-pro-sessions',
+  authenticateEmployeePROWithGoogleRouter,
+);
+
+// ==> UserManagementModule
+// ==> EmployeeManagementModule
+routes.use('/user-management-modules', userManagementModuleRouter);
+routes.use('/employee-management-modules', employeeManagementModuleRouter);
 
 routes.use('/user-form', userFormsRouter);
 routes.use('/form-field', formFieldsRouter);
@@ -176,7 +191,6 @@ routes.use('/event/dates', eventDatesRouter);
 routes.use('/event/dates/voting', eventDatesVotingRouter);
 routes.use('/event/date/voting-type', eventDateVotingTypeRouter);
 routes.use('/event/date/vote', eventDateVotesRouter);
-routes.use('/user/modules', userManagementModulesRouter);
 routes.use('/user/confirmations', userConfirmationsRouter);
 routes.use('/wp-guest/confirmations', wpGuestConfirmationsRouter);
 routes.use('/user/confirmation-files', userConfirmationFilesRouter);

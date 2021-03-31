@@ -5,10 +5,6 @@ import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEm
 import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompanyEmployeesRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
-interface IRequest {
-  employee_id: string;
-  company_id: string;
-}
 @injectable()
 class ShowCompanyEmployeeService {
   constructor(
@@ -19,13 +15,11 @@ class ShowCompanyEmployeeService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute({
-    employee_id,
-    company_id,
-  }: IRequest): Promise<CompanyEmployee | undefined> {
-    const companyEmployee = await this.companyEmployeesRepository.findByEmployeeIdAndCompanyId(
+  public async execute(
+    employee_id: string,
+  ): Promise<CompanyEmployee | undefined> {
+    const companyEmployee = await this.companyEmployeesRepository.findById(
       employee_id,
-      company_id,
     );
 
     return companyEmployee;
