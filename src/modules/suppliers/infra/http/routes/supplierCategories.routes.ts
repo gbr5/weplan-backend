@@ -23,7 +23,7 @@ supplierCategoriessRouter.post(
 );
 
 supplierCategoriessRouter.get(
-  '/weplan/:category_name/:sub_category',
+  '/list-weplan/:category_name/:sub_category',
   userSupplierCategoriesController.index,
 );
 
