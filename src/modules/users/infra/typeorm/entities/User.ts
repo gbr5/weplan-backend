@@ -136,6 +136,7 @@ class User {
   )
   weplanEventSuppliers: EventWeplanSupplier[];
 
+  // Não utilizar o eager para nenhum dos lados, pois gera conflito nos event Members Owners e Guests no party
   @OneToMany(() => Funnel, funnel => funnel.Supplier)
   supplierFunnels: Funnel[];
 
@@ -164,9 +165,6 @@ class User {
     eager: true,
   })
   userContacts: UserContactInfo[];
-
-  @OneToMany(() => Funnel, funnel => funnel.supplier_id)
-  Funnel: Funnel;
 
   @OneToOne(() => StageCard, card => card.card_owner)
   EventCard: StageCard;

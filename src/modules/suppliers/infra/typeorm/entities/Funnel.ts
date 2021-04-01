@@ -25,6 +25,7 @@ class Funnel {
   @Column('uuid')
   supplier_id: string;
 
+  // Não utilizar o eager para nenhum dos lados, pois gera conflito nos event Members Owners e Guests no party
   @ManyToOne(() => User, user => user.supplierFunnels)
   @JoinColumn({ name: 'supplier_id' })
   Supplier: User;
