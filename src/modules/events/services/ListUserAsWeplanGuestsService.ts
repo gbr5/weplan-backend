@@ -28,6 +28,7 @@ class ListWeplanGuestsService {
     // );
 
     // if (!eventsAsWeplanGuest) {
+    console.log(user_id);
     const weplanGuests = await this.weplanGuestsRepository.findByUserId(
       user_id,
     );

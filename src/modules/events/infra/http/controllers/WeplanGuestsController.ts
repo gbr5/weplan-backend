@@ -34,12 +34,14 @@ export default class WeplanGuestsController {
   }
 
   public async listUser(req: Request, res: Response): Promise<Response> {
-    const dataParams = req.params;
-    const { user_id } = dataParams;
+    // const dataParams = req.params;
+    // const { user_id } = dataParams;
+    const { id } = req.user;
+    console.log(id);
 
     const listGuests = container.resolve(ListUserAsWeplanGuestsService);
 
-    const guests = await listGuests.execute(user_id);
+    const guests = await listGuests.execute(id);
 
     return res.json(classToClass(guests));
   }
