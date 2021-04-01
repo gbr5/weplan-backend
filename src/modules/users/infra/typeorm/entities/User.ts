@@ -136,7 +136,7 @@ class User {
   )
   weplanEventSuppliers: EventWeplanSupplier[];
 
-  @OneToMany(() => Funnel, funnel => funnel.Supplier, { eager: true })
+  @OneToMany(() => Funnel, funnel => funnel.Supplier)
   supplierFunnels: Funnel[];
 
   @OneToMany(() => UserFileCategory, fileCategory => fileCategory.user)
