@@ -10,7 +10,7 @@ weplanGuestsRouter.use(ensureAuthenticated);
 
 weplanGuestsRouter.post('/', weplanGuestsController.create);
 weplanGuestsRouter.get('/:event_id', weplanGuestsController.index);
-weplanGuestsRouter.get('/user/:user_id/', weplanGuestsController.listUser);
+weplanGuestsRouter.get('/list/user/', weplanGuestsController.listUser);
 weplanGuestsRouter.delete('/:id', weplanGuestsController.delete);
 
 export default weplanGuestsRouter;

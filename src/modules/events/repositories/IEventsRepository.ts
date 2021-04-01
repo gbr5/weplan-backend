@@ -6,6 +6,7 @@ export default interface IEventsRepository {
   findById(event_id: string): Promise<Event | undefined>;
   findByName(trimmed_name: string): Promise<Event | undefined>;
   findByUserId(id: string): Promise<Event[]>;
+  findAllByIds(ids: string[]): Promise<Event[]>;
   save(event: Event): Promise<Event>;
   delete(event_id: string): Promise<void>;
 }
