@@ -26,15 +26,19 @@ class ListUserEventService {
   public async execute({ user_id }: IRequest): Promise<IListUserEvent[]> {
     const owner_id = user_id;
     const member_id = user_id;
+    console.log(user_id);
     const eventsAsOwner = await this.eventOwnersRepository.findByOwnerId(
       owner_id,
     );
+    console.log(eventsAsOwner);
     const eventsAsMember = await this.eventMembersRepository.findByMemberId(
       member_id,
     );
+    console.log(eventsAsMember);
     const eventsAsGuest = await this.weplanGuestsRepository.findByUserId(
       user_id,
     );
+    console.log(eventsAsGuest);
 
     const userEvents = [{} as IListUserEvent];
 

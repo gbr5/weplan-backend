@@ -14,7 +14,8 @@ class UserManagementModule {
   @Column('uuid')
   user_id: string;
 
-  @Column()
+  // Não retirar o uuid abaixo!!
+  @Column('uuid')
   management_module: string;
 
   @Column('integer')
