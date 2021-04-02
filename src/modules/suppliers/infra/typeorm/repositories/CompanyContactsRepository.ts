@@ -21,12 +21,13 @@ class CompanyContactsRepository implements ICompanyContactsRepository {
     return findCompanyContact;
   }
 
-  public async findByCompanyIdAndName(
+  public async findByCompanyIdAndNameAndFamilyName(
     company_id: string,
     name: string,
+    family_name: string,
   ): Promise<CompanyContact | undefined> {
     const findCompanyContact = await this.ormRepository.findOne({
-      where: { company_id, name },
+      where: { company_id, name, family_name },
     });
 
     return findCompanyContact;

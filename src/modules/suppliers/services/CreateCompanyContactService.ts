@@ -20,15 +20,18 @@ class CreateCompanyContactService {
   public async execute({
     company_id,
     name,
+    family_name,
     description,
     company_contact_type,
     weplanUser,
     isCompany,
+    isNew,
   }: ICreateCompanyContactDTO): Promise<CompanyContact> {
     try {
-      const companyContactExists = await this.companyContactsRepository.findByCompanyIdAndName(
+      const companyContactExists = await this.companyContactsRepository.findByCompanyIdAndNameAndFamilyName(
         company_id,
         name,
+        family_name,
       );
 
       if (companyContactExists) {
@@ -46,10 +49,12 @@ class CreateCompanyContactService {
       const companyContact = await this.companyContactsRepository.create({
         company_id,
         name,
+        family_name,
         description,
         company_contact_type,
         weplanUser,
         isCompany,
+        isNew,
       });
 
       return companyContact;

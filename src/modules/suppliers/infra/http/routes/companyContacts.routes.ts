@@ -17,13 +17,13 @@ companyContactsRouter.post(
     [Segments.BODY]: {
       company_id: Joi.string().required(),
       name: Joi.string().required(),
+      family_name: Joi.string(),
       description: Joi.string().required(),
       company_contact_type: Joi.string().required(),
       weplanUser: Joi.boolean().required(),
       isCompany: Joi.boolean().required(),
     },
   }),
-  ensureAuthenticated,
   companyContactsController.create,
 );
 companyContactsRouter.put(
@@ -35,6 +35,16 @@ companyContactsRouter.put(
   }),
   ensureAuthenticated,
   companyContactsController.updateName,
+);
+companyContactsRouter.put(
+  '/family-name/:id',
+  celebrate({
+    [Segments.BODY]: {
+      family_name: Joi.string().required(),
+    },
+  }),
+  ensureAuthenticated,
+  companyContactsController.updateFamilyName,
 );
 companyContactsRouter.put(
   '/description/:id',
@@ -76,6 +86,11 @@ companyContactsRouter.put(
   ensureAuthenticated,
   companyContactsController.updateIsCompany,
 );
+companyContactsRouter.put(
+  '/is-new/:id',
+  ensureAuthenticated,
+  companyContactsController.updateIsNew,
+);
 companyContactsRouter.get(
   '/:company_id',
   ensureAuthenticated,
@@ -98,7 +113,6 @@ companyContactsRouter.post(
       info: Joi.string().required(),
     },
   }),
-  ensureAuthenticated,
   companyContactInfosController.create,
 );
 companyContactsRouter.put(

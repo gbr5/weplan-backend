@@ -6,16 +6,19 @@ import CreateCompanyContactService from '@modules/suppliers/services/CreateCompa
 import ListCompanyContactsService from '@modules/suppliers/services/ListCompanyContactsService';
 import DeleteCompanyContactService from '@modules/suppliers/services/DeleteCompanyContactService';
 import UpdateCompanyContactNameService from '@modules/suppliers/services/UpdateCompanyContactNameService';
+import UpdateCompanyContactFamilyNameService from '@modules/suppliers/services/UpdateCompanyContactFamilyNameService';
 import UpdateCompanyContactDescriptionService from '@modules/suppliers/services/UpdateCompanyContactDescriptionService';
 import UpdateCompanyContactTypeService from '@modules/suppliers/services/UpdateCompanyContactTypeService';
 import UpdateCompanyContactWeplanUserService from '@modules/suppliers/services/UpdateCompanyContactWeplanUserService';
 import UpdateCompanyContactIsCompanyService from '@modules/suppliers/services/UpdateCompanyContactIsCompanyService';
+import UpdateCompanyContactIsNewService from '@modules/suppliers/services/UpdateCompanyContactIsNewService';
 
 export default class CompanyContactsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       company_id,
       name,
+      family_name,
       description,
       company_contact_type,
       weplanUser,
@@ -29,10 +32,12 @@ export default class CompanyContactsController {
     const companyContact = await createCompanyContacts.execute({
       company_id,
       name,
+      family_name,
       description,
       company_contact_type,
       weplanUser,
       isCompany,
+      isNew: true,
     });
 
     return res.json(classToClass(companyContact));
@@ -67,6 +72,25 @@ export default class CompanyContactsController {
     );
 
     const companyContact = await updateCompanyContactName.execute(id, name);
+
+    return res.json(classToClass(companyContact));
+  }
+
+  public async updateFamilyName(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+    const { family_name } = req.body;
+    const updateCompanyContactFamilyName = container.resolve(
+      UpdateCompanyContactFamilyNameService,
+    );
+
+    const companyContact = await updateCompanyContactFamilyName.execute(
+      id,
+      family_name,
+    );
 
     return res.json(classToClass(companyContact));
   }
@@ -140,6 +164,18 @@ export default class CompanyContactsController {
       id,
       isCompany,
     );
+
+    return res.json(classToClass(companyContact));
+  }
+
+  public async updateIsNew(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+    const updateCompanyContactIsNew = container.resolve(
+      UpdateCompanyContactIsNewService,
+    );
+
+    const companyContact = await updateCompanyContactIsNew.execute(id);
 
     return res.json(classToClass(companyContact));
   }
