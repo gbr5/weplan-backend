@@ -12,17 +12,14 @@ class UpdateCompanyContactWeplanUserService {
     private companyContactsRepository: ICompanyContactsRepository,
   ) {}
 
-  public async execute(
-    id: string,
-    weplanUser: boolean,
-  ): Promise<CompanyContact> {
+  public async execute(id: string): Promise<CompanyContact> {
     const companyContact = await this.companyContactsRepository.findById(id);
 
     if (!companyContact) {
       throw new AppError('CompanyContacts not found.');
     }
 
-    companyContact.weplanUser = weplanUser;
+    companyContact.weplanUser = !companyContact.weplanUser;
 
     const updatedCompanyContacts = await this.companyContactsRepository.save(
       companyContact,

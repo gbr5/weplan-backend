@@ -139,15 +139,11 @@ export default class CompanyContactsController {
   ): Promise<Response> {
     const reqParams = req.params;
     const { id } = reqParams;
-    const { weplanUser } = req.body;
     const updateCompanyContactWeplanUser = container.resolve(
       UpdateCompanyContactWeplanUserService,
     );
 
-    const companyContact = await updateCompanyContactWeplanUser.execute(
-      id,
-      weplanUser,
-    );
+    const companyContact = await updateCompanyContactWeplanUser.execute(id);
 
     return res.json(classToClass(companyContact));
   }
@@ -155,15 +151,11 @@ export default class CompanyContactsController {
   public async updateIsCompany(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { id } = reqParams;
-    const { isCompany } = req.body;
     const updateCompanyContactIsCompany = container.resolve(
       UpdateCompanyContactIsCompanyService,
     );
 
-    const companyContact = await updateCompanyContactIsCompany.execute(
-      id,
-      isCompany,
-    );
+    const companyContact = await updateCompanyContactIsCompany.execute(id);
 
     return res.json(classToClass(companyContact));
   }

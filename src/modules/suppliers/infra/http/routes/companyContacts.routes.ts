@@ -68,21 +68,11 @@ companyContactsRouter.put(
 );
 companyContactsRouter.put(
   '/weplan-user/:id',
-  celebrate({
-    [Segments.BODY]: {
-      weplanUser: Joi.boolean().required(),
-    },
-  }),
   ensureAuthenticated,
   companyContactsController.updateWeplanUser,
 );
 companyContactsRouter.put(
   '/is-company/:id',
-  celebrate({
-    [Segments.BODY]: {
-      isCompany: Joi.boolean().required(),
-    },
-  }),
   ensureAuthenticated,
   companyContactsController.updateIsCompany,
 );
