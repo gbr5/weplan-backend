@@ -33,6 +33,9 @@ class CompanyContact {
   name: string;
 
   @Column()
+  family_name: string;
+
+  @Column()
   description: string;
 
   @Column()
@@ -43,6 +46,9 @@ class CompanyContact {
 
   @Column('boolean')
   isCompany: boolean;
+
+  @Column('boolean')
+  isNew: boolean;
 
   @CreateDateColumn()
   created_at: Date;

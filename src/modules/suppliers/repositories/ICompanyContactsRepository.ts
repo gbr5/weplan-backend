@@ -4,9 +4,10 @@ import ICreateCompanyContactDTO from '@modules/suppliers/dtos/ICreateCompanyCont
 export default interface ICompanyContactsRepository {
   create(data: ICreateCompanyContactDTO): Promise<CompanyContact>;
   findByCompanyId(company_id: string): Promise<CompanyContact[]>;
-  findByCompanyIdAndName(
+  findByCompanyIdAndNameAndFamilyName(
     company_id: string,
     name: string,
+    family_name: string,
   ): Promise<CompanyContact | undefined>;
   findById(id: string): Promise<CompanyContact | undefined>;
   save(supplier: CompanyContact): Promise<CompanyContact>;

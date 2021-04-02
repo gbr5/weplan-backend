@@ -37,7 +37,6 @@ export default class WeplanGuestsController {
     // const dataParams = req.params;
     // const { user_id } = dataParams;
     const { id } = req.user;
-    console.log(id);
 
     const listGuests = container.resolve(ListUserAsWeplanGuestsService);
 
