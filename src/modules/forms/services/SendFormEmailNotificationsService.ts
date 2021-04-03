@@ -38,6 +38,10 @@ class SendFormEmailNotificationsService {
     if (!form) {
       throw new AppError('Form not found!');
     }
+    const user = await this.usersRepository.findById(form.user_id);
+    if (!user) {
+      throw new AppError('User not found!');
+    }
     const eString = JSON.stringify(formResults);
 
     const results = eString
@@ -70,6 +74,9 @@ class SendFormEmailNotificationsService {
       const ccoAdresses = internalMessage.recipients
         .filter(recipient => recipient.sending_type === 'cco')
         .map(recipient => recipient.email);
+      if (toAdresses.length <= 0) {
+        toAdresses.push(user.email);
+      }
       await this.client
         .sendEmail({
           Source: 'WePlan Forms <guy@weplan.world>',

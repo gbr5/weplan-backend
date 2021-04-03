@@ -16,6 +16,7 @@ import CompanyContactWeplanUser from './CompanyContactWeplanUser';
 import CardCurstomer from './CardCustomer';
 import CustomerServiceOrder from './CustomerServiceOrder';
 import CardOutsideParticipant from './CardOutsideParticipant';
+import CompanyContactNote from './CompanyContactNote';
 
 @Entity('company_contacts')
 class CompanyContact {
@@ -82,6 +83,11 @@ class CompanyContact {
     eager: true,
   })
   fileContacts: ContactFile[];
+
+  @OneToMany(() => CompanyContactNote, note => note.companyContact, {
+    eager: true,
+  })
+  notes: CompanyContactNote[];
 }
 
 export default CompanyContact;

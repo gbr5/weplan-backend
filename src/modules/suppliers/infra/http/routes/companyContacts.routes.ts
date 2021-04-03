@@ -13,17 +13,17 @@ const companyContactInfosController = new CompanyContactInfosController();
 
 companyContactsRouter.post(
   '/',
-  celebrate({
-    [Segments.BODY]: {
-      company_id: Joi.string().required(),
-      name: Joi.string().required(),
-      family_name: Joi.string(),
-      description: Joi.string().required(),
-      company_contact_type: Joi.string().required(),
-      weplanUser: Joi.boolean().required(),
-      isCompany: Joi.boolean().required(),
-    },
-  }),
+  // celebrate({
+  //   [Segments.BODY]: {
+  //     company_id: Joi.string().required(),
+  //     name: Joi.string().required(),
+  //     family_name: Joi.string(),
+  //     description: Joi.string().required(),
+  //     company_contact_type: Joi.string().required(),
+  //     weplanUser: Joi.boolean().required(),
+  //     isCompany: Joi.boolean().required(),
+  //   },
+  // }),
   companyContactsController.create,
 );
 companyContactsRouter.put(
