@@ -123,6 +123,7 @@ import userManagementModuleRouter from '@modules/users/infra/http/routes/userMan
 import employeeManagementModuleRouter from '@modules/users/infra/http/routes/employeeManagementModules.routes';
 import employeeSessionsRouter from '@modules/users/infra/http/routes/employeeSessions.routes';
 import authenticateEmployeePROWithGoogleRouter from '@modules/users/infra/http/routes/authenticateEmployeePROWithGoogle.routes';
+import companyContactNotesRouter from '@modules/suppliers/infra/http/routes/companyContactNotes.routes';
 
 const routes = Router();
 
@@ -259,6 +260,7 @@ routes.use('/card/customers', cardCustomersRouter);
 routes.use('/card/customer-service-orders', cardCustomerServiceOrdersRouter);
 routes.use('/card/budgets', cardBudgetsRouter);
 routes.use('/company/contacts/', companyContactsRouter);
+routes.use('/company/contacts/notes', companyContactNotesRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);
 routes.use('/service-order/customer', customerServiceOrdersRouter);
 routes.use(

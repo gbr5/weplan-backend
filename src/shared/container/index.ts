@@ -345,6 +345,14 @@ import FormStylesRepository from '@modules/forms/infra/typeorm/repositories/Form
 import IFormLandingPageRepository from '@modules/forms/repositories/IFormLandingPageRepository';
 import FormLandingPageRepository from '@modules/forms/infra/typeorm/repositories/FormLandingPageRepository';
 
+import ICompanyContactNotesRepository from '@modules/suppliers/repositories/ICompanyContactNotesRepository';
+import CompanyContactNotesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyContactNotesRepository';
+
+container.registerSingleton<ICompanyContactNotesRepository>(
+  'CompanyContactNotesRepository',
+  CompanyContactNotesRepository,
+);
+
 container.registerSingleton<IFormLandingPageRepository>(
   'FormLandingPageRepository',
   FormLandingPageRepository,

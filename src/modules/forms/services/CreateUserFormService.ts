@@ -118,7 +118,7 @@ class CreateUserFormService {
       title: 'Como podemos ajudá-lo?',
       name: 'message',
       placeholder: 'Sua mensagem ...',
-      type: 'text',
+      type: 'textarea',
       position: 4,
       isRequired: true,
     });
