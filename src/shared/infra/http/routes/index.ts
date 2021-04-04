@@ -124,6 +124,8 @@ import employeeManagementModuleRouter from '@modules/users/infra/http/routes/emp
 import employeeSessionsRouter from '@modules/users/infra/http/routes/employeeSessions.routes';
 import authenticateEmployeePROWithGoogleRouter from '@modules/users/infra/http/routes/authenticateEmployeePROWithGoogle.routes';
 import companyContactNotesRouter from '@modules/suppliers/infra/http/routes/companyContactNotes.routes';
+import googleProfileRouter from '@modules/googleProfiles/infra/http/routes/googleProfile.routes';
+import userGoogleProfileRouter from '@modules/googleProfiles/infra/http/routes/userGoogleProfile.routes';
 
 const routes = Router();
 
@@ -271,7 +273,9 @@ routes.use(
   '/company/customer-service-order/answers',
   customerServiceOrderFieldAnswersRouter,
 );
-
+// GoogleProfile
+routes.use('/google-profile', googleProfileRouter);
+routes.use('/user-google-profile', userGoogleProfileRouter);
 // Default funnel-card info-field
 routes.use('/comercial/funnel', comercialFunnelDefaultInfoFieldsRouter);
 routes.use('/production/funnel', productionFunnelDefaultInfoFieldsRouter);

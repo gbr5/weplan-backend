@@ -8,11 +8,18 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import IUserGoogleProfilesRepository from '@modules/googleProfiles/repositories/IUserGoogleProfilesRepository';
+import IGoogleProfilesRepository from '@modules/googleProfiles/repositories/IGoogleProfilesRepository';
 import IUserFileCategoriesRepository from '../repositories/IUserFileCategoriesRepository';
 
 interface IRequest {
   googleEmail: string;
   googleToken: string;
+  name: string;
+  givenName: string;
+  familyName: string;
+  googleId: string;
+  imageUrl: string;
 }
 
 interface IResponse {
@@ -28,6 +35,12 @@ class AuthenticateUserWithGoogleService {
     @inject('UserFileCategoriesRepository')
     private userFileCategoriesRepository: IUserFileCategoriesRepository,
 
+    @inject('UserGoogleProfilesRepository')
+    private userGoogleProfilesRepository: IUserGoogleProfilesRepository,
+
+    @inject('GoogleProfilesRepository')
+    private googleProfilesRepository: IGoogleProfilesRepository,
+
     @inject('HashProvider')
     private hashProvider: IHashProvider,
   ) {}
@@ -35,6 +48,11 @@ class AuthenticateUserWithGoogleService {
   public async execute({
     googleEmail,
     googleToken,
+    name,
+    givenName,
+    familyName,
+    googleId,
+    imageUrl,
   }: IRequest): Promise<IResponse> {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
@@ -54,6 +72,22 @@ class AuthenticateUserWithGoogleService {
 
     if (!user) {
       throw new AppError('Invalid e-mail adress/password combination.', 401);
+    }
+
+    const userGoogleProfile = await this.userGoogleProfilesRepository.findByUserId(
+      user.id,
+    );
+
+    if (!userGoogleProfile) {
+      const googleProfile = await this.googleProfilesRepository.create({
+        email: googleEmail,
+        name,
+        givenName,
+        familyName,
+        googleId,
+        imageUrl,
+      });
+      await this.userGoogleProfilesRepository.create(user.id, googleProfile.id);
     }
     if (!email || user.email !== email) {
       throw new AppError('Invalid e-mail adress/password combination.', 401);

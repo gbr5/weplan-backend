@@ -348,6 +348,22 @@ import FormLandingPageRepository from '@modules/forms/infra/typeorm/repositories
 import ICompanyContactNotesRepository from '@modules/suppliers/repositories/ICompanyContactNotesRepository';
 import CompanyContactNotesRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyContactNotesRepository';
 
+import IGoogleProfilesRepository from '@modules/googleProfiles/repositories/IGoogleProfilesRepository';
+import GoogleProfilesRepository from '@modules/googleProfiles/infra/typeorm/repositories/GoogleProfilesRepository';
+
+import IUserGoogleProfilesRepository from '@modules/googleProfiles/repositories/IUserGoogleProfilesRepository';
+import UserGoogleProfilesRepository from '@modules/googleProfiles/infra/typeorm/repositories/UserGoogleProfilesRepository';
+
+container.registerSingleton<IUserGoogleProfilesRepository>(
+  'UserGoogleProfilesRepository',
+  UserGoogleProfilesRepository,
+);
+
+container.registerSingleton<IGoogleProfilesRepository>(
+  'GoogleProfilesRepository',
+  GoogleProfilesRepository,
+);
+
 container.registerSingleton<ICompanyContactNotesRepository>(
   'CompanyContactNotesRepository',
   CompanyContactNotesRepository,
