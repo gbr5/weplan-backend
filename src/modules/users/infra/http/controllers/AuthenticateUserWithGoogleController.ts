@@ -6,13 +6,26 @@ import AuthenticateUserWithGoogleService from '@modules/users/services/Authentic
 
 export default class AuthenticateUserWithGoogleController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { email, token } = req.body;
+    const {
+      email,
+      token,
+      name,
+      givenName,
+      familyName,
+      imageUrl,
+      googleId,
+    } = req.body;
 
     const updateProfile = container.resolve(AuthenticateUserWithGoogleService);
 
     const user = await updateProfile.execute({
       googleEmail: email,
       googleToken: token,
+      familyName,
+      givenName,
+      googleId,
+      imageUrl,
+      name,
     });
 
     return res.json(classToClass(user));

@@ -33,8 +33,6 @@ import WeplanContractOrder from '@modules/weplan/infra/typeorm/entities/WeplanCo
 import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/CompanyMasterUser';
 import CheckList from '@modules/checklists/infra/typeorm/entities/CheckList';
 import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListTask';
-// import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
-// import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
 import CardNote from '@modules/suppliers/infra/typeorm/entities/CardNote';
 import CompanyContact from '@modules/suppliers/infra/typeorm/entities/CompanyContact';
 import CardParticipant from '@modules/suppliers/infra/typeorm/entities/CardParticipant';
@@ -50,6 +48,7 @@ import EventNoteAccess from '@modules/events/infra/typeorm/entities/EventNoteAcc
 import Guest from '@modules/events/infra/typeorm/entities/Guest';
 import EventDateVote from '@modules/events/infra/typeorm/entities/EventDateVote';
 import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
+import UserGoogleProfile from '@modules/googleProfiles/infra/typeorm/entities/UserGoogleProfile';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -120,6 +119,9 @@ class User {
 
   @OneToOne(() => PersonInfo, user => user.personUser, { eager: true })
   personInfo: PersonInfo;
+
+  @OneToOne(() => UserGoogleProfile, googleProfile => googleProfile.user)
+  googleProfile: UserGoogleProfile;
 
   @OneToOne(() => UserBirthdate, user_birthdate => user_birthdate.user_id)
   UserBirthdate: UserBirthdate;
