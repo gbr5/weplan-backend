@@ -17,9 +17,16 @@ export default class FindByNameOrEmailController {
 
     if (name) {
       const findUserByName = users.find(user => user.name === name);
+      const findUserByTrimmedName = users.find(
+        user => user.trimmed_name === name,
+      );
 
       if (findUserByName) {
         return res.json(classToClass(findUserByName));
+      }
+
+      if (findUserByTrimmedName) {
+        return res.json(classToClass(findUserByTrimmedName));
       }
     }
 

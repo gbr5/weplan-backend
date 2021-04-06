@@ -17,7 +17,7 @@ interface IRequest {
 class CreateUserConfirmation {
   constructor(
     @inject('UserConfirmationRepository')
-    private companyEmployeesRepository: IUserConfirmationRepository,
+    private userConfirmationRepository: IUserConfirmationRepository,
   ) {}
 
   public async execute({
@@ -28,7 +28,7 @@ class CreateUserConfirmation {
     isConfirmed,
   }: IRequest): Promise<UserConfirmation> {
     try {
-      const userConfirmation = await this.companyEmployeesRepository.create({
+      const userConfirmation = await this.userConfirmationRepository.create({
         sender_id,
         receiver_id,
         title,

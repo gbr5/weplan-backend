@@ -20,6 +20,14 @@ class CompanyInfoRepository implements ICompanyInfoRepository {
     return companyInfo;
   }
 
+  public async findByName(name: string): Promise<CompanyInfo | undefined> {
+    const companyInfo = await this.ormRepository.findOne({
+      where: { name },
+    });
+
+    return companyInfo;
+  }
+
   public async create(
     companyInfoData: ICreateCompanyInfoDTO,
   ): Promise<CompanyInfo> {
