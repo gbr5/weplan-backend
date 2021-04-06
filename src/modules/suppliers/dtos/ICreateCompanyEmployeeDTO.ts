@@ -1,4 +1,4 @@
-import User from '@modules/users/infra/typeorm/entities/User';
+// import User from '@modules/users/infra/typeorm/entities/User';
 
 // interface IModulesDTO {
 //   management_module: string;
@@ -11,7 +11,7 @@ export default interface ICreateCompanyEmployeeDTO {
   email: string;
   password: string;
   isActive: boolean;
-  employee: User;
-  company: User;
+  employee_id: string;
+  company_id: string;
   // modules: IModulesDTO[];
 }

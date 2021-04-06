@@ -126,6 +126,9 @@ import authenticateEmployeePROWithGoogleRouter from '@modules/users/infra/http/r
 import companyContactNotesRouter from '@modules/suppliers/infra/http/routes/companyContactNotes.routes';
 import googleProfileRouter from '@modules/googleProfiles/infra/http/routes/googleProfile.routes';
 import userGoogleProfileRouter from '@modules/googleProfiles/infra/http/routes/userGoogleProfile.routes';
+import findCompanyInfoByNameRouter from '@modules/users/infra/http/routes/findCompanyInfoByName.routes';
+import sendCompanyActivationEmailRouter from '@modules/users/infra/http/routes/sendCompanyActivationEmail.routes';
+import createFirstCompanyMasterRouter from '@modules/suppliers/infra/http/routes/createFirstCompanyMaster.routes';
 
 const routes = Router();
 
@@ -183,9 +186,11 @@ routes.use('/user-appointments', listUserAppointmentsRouter);
 routes.use('/external-guests', externalGuestsRouter);
 routes.use('/mass-invitation', sendMassInvitationRouter);
 
+routes.use('/first-master', createFirstCompanyMasterRouter);
 routes.use('/users', usersRouter);
 routes.use('/user/name-or-email', findUserByNameOrEmailRouter);
 routes.use('/user/activation', activationUserRouter);
+routes.use('/company/activation', sendCompanyActivationEmailRouter);
 routes.use('/user/suspend', suspendAccountRouter);
 routes.use('/user/delete', deleteUserRouter);
 routes.use('/user/terminate', terminateUserRouter);
@@ -202,6 +207,7 @@ routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);
 routes.use('/user-profile', userProfileRouter);
 routes.use('/company-info', companyInfoRouter);
+routes.use('/find-company-info-by-name', findCompanyInfoByNameRouter);
 routes.use('/guest-contact-info', guestContactInfosRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
