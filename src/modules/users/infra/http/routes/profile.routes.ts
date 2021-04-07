@@ -9,6 +9,7 @@ const profileRouter = Router();
 const userscontroller = new ProfileController();
 const userContactInfosController = new UserContactInfosController();
 
+profileRouter.get('/external/:user_id', userscontroller.showExternal);
 profileRouter.get('/', ensureAuthenticated, userscontroller.show);
 profileRouter.put(
   '/:user_id',
