@@ -13,7 +13,7 @@ class StageCardsRepository implements IStageCardsRepository {
   }
 
   public async findById(id: string): Promise<StageCard | undefined> {
-    const stageCard = await this.ormRepository.findOne({ id });
+    const stageCard = await this.ormRepository.findOne(id);
 
     return stageCard;
   }
