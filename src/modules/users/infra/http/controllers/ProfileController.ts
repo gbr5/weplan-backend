@@ -16,6 +16,17 @@ export default class ProfileController {
     return res.json(classToClass(user));
   }
 
+  public async showExternal(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { user_id } = reqParams;
+
+    const showProfile = container.resolve(ShowProfileService);
+
+    const user = await showProfile.execute(user_id);
+
+    return res.json(classToClass(user));
+  }
+
   public async update(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
     const { user_id } = reqParams;
