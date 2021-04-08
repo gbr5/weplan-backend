@@ -10,6 +10,8 @@ import ICardCheckListsRepository from '@modules/checklists/repositories/ICardChe
 import AppError from '@shared/errors/AppError';
 import IFunnelStagesRepository from '../repositories/IFunnelStagesRepository';
 import IFunnelsRepository from '../repositories/IFunnelsRepository';
+import ICompanyFunnelCardInfoFieldsRepository from '../repositories/ICompanyFunnelCardInfoFieldsRepository';
+import ICompanyFunnelCardInfosRepository from '../repositories/ICompanyFunnelCardInfosRepository';
 
 @injectable()
 class CreateStageCardService {
@@ -32,6 +34,12 @@ class CreateStageCardService {
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
 
+    @inject('CompanyFunnelCardInfoFieldsRepository')
+    private companyFunnelCardInfoFieldsRepository: ICompanyFunnelCardInfoFieldsRepository,
+
+    @inject('CompanyFunnelCardInfosRepository')
+    private companyFunnelCardInfosRepository: ICompanyFunnelCardInfosRepository,
+
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
   ) {}
@@ -52,8 +60,8 @@ class CreateStageCardService {
 
     const funnel = await this.funnelsRepository.findById(stage.funnel_id);
 
-    if (funnel === undefined) {
-      throw new AppError('Stage not found');
+    if (!funnel) {
+      throw new AppError('Funnel not found');
     }
     const stageCard = await this.stageCardsRepository.create({
       weplanEvent,
@@ -63,6 +71,20 @@ class CreateStageCardService {
       stage_id,
       card_owner,
     });
+    const infoFields = await this.companyFunnelCardInfoFieldsRepository.findByFunnelId(
+      funnel.id,
+    );
+
+    Promise.all([
+      infoFields.map(field => {
+        return this.companyFunnelCardInfosRepository.create({
+          card_unique_name: stageCard.unique_name,
+          funnel_card_field_id: field.id,
+          response: '',
+          user_id: stageCard.card_owner,
+        });
+      }),
+    ]);
 
     const firstCheckList = await this.checkListsRepository.create({
       name: `Tarefas | ${funnel.name}`,

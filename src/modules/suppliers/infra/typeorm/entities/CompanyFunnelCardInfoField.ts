@@ -17,17 +17,17 @@ class CompanyFunnelCardInfoField {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   company_id: string;
 
-  @ManyToOne(() => User, company => company.id)
+  @ManyToOne(() => User, company => company.company_funnel_card_info_fields)
   @JoinColumn({ name: 'company_id' })
   company: User;
 
-  @Column()
+  @Column('uuid')
   funnel_id: string;
 
-  @ManyToOne(() => Funnel, funnel => funnel.company_funnel_card_info_fields)
+  @ManyToOne(() => Funnel, funnel => funnel.card_info_fields)
   @JoinColumn({ name: 'funnel_id' })
   funnel: Funnel;
 

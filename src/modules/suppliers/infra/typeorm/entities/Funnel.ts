@@ -48,9 +48,9 @@ class Funnel {
 
   @OneToMany(
     () => CompanyFunnelCardInfoField,
-    funnel_card_info_field => funnel_card_info_field.funnel_id,
+    funnel_card_info_field => funnel_card_info_field.funnel,
   )
-  company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
+  card_info_fields: CompanyFunnelCardInfoField[];
 }
 
 export default Funnel;
