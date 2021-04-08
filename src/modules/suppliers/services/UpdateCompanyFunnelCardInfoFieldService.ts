@@ -5,6 +5,14 @@ import ICompanyFunnelCardInfoFieldsRepository from '@modules/suppliers/repositor
 
 import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
 
+interface IRequest {
+  id: string;
+  funnel_id: string;
+  name: string;
+  field_type: string;
+  isRequired: boolean;
+}
+
 @injectable()
 class UpdateCompanyFunnelCardInfoFieldService {
   constructor(
@@ -12,13 +20,13 @@ class UpdateCompanyFunnelCardInfoFieldService {
     private funnelCardInfoFieldsRepository: ICompanyFunnelCardInfoFieldsRepository,
   ) {}
 
-  public async execute(
-    id: string,
-    funnel_id: string,
-    name: string,
-    field_type: string,
-    isRequired: boolean,
-  ): Promise<CompanyFunnelCardInfoField> {
+  public async execute({
+    id,
+    funnel_id,
+    name,
+    field_type,
+    isRequired,
+  }: IRequest): Promise<CompanyFunnelCardInfoField> {
     const funnelCardInfoField = await this.funnelCardInfoFieldsRepository.findById(
       id,
     );
@@ -32,7 +40,7 @@ class UpdateCompanyFunnelCardInfoFieldService {
       name,
     );
 
-    if (funnelCardInfoFieldExists) {
+    if (funnelCardInfoFieldExists && funnelCardInfoFieldExists.id !== id) {
       throw new AppError(
         'There is already a funnel card field with this name.',
       );

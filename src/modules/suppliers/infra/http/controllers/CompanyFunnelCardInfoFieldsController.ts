@@ -51,13 +51,13 @@ export default class CompanyFunnelCardInfoFieldsController {
       UpdateCompanyFunnelCardInfoFieldService,
     );
 
-    const funnelCardInfoField = await updateCompanyFunnelCardInfoField.execute(
+    const funnelCardInfoField = await updateCompanyFunnelCardInfoField.execute({
       id,
       funnel_id,
       name,
       field_type,
       isRequired,
-    );
+    });
 
     return res.json(classToClass(funnelCardInfoField));
   }

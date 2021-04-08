@@ -275,13 +275,13 @@ class User {
 
   @OneToMany(
     () => CompanyFunnelCardInfoField,
-    funnel_card_field => funnel_card_field.company_id,
+    funnel_card_field => funnel_card_field.company,
   )
   company_funnel_card_info_fields: CompanyFunnelCardInfoField[];
 
   @OneToMany(
     () => CompanyFunnelCardInfo,
-    funnel_card_info => funnel_card_info.user_id,
+    funnel_card_info => funnel_card_info.author,
   )
   funnel_card_infos: CompanyFunnelCardInfo[];
 
