@@ -88,18 +88,19 @@ class SendFormEmailNotificationsService {
         const contactEmail = contact.contact_infos.find(
           emailInfo => emailInfo.info_type === 'Email',
         );
+
         if (contactEmail && email.value === contactEmail.info) {
           return contact;
         }
         return undefined;
       });
-      if (findByEmail) {
+      if (findByEmail !== undefined) {
         await this.companyContactNotesRepository.create({
           company_contact_id: findByEmail.id,
           isNew: true,
           note,
         });
-        if (phone) {
+        if (phone !== undefined) {
           const findPhone = findByEmail.contact_infos.find(
             contactInfo =>
               contactInfo.info_type === 'Phone' &&
@@ -113,7 +114,7 @@ class SendFormEmailNotificationsService {
             });
           }
         }
-        if (instagram) {
+        if (instagram !== undefined) {
           const findInstagram = findByEmail.contact_infos.find(
             contactInfo =>
               contactInfo.info_type === 'Instagram' &&
@@ -127,7 +128,7 @@ class SendFormEmailNotificationsService {
             });
           }
         }
-        if (facebook) {
+        if (facebook !== undefined) {
           const findFacebook = findByEmail.contact_infos.find(
             contactInfo =>
               contactInfo.info_type === 'Facebook' &&
@@ -141,7 +142,7 @@ class SendFormEmailNotificationsService {
             });
           }
         }
-        if (whatsapp) {
+        if (whatsapp !== undefined) {
           const findWhatsapp = findByEmail.contact_infos.find(
             contactInfo =>
               contactInfo.info_type === 'Whatsapp' &&
@@ -177,70 +178,46 @@ class SendFormEmailNotificationsService {
           isNew: true,
           note,
         });
-        if (phone) {
-          const findPhone = newContact.contact_infos.find(
-            contactInfo =>
-              contactInfo.info_type === 'Phone' &&
-              contactInfo.info === phone.value,
-          );
-          if (!findPhone) {
-            await this.companyContactInfosRepository.create({
-              company_contact_id: newContact.id,
-              info: phone.value,
-              info_type: 'Phone',
-            });
-          }
+        if (phone !== undefined) {
+          await this.companyContactInfosRepository.create({
+            company_contact_id: newContact.id,
+            info: phone.value,
+            info_type: 'Phone',
+          });
         }
-        if (instagram) {
-          const findInstagram = newContact.contact_infos.find(
-            contactInfo =>
-              contactInfo.info_type === 'Instagram' &&
-              contactInfo.info === instagram.value,
-          );
-          if (instagram && !findInstagram) {
-            await this.companyContactInfosRepository.create({
-              company_contact_id: newContact.id,
-              info: instagram.value,
-              info_type: 'Instagram',
-            });
-          }
+        if (instagram !== undefined) {
+          await this.companyContactInfosRepository.create({
+            company_contact_id: newContact.id,
+            info: instagram.value,
+            info_type: 'Instagram',
+          });
         }
-        if (facebook) {
-          const findFacebook = newContact.contact_infos.find(
-            contactInfo =>
-              contactInfo.info_type === 'Facebook' &&
-              contactInfo.info === facebook.value,
-          );
-          if (facebook && !findFacebook) {
-            await this.companyContactInfosRepository.create({
-              company_contact_id: newContact.id,
-              info: facebook.value,
-              info_type: 'Facebook',
-            });
-          }
+        if (facebook !== undefined) {
+          await this.companyContactInfosRepository.create({
+            company_contact_id: newContact.id,
+            info: facebook.value,
+            info_type: 'Facebook',
+          });
         }
-        if (whatsapp) {
-          const findWhatsapp = newContact.contact_infos.find(
-            contactInfo =>
-              contactInfo.info_type === 'Whatsapp' &&
-              contactInfo.info === whatsapp.value,
-          );
-          if (whatsapp || !findWhatsapp) {
-            await this.companyContactInfosRepository.create({
-              company_contact_id: newContact.id,
-              info: whatsapp.value,
-              info_type: 'Whatsapp',
-            });
-          }
+        if (whatsapp !== undefined) {
+          await this.companyContactInfosRepository.create({
+            company_contact_id: newContact.id,
+            info: whatsapp.value,
+            info_type: 'Whatsapp',
+          });
         }
       }
     }
 
-    const internalMessage = form.emailNotifications.find(
-      internalEmail => internalEmail.notification_type === 'internal_message',
-    );
+    const internalMessage =
+      form && form.emailNotifications && form.emailNotifications.length > 0
+        ? form.emailNotifications.find(
+            internalEmail =>
+              internalEmail.notification_type === 'internal_message',
+          )
+        : undefined;
 
-    if (internalMessage) {
+    if (internalMessage !== undefined) {
       const message = `
         ${internalMessage.message}\n
         ${results}
@@ -279,11 +256,15 @@ class SendFormEmailNotificationsService {
         })
         .promise();
     }
-    const externalMessage = form.emailNotifications.find(
-      externalEmail => externalEmail.notification_type === 'external_message',
-    );
+    const externalMessage =
+      form && form.emailNotifications && form.emailNotifications.length > 0
+        ? form.emailNotifications.find(
+            externalEmail =>
+              externalEmail.notification_type === 'external_message',
+          )
+        : undefined;
 
-    if (externalMessage) {
+    if (externalMessage !== undefined) {
       const toAddress =
         formResults.find(result => result.name === 'email')?.value || '';
       await this.client

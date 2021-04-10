@@ -354,6 +354,14 @@ import GoogleProfilesRepository from '@modules/googleProfiles/infra/typeorm/repo
 import IUserGoogleProfilesRepository from '@modules/googleProfiles/repositories/IUserGoogleProfilesRepository';
 import UserGoogleProfilesRepository from '@modules/googleProfiles/infra/typeorm/repositories/UserGoogleProfilesRepository';
 
+import ICompanyEmployeeContactRepository from '@modules/suppliers/repositories/ICompanyEmployeeContactRepository';
+import CompanyEmployeeContactRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeeContactRepository';
+
+container.registerSingleton<ICompanyEmployeeContactRepository>(
+  'CompanyEmployeeContactRepository',
+  CompanyEmployeeContactRepository,
+);
+
 container.registerSingleton<IUserGoogleProfilesRepository>(
   'UserGoogleProfilesRepository',
   UserGoogleProfilesRepository,

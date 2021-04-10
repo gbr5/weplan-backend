@@ -7,11 +7,13 @@ import {
   JoinColumn,
   Column,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import EmployeeFile from '@modules/users/infra/typeorm/entities/EmployeeFile';
 import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
+import CompanyEmployeeContact from '@modules/suppliers/infra/typeorm/entities/CompanyEmployeeContact';
 // import UserManagementModule from '@modules/users/infra/typeorm/entities/UserManagementModule';
 // import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 
@@ -82,6 +84,12 @@ class CompanyEmployee {
     },
   )
   confirmations: UserConfirmation[];
+
+  @OneToOne(
+    () => CompanyEmployeeContact,
+    employeeContact => employeeContact.employee,
+  )
+  employeeContact: CompanyEmployeeContact;
 }
 
 export default CompanyEmployee;

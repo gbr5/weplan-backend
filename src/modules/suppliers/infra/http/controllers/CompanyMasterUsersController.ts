@@ -54,13 +54,12 @@ export default class CompanyMasterUsersController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
-    const reqParams = req.params;
-    const { user_id, company_id } = reqParams;
+    const user_id = req.user.id;
     const showCompanyMasterUser = container.resolve(
       ShowCompanyMasterUserService,
     );
 
-    const user = await showCompanyMasterUser.execute(user_id, company_id);
+    const user = await showCompanyMasterUser.execute(user_id);
 
     return res.json(classToClass(user));
   }
