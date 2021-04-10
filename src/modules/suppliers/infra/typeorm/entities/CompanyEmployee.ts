@@ -88,9 +88,6 @@ class CompanyEmployee {
   @OneToOne(
     () => CompanyEmployeeContact,
     employeeContact => employeeContact.employee,
-    {
-      eager: true,
-    },
   )
   employeeContact: CompanyEmployeeContact;
 }
