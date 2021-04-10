@@ -254,7 +254,8 @@ routes.use('/event-types', eventTypesRouter);
 routes.use('/friends-events', friendsEventsRouter);
 
 routes.use('/suppliers', suppliersRouter);
-routes.use('/supplier-employees', companyEmployeesRouter);
+routes.use('/company-employees', companyEmployeesRouter);
+routes.use('/company-employee-contact', companyEmployeesRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);
 routes.use('/wp-products', weplanProductsRouter);
 routes.use('/wp/contract-orders', weplanContractOrdersRouter);

@@ -6,6 +6,7 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
 import IUserManagementModulesRepository from '@modules/users/repositories/IUserManagementModulesRepository';
 import IUserDTO from '@modules/events/dtos/IUserDTO';
+import CompanyEmployee from '../infra/typeorm/entities/CompanyEmployee';
 
 interface IEmployee {
   id: string;
@@ -37,26 +38,12 @@ class ListUserCompanyEmployeeService {
     private cacheUser: ICacheProvider,
   ) {}
 
-  public async execute(company_id: string): Promise<IEmployee[]> {
+  public async execute(company_id: string): Promise<CompanyEmployee[]> {
     const companyEmployees = await this.companyEmployeesRepository.findByCompanyId(
       company_id,
     );
 
-    const employeeArray = companyEmployees.map(employee => {
-      return {
-        id: employee.id,
-        position: employee.position,
-        access_key: employee.access_key,
-        email: employee.email,
-        isActive: employee.isActive,
-        name: employee.employee.name,
-        employee_id: employee.employee_id,
-        employee: employee.employee,
-        company: employee.company,
-      };
-    });
-
-    return employeeArray;
+    return companyEmployees;
   }
 }
 

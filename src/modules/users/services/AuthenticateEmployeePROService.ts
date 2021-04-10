@@ -33,7 +33,6 @@ class AuthenticatePROService {
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const employee = await this.companyEmployeesRepository.findByEmail(email);
-
     if (!employee) {
       throw new AppError('Invalid e-mail adress/password combination.', 401);
     }

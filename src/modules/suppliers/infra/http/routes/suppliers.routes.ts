@@ -62,7 +62,7 @@ suppliersRouter.get(
   companyMasterUsersController.listUserMasters,
 );
 suppliersRouter.get(
-  '/master/user/:user_id/:company_id',
+  '/show/me-as-master',
   ensureAuthenticated,
   companyMasterUsersController.show,
 );

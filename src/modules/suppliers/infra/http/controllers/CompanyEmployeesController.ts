@@ -46,7 +46,7 @@ export default class CompanyEmployeesController {
     const employees = await listCompanyEmployees.execute(company_id);
 
     const sortedEmployees = employees.filter(employee =>
-      employee.name.includes(employee_name),
+      employee.employeeUser.name.includes(employee_name),
     );
 
     if (sortedEmployees.length > 0) {
