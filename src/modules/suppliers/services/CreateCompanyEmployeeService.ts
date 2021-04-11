@@ -83,12 +83,12 @@ class CreateCompanyEmployeeService {
 
       const companyEmployee = await this.companyEmployeesRepository.create({
         position,
-        access_key,
+        access_key: hashedPassword,
         email,
         password: hashedPassword,
-        isActive: false,
-        employee,
-        company,
+        isActive: true,
+        company_id: company.id,
+        employee_id: employee.id,
       });
 
       await this.userConfirmationsRepository.create({

@@ -11,7 +11,7 @@ import {
 import CompanyContact from './CompanyContact';
 import CompanyEmployee from './CompanyEmployee';
 
-@Entity('company_employee_contacts')
+@Entity('company_employee_contact')
 class CompanyEmployeeContact {
   @PrimaryGeneratedColumn('uuid')
   id: string;

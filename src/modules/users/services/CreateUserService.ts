@@ -48,6 +48,7 @@ class CreateUserService {
 
     const userName = name
       .toLowerCase()
+      .normalize('NFD')
       .split(' ')
       .map(word => {
         return word[0].toUpperCase() + word.slice(1);
@@ -55,6 +56,7 @@ class CreateUserService {
       .join(' ');
 
     const trimmed_name = name
+      .normalize('NFD')
       .toLowerCase()
       .split(' ')
       .map(word => {

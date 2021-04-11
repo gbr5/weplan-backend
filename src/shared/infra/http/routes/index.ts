@@ -129,6 +129,7 @@ import userGoogleProfileRouter from '@modules/googleProfiles/infra/http/routes/u
 import findCompanyInfoByNameRouter from '@modules/users/infra/http/routes/findCompanyInfoByName.routes';
 import sendCompanyActivationEmailRouter from '@modules/users/infra/http/routes/sendCompanyActivationEmail.routes';
 import createFirstCompanyMasterRouter from '@modules/suppliers/infra/http/routes/createFirstCompanyMaster.routes';
+import companyEmployeeContactRouter from '@modules/suppliers/infra/http/routes/companyEmployeeContact.routes';
 
 const routes = Router();
 
@@ -255,7 +256,7 @@ routes.use('/friends-events', friendsEventsRouter);
 
 routes.use('/suppliers', suppliersRouter);
 routes.use('/company-employees', companyEmployeesRouter);
-routes.use('/company-employee-contact', companyEmployeesRouter);
+routes.use('/company-employee-contact', companyEmployeeContactRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);
 routes.use('/wp-products', weplanProductsRouter);
 routes.use('/wp/contract-orders', weplanContractOrdersRouter);
