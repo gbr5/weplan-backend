@@ -5,10 +5,10 @@ import ICompanyEmployeeContactRepository from '@modules/suppliers/repositories/I
 import AppError from '@shared/errors/AppError';
 import ICompanyEmployeesRepository from '../repositories/ICompanyEmployeesRepository';
 import ICompanyContactsRepository from '../repositories/ICompanyContactsRepository';
-import CompanyEmployee from '../infra/typeorm/entities/CompanyEmployee';
+import CompanyContact from '../infra/typeorm/entities/CompanyContact';
 
 @injectable()
-class ShowCompanyEmployeeContactService {
+class ShowCompanyEmployeeContactByEmployeeIDService {
   constructor(
     @inject('CompanyEmployeeContactRepository')
     private companyEmployeeContactRepository: ICompanyEmployeeContactRepository,
@@ -20,9 +20,9 @@ class ShowCompanyEmployeeContactService {
     private companyContactsRepository: ICompanyContactsRepository,
   ) {}
 
-  public async execute(company_contact_id: string): Promise<CompanyEmployee> {
-    const companyEmployeeContact = await this.companyEmployeeContactRepository.findByCompanyContactId(
-      company_contact_id,
+  public async execute(employee_id: string): Promise<CompanyContact> {
+    const companyEmployeeContact = await this.companyEmployeeContactRepository.findByEmployeeId(
+      employee_id,
     );
 
     if (companyEmployeeContact === undefined) {
@@ -39,8 +39,8 @@ class ShowCompanyEmployeeContactService {
       throw new AppError('Company employee contact not found!');
     }
 
-    return employee;
+    return companyContact;
   }
 }
 
-export default ShowCompanyEmployeeContactService;
+export default ShowCompanyEmployeeContactByEmployeeIDService;

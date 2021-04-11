@@ -23,7 +23,12 @@ companyEmployeeContactRouter.post(
 
 companyEmployeeContactRouter.get(
   '/:company_contact_id',
-  companyEmployeeContactController.index,
+  companyEmployeeContactController.show,
+);
+
+companyEmployeeContactRouter.get(
+  '/employee/:employee_id',
+  companyEmployeeContactController.showEmployee,
 );
 
 export default companyEmployeeContactRouter;
