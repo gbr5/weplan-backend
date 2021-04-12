@@ -86,6 +86,11 @@ companyContactsRouter.get(
   ensureAuthenticated,
   companyContactsController.index,
 );
+companyContactsRouter.get(
+  '/show/:id',
+  ensureAuthenticated,
+  companyContactsController.show,
+);
 companyContactsRouter.delete(
   '/:id',
   ensureAuthenticated,

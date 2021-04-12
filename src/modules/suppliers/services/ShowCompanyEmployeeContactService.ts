@@ -20,13 +20,15 @@ class ShowCompanyEmployeeContactService {
     private companyContactsRepository: ICompanyContactsRepository,
   ) {}
 
-  public async execute(company_contact_id: string): Promise<CompanyEmployee> {
+  public async execute(
+    company_contact_id: string,
+  ): Promise<CompanyEmployee | undefined> {
     const companyEmployeeContact = await this.companyEmployeeContactRepository.findByCompanyContactId(
       company_contact_id,
     );
 
     if (companyEmployeeContact === undefined) {
-      throw new AppError('Company employee contact not found!');
+      return undefined;
     }
     const employee = await this.companyEmployeesRepository.findById(
       companyEmployeeContact.employee_id,
