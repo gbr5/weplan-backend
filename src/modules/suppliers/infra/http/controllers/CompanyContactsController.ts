@@ -5,6 +5,7 @@ import { classToClass } from 'class-transformer';
 import CreateCompanyContactService from '@modules/suppliers/services/CreateCompanyContactService';
 import ListCompanyContactsService from '@modules/suppliers/services/ListCompanyContactsService';
 import DeleteCompanyContactService from '@modules/suppliers/services/DeleteCompanyContactService';
+import ShowCompanyContactService from '@modules/suppliers/services/ShowCompanyContactService';
 import UpdateCompanyContactNameService from '@modules/suppliers/services/UpdateCompanyContactNameService';
 import UpdateCompanyContactFamilyNameService from '@modules/suppliers/services/UpdateCompanyContactFamilyNameService';
 import UpdateCompanyContactDescriptionService from '@modules/suppliers/services/UpdateCompanyContactDescriptionService';
@@ -59,6 +60,16 @@ export default class CompanyContactsController {
     if (sortedContacts.length > 0) {
       return res.json(classToClass(sortedContacts));
     }
+
+    return res.json(classToClass(companyContacts));
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+    const showCompanyContact = container.resolve(ShowCompanyContactService);
+
+    const companyContacts = await showCompanyContact.execute(id);
 
     return res.json(classToClass(companyContacts));
   }
