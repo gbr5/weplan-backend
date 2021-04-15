@@ -41,9 +41,14 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
     });
 
     if (day && month && year) {
-      const sorted_owner_tasks = owner_tasks.filter(
-        task => task.due_date === `${day}/${month}/${year}`,
-      );
+      const sorted_owner_tasks = owner_tasks.filter(task => {
+        const selectedDate = `${year}/${month}/${day}`;
+        const taskDueDateFormated = new Date(task.due_date);
+        const taskDate = `${taskDueDateFormated.getFullYear()}/${
+          taskDueDateFormated.getMonth() + 1
+        }/${taskDueDateFormated.getDate()}`;
+        return selectedDate === taskDate;
+      });
       return sorted_owner_tasks;
     }
 
