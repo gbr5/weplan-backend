@@ -13,6 +13,8 @@ import ICompanyEmployeesRepository from '../repositories/ICompanyEmployeesReposi
 import IFunnelsRepository from '../repositories/IFunnelsRepository';
 import IFunnelStagesRepository from '../repositories/IFunnelStagesRepository';
 import ICompanyContactsRepository from '../repositories/ICompanyContactsRepository';
+import ICompanyEmployeeContactsRepository from '../repositories/ICompanyEmployeeContactRepository';
+import ICompanyContactInfosRepository from '../repositories/ICompanyContactInfosRepository';
 
 interface IRequest {
   user_id: string;
@@ -32,8 +34,14 @@ class CreateFirstCompanyMasterService {
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
 
+    @inject('CompanyEmployeeContactsRepository')
+    private companyEmployeeContactsRepository: ICompanyEmployeeContactsRepository,
+
     @inject('CompanyContactsRepository')
     private companyContactsRepository: ICompanyContactsRepository,
+
+    @inject('CompanyContactInfosRepository')
+    private companyContactInfosRepository: ICompanyContactInfosRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -83,23 +91,18 @@ class CreateFirstCompanyMasterService {
       user_id,
       company.id,
     );
-
     if (companyMasterUserExists) {
       throw new AppError(
         `${user_id} is already registered to ${company.name}.`,
       );
     }
-
     const emailRegistered = await this.companyMasterUsersRepository.findByEmail(
       email,
     );
-
     if (emailRegistered) {
       throw new AppError(`${email} is already registered to ${company.name}.`);
     }
-
     const hashedPassword = await this.hashProvider.generateHash(password);
-
     const companyMasterUser = await this.companyMasterUsersRepository.create({
       user_id,
       email,
@@ -107,7 +110,6 @@ class CreateFirstCompanyMasterService {
       company_id: company.id,
       isConfirmed: false,
     });
-
     const companyEmployee = await this.companyEmployeesRepository.create({
       access_key: hashedPassword,
       company_id: company.id,
@@ -117,17 +119,22 @@ class CreateFirstCompanyMasterService {
       email,
       password: hashedPassword,
     });
+    const companyContact = await this.companyContactsRepository.create({
+      company_contact_type: 'Employee',
+      company_id: company.id,
+      description: 'Usuário Master',
+      family_name,
+      name,
+      isCompany: false,
+      isNew: true,
+      weplanUser: false,
+    });
+    const response = await this.funnelsRepository.create({
+      name: 'Comercial',
+      funnel_type: 'Comercial',
+      supplier_id: company.id,
+    });
     Promise.all([
-      this.companyContactsRepository.create({
-        company_contact_type: 'Employee',
-        company_id: company.id,
-        description: 'Usuário Master',
-        family_name,
-        name,
-        isCompany: false,
-        isNew: true,
-        weplanUser: false,
-      }),
       this.userConfirmationsRepository.create({
         isConfirmed: true,
         message: 'Seja bem vindo',
@@ -140,14 +147,15 @@ class CreateFirstCompanyMasterService {
         management_module: 'Comercial',
         user_id: companyEmployee.id,
       }),
-    ]);
-    const response = await this.funnelsRepository.create({
-      name: 'Comercial',
-      funnel_type: 'Comercial',
-      supplier_id: company.id,
-    });
-
-    Promise.all([
+      this.companyEmployeeContactsRepository.create({
+        company_contact_id: companyContact.id,
+        employee_id: companyEmployee.id,
+      }),
+      this.companyContactInfosRepository.create({
+        company_contact_id: companyContact.id,
+        info: companyEmployee.email,
+        info_type: 'Email',
+      }),
       this.funnelStagesRepository.create({
         funnel_id: response.id,
         funnel_order: 1,
