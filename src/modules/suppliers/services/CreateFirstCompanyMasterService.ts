@@ -12,12 +12,15 @@ import IUserManagementModulesRepository from '@modules/users/repositories/IUserM
 import ICompanyEmployeesRepository from '../repositories/ICompanyEmployeesRepository';
 import IFunnelsRepository from '../repositories/IFunnelsRepository';
 import IFunnelStagesRepository from '../repositories/IFunnelStagesRepository';
+import ICompanyContactsRepository from '../repositories/ICompanyContactsRepository';
 
 interface IRequest {
   user_id: string;
   companyEmail: string;
   email: string;
   password: string;
+  name: string;
+  family_name: string;
 }
 
 @injectable()
@@ -28,6 +31,9 @@ class CreateFirstCompanyMasterService {
 
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
+
+    @inject('CompanyContactsRepository')
+    private companyContactsRepository: ICompanyContactsRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -56,6 +62,8 @@ class CreateFirstCompanyMasterService {
     companyEmail,
     email,
     password,
+    name,
+    family_name,
   }: IRequest): Promise<CompanyMasterUser> {
     const user = await this.usersRepository.findById(user_id);
     const company = await this.usersRepository.findByEmail(companyEmail);
@@ -110,6 +118,16 @@ class CreateFirstCompanyMasterService {
       password: hashedPassword,
     });
     Promise.all([
+      this.companyContactsRepository.create({
+        company_contact_type: 'Employee',
+        company_id: company.id,
+        description: 'Usuário Master',
+        family_name,
+        name,
+        isCompany: false,
+        isNew: true,
+        weplanUser: false,
+      }),
       this.userConfirmationsRepository.create({
         isConfirmed: true,
         message: 'Seja bem vindo',
