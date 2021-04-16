@@ -106,6 +106,17 @@ class CreateFirstCompanyMasterService {
     if (emailRegistered) {
       throw new AppError(`${email} is already registered to ${company.name}.`);
     }
+    const response = await this.funnelsRepository.create({
+      name: 'Comercial',
+      funnel_type: 'Comercial',
+      supplier_id: company.id,
+    });
+
+    await this.funnelStagesRepository.create({
+      funnel_id: response.id,
+      funnel_order: 1,
+      name: 'Prospectos',
+    });
     if (!user.personInfo) {
       const first_name = name;
       const last_name = family_name;
@@ -130,7 +141,17 @@ class CreateFirstCompanyMasterService {
         });
       }
     }
+    await this.funnelStagesRepository.create({
+      funnel_id: response.id,
+      funnel_order: 2,
+      name: '1° Contato',
+    });
     const hashedPassword = await this.hashProvider.generateHash(password);
+    await this.funnelStagesRepository.create({
+      funnel_id: response.id,
+      funnel_order: 3,
+      name: 'Orçamento Enviado',
+    });
     const companyMasterUser = await this.companyMasterUsersRepository.create({
       user_id,
       email,
@@ -138,6 +159,13 @@ class CreateFirstCompanyMasterService {
       company_id: company.id,
       isConfirmed: false,
     });
+
+    await this.funnelStagesRepository.create({
+      funnel_id: response.id,
+      funnel_order: 4,
+      name: 'Negociação',
+    });
+
     const companyEmployee = await this.companyEmployeesRepository.create({
       access_key: hashedPassword,
       company_id: company.id,
@@ -156,11 +184,6 @@ class CreateFirstCompanyMasterService {
       isCompany: false,
       isNew: true,
       weplanUser: false,
-    });
-    const response = await this.funnelsRepository.create({
-      name: 'Comercial',
-      funnel_type: 'Comercial',
-      supplier_id: company.id,
     });
     Promise.all([
       this.userConfirmationsRepository.create({
@@ -185,35 +208,11 @@ class CreateFirstCompanyMasterService {
         info_type: 'Email',
       }),
     ]);
-
-    Promise.all([
-      this.funnelStagesRepository.create({
-        funnel_id: response.id,
-        funnel_order: 1,
-        name: 'Prospectos',
-      }),
-      this.funnelStagesRepository.create({
-        funnel_id: response.id,
-        funnel_order: 2,
-        name: '1° Contato',
-      }),
-      this.funnelStagesRepository.create({
-        funnel_id: response.id,
-        funnel_order: 3,
-        name: 'Orçamento Enviado',
-      }),
-      this.funnelStagesRepository.create({
-        funnel_id: response.id,
-        funnel_order: 4,
-        name: 'Negociação',
-      }),
-      this.funnelStagesRepository.create({
-        funnel_id: response.id,
-        funnel_order: 5,
-        name: 'Contrato Enviado',
-      }),
-    ]);
-
+    await this.funnelStagesRepository.create({
+      funnel_id: response.id,
+      funnel_order: 5,
+      name: 'Contrato Enviado',
+    });
     return companyMasterUser;
   }
 }
