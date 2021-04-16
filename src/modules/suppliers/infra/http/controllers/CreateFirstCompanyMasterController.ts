@@ -6,7 +6,14 @@ import CreateFirstCompanyMasterService from '@modules/suppliers/services/CreateF
 
 export default class CreateFirstCompanyMasterController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { companyEmail, user_id, email, password } = req.body;
+    const {
+      companyEmail,
+      user_id,
+      email,
+      name,
+      family_name,
+      password,
+    } = req.body;
 
     const createCompanyMaster = container.resolve(
       CreateFirstCompanyMasterService,
@@ -17,6 +24,8 @@ export default class CreateFirstCompanyMasterController {
       companyEmail,
       email,
       password,
+      name,
+      family_name,
     });
 
     return res.json(classToClass(user));
