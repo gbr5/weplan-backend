@@ -9,6 +9,7 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
 import IUserManagementModulesRepository from '@modules/users/repositories/IUserManagementModulesRepository';
+import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
 import ICompanyEmployeesRepository from '../repositories/ICompanyEmployeesRepository';
 import IFunnelsRepository from '../repositories/IFunnelsRepository';
 import IFunnelStagesRepository from '../repositories/IFunnelStagesRepository';
@@ -34,7 +35,7 @@ class CreateFirstCompanyMasterService {
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
 
-    @inject('CompanyEmployeeContactsRepository')
+    @inject('CompanyEmployeeContactRepository')
     private companyEmployeeContactsRepository: ICompanyEmployeeContactsRepository,
 
     @inject('CompanyContactsRepository')
@@ -45,6 +46,9 @@ class CreateFirstCompanyMasterService {
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('PersonInfoRepository')
+    private personInfoRepository: IPersonInfoRepository,
 
     @inject('FunnelsRepository')
     private funnelsRepository: IFunnelsRepository,
@@ -84,7 +88,7 @@ class CreateFirstCompanyMasterService {
     }
     if (user.isCompany) {
       throw new AppError(
-        'It is not possible to add a company as an user Master',
+        'It is not possible to add a company as a master user',
       );
     }
     const companyMasterUserExists = await this.companyMasterUsersRepository.findByUserIdAndCompanyId(
@@ -101,6 +105,30 @@ class CreateFirstCompanyMasterService {
     );
     if (emailRegistered) {
       throw new AppError(`${email} is already registered to ${company.name}.`);
+    }
+    if (!user.personInfo) {
+      const first_name = name;
+      const last_name = family_name;
+      const findByNameAndFamilyName = await this.personInfoRepository.findByFirstAndLastName(
+        first_name,
+        last_name,
+      );
+
+      if (findByNameAndFamilyName) {
+        await this.personInfoRepository.create({
+          first_name: name,
+          last_name: `${family_name} ${company.name}`,
+          person_id: user_id,
+          user_id,
+        });
+      } else {
+        await this.personInfoRepository.create({
+          first_name: name,
+          last_name: family_name,
+          person_id: user_id,
+          user_id,
+        });
+      }
     }
     const hashedPassword = await this.hashProvider.generateHash(password);
     const companyMasterUser = await this.companyMasterUsersRepository.create({
