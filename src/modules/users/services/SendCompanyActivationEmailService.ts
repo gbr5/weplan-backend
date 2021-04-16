@@ -48,7 +48,7 @@ class SendCompanyActivationEmailService {
         file: accountActivationTemplate,
         variables: {
           name: user.name,
-          link: `http://www.weplan.pro/wellcome?token=${token}&email=${email}`,
+          link: `http://www.weplan.pro/welcome?token=${token}&email=${email}`,
         },
       },
     });
