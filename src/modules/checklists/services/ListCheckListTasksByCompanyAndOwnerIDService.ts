@@ -32,7 +32,9 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
 
     const owner_tasks: CheckListTask[] = [];
     companyCheckLists.map(checkList => {
-      const tasks = checkList.tasks.filter(task => task.owner_id === owner_id);
+      const tasks = checkList.tasks
+        .filter(task => task.isActive)
+        .filter(task => task.owner_id === owner_id);
       tasks.map(xtask => {
         owner_tasks.push(xtask);
         return xtask;
