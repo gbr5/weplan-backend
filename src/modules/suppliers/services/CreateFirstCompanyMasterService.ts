@@ -184,6 +184,9 @@ class CreateFirstCompanyMasterService {
         info: companyEmployee.email,
         info_type: 'Email',
       }),
+    ]);
+
+    Promise.all([
       this.funnelStagesRepository.create({
         funnel_id: response.id,
         funnel_order: 1,
