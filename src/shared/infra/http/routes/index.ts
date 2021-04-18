@@ -130,6 +130,7 @@ import findCompanyInfoByNameRouter from '@modules/users/infra/http/routes/findCo
 import sendCompanyActivationEmailRouter from '@modules/users/infra/http/routes/sendCompanyActivationEmail.routes';
 import createFirstCompanyMasterRouter from '@modules/suppliers/infra/http/routes/createFirstCompanyMaster.routes';
 import companyEmployeeContactRouter from '@modules/suppliers/infra/http/routes/companyEmployeeContact.routes';
+import checkListTaskNotesRouter from '@modules/notes/infra/http/routes/checkListTaskNotes.routes';
 
 const routes = Router();
 
@@ -292,6 +293,7 @@ routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 
 routes.use('/finances', financesRouter);
 routes.use('/check-lists', checkListRouter);
+routes.use('/check-list-task-notes', checkListTaskNotesRouter);
 routes.use('/card/check-lists', cardCheckListRouter);
 
 // Main Transactions

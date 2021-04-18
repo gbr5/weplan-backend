@@ -5,6 +5,7 @@ import { classToClass } from 'class-transformer';
 import CreateCheckListTaskService from '@modules/checklists/services/CreateCheckListTaskService';
 import UpdateCheckListTasksService from '@modules/checklists/services/UpdateCheckListTaskService';
 import ListCheckListTasksService from '@modules/checklists/services/ListCheckListTasksService';
+import ShowCheckListTaskService from '@modules/checklists/services/ShowCheckListTaskService';
 import UpdateCheckListTaskStatusService from '@modules/checklists/services/UpdateCheckListTaskStatusService';
 import UpdateCheckListTaskIsActiveService from '@modules/checklists/services/UpdateCheckListTaskIsActiveService';
 import UpdateCheckListTaskPriorityService from '@modules/checklists/services/UpdateCheckListTaskPriorityService';
@@ -46,6 +47,17 @@ export default class CheckListTasksController {
     const listCheckListTasks = container.resolve(ListCheckListTasksService);
 
     const checkListTask = await listCheckListTasks.execute(check_list_id);
+
+    return res.json(classToClass(checkListTask));
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const showCheckListTasks = container.resolve(ShowCheckListTaskService);
+
+    const checkListTask = await showCheckListTasks.execute(id);
 
     return res.json(classToClass(checkListTask));
   }
