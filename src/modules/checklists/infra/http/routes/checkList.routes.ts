@@ -67,6 +67,11 @@ checkListRouter.get(
   checkListTaskController.index,
 );
 checkListRouter.get(
+  '/tasks/show/:id',
+  ensureAuthenticated,
+  checkListTaskController.show,
+);
+checkListRouter.get(
   '/tasks/:company_id/:owner_id',
   ensureAuthenticated,
   companyUserEmployeeTasksController.index,

@@ -49,6 +49,7 @@ import Guest from '@modules/events/infra/typeorm/entities/Guest';
 import EventDateVote from '@modules/events/infra/typeorm/entities/EventDateVote';
 import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
 import UserGoogleProfile from '@modules/googleProfiles/infra/typeorm/entities/UserGoogleProfile';
+import Note from '@modules/notes/infra/typeorm/entities/Note';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -248,6 +249,9 @@ class User {
 
   @OneToMany(() => CardNote, note => note.note_author)
   notes: CardNote[];
+
+  @OneToMany(() => Note, note => note.note)
+  authorNotes: Note[];
 
   @OneToMany(() => CardParticipant, card => card.participant)
   card_participants: CardParticipant[];

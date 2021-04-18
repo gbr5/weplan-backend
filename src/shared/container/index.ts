@@ -357,6 +357,22 @@ import UserGoogleProfilesRepository from '@modules/googleProfiles/infra/typeorm/
 import ICompanyEmployeeContactRepository from '@modules/suppliers/repositories/ICompanyEmployeeContactRepository';
 import CompanyEmployeeContactRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyEmployeeContactRepository';
 
+import ICheckListTaskNotesRepository from '@modules/notes/repositories/ICheckListTaskNotesRepository';
+import CheckListTaskNotesRepository from '@modules/notes/infra/typeorm/repositories/CheckListTaskNotesRepository';
+
+import INotesRepository from '@modules/notes/repositories/INotesRepository';
+import NotesRepository from '@modules/notes/infra/typeorm/repositories/NotesRepository';
+
+container.registerSingleton<INotesRepository>(
+  'NotesRepository',
+  NotesRepository,
+);
+
+container.registerSingleton<ICheckListTaskNotesRepository>(
+  'CheckListTaskNotesRepository',
+  CheckListTaskNotesRepository,
+);
+
 container.registerSingleton<ICompanyEmployeeContactRepository>(
   'CompanyEmployeeContactRepository',
   CompanyEmployeeContactRepository,

@@ -26,7 +26,7 @@ class UserEventTaskNote {
   @Column('uuid')
   task_id: string;
 
-  @ManyToOne(() => CheckListTask, task => task.taskNotes)
+  @ManyToOne(() => CheckListTask, task => task)
   @JoinColumn({ name: 'task_id' })
   taskNote: CheckListTask;
 
