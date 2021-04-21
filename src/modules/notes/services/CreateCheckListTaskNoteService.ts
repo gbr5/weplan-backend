@@ -19,10 +19,6 @@ class CreateCheckListTaskNoteService {
     note,
     task_id,
   }: ICreateCheckListTaskNoteDTO): Promise<CheckListTaskNote> {
-    console.log({
-      note,
-      task_id,
-    });
     const newNote: Note = await this.notesRepository.create(note);
     const checkList = await this.checkListTaskNotesRepository.create({
       task_id,

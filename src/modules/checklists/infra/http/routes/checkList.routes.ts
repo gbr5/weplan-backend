@@ -94,11 +94,6 @@ checkListRouter.put(
 checkListRouter.put(
   '/tasks/edit/is-active/:id',
   ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      isActive: Joi.boolean().required(),
-    },
-  }),
   checkListTaskController.updateIsActive,
 );
 checkListRouter.put(
