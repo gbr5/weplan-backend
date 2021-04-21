@@ -32,6 +32,7 @@ import weplanProductsRouter from '@modules/weplan/infra/http/routes/weplanProduc
 import weplanContractOrdersRouter from '@modules/weplan/infra/http/routes/weplanContractOrders.routes';
 import financesRouter from '@modules/finances/infra/http/routes/finances.routes';
 import checkListRouter from '@modules/checklists/infra/http/routes/checkList.routes';
+import checkListCardsRouter from '@modules/checklists/infra/http/routes/checkListCards.routes';
 import cardCheckListRouter from '@modules/checklists/infra/http/routes/cardCheckList.routes';
 import cardParticipantsRouter from '@modules/suppliers/infra/http/routes/cardParticipants.routes';
 import companyContactWeplanUsersRouter from '@modules/suppliers/infra/http/routes/companyContactWeplanUsers.routes';
@@ -293,6 +294,7 @@ routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 
 routes.use('/finances', financesRouter);
 routes.use('/check-lists', checkListRouter);
+routes.use('/check-list-cards', checkListCardsRouter);
 routes.use('/check-list-task-notes', checkListTaskNotesRouter);
 routes.use('/card/check-lists', cardCheckListRouter);
 

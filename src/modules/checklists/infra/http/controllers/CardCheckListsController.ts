@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateCardCheckListService from '@modules/checklists/services/CreateCardCheckListService';
 import ListCardCheckListsService from '@modules/checklists/services/ListCardCheckListsService';
+import ListCheckListCardsService from '@modules/checklists/services/ListCheckListCardsService';
 import DeleteCardCheckListService from '@modules/checklists/services/DeleteCardCheckListService';
 
 export default class CardCheckListsController {
@@ -28,6 +29,17 @@ export default class CardCheckListsController {
     const listCardCheckLists = container.resolve(ListCardCheckListsService);
 
     const checkListTask = await listCardCheckLists.execute(card_id);
+
+    return res.json(classToClass(checkListTask));
+  }
+
+  public async listCards(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { check_list_id } = reqParams;
+
+    const istCheckListCards = container.resolve(ListCheckListCardsService);
+
+    const checkListTask = await istCheckListCards.execute(check_list_id);
 
     return res.json(classToClass(checkListTask));
   }
