@@ -30,6 +30,7 @@ checkListRouter.get(
   ensureAuthenticated,
   checkListController.index,
 );
+checkListRouter.get('/show/:id', ensureAuthenticated, checkListController.show);
 checkListRouter.put(
   '/edit/:id',
   ensureAuthenticated,
