@@ -7,7 +7,6 @@ import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListT
 
 interface ICheckListTaskDTO {
   id: string;
-  isActive: boolean;
 }
 
 @injectable()
@@ -17,16 +16,13 @@ class UpdateCheckListTaskIsActiveService {
     private checkListTasksRepository: ICheckListTasksRepository,
   ) {}
 
-  public async execute({
-    id,
-    isActive,
-  }: ICheckListTaskDTO): Promise<CheckListTask> {
+  public async execute({ id }: ICheckListTaskDTO): Promise<CheckListTask> {
     const checkListTask = await this.checkListTasksRepository.findById(id);
 
     if (!checkListTask) {
       throw new AppError('CheckListTask not found.');
     }
-    checkListTask.isActive = isActive;
+    checkListTask.isActive = !checkListTask.isActive;
 
     const updatedCheckListTask = await this.checkListTasksRepository.save(
       checkListTask,

@@ -87,13 +87,11 @@ export default class CheckListTasksController {
     const reqParams = req.params;
     const { id } = reqParams;
 
-    const { isActive } = req.body;
-
     const updateCheckListTasks = container.resolve(
       UpdateCheckListTaskIsActiveService,
     );
 
-    const checkListTask = await updateCheckListTasks.execute({ id, isActive });
+    const checkListTask = await updateCheckListTasks.execute({ id });
 
     return res.json(classToClass(checkListTask));
   }
