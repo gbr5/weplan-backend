@@ -39,6 +39,7 @@ import companyContactWeplanUsersRouter from '@modules/suppliers/infra/http/route
 import cardCustomersRouter from '@modules/suppliers/infra/http/routes/cardCustomers.routes';
 import cardCustomerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/cardCustomerServiceOrders.routes';
 import cardBudgetsRouter from '@modules/suppliers/infra/http/routes/cardBudgets.routes';
+import comercialCardResultsRouter from '@modules/suppliers/infra/http/routes/comercialCardResults.routes';
 import customerServiceOrdersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrders.routes';
 import companyDefaultServiceOrderFieldsRouter from '@modules/suppliers/infra/http/routes/companyDefaultServiceOrderFields.routes';
 import customerServiceOrderFieldAnswersRouter from '@modules/suppliers/infra/http/routes/customerServiceOrderFieldAnswers.routes';
@@ -132,6 +133,7 @@ import sendCompanyActivationEmailRouter from '@modules/users/infra/http/routes/s
 import createFirstCompanyMasterRouter from '@modules/suppliers/infra/http/routes/createFirstCompanyMaster.routes';
 import companyEmployeeContactRouter from '@modules/suppliers/infra/http/routes/companyEmployeeContact.routes';
 import checkListTaskNotesRouter from '@modules/notes/infra/http/routes/checkListTaskNotes.routes';
+import listInactiveComercialCardsRouter from '@modules/suppliers/infra/http/routes/listInactiveComercialCards.routes';
 
 const routes = Router();
 
@@ -266,11 +268,13 @@ routes.use('/wp-management-modules', weplanManagementModulesRouter);
 routes.use('/funnel-types', funnelTypesRouter);
 routes.use('/funnels', supplierFunnelsRouter);
 routes.use('/cards', cardsRouter);
+routes.use('/inactive-cards', listInactiveComercialCardsRouter);
 routes.use('/card/participants', cardParticipantsRouter);
 routes.use('/card/outside-participants', cardOutsideParticipantsRouter);
 routes.use('/card/customers', cardCustomersRouter);
 routes.use('/card/customer-service-orders', cardCustomerServiceOrdersRouter);
 routes.use('/card/budgets', cardBudgetsRouter);
+routes.use('/comercial-card-results', comercialCardResultsRouter);
 routes.use('/company/contacts/', companyContactsRouter);
 routes.use('/company/contacts/notes', companyContactNotesRouter);
 routes.use('/company/contact/wp-user/', companyContactWeplanUsersRouter);
