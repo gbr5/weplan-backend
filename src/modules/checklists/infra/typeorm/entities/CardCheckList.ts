@@ -8,20 +8,12 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import StageCard from '@modules/suppliers/infra/typeorm/entities/StageCard';
 import CheckList from '@modules/checklists/infra/typeorm/entities/CheckList';
 
 @Entity('card_check_lists')
 class CardCheckList {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column('uuid')
-  card_id: string;
-
-  @ManyToOne(() => StageCard, card => card.id)
-  @JoinColumn({ name: 'card_id' })
-  card: StageCard;
 
   @Column('uuid')
   check_list_id: string;

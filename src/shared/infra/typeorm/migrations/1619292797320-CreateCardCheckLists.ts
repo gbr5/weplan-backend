@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateCardCheckLists1604437692563
+export default class CreateCardCheckLists1619292797320
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -13,10 +13,6 @@ export default class CreateCardCheckLists1604437692563
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'card_id',
-            type: 'uuid',
           },
           {
             name: 'check_list_id',
@@ -42,14 +38,6 @@ export default class CreateCardCheckLists1604437692563
             name: 'CheckListCard',
             columnNames: ['check_list_id'],
             referencedTableName: 'check_lists',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'CardCheckList',
-            columnNames: ['card_id'],
-            referencedTableName: 'stage_cards',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',

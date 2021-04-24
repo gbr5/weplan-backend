@@ -11,7 +11,6 @@ cardCheckListRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
-      card_id: Joi.string().required(),
       check_list_id: Joi.string().required(),
       card_unique_name: Joi.string().required(),
     },
@@ -19,7 +18,7 @@ cardCheckListRouter.post(
   cardCheckListController.create,
 );
 cardCheckListRouter.get(
-  '/:card_id',
+  '/:card_unique_name',
   ensureAuthenticated,
   cardCheckListController.index,
 );
