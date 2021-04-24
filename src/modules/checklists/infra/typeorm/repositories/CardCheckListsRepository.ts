@@ -26,6 +26,16 @@ class CardCheckListsRepository implements ICardCheckListsRepository {
     return checkListTasks;
   }
 
+  public async findByCardUniqueName(
+    card_unique_name: string,
+  ): Promise<CardCheckList[]> {
+    const checkListTasks = await this.ormRepository.find({
+      where: { card_unique_name },
+    });
+
+    return checkListTasks;
+  }
+
   public async findByCheckListId(
     check_list_id: string,
   ): Promise<CardCheckList[]> {

@@ -9,12 +9,11 @@ import DeleteCardCheckListService from '@modules/checklists/services/DeleteCardC
 
 export default class CardCheckListsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { card_unique_name, check_list_id, card_id } = req.body;
+    const { card_unique_name, check_list_id } = req.body;
 
     const createCardCheckLists = container.resolve(CreateCardCheckListService);
 
     const checkListTask = await createCardCheckLists.execute({
-      card_id,
       check_list_id,
       card_unique_name,
     });
@@ -24,11 +23,11 @@ export default class CardCheckListsController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
-    const { card_id } = reqParams;
+    const { card_unique_name } = reqParams;
 
     const listCardCheckLists = container.resolve(ListCardCheckListsService);
 
-    const checkListTask = await listCardCheckLists.execute(card_id);
+    const checkListTask = await listCardCheckLists.execute(card_unique_name);
 
     return res.json(classToClass(checkListTask));
   }

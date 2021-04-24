@@ -11,9 +11,9 @@ class ListCardCheckListsService {
     private cardCheckListRepository: ICardCheckListsRepository,
   ) {}
 
-  public async execute(card_id: string): Promise<CardCheckList[]> {
-    const cardCheckList = await this.cardCheckListRepository.findByCardId(
-      card_id,
+  public async execute(card_unique_name: string): Promise<CardCheckList[]> {
+    const cardCheckList = await this.cardCheckListRepository.findByCardUniqueName(
+      card_unique_name,
     );
 
     return cardCheckList;
