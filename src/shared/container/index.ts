@@ -363,6 +363,14 @@ import CheckListTaskNotesRepository from '@modules/notes/infra/typeorm/repositor
 import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import NotesRepository from '@modules/notes/infra/typeorm/repositories/NotesRepository';
 
+import IComercialCardResultsRepository from '@modules/suppliers/repositories/IComercialCardResultsRepository';
+import ComercialCardResultsRepository from '@modules/suppliers/infra/typeorm/repositories/ComercialCardResultsRepository';
+
+container.registerSingleton<IComercialCardResultsRepository>(
+  'ComercialCardResultsRepository',
+  ComercialCardResultsRepository,
+);
+
 container.registerSingleton<INotesRepository>(
   'NotesRepository',
   NotesRepository,

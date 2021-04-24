@@ -30,7 +30,18 @@ class StageCardsRepository implements IStageCardsRepository {
 
   public async findByStageId(stage_id: string): Promise<StageCard[]> {
     const stageCards = await this.ormRepository.find({
-      where: { stage_id },
+      where: { stage_id, isActive: true },
+      order: {
+        updated_at: 'ASC',
+      },
+    });
+
+    return stageCards;
+  }
+
+  public async findNotActiveByStageId(stage_id: string): Promise<StageCard[]> {
+    const stageCards = await this.ormRepository.find({
+      where: { stage_id, isActive: false },
       order: {
         updated_at: 'ASC',
       },
