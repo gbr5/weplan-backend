@@ -2,12 +2,14 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import ICardCheckListsRepository from '@modules/checklists/repositories/ICardCheckListsRepository';
-import ICheckListsRepository from '@modules/checklists/repositories/ICheckListsRepository';
 import ICheckListTasksRepository from '@modules/checklists/repositories/ICheckListTasksRepository';
+import ICheckListTaskNotesRepository from '@modules/notes/repositories/ICheckListTaskNotesRepository';
+import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import IComercialCardResultsRepository from '../repositories/IComercialCardResultsRepository';
 import IStageCardsRepository from '../repositories/IStageCardsRepository';
 import ICreateComercialCardResultsDTO from '../dtos/ICreateComercialCardResultsDTO';
 import ComercialCardResult from '../infra/typeorm/entities/ComercialCardResult';
+import ICardNotesRepository from '../repositories/ICardNotesRepository';
 
 @injectable()
 class CreateComercialCardResultsService {
@@ -18,11 +20,17 @@ class CreateComercialCardResultsService {
     @inject('StageCardsRepository')
     private stageCardsRepository: IStageCardsRepository,
 
+    @inject('CardNotesRepository')
+    private cardNotesRepository: ICardNotesRepository,
+
     @inject('CardCheckListsRepository')
     private cardCheckListsRepository: ICardCheckListsRepository,
 
-    @inject('CheckListsRepository')
-    private checkListsRepository: ICheckListsRepository,
+    @inject('CheckListTaskNotesRepository')
+    private checkListTaskNotesRepository: ICheckListTaskNotesRepository,
+
+    @inject('NotesRepository')
+    private notesRepository: INotesRepository,
 
     @inject('CheckListTasksRepository')
     private checkListTasksRepository: ICheckListTasksRepository,
@@ -44,9 +52,21 @@ class CreateComercialCardResultsService {
       throw new AppError('Card already have results, try to edit it.');
 
     if (!isSuccessful) {
+      await this.cardNotesRepository.create({
+        card_unique_name: cardExists.unique_name,
+        note: `Negócio Encerrado|||\n.\nNegócio ${cardExists.name} perdido\n.\nNota:\n${note}\n. . . . .\n`,
+        user_id: cardExists.card_owner,
+      });
       const cardCheckList = await this.cardCheckListsRepository.findByCardUniqueName(
         cardExists.unique_name,
       );
+
+      const newNote = await this.notesRepository.create({
+        author_id: cardCheckList[0].check_list.user_id,
+        isNew: true,
+        note:
+          'Tarefa Encerrada|||\n.\nA tarefa foi encerrada pois o negócio associado a ela foi encerrado!\n. . . . .\n',
+      });
       if (
         cardCheckList.length > 0 &&
         cardCheckList[0].check_list &&
@@ -66,10 +86,20 @@ class CreateComercialCardResultsService {
               isActive: false,
             });
           }),
+          tasks.map(task => {
+            return this.checkListTaskNotesRepository.create({
+              task_id: task.id,
+              note_id: newNote.id,
+            });
+          }),
         ]);
       }
     }
-
+    await this.cardNotesRepository.create({
+      card_unique_name: cardExists.unique_name,
+      note: `Negócio Encerrado|||\n.\nNegócio ${cardExists.name} fechado!\n.\nParabéns!\n.\nValor do contrato: R$ ${contract_value}\n.\nNota:\n${note}\n. . . . .\n`,
+      user_id: cardExists.card_owner,
+    });
     cardExists.isActive = false;
     await this.stageCardsRepository.save(cardExists);
 

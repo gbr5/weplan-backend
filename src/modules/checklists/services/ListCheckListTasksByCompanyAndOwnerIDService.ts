@@ -3,6 +3,8 @@ import { injectable, inject } from 'tsyringe';
 
 import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListTask';
 import { differenceInDays } from 'date-fns';
+import ICheckListTaskNotesRepository from '@modules/notes/repositories/ICheckListTaskNotesRepository';
+import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import ICheckListsRepository from '../repositories/ICheckListsRepository';
 import ICheckListTasksRepository from '../repositories/ICheckListTasksRepository';
 
@@ -22,6 +24,12 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
 
     @inject('CheckListTasksRepository')
     private checkListTasksRepository: ICheckListTasksRepository,
+
+    @inject('CheckListTaskNotesRepository')
+    private checkListTaskNotesRepository: ICheckListTaskNotesRepository,
+
+    @inject('NotesRepository')
+    private notesRepository: INotesRepository,
   ) {}
 
   public async execute({
@@ -48,6 +56,12 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
     });
     const now = new Date();
 
+    const newNote = await this.notesRepository.create({
+      author_id: company_id,
+      isNew: true,
+      note: 'Tarefa Concluída|||\n.\nTarefa encerrada!\n. . . . .\n',
+    });
+
     owner_tasks
       .filter(task => task.isActive)
       .map(task => {
@@ -57,12 +71,17 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
           taskDueDate !== undefined &&
           differenceInDays(now, taskDueDate) > 0
         ) {
-          return this.checkListTasksRepository.save({
-            ...task,
-            isActive: false,
-          });
+          return Promise.all([
+            this.checkListTasksRepository.save({
+              ...task,
+              isActive: false,
+            }),
+            this.checkListTaskNotesRepository.create({
+              note_id: newNote.id,
+              task_id: task.id,
+            }),
+          ]);
         }
-        // if (task.status === '3' && )
         return '';
       });
 
