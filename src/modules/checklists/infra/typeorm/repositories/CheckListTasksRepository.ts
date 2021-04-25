@@ -18,6 +18,12 @@ class CheckListTasksRepository implements ICheckListTasksRepository {
     return findCheckListTask;
   }
 
+  public async findAllById(ids: string[]): Promise<CheckListTask[]> {
+    const findCheckListTask = await this.ormRepository.findByIds(ids);
+
+    return findCheckListTask;
+  }
+
   public async findByOwnerId(owner_id: string): Promise<CheckListTask[]> {
     const checkListTasks = await this.ormRepository.find({
       where: { owner_id },
