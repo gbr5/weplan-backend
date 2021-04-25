@@ -95,11 +95,13 @@ class CreateComercialCardResultsService {
         ]);
       }
     }
-    await this.cardNotesRepository.create({
-      card_unique_name: cardExists.unique_name,
-      note: `Negócio Encerrado|||\n.\nNegócio ${cardExists.name} fechado!\n.\nParabéns!\n.\nValor do contrato: R$ ${contract_value}\n.\nNota:\n${note}\n. . . . .\n`,
-      user_id: cardExists.card_owner,
-    });
+    if (isSuccessful)
+      await this.cardNotesRepository.create({
+        card_unique_name: cardExists.unique_name,
+        note: `Negócio Encerrado|||\n.\nNegócio ${cardExists.name} fechado!\n.\nParabéns!\n.\nValor do contrato: R$ ${contract_value}\n.\nNota:\n${note}\n. . . . .\n`,
+        user_id: cardExists.card_owner,
+      });
+
     cardExists.isActive = false;
     await this.stageCardsRepository.save(cardExists);
 
