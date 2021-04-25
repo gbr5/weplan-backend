@@ -5,6 +5,7 @@ import { classToClass } from 'class-transformer';
 import CreateStageCardService from '@modules/suppliers/services/CreateStageCardService';
 import UpdateStageCardService from '@modules/suppliers/services/UpdateStageCardService';
 import ListStageCardsService from '@modules/suppliers/services/ListStageCardsService';
+import ShowStageCardService from '@modules/suppliers/services/ShowStageCardService';
 import DeleteStageCardService from '@modules/suppliers/services/DeleteStageCardService';
 
 export default class StageCardController {
@@ -43,6 +44,16 @@ export default class StageCardController {
     const listStageCards = container.resolve(ListStageCardsService);
 
     const stageCard = await listStageCards.execute(stage_id);
+
+    return res.json(classToClass(stageCard));
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const dataParams = req.params;
+    const { id } = dataParams;
+    const showCard = container.resolve(ShowStageCardService);
+
+    const stageCard = await showCard.execute(id);
 
     return res.json(classToClass(stageCard));
   }

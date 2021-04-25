@@ -13,13 +13,13 @@ class ShowStageCardService {
   ) {}
 
   public async execute(id: string): Promise<StageCard> {
-    const event = await this.stageCardsRepository.findById(id);
+    const card = await this.stageCardsRepository.findById(id);
 
-    if (!event) {
+    if (!card) {
       throw new AppError('Card not found.');
     }
 
-    return event;
+    return card;
   }
 }
 
