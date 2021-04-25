@@ -2,7 +2,9 @@ import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
 import CheckListTask from '@modules/checklists/infra/typeorm/entities/CheckListTask';
+import { differenceInDays } from 'date-fns';
 import ICheckListsRepository from '../repositories/ICheckListsRepository';
+import ICheckListTasksRepository from '../repositories/ICheckListTasksRepository';
 
 interface IRequest {
   company_id: string;
@@ -17,6 +19,9 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
   constructor(
     @inject('CheckListsRepository')
     private checkListsRepository: ICheckListsRepository,
+
+    @inject('CheckListTasksRepository')
+    private checkListTasksRepository: ICheckListTasksRepository,
   ) {}
 
   public async execute({
@@ -41,6 +46,25 @@ class ListCheckListTasksByCompanyAndOwnerIDService {
       });
       return tasks;
     });
+    const now = new Date();
+
+    owner_tasks
+      .filter(task => task.isActive)
+      .map(task => {
+        const taskDueDate = new Date(task.due_date);
+        if (
+          task.status === '3' &&
+          taskDueDate !== undefined &&
+          differenceInDays(now, taskDueDate) > 0
+        ) {
+          return this.checkListTasksRepository.save({
+            ...task,
+            isActive: false,
+          });
+        }
+        // if (task.status === '3' && )
+        return '';
+      });
 
     if (day && month && year) {
       const sorted_owner_tasks = owner_tasks.filter(task => {

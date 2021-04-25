@@ -4,6 +4,7 @@ import ICreateCheckListTaskDTO from '@modules/checklists/dtos/ICreateCheckListTa
 export default interface ICheckListTasksRepository {
   create(data: ICreateCheckListTaskDTO): Promise<CheckListTask>;
   findById(id: string): Promise<CheckListTask | undefined>;
+  findAllById(ids: string[]): Promise<CheckListTask[]>;
   findByOwnerId(owner_id: string): Promise<CheckListTask[]>;
   findByCheckListId(check_list_id: string): Promise<CheckListTask[]>;
   save(checkListTask: CheckListTask): Promise<CheckListTask>;

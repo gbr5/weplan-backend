@@ -16,7 +16,7 @@ class ListCardCheckListsService {
       card_unique_name,
     );
 
-    return cardCheckList;
+    return cardCheckList.filter(card => card.check_list.isActive);
   }
 }
 
