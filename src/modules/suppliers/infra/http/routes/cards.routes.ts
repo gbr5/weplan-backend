@@ -2,13 +2,17 @@ import { Router } from 'express';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 import CardNotesController from '@modules/suppliers/infra/http/controllers/CardNotesController';
+import StageCardsController from '@modules/suppliers/infra/http/controllers/StageCardsController';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const cardsRouter = Router();
+const stageCardsController = new StageCardsController();
 const cardNotesController = new CardNotesController();
 
 cardsRouter.use(ensureAuthenticated);
+
+cardsRouter.get('/show/:id', stageCardsController.show);
 
 // === Card Notes === //
 
