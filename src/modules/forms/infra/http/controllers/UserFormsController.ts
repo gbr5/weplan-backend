@@ -11,13 +11,14 @@ import DeleteUserFormService from '@modules/forms/services/DeleteUserFormService
 export default class UserFormsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const user_id = req.user.id;
-    const { slug, name, title, message, isActive } = req.body;
+    const { slug, name, external_name, title, message, isActive } = req.body;
     const createUserForms = container.resolve(CreateUserFormService);
 
     const form = await createUserForms.execute({
       user_id,
       slug,
       name,
+      external_name,
       title,
       message,
       isActive,
@@ -30,7 +31,7 @@ export default class UserFormsController {
     const dataParams = req.params;
     const { id } = dataParams;
     const user_id = req.user.id;
-    const { slug, name, title, message, isActive } = req.body;
+    const { slug, external_name, name, title, message, isActive } = req.body;
     const updateUserForms = container.resolve(UpdateUserFormService);
 
     const form = await updateUserForms.execute({
@@ -38,6 +39,7 @@ export default class UserFormsController {
       user_id,
       slug,
       name,
+      external_name,
       title,
       message,
       isActive,
