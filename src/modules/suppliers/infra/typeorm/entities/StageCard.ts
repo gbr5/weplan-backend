@@ -31,6 +31,9 @@ class StageCard {
   @Column()
   unique_name: string;
 
+  @Column('numeric')
+  value: number;
+
   @Column('boolean')
   isActive: boolean;
 

@@ -10,7 +10,6 @@ import UpdateCardNoteService from '@modules/suppliers/services/UpdateCardNoteSer
 export default class CardNotesController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { user_id, card_unique_name, note } = req.body;
-
     const createCardNotes = container.resolve(CreateCardNoteService);
 
     const card = await createCardNotes.execute({

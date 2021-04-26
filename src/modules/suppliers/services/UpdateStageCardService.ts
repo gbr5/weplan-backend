@@ -18,6 +18,7 @@ class UpdateStageCardService {
     id: string,
     weplanEvent: boolean,
     name: string,
+    value: number,
     isActive: boolean,
     new_stage_id: string,
     new_card_owner: string,
@@ -38,6 +39,7 @@ class UpdateStageCardService {
       const updatedStageCard = await createStageCard.execute({
         weplanEvent,
         name,
+        value,
         unique_name: stageCard.unique_name,
         isActive,
         stage_id: new_stage_id,

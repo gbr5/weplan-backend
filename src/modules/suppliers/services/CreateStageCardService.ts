@@ -47,6 +47,7 @@ class CreateStageCardService {
   public async execute({
     weplanEvent,
     name,
+    value,
     unique_name,
     isActive,
     stage_id,
@@ -66,6 +67,7 @@ class CreateStageCardService {
     const stageCard = await this.stageCardsRepository.create({
       weplanEvent,
       name,
+      value,
       unique_name,
       isActive,
       stage_id,
@@ -87,7 +89,7 @@ class CreateStageCardService {
     ]);
 
     const firstCheckList = await this.checkListsRepository.create({
-      name: `Tarefas | ${funnel.name}`,
+      name: `${name} | ${funnel.name}`,
       color: 'transparent',
       due_date: `${new Date()}`,
       isActive: true,
@@ -95,7 +97,6 @@ class CreateStageCardService {
       user_id: funnel.supplier_id,
     });
     await this.cardCheckListsRepository.create({
-      card_id: stageCard.id,
       card_unique_name: stageCard.unique_name,
       check_list_id: firstCheckList.id,
     });

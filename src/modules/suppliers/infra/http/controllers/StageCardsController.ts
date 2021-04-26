@@ -29,6 +29,7 @@ export default class StageCardController {
     const stageCard = await createStageCard.execute({
       weplanEvent,
       name,
+      value: 0,
       unique_name,
       isActive,
       stage_id,
@@ -62,6 +63,7 @@ export default class StageCardController {
     const {
       weplanEvent,
       name,
+      value,
       isActive,
       new_stage_id,
       new_card_owner,
@@ -75,6 +77,7 @@ export default class StageCardController {
       id,
       weplanEvent,
       name,
+      value,
       isActive,
       new_stage_id,
       new_card_owner,
