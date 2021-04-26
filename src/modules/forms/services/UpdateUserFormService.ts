@@ -10,6 +10,7 @@ interface IRequest {
   user_id: string;
   slug: string;
   name: string;
+  external_name: string;
   title: string;
   message: string;
   isActive: boolean;
@@ -30,6 +31,7 @@ class UpdateUserFormService {
     user_id,
     slug,
     name,
+    external_name,
     title,
     message,
     isActive,
@@ -62,6 +64,7 @@ class UpdateUserFormService {
     }
 
     userForm.name = name;
+    userForm.external_name = external_name;
     userForm.title = title;
     userForm.message = message;
     userForm.isActive = isActive;

@@ -37,6 +37,9 @@ class UserForm {
   name: string;
 
   @Column()
+  external_name: string;
+
+  @Column()
   title: string;
 
   @Column()
