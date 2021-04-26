@@ -3,7 +3,6 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import FunnelsController from '@modules/suppliers/infra/http/controllers/FunnelsController';
 import FunnelStagesController from '@modules/suppliers/infra/http/controllers/FunnelStagesController';
-import StageCardsController from '@modules/suppliers/infra/http/controllers/StageCardsController';
 import EventCardsController from '@modules/suppliers/infra/http/controllers/EventCardsController';
 import CompanyFunnelCardInfoFieldsController from '@modules/suppliers/infra/http/controllers/CompanyFunnelCardInfoFieldsController';
 import CompanyFunnelCardInfosController from '@modules/suppliers/infra/http/controllers/CompanyFunnelCardInfosController';
@@ -13,7 +12,6 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 const supplierFunnelsRouter = Router();
 const funnelsController = new FunnelsController();
 const funnelStagesController = new FunnelStagesController();
-const stageCardsController = new StageCardsController();
 const eventCardsController = new EventCardsController();
 const companyFunnelCardInfoFieldsController = new CompanyFunnelCardInfoFieldsController();
 const companyFunnelCardInfosController = new CompanyFunnelCardInfosController();
@@ -77,40 +75,6 @@ supplierFunnelsRouter.delete(
 );
 
 // === Stage Cards === //
-
-supplierFunnelsRouter.post(
-  '/:stage_id/cards',
-  celebrate({
-    [Segments.BODY]: {
-      weplanEvent: Joi.boolean(),
-      name: Joi.string().required(),
-      card_owner: Joi.string().required(),
-    },
-  }),
-  stageCardsController.create,
-);
-
-supplierFunnelsRouter.get('/:stage_id/cards', stageCardsController.index);
-
-supplierFunnelsRouter.put(
-  '/:stage_id/cards/:id',
-  celebrate({
-    [Segments.BODY]: {
-      weplanEvent: Joi.boolean(),
-      name: Joi.string().required(),
-      isActive: Joi.boolean(),
-      new_stage_id: Joi.string(),
-      new_card_owner: Joi.string(),
-    },
-  }),
-  stageCardsController.update,
-);
-
-supplierFunnelsRouter.delete(
-  '/:stage_id/cards/:id',
-  stageCardsController.delete,
-);
-
 // === Event Cards === //
 
 supplierFunnelsRouter.post(

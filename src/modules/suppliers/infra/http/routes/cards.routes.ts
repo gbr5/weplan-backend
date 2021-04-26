@@ -14,17 +14,47 @@ cardsRouter.use(ensureAuthenticated);
 
 cardsRouter.get('/show/:id', stageCardsController.show);
 
+cardsRouter.post(
+  '/:stage_id',
+  celebrate({
+    [Segments.BODY]: {
+      weplanEvent: Joi.boolean(),
+      name: Joi.string().required(),
+      card_owner: Joi.string().required(),
+    },
+  }),
+  stageCardsController.create,
+);
+
+cardsRouter.get('/:stage_id', stageCardsController.index);
+
+cardsRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.BODY]: {
+      weplanEvent: Joi.boolean(),
+      name: Joi.string().required(),
+      isActive: Joi.boolean(),
+      new_stage_id: Joi.string(),
+      new_card_owner: Joi.string(),
+    },
+  }),
+  stageCardsController.update,
+);
+
+cardsRouter.delete('/:id', stageCardsController.delete);
+
 // === Card Notes === //
 
 cardsRouter.post(
-  '/notes',
-  celebrate({
-    [Segments.BODY]: {
-      user_id: Joi.string().required(),
-      card_unique_name: Joi.string().required(),
-      note: Joi.string().required(),
-    },
-  }),
+  '/create/notes',
+  // celebrate({
+  //   [Segments.BODY]: {
+  //     user_id: Joi.string().required(),
+  //     card_unique_name: Joi.string().required(),
+  //     note: Joi.string().required(),
+  //   },
+  // }),
   cardNotesController.create,
 );
 
