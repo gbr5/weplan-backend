@@ -49,6 +49,7 @@ class UpdateStageCardService {
     }
 
     stageCard.name = name;
+    stageCard.value = value;
     stageCard.weplanEvent = weplanEvent;
     stageCard.isActive = isActive;
 
