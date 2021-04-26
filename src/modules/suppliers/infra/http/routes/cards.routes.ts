@@ -28,19 +28,7 @@ cardsRouter.post(
 
 cardsRouter.get('/:stage_id', stageCardsController.index);
 
-cardsRouter.put(
-  '/:id',
-  celebrate({
-    [Segments.BODY]: {
-      weplanEvent: Joi.boolean(),
-      name: Joi.string().required(),
-      isActive: Joi.boolean(),
-      new_stage_id: Joi.string(),
-      new_card_owner: Joi.string(),
-    },
-  }),
-  stageCardsController.update,
-);
+cardsRouter.put('/:id', stageCardsController.update);
 
 cardsRouter.delete('/:id', stageCardsController.delete);
 
