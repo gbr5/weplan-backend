@@ -7,6 +7,7 @@ export default interface IStageCardsRepository {
   findByUniqueName(unique_name: string): Promise<StageCard | undefined>;
   findByStageId(stage_id: string): Promise<StageCard[]>;
   findNotActiveByStageId(stage_id: string): Promise<StageCard[]>;
+  findByCardOwner(card_owner: string): Promise<StageCard[]>;
   save(stageCard: StageCard): Promise<StageCard>;
   delete(stageCard: StageCard): Promise<void>;
 }

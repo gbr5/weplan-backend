@@ -7,11 +7,13 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import CheckListTask from './CheckListTask';
 import CardCheckList from './CardCheckList';
+import EmployeeCheckList from './EmployeeCheckList';
 
 @Entity('check_lists')
 class CheckList {
@@ -51,6 +53,9 @@ class CheckList {
 
   @OneToMany(() => CardCheckList, card => card.check_list_id)
   cards: CardCheckList[];
+
+  @OneToOne(() => EmployeeCheckList, employee => employee.check_list)
+  employee: EmployeeCheckList;
 }
 
 export default CheckList;

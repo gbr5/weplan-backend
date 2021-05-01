@@ -134,6 +134,8 @@ import createFirstCompanyMasterRouter from '@modules/suppliers/infra/http/routes
 import companyEmployeeContactRouter from '@modules/suppliers/infra/http/routes/companyEmployeeContact.routes';
 import checkListTaskNotesRouter from '@modules/notes/infra/http/routes/checkListTaskNotes.routes';
 import listInactiveComercialCardsRouter from '@modules/suppliers/infra/http/routes/listInactiveComercialCards.routes';
+import employeeCheckListRouter from '@modules/checklists/infra/http/routes/employeeCheckList.routes';
+import listOwnerCardsRouter from '@modules/suppliers/infra/http/routes/listOwnerCards.routes';
 
 const routes = Router();
 
@@ -297,7 +299,9 @@ routes.use('/projects/funnel', projectsFunnelDefaultInfoFieldsRouter);
 routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 
 routes.use('/finances', financesRouter);
+routes.use('/list-owner-cards', listOwnerCardsRouter);
 routes.use('/check-lists', checkListRouter);
+routes.use('/employee-check-list', employeeCheckListRouter);
 routes.use('/check-list-cards', checkListCardsRouter);
 routes.use('/check-list-task-notes', checkListTaskNotesRouter);
 routes.use('/card/check-lists', cardCheckListRouter);

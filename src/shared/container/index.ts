@@ -366,6 +366,14 @@ import NotesRepository from '@modules/notes/infra/typeorm/repositories/NotesRepo
 import IComercialCardResultsRepository from '@modules/suppliers/repositories/IComercialCardResultsRepository';
 import ComercialCardResultsRepository from '@modules/suppliers/infra/typeorm/repositories/ComercialCardResultsRepository';
 
+import IEmployeeCheckListRepository from '@modules/checklists/repositories/IEmployeeCheckListRepository';
+import EmployeeCheckListRepository from '@modules/checklists/infra/typeorm/repositories/EmployeeCheckListRepository';
+
+container.registerSingleton<IEmployeeCheckListRepository>(
+  'EmployeeCheckListRepository',
+  EmployeeCheckListRepository,
+);
+
 container.registerSingleton<IComercialCardResultsRepository>(
   'ComercialCardResultsRepository',
   ComercialCardResultsRepository,

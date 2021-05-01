@@ -14,6 +14,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import EmployeeFile from '@modules/users/infra/typeorm/entities/EmployeeFile';
 import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 import CompanyEmployeeContact from '@modules/suppliers/infra/typeorm/entities/CompanyEmployeeContact';
+import EmployeeCheckList from '@modules/checklists/infra/typeorm/entities/EmployeeCheckList';
 // import UserManagementModule from '@modules/users/infra/typeorm/entities/UserManagementModule';
 // import UserConfirmation from '@modules/users/infra/typeorm/entities/UserConfirmation';
 
@@ -84,6 +85,11 @@ class CompanyEmployee {
     },
   )
   confirmations: UserConfirmation[];
+
+  @OneToOne(() => EmployeeCheckList, checkList => checkList.employee, {
+    eager: true,
+  })
+  checkList: EmployeeCheckList;
 
   @OneToOne(
     () => CompanyEmployeeContact,

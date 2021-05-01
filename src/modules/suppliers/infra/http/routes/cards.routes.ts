@@ -38,7 +38,7 @@ cardsRouter.post(
   '/create/notes',
   // celebrate({
   //   [Segments.BODY]: {
-  //     user_id: Joi.string().required(),
+  //     user_id: Joi.string().requirupdateCarded(),
   //     card_unique_name: Joi.string().required(),
   //     note: Joi.string().required(),
   //   },
