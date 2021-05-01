@@ -39,6 +39,17 @@ class StageCardsRepository implements IStageCardsRepository {
     return stageCards;
   }
 
+  public async findByCardOwner(card_owner: string): Promise<StageCard[]> {
+    const stageCards = await this.ormRepository.find({
+      where: { card_owner, isActive: true },
+      order: {
+        updated_at: 'ASC',
+      },
+    });
+
+    return stageCards;
+  }
+
   public async findNotActiveByStageId(stage_id: string): Promise<StageCard[]> {
     const stageCards = await this.ormRepository.find({
       where: { stage_id, isActive: false },
