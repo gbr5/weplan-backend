@@ -7,6 +7,8 @@ import ICompanyEmployeesRepository from '@modules/suppliers/repositories/ICompan
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
 import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
+import IEmployeeCheckListRepository from '@modules/checklists/repositories/IEmployeeCheckListRepository';
+import ICheckListsRepository from '@modules/checklists/repositories/ICheckListsRepository';
 
 // interface IModulesDTO {
 //   management_module: string;
@@ -39,6 +41,12 @@ class CreateCompanyEmployeeService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
+
+    @inject('EmployeeCheckListRepository')
+    private employeeCheckListRepository: IEmployeeCheckListRepository,
+
+    @inject('CheckListsRepository')
+    private checkListsRepository: ICheckListsRepository,
   ) {}
 
   public async execute({
@@ -91,13 +99,27 @@ class CreateCompanyEmployeeService {
         employee_id: employee.id,
       });
 
-      await this.userConfirmationsRepository.create({
-        isConfirmed: false,
-        message,
-        receiver_id: companyEmployee.id,
-        sender_id,
-        title,
+      const checkList = await this.checkListsRepository.create({
+        color: 'transparent',
+        due_date: String(new Date()),
+        isActive: true,
+        name: `Tarefas do Colaborador ${companyEmployee.email}`,
+        priority: 'high',
+        user_id: company_id,
       });
+      Promise.all([
+        this.employeeCheckListRepository.create({
+          employee_id: companyEmployee.id,
+          check_list_id: checkList.id,
+        }),
+        this.userConfirmationsRepository.create({
+          isConfirmed: false,
+          message,
+          receiver_id: companyEmployee.id,
+          sender_id,
+          title,
+        }),
+      ]);
 
       return companyEmployee;
     } catch (err) {

@@ -4,9 +4,10 @@ import AppError from '@shared/errors/AppError';
 
 import CompanyMasterUser from '@modules/suppliers/infra/typeorm/entities/CompanyMasterUser';
 import ICompanyMasterUsersRepository from '@modules/suppliers/repositories/ICompanyMasterUsersRepository';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
+import IEmployeeCheckListRepository from '@modules/checklists/repositories/IEmployeeCheckListRepository';
+import ICheckListsRepository from '@modules/checklists/repositories/ICheckListsRepository';
 import IUserConfirmationRepository from '@modules/users/repositories/IUserConfirmationRepository';
 import IUserManagementModulesRepository from '@modules/users/repositories/IUserManagementModulesRepository';
 import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
@@ -62,8 +63,11 @@ class CreateFirstCompanyMasterService {
     @inject('UserConfirmationRepository')
     private userConfirmationsRepository: IUserConfirmationRepository,
 
-    @inject('CacheProvider')
-    private cacheProvider: ICacheProvider,
+    @inject('EmployeeCheckListRepository')
+    private employeeCheckListRepository: IEmployeeCheckListRepository,
+
+    @inject('CheckListsRepository')
+    private checkListsRepository: ICheckListsRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -185,6 +189,15 @@ class CreateFirstCompanyMasterService {
       isNew: true,
       weplanUser: false,
     });
+
+    const checkList = await this.checkListsRepository.create({
+      color: 'transparent',
+      due_date: String(new Date()),
+      isActive: true,
+      name: `Tarefas do Colaborador ${companyEmployee.email}`,
+      priority: 'high',
+      user_id: company.id,
+    });
     Promise.all([
       this.userConfirmationsRepository.create({
         isConfirmed: true,
@@ -206,6 +219,10 @@ class CreateFirstCompanyMasterService {
         company_contact_id: companyContact.id,
         info: companyEmployee.email,
         info_type: 'Email',
+      }),
+      this.employeeCheckListRepository.create({
+        employee_id: companyEmployee.id,
+        check_list_id: checkList.id,
       }),
     ]);
     await this.funnelStagesRepository.create({

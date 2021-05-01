@@ -13,11 +13,11 @@ class CreateEmployeeCheckListService {
     @inject('EmployeeCheckListRepository')
     private employeeCheckListRepository: IEmployeeCheckListRepository,
 
-    @inject('CompanyEmployeeContactRepository')
-    private companyEmployeeContactsRepository: ICompanyEmployeeContactsRepository,
-
     @inject('CheckListsRepository')
     private checkListsRepository: ICheckListsRepository,
+
+    @inject('CompanyEmployeeContactRepository')
+    private companyEmployeeContactsRepository: ICompanyEmployeeContactsRepository,
 
     @inject('CompanyEmployeesRepository')
     private companyEmployeesRepository: ICompanyEmployeesRepository,
