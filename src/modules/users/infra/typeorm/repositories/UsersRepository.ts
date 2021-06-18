@@ -5,6 +5,7 @@ import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllSuppliersDTO from 'modules/users/dtos/IFindAllSuppliersDTO';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import AppError from '@shared/errors/AppError';
 
 class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
@@ -79,6 +80,20 @@ class UsersRepository implements IUsersRepository {
 
   public async save(user: User): Promise<User> {
     return this.ormRepository.save(user);
+  }
+
+  public async activate(user: User): Promise<void> {
+    try {
+      const updatedUser = await this.ormRepository.findOne(user.id);
+      if (updatedUser) {
+        await this.ormRepository.save({
+          ...updatedUser,
+          isActive: true,
+        });
+      }
+    } catch {
+      throw new AppError(`Algo deu errado aqui`);
+    }
   }
 
   public async delete({ id }: User): Promise<void> {

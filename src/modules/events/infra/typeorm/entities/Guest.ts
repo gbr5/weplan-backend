@@ -15,6 +15,7 @@ import Event from './Event';
 import WeplanGuest from './WeplanGuest';
 import UserEventGuestNote from './UserEventGuestNote';
 import GuestContactInfo from './GuestContactInfo';
+import GuestContact from './GuestContact';
 
 @Entity('guests')
 class Guest {
@@ -66,6 +67,11 @@ class Guest {
     eager: true,
   })
   guestContactInfos: GuestContactInfo[];
+
+  @OneToMany(() => GuestContact, guest => guest.guestContact, {
+    eager: true,
+  })
+  guestContacts: GuestContact[];
 }
 
 export default Guest;

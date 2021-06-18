@@ -81,11 +81,19 @@ class CreateFirstCompanyMasterService {
     name,
     family_name,
   }: IRequest): Promise<CompanyMasterUser> {
+    // Tem algum erro nestas rotas abaixo, em desenvolvimento, acaba travando o backend
+    // Que é destravado quando o backend é renderizado
+
     const user = await this.usersRepository.findById(user_id);
     const company = await this.usersRepository.findByEmail(companyEmail);
 
     if (!user) {
       throw new AppError("User's user not found");
+    }
+    if (!user.isActive) {
+      user.isActive = true;
+
+      await this.usersRepository.save(user);
     }
     if (!company) {
       throw new AppError("User's user not found");

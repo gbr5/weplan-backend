@@ -369,6 +369,14 @@ import ComercialCardResultsRepository from '@modules/suppliers/infra/typeorm/rep
 import IEmployeeCheckListRepository from '@modules/checklists/repositories/IEmployeeCheckListRepository';
 import EmployeeCheckListRepository from '@modules/checklists/infra/typeorm/repositories/EmployeeCheckListRepository';
 
+import IGuestContactsRepository from '@modules/events/repositories/IGuestContactsRepository';
+import GuestContactsRepository from '@modules/events/infra/typeorm/repositories/GuestContactsRepository';
+
+container.registerSingleton<IGuestContactsRepository>(
+  'GuestContactsRepository',
+  GuestContactsRepository,
+);
+
 container.registerSingleton<IEmployeeCheckListRepository>(
   'EmployeeCheckListRepository',
   EmployeeCheckListRepository,

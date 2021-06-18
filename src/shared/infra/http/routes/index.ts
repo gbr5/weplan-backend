@@ -69,6 +69,7 @@ import eventOwnerPaymentRouter from '@modules/transactions/infra/http/routes/eve
 import eventMemberPaymentRouter from '@modules/transactions/infra/http/routes/eventMemberPayments.routes';
 import userTransactionRouter from '@modules/transactions/infra/http/routes/userTransactions.routes';
 import guestContactInfosRouter from '@modules/events/infra/http/routes/guestContactInfos.routes';
+import guestContactsRouter from '@modules/events/infra/http/routes/guestContacts.routes';
 import guestsRouter from '@modules/events/infra/http/routes/guests.routes';
 import userConfirmationFilesRouter from '@modules/events/infra/http/routes/userConfirmationFiles.routes';
 import wpGuestConfirmationsRouter from '@modules/users/infra/http/controllers/wpGuestConfirmationsRouter';
@@ -216,6 +217,7 @@ routes.use('/user-profile', userProfileRouter);
 routes.use('/company-info', companyInfoRouter);
 routes.use('/find-company-info-by-name', findCompanyInfoByNameRouter);
 routes.use('/guest-contact-info', guestContactInfosRouter);
+routes.use('/guest-contacts', guestContactsRouter);
 routes.use('/person-info', personInfoRouter);
 routes.use('/user-birthdate', userBirthdateRouter);
 routes.use('/contact-types', contactTypesRouter);

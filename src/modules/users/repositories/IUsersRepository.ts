@@ -10,6 +10,7 @@ export default interface IUsersRepository {
   findByTrimmedName(trimmed_name: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
   create(data: ICreateUserDTO): Promise<User>;
+  activate(user: User): Promise<void>;
   save(user: User): Promise<User>;
   delete(user: User): Promise<void>;
 }
