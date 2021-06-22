@@ -68,10 +68,10 @@ class Guest {
   })
   guestContactInfos: GuestContactInfo[];
 
-  @OneToMany(() => GuestContact, guest => guest.guestContact, {
+  @OneToMany(() => GuestContact, contact => contact.guest, {
     eager: true,
   })
-  guestContacts: GuestContact[];
+  contacts: GuestContact[];
 }
 
 export default Guest;

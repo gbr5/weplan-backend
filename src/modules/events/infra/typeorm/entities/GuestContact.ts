@@ -17,9 +17,9 @@ class GuestContactInfo {
   @Column('uuid')
   guest_id: string;
 
-  @ManyToOne(() => Guest, guest => guest.guestContacts)
+  @ManyToOne(() => Guest, guest => guest.contacts)
   @JoinColumn({ name: 'guest_id' })
-  guestContact: Guest;
+  guest: Guest;
 
   @Column()
   contact_info: string;
