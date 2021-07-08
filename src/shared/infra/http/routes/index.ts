@@ -137,6 +137,7 @@ import checkListTaskNotesRouter from '@modules/notes/infra/http/routes/checkList
 import listInactiveComercialCardsRouter from '@modules/suppliers/infra/http/routes/listInactiveComercialCards.routes';
 import employeeCheckListRouter from '@modules/checklists/infra/http/routes/employeeCheckList.routes';
 import listOwnerCardsRouter from '@modules/suppliers/infra/http/routes/listOwnerCards.routes';
+import eventTasksRouter from '@modules/events/infra/http/routes/eventTasks.routes';
 
 const routes = Router();
 
@@ -202,14 +203,20 @@ routes.use('/company/activation', sendCompanyActivationEmailRouter);
 routes.use('/user/suspend', suspendAccountRouter);
 routes.use('/user/delete', deleteUserRouter);
 routes.use('/user/terminate', terminateUserRouter);
+
 routes.use('/event-guests', guestsRouter);
 routes.use('/event/dates', eventDatesRouter);
+routes.use('/event-tasks', eventTasksRouter);
 routes.use('/event/dates/voting', eventDatesVotingRouter);
 routes.use('/event/date/voting-type', eventDateVotingTypeRouter);
 routes.use('/event/date/vote', eventDateVotesRouter);
+
 routes.use('/user/confirmations', userConfirmationsRouter);
+
 routes.use('/wp-guest/confirmations', wpGuestConfirmationsRouter);
+
 routes.use('/user/confirmation-files', userConfirmationFilesRouter);
+
 routes.use('/sessions', sessionsRouter);
 routes.use('/password', passwordRouter);
 routes.use('/profile', profileRouter);

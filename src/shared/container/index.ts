@@ -372,6 +372,14 @@ import EmployeeCheckListRepository from '@modules/checklists/infra/typeorm/repos
 import IGuestContactsRepository from '@modules/events/repositories/IGuestContactsRepository';
 import GuestContactsRepository from '@modules/events/infra/typeorm/repositories/GuestContactsRepository';
 
+import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepository';
+import EventTasksRepository from '@modules/events/infra/typeorm/repositories/EventTasksRepository';
+
+container.registerSingleton<IEventTasksRepository>(
+  'EventTasksRepository',
+  EventTasksRepository,
+);
+
 container.registerSingleton<IGuestContactsRepository>(
   'GuestContactsRepository',
   GuestContactsRepository,

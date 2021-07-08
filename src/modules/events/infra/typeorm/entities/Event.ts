@@ -30,6 +30,7 @@ import EventDate from './EventDate';
 import EventFile from './EventFile';
 import EventImage from './EventImage';
 import EventInspirationImage from './EventInspirationImage';
+import EventTask from './EventTask';
 
 @Entity('events')
 class Event {
@@ -136,6 +137,9 @@ class Event {
 
   @OneToMany(() => EventDate, eventDate => eventDate.event, { eager: true })
   eventDates: EventDate[];
+
+  @OneToMany(() => EventTask, eventTask => eventTask.event, { eager: true })
+  eventTasks: EventTask[];
 
   @OneToMany(() => EventFile, eventFile => eventFile.event, { eager: true })
   eventFiles: EventFile[];
