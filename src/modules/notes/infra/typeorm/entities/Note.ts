@@ -1,3 +1,4 @@
+import EventTaskNote from '@modules/events/infra/typeorm/entities/EventTaskNote';
 import {
   Entity,
   Column,
@@ -30,6 +31,9 @@ class Note {
 
   @OneToOne(() => CheckListTaskNote, note => note.note)
   checkListTaskNote: CheckListTaskNote;
+
+  @OneToOne(() => EventTaskNote, note => note.note)
+  eventTaskNote: EventTaskNote;
 }
 
 export default Note;

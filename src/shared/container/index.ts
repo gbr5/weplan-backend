@@ -375,6 +375,14 @@ import GuestContactsRepository from '@modules/events/infra/typeorm/repositories/
 import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepository';
 import EventTasksRepository from '@modules/events/infra/typeorm/repositories/EventTasksRepository';
 
+import IEventTaskNotesRepository from '@modules/events/repositories/IEventTaskNotesRepository';
+import EventTaskNotesRepository from '@modules/events/infra/typeorm/repositories/EventTaskNotesRepository';
+
+container.registerSingleton<IEventTaskNotesRepository>(
+  'EventTaskNotesRepository',
+  EventTaskNotesRepository,
+);
+
 container.registerSingleton<IEventTasksRepository>(
   'EventTasksRepository',
   EventTasksRepository,

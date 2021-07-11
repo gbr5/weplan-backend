@@ -138,8 +138,13 @@ import listInactiveComercialCardsRouter from '@modules/suppliers/infra/http/rout
 import employeeCheckListRouter from '@modules/checklists/infra/http/routes/employeeCheckList.routes';
 import listOwnerCardsRouter from '@modules/suppliers/infra/http/routes/listOwnerCards.routes';
 import eventTasksRouter from '@modules/events/infra/http/routes/eventTasks.routes';
+import eventTaskNotesRouter from '@modules/events/infra/http/routes/eventTaskNotes.routes';
+import notesRouter from '@modules/notes/infra/http/routes/notes.routes';
 
 const routes = Router();
+
+// ==> Notes
+routes.use('/notes', notesRouter);
 
 // ==> Used by Public Pages
 routes.use('/event-suppliers-sub-categories', eventSupplierSubCategoriesRouter);
@@ -207,6 +212,7 @@ routes.use('/user/terminate', terminateUserRouter);
 routes.use('/event-guests', guestsRouter);
 routes.use('/event/dates', eventDatesRouter);
 routes.use('/event-tasks', eventTasksRouter);
+routes.use('/event-task-notes', eventTaskNotesRouter);
 routes.use('/event/dates/voting', eventDatesVotingRouter);
 routes.use('/event/date/voting-type', eventDateVotingTypeRouter);
 routes.use('/event/date/vote', eventDateVotesRouter);

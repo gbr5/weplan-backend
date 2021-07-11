@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import Event from './Event';
+import EventTaskNote from './EventTaskNote';
 
 @Entity('event_tasks')
 class EventTask {
@@ -39,6 +41,11 @@ class EventTask {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => EventTaskNote, eventTaskNote => eventTaskNote.task, {
+    eager: true,
+  })
+  notes: EventTaskNote[];
 }
 
 export default EventTask;

@@ -47,9 +47,9 @@ export default class EventTaskController {
 
     const listEventTask = container.resolve(ListEventTasksService);
 
-    const eventTask = await listEventTask.execute(event_id);
+    const eventTasks = await listEventTask.execute(event_id);
 
-    return res.json(classToClass(eventTask));
+    return res.json(classToClass(eventTasks));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
