@@ -9,6 +9,7 @@ import ShowEventByNameService from '@modules/events/services/ShowEventByNameServ
 import ListUserEventsService from '@modules/events/services/ListUserEventsService';
 import DeleteEventService from '@modules/events/services/DeleteEventService';
 import UpdateEventNameService from '@modules/events/services/UpdateEventNameService';
+import CreateWeddingTasksService from '@modules/events/services/CreateWeddingTasksService';
 
 export default class EventsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -16,6 +17,7 @@ export default class EventsController {
     const user_id = req.user.id;
 
     const createEvents = container.resolve(CreateEventsService);
+    const createWeddingTasks = container.resolve(CreateWeddingTasksService);
 
     const trimmed_name = name
       .toLowerCase()
@@ -35,6 +37,9 @@ export default class EventsController {
       isPublished: false,
     });
 
+    if (event_type === 'Wedding') {
+      await createWeddingTasks.execute({ event_id: event.id });
+    }
     return res.json(classToClass(event));
   }
 

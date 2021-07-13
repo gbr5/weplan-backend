@@ -57,6 +57,7 @@ class CreateEventService {
       isDateDefined,
       isPublished,
     });
+
     if (isDateDefined) {
       event.isDateDefined = true;
       await this.eventsRepository.save(event);
