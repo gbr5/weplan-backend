@@ -14,7 +14,14 @@ class ListEventTasksService {
   public async execute(event_id: string): Promise<EventTask[]> {
     const eventTasks = await this.eventTasksRepository.findByEventId(event_id);
 
-    return eventTasks;
+    const sortedTasks = eventTasks.sort((a, b) => {
+      if (new Date(a.due_date) > new Date(b.due_date)) return 1;
+      if (new Date(a.due_date) < new Date(b.due_date)) return -1;
+      return 0;
+    });
+    console.log({ sortedTasks });
+
+    return sortedTasks;
   }
 }
 
