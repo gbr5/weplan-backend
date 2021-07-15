@@ -3,7 +3,6 @@ import { celebrate, Segments, Joi } from 'celebrate';
 
 import EventsController from '@modules/events/infra/http/controllers/EventsController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
-import EventSuppliersController from '@modules/events/infra/http/controllers/EventSuppliersController';
 import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
 import EventWeplanSuppliersController from '@modules/events/infra/http/controllers/EventWeplanSuppliersController';
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
@@ -21,7 +20,6 @@ import EventAvatarController from '../controllers/EventAvatarController';
 const eventsRouter = Router();
 const events = new EventsController();
 const eventAvatar = new EventAvatarController();
-const eventSuppliers = new EventSuppliersController();
 const hiredSuppliers = new HiredSuppliersController();
 const eventWeplanSuppliers = new EventWeplanSuppliersController();
 const userCheckLists = new UserCheckListsController();
@@ -84,36 +82,6 @@ eventsRouter.patch(
 // === Hired Suppliers === //
 
 eventsRouter.get('/hired-suppliers/:event_id', hiredSuppliers.index);
-
-// === Selected & Hired Suppliers === //
-
-eventsRouter.post(
-  '/event-suppliers/:event_id',
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      supplier_sub_category: Joi.string().required(),
-      isHired: Joi.boolean().required(),
-      weplanUser: Joi.boolean().required(),
-    },
-  }),
-  eventSuppliers.create,
-);
-
-eventsRouter.put(
-  '/event-suppliers/edit/:id',
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      supplier_sub_category: Joi.string().required(),
-      isHired: Joi.boolean().required(),
-    },
-  }),
-  eventSuppliers.update,
-);
-
-eventsRouter.delete('/:event_id/event-suppliers/:id', eventSuppliers.delete);
-eventsRouter.get('/event-suppliers/:event_id', eventSuppliers.index);
 
 // === Selected & Hired WEPLAN Suppliers === //
 
@@ -321,19 +289,19 @@ eventsRouter.get('/:event_id/event-members/', eventMembers.index);
 
 eventsRouter.post(
   '/:event_id/event-info',
-  celebrate({
-    [Segments.BODY]: {
-      number_of_guests: Joi.number(),
-      duration: Joi.number(),
-      budget: Joi.number(),
-      description: Joi.string(),
-      country: Joi.string(),
-      local_state: Joi.string(),
-      city: Joi.string(),
-      address: Joi.string(),
-      dress_code: Joi.string(),
-    },
-  }),
+  // celebrate({
+  //   [Segments.BODY]: {
+  //     number_of_guests: Joi.number(),
+  //     duration: Joi.number(),
+  //     budget: Joi.number(),
+  //     description: Joi.string(),
+  //     country: Joi.string(),
+  //     local_state: Joi.string(),
+  //     city: Joi.string(),
+  //     address: Joi.string(),
+  //     dress_code: Joi.string(),
+  //   },
+  // }),
   eventInfos.create,
 );
 eventsRouter.get('/:event_id/event-info', eventInfos.show);

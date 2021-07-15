@@ -21,6 +21,7 @@ class CreateEventInfoService {
   ) {}
 
   public async execute(data: ICreateEventInfoDTO): Promise<EventInfo> {
+    console.log({ data });
     const event = await this.eventRepository.findById(data.event_id);
     if (!event) {
       throw new AppError('Event not found!');

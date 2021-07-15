@@ -6,7 +6,9 @@ export default interface ISupplierCategoriesRepository {
   findBySubCategoryName(
     sub_category: string,
   ): Promise<SupplierSubCategory | undefined>;
+  findById(id: string): Promise<SupplierSubCategory | undefined>;
   findByCategoryName(category_name: string): Promise<SupplierSubCategory[]>;
   findAll(): Promise<SupplierSubCategory[]>;
   save(sub_category: SupplierSubCategory): Promise<SupplierSubCategory>;
+  delete(sub_category: SupplierSubCategory): Promise<void>;
 }

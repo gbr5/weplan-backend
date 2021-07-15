@@ -23,6 +23,12 @@ class SupplierSubCategoriesRepository
     return findSupplierSubCategory;
   }
 
+  public async findById(id: string): Promise<SupplierSubCategory | undefined> {
+    const findSupplierSubCategory = await this.ormRepository.findOne(id);
+
+    return findSupplierSubCategory;
+  }
+
   public async findByCategoryName(
     category_name: string,
   ): Promise<SupplierSubCategory[]> {
@@ -57,6 +63,10 @@ class SupplierSubCategoriesRepository
     supplierSubCategory: SupplierSubCategory,
   ): Promise<SupplierSubCategory> {
     return this.ormRepository.save(supplierSubCategory);
+  }
+
+  public async delete({ id }: SupplierSubCategory): Promise<void> {
+    await this.ormRepository.delete({ id });
   }
 }
 

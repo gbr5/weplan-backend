@@ -141,6 +141,10 @@ import eventTasksRouter from '@modules/events/infra/http/routes/eventTasks.route
 import eventTaskNotesRouter from '@modules/events/infra/http/routes/eventTaskNotes.routes';
 import notesRouter from '@modules/notes/infra/http/routes/notes.routes';
 import weddingTasksRouter from '@modules/events/infra/http/routes/weddingTasks.routes';
+import supplierSubCategoriesRouter from '@modules/suppliers/infra/http/routes/supplierSubCategories.routes';
+import eventSuppliersRouter from '@modules/suppliers/infra/http/routes/eventSuppliers.routes';
+import eventInfoRouter from '@modules/events/infra/http/routes/eventInfo.routes';
+import eventBudgetRouter from '@modules/events/infra/http/routes/eventBudget.routes';
 
 const routes = Router();
 
@@ -262,6 +266,10 @@ routes.use('/employee/files', employeeFilesRouter);
 routes.use('/my-next-event', nextEventRouter);
 routes.use('/list/events', listEventsRouter);
 routes.use('/events', eventsRouter);
+
+routes.use('/event-info', eventInfoRouter);
+routes.use('/event-budget', eventBudgetRouter);
+
 routes.use('/event/is-published', eventIsPublishedRouter);
 routes.use('/event/is-date-defined', eventIsDateDefinedRouter);
 routes.use('/event/weplan-guests', weplanGuestsRouter);
@@ -278,6 +286,8 @@ routes.use('/event-types', eventTypesRouter);
 routes.use('/friends-events', friendsEventsRouter);
 
 routes.use('/suppliers', suppliersRouter);
+routes.use('/event-suppliers', eventSuppliersRouter);
+routes.use('/supplier-sub-categories', supplierSubCategoriesRouter);
 routes.use('/company-employees', companyEmployeesRouter);
 routes.use('/company-employee-contact', companyEmployeeContactRouter);
 routes.use('/suppliers/categories', supplierCategoriesRouter);

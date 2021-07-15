@@ -31,6 +31,7 @@ import EventFile from './EventFile';
 import EventImage from './EventImage';
 import EventInspirationImage from './EventInspirationImage';
 import EventTask from './EventTask';
+import EventBudget from './EventBudget';
 
 @Entity('events')
 class Event {
@@ -152,6 +153,9 @@ class Event {
     eventInspirationImage => eventInspirationImage.event,
   )
   eventInspirationImages: EventInspirationImage[];
+
+  @OneToOne(() => EventBudget, eventBudget => eventBudget.event)
+  eventBudget: EventBudget;
 }
 
 export default Event;

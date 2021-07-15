@@ -6,64 +6,64 @@ import SupplierSubCategoriesController from '@modules/suppliers/infra/http/contr
 import UserSupplierCategoriesController from '@modules/suppliers/infra/http/controllers/UserSupplierCategoriesController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
-const supplierCategoriessRouter = Router();
-const supplierCategoriessController = new SupplierCategoriesController();
+const supplierCategoriesRouter = Router();
+const supplierCategoriesController = new SupplierCategoriesController();
 const userSupplierCategoriesController = new UserSupplierCategoriesController();
 const supplierSubCategoriesController = new SupplierSubCategoriesController();
 
-supplierCategoriessRouter.use(ensureAuthenticated);
+supplierCategoriesRouter.use(ensureAuthenticated);
 
 // =============== !!! ==> http.../suppliers/categories  <== ===============
 
 // === $$ === $ ==> Supplier <== $ === $$ === //
 
-supplierCategoriessRouter.post(
+supplierCategoriesRouter.post(
   '/weplan/:sub_category_name/:company_id',
   userSupplierCategoriesController.create,
 );
 
-supplierCategoriessRouter.get(
+supplierCategoriesRouter.get(
   '/list-weplan/:category_name/:sub_category',
   userSupplierCategoriesController.index,
 );
 
-supplierCategoriessRouter.get(
+supplierCategoriesRouter.get(
   '/weplan/:category_name/:sub_category/:user_id',
   userSupplierCategoriesController.show,
 );
 
-supplierCategoriessRouter.delete(
+supplierCategoriesRouter.delete(
   '/weplan/:category_name/:sub_category',
   userSupplierCategoriesController.delete,
 );
 
 // === Supplier Categories === //
 
-supplierCategoriessRouter.post(
+supplierCategoriesRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
       category: Joi.string().required(),
     },
   }),
-  supplierCategoriessController.create,
+  supplierCategoriesController.create,
 );
 
-supplierCategoriessRouter.get('/all', supplierCategoriessController.index);
+supplierCategoriesRouter.get('/all', supplierCategoriesController.index);
 
-supplierCategoriessRouter.put(
+supplierCategoriesRouter.put(
   '/:category',
   celebrate({
     [Segments.BODY]: {
       category: Joi.string().required(),
     },
   }),
-  supplierCategoriessController.update,
+  supplierCategoriesController.update,
 );
 
 // === Supplier Sub Categories === //
 
-supplierCategoriessRouter.post(
+supplierCategoriesRouter.post(
   '/:category_name',
   celebrate({
     [Segments.BODY]: {
@@ -73,12 +73,12 @@ supplierCategoriessRouter.post(
   supplierSubCategoriesController.create,
 );
 
-supplierCategoriessRouter.get(
+supplierCategoriesRouter.get(
   '/sub-categories/:category_name',
   supplierSubCategoriesController.index,
 );
 
-supplierCategoriessRouter.put(
+supplierCategoriesRouter.put(
   '/:category_name/:sub_category',
   celebrate({
     [Segments.BODY]: {
@@ -88,4 +88,4 @@ supplierCategoriessRouter.put(
   supplierSubCategoriesController.update,
 );
 
-export default supplierCategoriessRouter;
+export default supplierCategoriesRouter;

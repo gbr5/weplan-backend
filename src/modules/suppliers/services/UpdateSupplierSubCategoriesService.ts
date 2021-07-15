@@ -6,7 +6,7 @@ import ISupplierSubCategoriesRepository from '@modules/suppliers/repositories/IS
 import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
 
 interface IRequest {
-  oldSubCategoryName: string;
+  id: string;
   sub_category: string;
 }
 
@@ -18,11 +18,11 @@ class UpdateSupplierSubCategoriesService {
   ) {}
 
   public async execute({
-    oldSubCategoryName,
+    id,
     sub_category,
   }: IRequest): Promise<SupplierSubCategory> {
-    const supplierSubCategories = await this.SupplierSubCategoriesRepository.findBySubCategoryName(
-      oldSubCategoryName,
+    const supplierSubCategories = await this.SupplierSubCategoriesRepository.findById(
+      id,
     );
 
     if (!supplierSubCategories) {

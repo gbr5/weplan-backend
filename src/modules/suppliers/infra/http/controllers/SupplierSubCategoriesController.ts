@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import CreateSupplierSubCategoriesService from '@modules/suppliers/services/CreateSupplierSubCategoriesService';
 import UpdateSupplierSubCategoriesService from '@modules/suppliers/services/UpdateSupplierSubCategoriesService';
 import ListSupplierSubCategoriesService from '@modules/suppliers/services/ListSupplierSubCategoriesService';
+import DeleteSupplierSubCategoryService from '@modules/suppliers/services/DeleteSupplierSubCategoryService';
 
 export default class SupplierSubCategoriesController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -39,7 +40,8 @@ export default class SupplierSubCategoriesController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const old_subCategoryName = req.params;
+    const reqParams = req.params;
+    const { id } = reqParams;
     const { sub_category } = req.body;
 
     const updateSupplierSubCategories = container.resolve(
@@ -48,9 +50,22 @@ export default class SupplierSubCategoriesController {
 
     const supplierCategories = await updateSupplierSubCategories.execute({
       sub_category,
-      oldSubCategoryName: old_subCategoryName.sub_category,
+      id,
     });
 
     return res.json(supplierCategories);
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const deleteSupplierSubCategory = container.resolve(
+      DeleteSupplierSubCategoryService,
+    );
+
+    await deleteSupplierSubCategory.execute(id);
+
+    return res.status(200).send();
   }
 }

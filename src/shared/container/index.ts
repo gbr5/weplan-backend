@@ -378,6 +378,14 @@ import EventTasksRepository from '@modules/events/infra/typeorm/repositories/Eve
 import IEventTaskNotesRepository from '@modules/events/repositories/IEventTaskNotesRepository';
 import EventTaskNotesRepository from '@modules/events/infra/typeorm/repositories/EventTaskNotesRepository';
 
+import IEventBudgetRepository from '@modules/events/repositories/IEventBudgetRepository';
+import EventBudgetRepository from '@modules/events/infra/typeorm/repositories/EventBudgetRepository';
+
+container.registerSingleton<IEventBudgetRepository>(
+  'EventBudgetRepository',
+  EventBudgetRepository,
+);
+
 container.registerSingleton<IEventTaskNotesRepository>(
   'EventTaskNotesRepository',
   EventTaskNotesRepository,

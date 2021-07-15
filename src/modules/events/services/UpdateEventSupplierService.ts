@@ -9,6 +9,7 @@ interface IRequest {
   name: string;
   supplier_sub_category: string;
   isHired: boolean;
+  weplanUser: boolean;
   id: string;
 }
 @injectable()
@@ -22,6 +23,7 @@ class UpdateEventService {
     name,
     supplier_sub_category,
     isHired,
+    weplanUser,
     id,
   }: IRequest): Promise<EventSupplier> {
     const eventSupplier = await this.eventSuppliersRepository.findById(id);
@@ -32,6 +34,7 @@ class UpdateEventService {
 
     eventSupplier.supplier_sub_category = supplier_sub_category;
     eventSupplier.isHired = isHired;
+    eventSupplier.weplanUser = weplanUser;
     eventSupplier.name = name;
 
     const updatedEvent = await this.eventSuppliersRepository.save(

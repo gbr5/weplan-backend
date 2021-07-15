@@ -20,6 +20,19 @@ export default class EventInfosController {
       address,
       dress_code,
     } = req.body;
+
+    console.log({
+      number_of_guests,
+      budget,
+      description,
+      country,
+      local_state,
+      city,
+      duration,
+      address,
+      dress_code,
+    });
+
     const dataParams = req.params;
     const { event_id } = dataParams;
 

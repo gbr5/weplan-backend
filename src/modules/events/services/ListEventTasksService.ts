@@ -19,7 +19,6 @@ class ListEventTasksService {
       if (new Date(a.due_date) < new Date(b.due_date)) return -1;
       return 0;
     });
-    console.log({ sortedTasks });
 
     return sortedTasks;
   }
