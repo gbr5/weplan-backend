@@ -183,12 +183,6 @@ import FriendGroupsRepository from '@modules/users/infra/typeorm/repositories/Fr
 import IUserFriendsRepository from '@modules/users/repositories/IUserFriendsRepository';
 import UserFriendsRepository from '@modules/users/infra/typeorm/repositories/UserFriendsRepository';
 
-import ITransactionAgreementsRepository from '@modules/finances/repositories/ITransactionAgreementsRepository';
-import TransactionAgreementsRepository from '@modules/finances/infra/typeorm/repositories/TransactionAgreementsRepository';
-
-import ITransactionsRepository from '@modules/finances/repositories/ITransactionsRepository';
-import TransactionsRepository from '@modules/finances/infra/typeorm/repositories/TransactionsRepository';
-
 import IWeplanContractOrdersRepository from '@modules/weplan/repositories/IWeplanContractOrdersRepository';
 import WeplanContractOrdersRepository from '@modules/weplan/infra/typeorm/repositories/WeplanContractOrdersRepository';
 
@@ -239,30 +233,6 @@ import EventNotesRepository from '@modules/events/infra/typeorm/repositories/Eve
 
 import IEventUserSupplierNotesRepository from '@modules/events/repositories/IEventUserSupplierNotesRepository';
 import EventUserSupplierNotesRepository from '@modules/events/infra/typeorm/repositories/EventUserSupplierNotesRepository';
-
-import IMainTransactionsRepository from '@modules/transactions/repositories/IMainTransactionsRepository';
-import MainTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/MainTransactionsRepository';
-
-import IEventTransactionsRepository from '@modules/transactions/repositories/IEventTransactionsRepository';
-import EventTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventTransactionsRepository';
-
-import IUserTransactionsRepository from '@modules/transactions/repositories/IUserTransactionsRepository';
-import UserTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/UserTransactionsRepository';
-
-import IEventSupplierMainTransactionsRepository from '@modules/transactions/repositories/IEventSupplierMainTransactionsRepository';
-import EventSupplierMainTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventSupplierMainTransactionsRepository';
-
-import IEventOwnerPaymentTransactionsRepository from '@modules/transactions/repositories/IEventOwnerPaymentTransactionsRepository';
-import EventOwnerPaymentTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventOwnerPaymentTransactionsRepository';
-
-import IEventOwnerPaymentsRepository from '@modules/transactions/repositories/IEventOwnerPaymentsRepository';
-import EventOwnerPaymentsRepository from '@modules/transactions/infra/typeorm/repositories/EventOwnerPaymentsRepository';
-
-import IEventMemberPaymentTransactionsRepository from '@modules/transactions/repositories/IEventMemberPaymentTransactionsRepository';
-import EventMemberPaymentTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberPaymentTransactionsRepository';
-
-import IEventMemberPaymentsRepository from '@modules/transactions/repositories/IEventMemberPaymentsRepository';
-import EventMemberPaymentsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberPaymentsRepository';
 
 import IGuestContactInfosRepository from '@modules/events/repositories/IGuestContactInfosRepository';
 import GuestContactInfosRepository from '@modules/events/infra/typeorm/repositories/GuestContactInfosRepository';
@@ -380,6 +350,14 @@ import EventTaskNotesRepository from '@modules/events/infra/typeorm/repositories
 
 import IEventBudgetRepository from '@modules/events/repositories/IEventBudgetRepository';
 import EventBudgetRepository from '@modules/events/infra/typeorm/repositories/EventBudgetRepository';
+
+import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
+import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
+
+container.registerSingleton<ITransactionsRepository>(
+  'TransactionsRepository',
+  TransactionsRepository,
+);
 
 container.registerSingleton<IEventBudgetRepository>(
   'EventBudgetRepository',
@@ -576,45 +554,6 @@ container.registerSingleton<IGuestContactInfosRepository>(
   GuestContactInfosRepository,
 );
 
-container.registerSingleton<IEventMemberPaymentsRepository>(
-  'EventMemberPaymentsRepository',
-  EventMemberPaymentsRepository,
-);
-
-container.registerSingleton<IEventMemberPaymentTransactionsRepository>(
-  'EventMemberPaymentTransactionsRepository',
-  EventMemberPaymentTransactionsRepository,
-);
-
-container.registerSingleton<IEventOwnerPaymentsRepository>(
-  'EventOwnerPaymentsRepository',
-  EventOwnerPaymentsRepository,
-);
-
-container.registerSingleton<IEventOwnerPaymentTransactionsRepository>(
-  'EventOwnerPaymentTransactionsRepository',
-  EventOwnerPaymentTransactionsRepository,
-);
-
-container.registerSingleton<IEventSupplierMainTransactionsRepository>(
-  'EventSupplierMainTransactionsRepository',
-  EventSupplierMainTransactionsRepository,
-);
-
-container.registerSingleton<IEventTransactionsRepository>(
-  'EventTransactionsRepository',
-  EventTransactionsRepository,
-);
-
-container.registerSingleton<IUserTransactionsRepository>(
-  'UserTransactionsRepository',
-  UserTransactionsRepository,
-);
-
-container.registerSingleton<IMainTransactionsRepository>(
-  'MainTransactionsRepository',
-  MainTransactionsRepository,
-);
 container.registerSingleton<IEventUserSupplierNotesRepository>(
   'EventUserSupplierNotesRepository',
   EventUserSupplierNotesRepository,
@@ -960,16 +899,6 @@ container.registerSingleton<IFriendGroupsRepository>(
 container.registerSingleton<IUserFriendsRepository>(
   'UserFriendsRepository',
   UserFriendsRepository,
-);
-
-container.registerSingleton<ITransactionAgreementsRepository>(
-  'TransactionAgreementsRepository',
-  TransactionAgreementsRepository,
-);
-
-container.registerSingleton<ITransactionsRepository>(
-  'TransactionsRepository',
-  TransactionsRepository,
 );
 
 container.registerSingleton<ICompanyMasterUsersRepository>(

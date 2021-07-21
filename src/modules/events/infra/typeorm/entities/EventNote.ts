@@ -16,8 +16,6 @@ import UserEventGuestNote from './UserEventGuestNote';
 import UserEventOwnerNote from './UserEventOwnerNote';
 import UserEventMemberNote from './UserEventMemberNote';
 import UserEventTaskNote from './UserEventTaskNote';
-import UserEventTransactionNote from './UserEventTransactionNote';
-import UserEventTransactionAgreementNote from './UserEventTransactionAgreementNote';
 import EventNoteAccess from './EventNoteAccess';
 
 @Entity('event_notes')
@@ -77,19 +75,6 @@ class EventNote {
 
   @OneToMany(() => UserEventTaskNote, eventTask => eventTask.eventTaskNote)
   eventTaskNotes: UserEventTaskNote[];
-
-  @OneToMany(
-    () => UserEventTransactionNote,
-    eventTransaction => eventTransaction.eventTransactionNote,
-  )
-  eventTransactionNotes: UserEventTransactionNote[];
-
-  @OneToMany(
-    () => UserEventTransactionAgreementNote,
-    eventTransactionAgreement =>
-      eventTransactionAgreement.eventTransactionAgreementNote,
-  )
-  eventTransactionAgreementNotes: UserEventTransactionAgreementNote[];
 
   @OneToMany(
     () => EventNoteAccess,

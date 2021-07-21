@@ -30,7 +30,7 @@ import projectsFunnelDefaultInfoFieldsRouter from '@modules/suppliers/infra/http
 import weplanManagementModulesRouter from '@modules/weplan/infra/http/routes/weplanManagementModules.routes';
 import weplanProductsRouter from '@modules/weplan/infra/http/routes/weplanProducts.routes';
 import weplanContractOrdersRouter from '@modules/weplan/infra/http/routes/weplanContractOrders.routes';
-import financesRouter from '@modules/finances/infra/http/routes/finances.routes';
+import transactionsRouter from '@modules/transactions/infra/http/routes/transactions.routes';
 import checkListRouter from '@modules/checklists/infra/http/routes/checkList.routes';
 import checkListCardsRouter from '@modules/checklists/infra/http/routes/checkListCards.routes';
 import cardCheckListRouter from '@modules/checklists/infra/http/routes/cardCheckList.routes';
@@ -60,14 +60,6 @@ import listEventsRouter from '@modules/events/infra/http/routes/listEvents.route
 import eventNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventNumberOfGuests.routes';
 import eventOwnerNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventOwnerNumberOfGuests.routes';
 import eventMemberNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventMemberNumberOfGuests.routes';
-import mainTransactionRouter from '@modules/transactions/infra/http/routes/mainTransactions.routes';
-import eventTransactionRouter from '@modules/transactions/infra/http/routes/eventTransactions.routes';
-import eventSupplierMainTransactionRouter from '@modules/transactions/infra/http/routes/eventSupplierMainTransactions.routes';
-import eventOwnerPaymentTransactionRouter from '@modules/transactions/infra/http/routes/eventOwnerPaymentTransactions.routes';
-import eventMemberPaymentTransactionRouter from '@modules/transactions/infra/http/routes/eventMemberPaymentTransactions.routes';
-import eventOwnerPaymentRouter from '@modules/transactions/infra/http/routes/eventOwnerPayments.routes';
-import eventMemberPaymentRouter from '@modules/transactions/infra/http/routes/eventMemberPayments.routes';
-import userTransactionRouter from '@modules/transactions/infra/http/routes/userTransactions.routes';
 import guestContactInfosRouter from '@modules/events/infra/http/routes/guestContactInfos.routes';
 import guestContactsRouter from '@modules/events/infra/http/routes/guestContacts.routes';
 import guestsRouter from '@modules/events/infra/http/routes/guests.routes';
@@ -145,6 +137,8 @@ import supplierSubCategoriesRouter from '@modules/suppliers/infra/http/routes/su
 import eventSuppliersRouter from '@modules/suppliers/infra/http/routes/eventSuppliers.routes';
 import eventInfoRouter from '@modules/events/infra/http/routes/eventInfo.routes';
 import eventBudgetRouter from '@modules/events/infra/http/routes/eventBudget.routes';
+import listPayeeTransactionsRouter from '@modules/transactions/infra/http/routes/listPayeeTransactions.routes';
+import listPayerTransactionsRouter from '@modules/transactions/infra/http/routes/listPayerTransactions.routes';
 
 const routes = Router();
 
@@ -325,45 +319,16 @@ routes.use('/production/funnel', productionFunnelDefaultInfoFieldsRouter);
 routes.use('/projects/funnel', projectsFunnelDefaultInfoFieldsRouter);
 routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 
-routes.use('/finances', financesRouter);
+// Transactions
+routes.use('/transactions', transactionsRouter);
+routes.use('/list-payee-transactions', listPayeeTransactionsRouter);
+routes.use('/list-payer-transactions', listPayerTransactionsRouter);
+
 routes.use('/list-owner-cards', listOwnerCardsRouter);
 routes.use('/check-lists', checkListRouter);
 routes.use('/employee-check-list', employeeCheckListRouter);
 routes.use('/check-list-cards', checkListCardsRouter);
 routes.use('/check-list-task-notes', checkListTaskNotesRouter);
 routes.use('/card/check-lists', cardCheckListRouter);
-
-// Main Transactions
-routes.use('/main-transactions', mainTransactionRouter);
-
-// Event Transactions
-routes.use('/user-transactions', userTransactionRouter);
-
-// Event Transactions
-routes.use('/event-transactions', eventTransactionRouter);
-
-// Event Supplier Main Transactions
-routes.use(
-  '/event-supplier-main-transactions',
-  eventSupplierMainTransactionRouter,
-);
-
-// Event Owner Payments
-routes.use('/event-owner-payments', eventOwnerPaymentRouter);
-
-// Event Member Payments
-routes.use('/event-member-payments', eventMemberPaymentRouter);
-
-// Event Owner Payment Transactions
-routes.use(
-  '/event-owner-payment-transactions',
-  eventOwnerPaymentTransactionRouter,
-);
-
-// Event Member Payment Transactions
-routes.use(
-  '/event-member-payment-transactions',
-  eventMemberPaymentTransactionRouter,
-);
 
 export default routes;
