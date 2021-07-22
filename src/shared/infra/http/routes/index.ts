@@ -139,6 +139,8 @@ import eventInfoRouter from '@modules/events/infra/http/routes/eventInfo.routes'
 import eventBudgetRouter from '@modules/events/infra/http/routes/eventBudget.routes';
 import listPayeeTransactionsRouter from '@modules/transactions/infra/http/routes/listPayeeTransactions.routes';
 import listPayerTransactionsRouter from '@modules/transactions/infra/http/routes/listPayerTransactions.routes';
+import eventSupplierTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactionAgreements.routes';
+import eventSupplierTransactionsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactions.routes';
 
 const routes = Router();
 
@@ -323,6 +325,15 @@ routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 routes.use('/transactions', transactionsRouter);
 routes.use('/list-payee-transactions', listPayeeTransactionsRouter);
 routes.use('/list-payer-transactions', listPayerTransactionsRouter);
+
+// Event Supplier Transaction Agreements
+routes.use(
+  '/event-supplier-transaction-agreements',
+  eventSupplierTransactionAgreementsRouter,
+);
+
+// Event Supplier Transactions
+routes.use('/event-supplier-transactions', eventSupplierTransactionsRouter);
 
 routes.use('/list-owner-cards', listOwnerCardsRouter);
 routes.use('/check-lists', checkListRouter);

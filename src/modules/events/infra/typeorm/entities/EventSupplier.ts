@@ -12,7 +12,7 @@ import {
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
-// import TransactionAgreement from '@modules/finances/infra/typeorm/entities/TransactionAgreement';
+import EventSupplierTransactionAgreement from '@modules/transactions/infra/typeorm/entities/EventSupplierTransactionAgreement';
 import EventWeplanSupplier from './EventWeplanSupplier';
 import EventUserSupplierNote from './EventUserSupplierNote';
 
@@ -60,12 +60,12 @@ class EventSupplier {
   )
   eventWeplanSupplier: EventWeplanSupplier;
 
-  // @OneToMany(
-  //   () => TransactionAgreement,
-  //   transactionAgreement => transactionAgreement.supplier,
-  //   { eager: true },
-  // )
-  // transactionAgreements: TransactionAgreement[];
+  @OneToMany(
+    () => EventSupplierTransactionAgreement,
+    transactionAgreement => transactionAgreement.eventSupplier,
+    { eager: true },
+  )
+  transactionAgreements: EventSupplierTransactionAgreement[];
 
   @OneToMany(
     () => EventUserSupplierNote,

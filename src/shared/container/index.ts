@@ -354,6 +354,22 @@ import EventBudgetRepository from '@modules/events/infra/typeorm/repositories/Ev
 import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
 import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
 
+import IEventSupplierTransactionAgreementsRepository from '@modules/transactions/repositories/IEventSupplierTransactionAgreementsRepository';
+import EventSupplierTransactionAgreementsRepository from '@modules/transactions/infra/typeorm/repositories/EventSupplierTransactionAgreementsRepository';
+
+import IEventSupplierTransactionsRepository from '@modules/transactions/repositories/IEventSupplierTransactionsRepository';
+import EventSupplierTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventSupplierTransactionsRepository';
+
+container.registerSingleton<IEventSupplierTransactionsRepository>(
+  'EventSupplierTransactionsRepository',
+  EventSupplierTransactionsRepository,
+);
+
+container.registerSingleton<IEventSupplierTransactionAgreementsRepository>(
+  'EventSupplierTransactionAgreementsRepository',
+  EventSupplierTransactionAgreementsRepository,
+);
+
 container.registerSingleton<ITransactionsRepository>(
   'TransactionsRepository',
   TransactionsRepository,

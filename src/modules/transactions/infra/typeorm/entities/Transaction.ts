@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
+import EventSupplierTransaction from './EventSupplierTransaction';
 
 @Entity('transactions')
 class Transaction {
@@ -31,6 +33,12 @@ class Transaction {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToOne(
+    () => EventSupplierTransaction,
+    eventSupplier => eventSupplier.transaction,
+  )
+  eventSupplierTransaction: EventSupplierTransaction;
 }
 
 export default Transaction;
