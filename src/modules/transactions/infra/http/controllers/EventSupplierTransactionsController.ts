@@ -10,7 +10,6 @@ export default class EventSupplierTransactionsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { agreement_id, transaction_id } = req.body;
 
-    console.log({ agreement_id, transaction_id });
     const createEventSupplierTransactionService = container.resolve(
       CreateEventSupplierTransactionService,
     );
