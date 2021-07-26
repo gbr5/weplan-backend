@@ -142,6 +142,7 @@ import listPayerTransactionsRouter from '@modules/transactions/infra/http/routes
 import eventSupplierTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactionAgreements.routes';
 import eventSupplierTransactionsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactions.routes';
 import createEventSupplierTransactionAgreementWithTransactionsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactionAgreementWithTransactions.routes';
+import deleteEventSupplierTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/deleteEventSupplierTransactionAgreements.routes';
 
 const routes = Router();
 
@@ -331,6 +332,11 @@ routes.use('/list-payer-transactions', listPayerTransactionsRouter);
 routes.use(
   '/event-supplier-transaction-agreements',
   eventSupplierTransactionAgreementsRouter,
+);
+// Delete Event Supplier Transaction Agreements
+routes.use(
+  '/delete-event-supplier-transaction-agreements',
+  deleteEventSupplierTransactionAgreementsRouter,
 );
 
 // Event Supplier Transaction Agreement With Transactions

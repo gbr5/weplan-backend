@@ -40,7 +40,13 @@ export default class EventSuppliersController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { name, supplier_sub_category, isHired, weplanUser } = req.body;
+    const {
+      name,
+      supplier_sub_category,
+      isHired,
+      isDischarged,
+      weplanUser,
+    } = req.body;
 
     const dataParams = req.params;
     const { id } = dataParams;
@@ -53,6 +59,7 @@ export default class EventSuppliersController {
       supplier_sub_category,
       isHired,
       weplanUser,
+      isDischarged,
     });
 
     return res.json(classToClass(eventSupplier));

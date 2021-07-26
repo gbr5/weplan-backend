@@ -1,5 +1,5 @@
 import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
-import ICreateEventSupplierDTO from '@modules/events/dtos/ICreateEventSupplierDTO';
+import ICreateEventSupplierDTO from '@modules/suppliers/dtos/ICreateEventSupplierDTO';
 
 export default interface IEventSupplierRepository {
   findById(id: string): Promise<EventSupplier | undefined>;

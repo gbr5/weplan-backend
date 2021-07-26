@@ -1,7 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
-import ICreateEventSupplierDTO from '@modules/events/dtos/ICreateEventSupplierDTO';
+import ICreateEventSupplierDTO from '@modules/suppliers/dtos/ICreateEventSupplierDTO';
 import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier';
 
 interface IRequest {
@@ -52,10 +52,21 @@ class EventSuppliersRepository implements IEventSuppliersRepository {
     return findHiredSuppliers;
   }
 
-  public async create(
-    userData: ICreateEventSupplierDTO,
-  ): Promise<EventSupplier> {
-    const eventSupplier = this.ormRepository.create(userData);
+  public async create({
+    event_id,
+    isHired,
+    name,
+    supplier_sub_category,
+    weplanUser,
+  }: ICreateEventSupplierDTO): Promise<EventSupplier> {
+    const eventSupplier = this.ormRepository.create({
+      event_id,
+      isHired,
+      name,
+      supplier_sub_category,
+      weplanUser,
+      isDischarged: false,
+    });
 
     await this.ormRepository.save(eventSupplier);
 

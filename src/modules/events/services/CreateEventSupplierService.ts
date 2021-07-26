@@ -6,13 +6,9 @@ import EventSupplier from '@modules/events/infra/typeorm/entities/EventSupplier'
 import IEventSuppliersRepository from '@modules/events/repositories/IEventSuppliersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
+import ICreateEventSupplierDTO from '@modules/suppliers/dtos/ICreateEventSupplierDTO';
 
-interface IRequest {
-  name: string;
-  event_id: string;
-  supplier_sub_category: string;
-  isHired: boolean;
-  weplanUser: boolean;
+interface IRequest extends ICreateEventSupplierDTO {
   user_id: string;
 }
 

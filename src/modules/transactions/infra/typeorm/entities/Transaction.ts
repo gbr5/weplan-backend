@@ -22,6 +22,9 @@ class Transaction {
   @Column('boolean')
   isPaid: boolean;
 
+  @Column('boolean')
+  isCancelled: boolean;
+
   @Column()
   payer_id: string;
 

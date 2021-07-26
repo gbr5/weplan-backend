@@ -32,6 +32,7 @@ eventSuppliersRouter.put(
       name: Joi.string().required(),
       supplier_sub_category: Joi.string().required(),
       isHired: Joi.boolean().required(),
+      isDischarged: Joi.boolean().required(),
       weplanUser: Joi.boolean().required(),
     },
   }),

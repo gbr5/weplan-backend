@@ -9,6 +9,7 @@ interface IRequest {
   name: string;
   supplier_sub_category: string;
   isHired: boolean;
+  isDischarged: boolean;
   weplanUser: boolean;
   id: string;
 }
@@ -23,6 +24,7 @@ class UpdateEventService {
     name,
     supplier_sub_category,
     isHired,
+    isDischarged,
     weplanUser,
     id,
   }: IRequest): Promise<EventSupplier> {
@@ -34,6 +36,7 @@ class UpdateEventService {
 
     eventSupplier.supplier_sub_category = supplier_sub_category;
     eventSupplier.isHired = isHired;
+    eventSupplier.isDischarged = isDischarged;
     eventSupplier.weplanUser = weplanUser;
     eventSupplier.name = name;
 

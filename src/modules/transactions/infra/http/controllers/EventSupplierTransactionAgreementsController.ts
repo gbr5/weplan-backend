@@ -27,7 +27,13 @@ export default class EventSupplierTransactionAgreementsController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { id, amount, number_of_installments } = req.body;
+    const {
+      id,
+      amount,
+      number_of_installments,
+      isCancelled,
+      transactions,
+    } = req.body;
 
     const updateEventSupplierTransactionAgreementService = container.resolve(
       UpdateEventSupplierTransactionAgreementService,
@@ -38,6 +44,8 @@ export default class EventSupplierTransactionAgreementsController {
         id,
         amount,
         number_of_installments,
+        isCancelled,
+        transactions,
       },
     );
 

@@ -26,7 +26,7 @@ export default class TransactionsController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { id, amount, due_date, isPaid } = req.body;
+    const { id, amount, due_date, isPaid, isCancelled } = req.body;
 
     const updateTransactionService = container.resolve(
       UpdateTransactionService,
@@ -37,6 +37,7 @@ export default class TransactionsController {
       amount,
       due_date,
       isPaid,
+      isCancelled,
     });
 
     return res.json(classToClass(transaction));

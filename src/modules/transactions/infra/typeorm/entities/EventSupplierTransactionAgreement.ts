@@ -32,17 +32,18 @@ class EventSupplierTransactionAgreement {
   @Column('numeric')
   number_of_installments: number;
 
+  @Column('boolean')
+  isCancelled: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(
-    () => EventSupplierTransaction,
-    agreement => agreement.transaction,
-    // { eager: true },
-  )
+  @OneToMany(() => EventSupplierTransaction, agreement => agreement.agreement, {
+    eager: true,
+  })
   transactions: EventSupplierTransaction[];
 }
 

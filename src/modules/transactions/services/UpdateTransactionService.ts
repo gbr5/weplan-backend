@@ -10,6 +10,7 @@ interface IRequest {
   amount: number;
   due_date: Date;
   isPaid: boolean;
+  isCancelled: boolean;
 }
 
 @injectable()
@@ -27,6 +28,7 @@ class UpdateTransactionService {
     amount,
     due_date,
     isPaid,
+    isCancelled,
   }: IRequest): Promise<Transaction> {
     const transaction = await this.transactionsRepository.findById(id);
 
@@ -35,6 +37,7 @@ class UpdateTransactionService {
     transaction.amount = amount;
     transaction.due_date = due_date;
     transaction.isPaid = isPaid;
+    transaction.isCancelled = isCancelled;
 
     await this.transactionsRepository.save(transaction);
 

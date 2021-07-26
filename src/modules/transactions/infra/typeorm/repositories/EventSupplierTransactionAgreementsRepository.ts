@@ -29,16 +29,27 @@ class EventSupplierTransactionAgreementsRepository
     const findEventSupplierTransactionAgreements = await this.ormRepository.find(
       {
         where: { supplier_id },
+        // relations: ['event_supplier_transactions'],
+        // loadRelationIds: true,
       },
     );
 
     return findEventSupplierTransactionAgreements;
   }
 
-  public async create(
-    data: ICreateEventSupplierTransactionAgreementDTO,
-  ): Promise<EventSupplierTransactionAgreement> {
-    const transaction = this.ormRepository.create(data);
+  public async create({
+    amount,
+    number_of_installments,
+    supplier_id,
+  }: ICreateEventSupplierTransactionAgreementDTO): Promise<
+    EventSupplierTransactionAgreement
+  > {
+    const transaction = this.ormRepository.create({
+      amount,
+      number_of_installments,
+      supplier_id,
+      isCancelled: false,
+    });
 
     await this.ormRepository.save(transaction);
 

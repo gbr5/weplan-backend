@@ -45,6 +45,9 @@ class EventSupplier {
   isHired: boolean;
 
   @Column('boolean')
+  isDischarged: boolean;
+
+  @Column('boolean')
   weplanUser: boolean;
 
   @CreateDateColumn()

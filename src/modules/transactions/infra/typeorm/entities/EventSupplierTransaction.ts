@@ -24,7 +24,7 @@ class EventSupplierTransaction {
     agreement => agreement.transactions,
   )
   @JoinColumn({ name: 'agreement_id' })
-  eventSupplier: EventSupplierTransactionAgreement;
+  agreement: EventSupplierTransactionAgreement;
 
   @Column()
   transaction_id: string;
