@@ -154,7 +154,9 @@ class Event {
   )
   eventInspirationImages: EventInspirationImage[];
 
-  @OneToOne(() => EventBudget, eventBudget => eventBudget.event)
+  @OneToOne(() => EventBudget, eventBudget => eventBudget.event, {
+    eager: true,
+  })
   eventBudget: EventBudget;
 }
 
