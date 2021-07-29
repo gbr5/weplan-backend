@@ -7,8 +7,8 @@ import IEventSupplierRepository from '../repositories/IEventSuppliersRepository'
 import IGuestsRepository from '../repositories/IGuestsRepository';
 import IEventNotesRepository from '../repositories/IEventNotesRepository';
 import IUserCheckListsRepository from '../repositories/IUserCheckListsRepository';
-import IShowEventDTO from '../dtos/IShowEventDTO';
 import IEventDatesRepository from '../repositories/IEventDatesRepository';
+import Event from '../infra/typeorm/entities/Event';
 
 @injectable()
 class ShowEventService {
@@ -32,32 +32,14 @@ class ShowEventService {
     private userCheckListsRepository: IUserCheckListsRepository,
   ) {}
 
-  public async execute(event_id: string): Promise<IShowEventDTO> {
+  public async execute(event_id: string): Promise<Event> {
     const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
       throw new AppError('Event not found.');
     }
 
-    const eventNotes = await this.eventNotesRepository.findByEvent(event.id);
-    const eventDates = await this.eventDatesRepository.findByEventId(event.id);
-    const suppliers = await this.eventSuppliersRepository.findByEvent(event.id);
-    const guests = await this.guestsRepository.findByEvent(event.id);
-    const checkLists = await this.userCheckListsRepository.findByEvent(
-      event.id,
-    );
-    const event_avatar_url = event.getAvatarUrl();
-    return {
-      event,
-      checkLists,
-      eventNotes,
-      eventDates,
-      guests,
-      suppliers,
-      event_avatar_url: event_avatar_url || 'n/a',
-      eventFiles: event.eventFiles,
-      eventImages: event.eventImages,
-    };
+    return event;
   }
 }
 
