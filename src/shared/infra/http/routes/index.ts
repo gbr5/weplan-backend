@@ -143,6 +143,8 @@ import eventSupplierTransactionAgreementsRouter from '@modules/transactions/infr
 import eventSupplierTransactionsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactions.routes';
 import createEventSupplierTransactionAgreementWithTransactionsRouter from '@modules/transactions/infra/http/routes/eventSupplierTransactionAgreementWithTransactions.routes';
 import deleteEventSupplierTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/deleteEventSupplierTransactionAgreements.routes';
+import eventOwnersRouter from '@modules/events/infra/http/routes/eventOwners.routes';
+import eventMembersRouter from '@modules/events/infra/http/routes/eventMembers.routes';
 
 const routes = Router();
 
@@ -347,6 +349,12 @@ routes.use(
 
 // Event Supplier Transactions
 routes.use('/event-supplier-transactions', eventSupplierTransactionsRouter);
+
+// Event Owners
+routes.use('/event-owners', eventOwnersRouter);
+
+// Event Owners
+routes.use('/event-members', eventMembersRouter);
 
 routes.use('/list-owner-cards', listOwnerCardsRouter);
 routes.use('/check-lists', checkListRouter);

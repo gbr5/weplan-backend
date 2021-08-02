@@ -69,14 +69,11 @@ export default class EventMembersController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_id, member_id } = dataParams;
+    const { id } = dataParams;
 
     const deleteEventMember = container.resolve(DeleteEventMemberService);
 
-    await deleteEventMember.execute({
-      event_id,
-      member_id,
-    });
+    await deleteEventMember.execute(id);
 
     return res.status(200).send();
   }

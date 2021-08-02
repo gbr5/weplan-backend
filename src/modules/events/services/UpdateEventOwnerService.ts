@@ -6,8 +6,7 @@ import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRep
 import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
 
 interface IRequest {
-  owner_id: string;
-  event_id: string;
+  id: string;
   description: string;
   number_of_guests: number;
 }
@@ -19,15 +18,11 @@ class UpdateEventOwnerService {
   ) {}
 
   public async execute({
-    owner_id,
-    event_id,
+    id,
     description,
     number_of_guests,
   }: IRequest): Promise<EventOwner> {
-    const eventOwner = await this.eventOwnersRepository.findByEventAndOwnerId(
-      event_id,
-      owner_id,
-    );
+    const eventOwner = await this.eventOwnersRepository.findById(id);
 
     if (!eventOwner) {
       throw new AppError('Event informations not found.');

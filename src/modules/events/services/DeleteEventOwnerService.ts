@@ -14,17 +14,14 @@ class DeleteEventOwnerService {
     private eventOwnersRepository: IEventOwnersRepository,
   ) {}
 
-  public async execute({ event_id, owner_id }: IRequest): Promise<void> {
-    const checkList = await this.eventOwnersRepository.findByEventAndOwnerId(
-      event_id,
-      owner_id,
-    );
+  public async execute(id: string): Promise<void> {
+    const owner = await this.eventOwnersRepository.findById(id);
 
-    if (!checkList) {
+    if (!owner) {
       throw new AppError('Selected supplier not found.');
     }
 
-    await this.eventOwnersRepository.delete(checkList);
+    await this.eventOwnersRepository.delete(owner);
   }
 }
 

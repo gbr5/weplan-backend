@@ -10,6 +10,7 @@ interface IRequest {
   event_id: string;
   name: string;
   date: Date;
+  isNumberOfGuestsRestricted: boolean;
 }
 @injectable()
 class UpdateEventService {
@@ -23,6 +24,7 @@ class UpdateEventService {
     event_id,
     name,
     date,
+    isNumberOfGuestsRestricted,
   }: IRequest): Promise<Event> {
     const event = await this.eventsRepository.findById(event_id);
 
@@ -49,6 +51,7 @@ class UpdateEventService {
     event.name = eventName;
     event.trimmed_name = trimmedName;
     event.date = date;
+    event.isNumberOfGuestsRestricted = isNumberOfGuestsRestricted;
 
     const updatedEvent = await this.eventsRepository.save(event);
 

@@ -9,8 +9,6 @@ import UserCheckListsController from '@modules/events/infra/http/controllers/Use
 import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
 import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
 import EventPlannersController from '@modules/events/infra/http/controllers/EventPlannersController';
-import EventOwnersController from '@modules/events/infra/http/controllers/EventOwnersController';
-import EventMembersController from '@modules/events/infra/http/controllers/EventMembersController';
 import EventInfosController from '@modules/events/infra/http/controllers/EventInfosController';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
@@ -26,8 +24,6 @@ const userCheckLists = new UserCheckListsController();
 const guests = new GuestsController();
 const hostGuests = new HostGuestsController();
 const eventPlanners = new EventPlannersController();
-const eventOwners = new EventOwnersController();
-const eventMembers = new EventMembersController();
 const eventInfos = new EventInfosController();
 const weplanGuestConfirmation = new WeplanGuestConfirmationController();
 const upload = multer(uploadConfig.multer);
@@ -56,6 +52,7 @@ eventsRouter.put(
     [Segments.BODY]: {
       name: Joi.string().required(),
       date: Joi.date(),
+      isNumberOfGuestsRestricted: Joi.boolean(),
     },
   }),
   events.update,
@@ -218,72 +215,6 @@ eventsRouter.delete(
   eventPlanners.delete,
 );
 eventsRouter.get('/:event_id/event-planner/', eventPlanners.index);
-
-// === Event Owners === //
-
-eventsRouter.post(
-  '/:event_id/event-owners',
-  celebrate({
-    [Segments.BODY]: {
-      owner_id: Joi.string().required(),
-      description: Joi.string(),
-      number_of_guests: Joi.number(),
-    },
-  }),
-  eventOwners.create,
-);
-
-eventsRouter.put(
-  '/:event_id/event-owners/:owner_id',
-  celebrate({
-    [Segments.BODY]: {
-      description: Joi.string(),
-      number_of_guests: Joi.number(),
-    },
-  }),
-  eventOwners.update,
-);
-
-eventsRouter.put(
-  '/master-number-of-guests/:event_id',
-  celebrate({
-    [Segments.BODY]: {
-      description: Joi.string(),
-      number_of_guests: Joi.number(),
-    },
-  }),
-  eventOwners.updateEventMaster,
-);
-
-eventsRouter.delete('/:event_id/event-owners/:owner_id', eventOwners.delete);
-eventsRouter.get('/:event_id/event-owners/', eventOwners.index);
-eventsRouter.get('/event-owner/:event_id/:owner_id/', eventOwners.show);
-
-// === Event Members === //
-
-eventsRouter.post(
-  '/:event_id/event-members',
-  celebrate({
-    [Segments.BODY]: {
-      member_id: Joi.string().required(),
-      number_of_guests: Joi.number(),
-    },
-  }),
-  eventMembers.create,
-);
-
-eventsRouter.put(
-  '/:event_id/event-members/:member_id',
-  celebrate({
-    [Segments.BODY]: {
-      number_of_guests: Joi.number(),
-    },
-  }),
-  eventMembers.update,
-);
-
-eventsRouter.delete('/:event_id/event-members/:member_id', eventMembers.delete);
-eventsRouter.get('/:event_id/event-members/', eventMembers.index);
 
 // === Event Info === //
 

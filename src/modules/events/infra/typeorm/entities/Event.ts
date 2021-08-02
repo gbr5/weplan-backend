@@ -45,6 +45,9 @@ class Event {
   isDateDefined: boolean;
 
   @Column('boolean')
+  isNumberOfGuestsRestricted: boolean;
+
+  @Column('boolean')
   isPublished: boolean;
 
   @Column('boolean', { default: false })

@@ -35,13 +35,12 @@ export default class EventOwnersController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { number_of_guests, description } = req.body;
     const reqParams = req.params;
-    const { event_id, owner_id } = reqParams;
+    const { id } = reqParams;
 
     const updateEventOwner = container.resolve(UpdateEventOwnerService);
 
     const owner = await updateEventOwner.execute({
-      owner_id,
-      event_id,
+      id,
       description,
       number_of_guests,
     });
@@ -103,14 +102,11 @@ export default class EventOwnersController {
   public async delete(req: Request, res: Response): Promise<Response> {
     const dataParams = req.params;
 
-    const { event_id, owner_id } = dataParams;
+    const { id } = dataParams;
 
     const deleteEventOwner = container.resolve(DeleteEventOwnerService);
 
-    await deleteEventOwner.execute({
-      event_id,
-      owner_id,
-    });
+    await deleteEventOwner.execute(id);
 
     return res.status(200).send();
   }
