@@ -160,7 +160,7 @@ eventsRouter.post(
   celebrate({
     [Segments.BODY]: {
       first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
+      last_name: Joi.string(),
       description: Joi.string(),
       confirmed: Joi.boolean().required(),
       weplanUser: Joi.boolean().required(),
