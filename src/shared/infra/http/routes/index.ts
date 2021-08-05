@@ -145,6 +145,7 @@ import createEventSupplierTransactionAgreementWithTransactionsRouter from '@modu
 import deleteEventSupplierTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/deleteEventSupplierTransactionAgreements.routes';
 import eventOwnersRouter from '@modules/events/infra/http/routes/eventOwners.routes';
 import eventMembersRouter from '@modules/events/infra/http/routes/eventMembers.routes';
+import createMultipleGuestsRouter from '@modules/events/infra/http/routes/createMultipleGuests.routes';
 
 const routes = Router();
 
@@ -355,6 +356,9 @@ routes.use('/event-owners', eventOwnersRouter);
 
 // Event Owners
 routes.use('/event-members', eventMembersRouter);
+
+// Create Multiple Guests
+routes.use('/create-multiple-guests', createMultipleGuestsRouter);
 
 routes.use('/list-owner-cards', listOwnerCardsRouter);
 routes.use('/check-lists', checkListRouter);
