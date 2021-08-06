@@ -13,6 +13,9 @@ class Transaction {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('varchar')
+  name: string;
+
   @Column('numeric')
   amount: number;
 

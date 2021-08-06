@@ -7,6 +7,7 @@ import AppError from '@shared/errors/AppError';
 
 interface IRequest {
   id: string;
+  name: string;
   amount: number;
   due_date: Date;
   isPaid: boolean;
@@ -25,6 +26,7 @@ class UpdateTransactionService {
 
   public async execute({
     id,
+    name,
     amount,
     due_date,
     isPaid,
@@ -34,6 +36,7 @@ class UpdateTransactionService {
 
     if (!transaction) throw new AppError('Transaction not found!');
 
+    transaction.name = name;
     transaction.amount = amount;
     transaction.due_date = due_date;
     transaction.isPaid = isPaid;

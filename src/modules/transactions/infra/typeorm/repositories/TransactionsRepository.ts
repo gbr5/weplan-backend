@@ -34,7 +34,9 @@ class TransactionsRepository implements ITransactionsRepository {
     return findTransactions;
   }
 
+  // Don't alter this Function! It is destructed because of isCancelled!
   public async create({
+    name,
     amount,
     due_date,
     isPaid,
@@ -42,6 +44,7 @@ class TransactionsRepository implements ITransactionsRepository {
     payer_id,
   }: ICreateTransactionDTO): Promise<Transaction> {
     const transaction = this.ormRepository.create({
+      name,
       amount,
       due_date,
       isPaid,

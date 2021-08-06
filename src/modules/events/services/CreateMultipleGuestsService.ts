@@ -54,48 +54,49 @@ class CreateGuestService {
       throw new AppError('Host not found!');
     }
 
-    Promise.all([
-      contacts.map(async contact => {
-        return this.guestsRepository
-          .create({
-            first_name: contact.givenName,
-            last_name: contact.familyName,
-            description: '',
-            event_id,
-            host_id,
-            confirmed: false,
-            weplanUser: false,
-          })
-          .then(response => {
-            if (
-              contact &&
-              contact.phoneNumbers &&
-              contact.phoneNumbers.length > 0
-            ) {
-              contact.phoneNumbers.map(({ number }) => {
-                return this.guestContactsRepository.create({
-                  contact_info: number,
-                  contact_type: 'Phone',
-                  guest_id: response.id,
+    if (contacts && contacts.length > 0)
+      Promise.all([
+        contacts.map(async contact => {
+          return this.guestsRepository
+            .create({
+              first_name: contact.givenName,
+              last_name: contact.familyName,
+              description: '',
+              event_id,
+              host_id,
+              confirmed: false,
+              weplanUser: false,
+            })
+            .then(response => {
+              if (
+                contact &&
+                contact.phoneNumbers &&
+                contact.phoneNumbers.length > 0
+              ) {
+                contact.phoneNumbers.map(({ number }) => {
+                  return this.guestContactsRepository.create({
+                    contact_info: number,
+                    contact_type: 'Phone',
+                    guest_id: response.id,
+                  });
                 });
-              });
-            }
-            if (
-              contact &&
-              contact.emailAddresses &&
-              contact.emailAddresses.length > 0
-            ) {
-              contact.emailAddresses.map(({ email }) => {
-                return this.guestContactsRepository.create({
-                  contact_info: email,
-                  contact_type: 'Email',
-                  guest_id: response.id,
+              }
+              if (
+                contact &&
+                contact.emailAddresses &&
+                contact.emailAddresses.length > 0
+              ) {
+                contact.emailAddresses.map(({ email }) => {
+                  return this.guestContactsRepository.create({
+                    contact_info: email,
+                    contact_type: 'Email',
+                    guest_id: response.id,
+                  });
                 });
-              });
-            }
-          });
-      }),
-    ]);
+              }
+            });
+        }),
+      ]);
   }
 }
 

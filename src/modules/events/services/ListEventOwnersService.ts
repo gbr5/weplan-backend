@@ -17,7 +17,6 @@ class ListEventOwnersService {
 
   public async execute(event_id: string): Promise<EventOwner[]> {
     const eventOwners = await this.eventOwnersRepository.findByEvent(event_id);
-    console.log(eventOwners);
 
     return eventOwners;
   }
