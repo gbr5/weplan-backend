@@ -13,8 +13,11 @@ class Transaction {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar')
+  @Column()
   name: string;
+
+  @Column()
+  category: string | null;
 
   @Column('numeric')
   amount: number;

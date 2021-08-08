@@ -8,7 +8,15 @@ import UpdateTransactionService from '@modules/transactions/services/UpdateTrans
 
 export default class TransactionsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, amount, due_date, isPaid, payee_id, payer_id } = req.body;
+    const {
+      name,
+      amount,
+      due_date,
+      isPaid,
+      payee_id,
+      payer_id,
+      category,
+    } = req.body;
 
     const createTransactionService = container.resolve(
       CreateTransactionService,
@@ -16,6 +24,7 @@ export default class TransactionsController {
 
     const transaction = await createTransactionService.execute({
       name,
+      category,
       amount,
       due_date,
       isPaid,
@@ -27,7 +36,15 @@ export default class TransactionsController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { id, name, amount, due_date, isPaid, isCancelled } = req.body;
+    const {
+      id,
+      name,
+      category,
+      amount,
+      due_date,
+      isPaid,
+      isCancelled,
+    } = req.body;
 
     const updateTransactionService = container.resolve(
       UpdateTransactionService,
@@ -36,6 +53,7 @@ export default class TransactionsController {
     const transaction = await updateTransactionService.execute({
       id,
       name,
+      category,
       amount,
       due_date,
       isPaid,

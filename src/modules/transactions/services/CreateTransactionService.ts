@@ -17,6 +17,7 @@ class CreateTransactionService {
 
   public async execute({
     name,
+    category,
     amount,
     due_date,
     isPaid,
@@ -25,6 +26,7 @@ class CreateTransactionService {
   }: ICreateTransactionDTO): Promise<Transaction> {
     const transaction = await this.transactionsRepository.create({
       name,
+      category,
       amount,
       due_date,
       isPaid,
