@@ -8,7 +8,7 @@ import AppError from '@shared/errors/AppError';
 interface IRequest {
   id: string;
   name: string;
-  category: string;
+  category: string | null;
   amount: number;
   due_date: Date;
   isPaid: boolean;
