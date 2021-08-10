@@ -150,6 +150,7 @@ import createEventNoteAndEventSupplierNoteRouter from '@modules/notes/infra/http
 import transactionNotesRouter from '@modules/notes/infra/http/routes/transactionNotes.routes';
 import createEventNoteAndTransactionNoteRouter from '@modules/notes/infra/http/routes/createEventNoteAndTransactionNote.routes';
 import createEventSupplierNoteAndTransactionNoteRouter from '@modules/notes/infra/http/routes/createEventSupplierNoteAndTransactionNote.routes';
+import transactionFilesRouter from '@modules/transactions/infra/http/routes/transactionFiles.routes';
 
 const routes = Router();
 
@@ -357,6 +358,9 @@ routes.use('/financial/funnel', financialFunnelDefaultInfoFieldsRouter);
 routes.use('/transactions', transactionsRouter);
 routes.use('/list-payee-transactions', listPayeeTransactionsRouter);
 routes.use('/list-payer-transactions', listPayerTransactionsRouter);
+
+// Transaction Files
+routes.use('/transaction-files', transactionFilesRouter);
 
 // Event Supplier Transaction Agreements
 routes.use(

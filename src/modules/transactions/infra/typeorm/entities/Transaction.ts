@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import EventSupplierTransaction from './EventSupplierTransaction';
+import TransactionFile from './TransactionFile';
 
 @Entity('transactions')
 class Transaction {
@@ -57,6 +58,13 @@ class Transaction {
     // { eager: true },
   )
   notes: TransactionNote;
+
+  @OneToMany(
+    () => TransactionFile,
+    transactionFile => transactionFile.transaction,
+    { eager: true },
+  )
+  files: TransactionFile;
 }
 
 export default Transaction;

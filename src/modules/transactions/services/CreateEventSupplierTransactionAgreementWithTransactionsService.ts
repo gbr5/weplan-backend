@@ -34,12 +34,6 @@ class CreateEventSupplierTransactionAgreementWithTransactionsService {
     supplier_id,
     transactions,
   }: IRequest): Promise<EventSupplierTransactionAgreement> {
-    console.log({
-      amount,
-      number_of_installments,
-      supplier_id,
-      transactions,
-    });
     const agreement = await this.eventSupplierTransactionAgreementsRepository.create(
       {
         amount,
