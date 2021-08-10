@@ -53,7 +53,6 @@ import cardFilesRouter from '@modules/users/infra/http/routes/cardFiles.routes';
 import budgetFilesRouter from '@modules/users/infra/http/routes/budgetFiles.routes';
 import employeeFilesRouter from '@modules/users/infra/http/routes/employeeFiles.routes';
 import eventNotesRouter from '@modules/events/infra/http/routes/eventNotes.routes';
-import eventUserSupplierNotesRouter from '@modules/events/infra/http/routes/eventUserSupplierNotes.routes';
 import weplanGuestsRouter from '@modules/events/infra/http/routes/weplanGuests.routes';
 import nextEventRouter from '@modules/events/infra/http/routes/nextEvent.routes';
 import listEventsRouter from '@modules/events/infra/http/routes/listEvents.routes';
@@ -146,6 +145,11 @@ import deleteEventSupplierTransactionAgreementsRouter from '@modules/transaction
 import eventOwnersRouter from '@modules/events/infra/http/routes/eventOwners.routes';
 import eventMembersRouter from '@modules/events/infra/http/routes/eventMembers.routes';
 import createMultipleGuestsRouter from '@modules/events/infra/http/routes/createMultipleGuests.routes';
+import eventSupplierNotesRouter from '@modules/notes/infra/http/routes/eventSupplierNotes.routes';
+import createEventNoteAndEventSupplierNoteRouter from '@modules/notes/infra/http/routes/createEventNoteAndEventSupplierNote.routes';
+import transactionNotesRouter from '@modules/notes/infra/http/routes/transactionNotes.routes';
+import createEventNoteAndTransactionNoteRouter from '@modules/notes/infra/http/routes/createEventNoteAndTransactionNote.routes';
+import createEventSupplierNoteAndTransactionNoteRouter from '@modules/notes/infra/http/routes/createEventSupplierNoteAndTransactionNote.routes';
 
 const routes = Router();
 
@@ -277,11 +281,34 @@ routes.use('/event/weplan-guests', weplanGuestsRouter);
 routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
 routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
 routes.use('/member/number-of-guests', eventMemberNumberOfGuestsRouter);
-routes.use('/event/notes', eventNotesRouter);
+
+// Event Notes
+routes.use('/event-notes', eventNotesRouter);
+
+// Event Supplier Notes
+routes.use('/event-supplier-notes', eventSupplierNotesRouter);
+// Create Event And Event Supplier Notes
+routes.use(
+  '/create-event-and-supplier-note',
+  createEventNoteAndEventSupplierNoteRouter,
+);
+
+// Transaction Notes
+routes.use('/transaction-notes', transactionNotesRouter);
+// Create Event And Transaction Notes
+routes.use(
+  '/create-event-and-transaction-note',
+  createEventNoteAndTransactionNoteRouter,
+);
+// Create Event Supplier And Transaction Notes
+routes.use(
+  '/create-event-supplier-and-transaction-note',
+  createEventSupplierNoteAndTransactionNoteRouter,
+);
+
 routes.use('/event/files', eventFilesRouter);
 routes.use('/event/images', eventImagesRouter);
 routes.use('/event/invitations', eventInvitationsRouter);
-routes.use('/event/user/supplier-notes', eventUserSupplierNotesRouter);
 routes.use('/event/service-orders', eventServiceOrdersRouter);
 routes.use('/event-types', eventTypesRouter);
 routes.use('/friends-events', friendsEventsRouter);

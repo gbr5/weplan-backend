@@ -1,6 +1,6 @@
 export default interface ICreateTransactionDTO {
   name: string;
-  category: string | null;
+  category: string;
   amount: number;
   due_date: Date;
   isPaid: boolean;

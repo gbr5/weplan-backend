@@ -11,17 +11,6 @@ class EventNotesRepository implements IEventNotesRepository {
     this.ormRepository = getRepository(EventNote);
   }
 
-  public async findByEventAndAccess(
-    event_id: string,
-    access: string,
-  ): Promise<EventNote[]> {
-    const findEventNote = await this.ormRepository.find({
-      where: { event_id, access },
-    });
-
-    return findEventNote;
-  }
-
   public async findByEvent(event_id: string): Promise<EventNote[]> {
     const findEventNote = await this.ormRepository.find({
       where: { event_id },
@@ -46,6 +35,10 @@ class EventNotesRepository implements IEventNotesRepository {
 
   public async save(eventNote: EventNote): Promise<EventNote> {
     return this.ormRepository.save(eventNote);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
   }
 }
 

@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserEventOwnerNotes1607526494744
+export default class CreateEventSupplierNotes1628463925054
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_event_owner_notes',
+        name: 'event_supplier_notes',
         columns: [
           {
             name: 'id',
@@ -15,11 +15,11 @@ export default class CreateUserEventOwnerNotes1607526494744
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_note_id',
+            name: 'note_id',
             type: 'uuid',
           },
           {
-            name: 'owner_id',
+            name: 'supplier_id',
             type: 'uuid',
           },
           {
@@ -35,17 +35,17 @@ export default class CreateUserEventOwnerNotes1607526494744
         ],
         foreignKeys: [
           {
-            name: 'OwnerEventNote',
-            columnNames: ['event_note_id'],
-            referencedTableName: 'event_notes',
+            name: 'EventSupplierNotes',
+            columnNames: ['note_id'],
+            referencedTableName: 'notes',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'EventNoteOwner',
-            columnNames: ['owner_id'],
-            referencedTableName: 'event_owners',
+            name: 'NoteAboutEventSupplier',
+            columnNames: ['supplier_id'],
+            referencedTableName: 'event_suppliers',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -56,6 +56,6 @@ export default class CreateUserEventOwnerNotes1607526494744
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_event_owner_notes');
+    await queryRunner.dropTable('event_supplier_notes');
   }
 }

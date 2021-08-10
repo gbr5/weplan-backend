@@ -1,3 +1,4 @@
+import TransactionNote from '@modules/notes/infra/typeorm/entities/TransactionNote';
 import {
   Entity,
   Column,
@@ -5,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import EventSupplierTransaction from './EventSupplierTransaction';
 
@@ -17,7 +19,7 @@ class Transaction {
   name: string;
 
   @Column()
-  category: string | null;
+  category: string;
 
   @Column('numeric')
   amount: number;
@@ -48,6 +50,13 @@ class Transaction {
     eventSupplier => eventSupplier.transaction,
   )
   eventSupplierTransaction: EventSupplierTransaction;
+
+  @OneToMany(
+    () => TransactionNote,
+    transactionNote => transactionNote.transaction,
+    // { eager: true },
+  )
+  notes: TransactionNote;
 }
 
 export default Transaction;

@@ -2,19 +2,23 @@ import { injectable, inject } from 'tsyringe';
 
 import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
 import IEventNotesRepository from '@modules/events/repositories/IEventNotesRepository';
-import ICreateEventNoteDTO from '@modules/events/dtos/ICreateEventNoteDTO';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
+import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import IEventsRepository from '../repositories/IEventsRepository';
 
+interface IRequest {
+  note: string;
+  event_id: string;
+  author_id: string;
+}
 @injectable()
 class CreateEventNoteService {
   constructor(
     @inject('EventNotesRepository')
     private eventNotesRepository: IEventNotesRepository,
 
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('NotesRepository')
+    private notesRepository: INotesRepository,
 
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
@@ -22,31 +26,24 @@ class CreateEventNoteService {
 
   public async execute({
     event_id,
-    user_id,
-    access,
     note,
-    color,
-    isActive,
-  }: ICreateEventNoteDTO): Promise<EventNote> {
-    const user = await this.usersRepository.findById(user_id);
-
-    if (!user) {
-      throw new AppError('user not found!');
-    }
+    author_id,
+  }: IRequest): Promise<EventNote> {
+    const newNote = await this.notesRepository.create({
+      author_id,
+      isNew: true,
+      note,
+    });
 
     const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
-      throw new AppError('event not found!');
+      throw new AppError('Event not found!');
     }
 
     const eventNote = await this.eventNotesRepository.create({
-      color,
-      isActive,
-      access,
       event_id,
-      note,
-      user_id,
+      note_id: newNote.id,
     });
 
     return eventNote;

@@ -1,3 +1,4 @@
+import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
 import EventTaskNote from '@modules/events/infra/typeorm/entities/EventTaskNote';
 import {
   Entity,
@@ -8,6 +9,8 @@ import {
   OneToOne,
 } from 'typeorm';
 import CheckListTaskNote from './CheckListTaskNote';
+import EventSupplierNote from './EventSupplierNote';
+import TransactionNote from './TransactionNote';
 
 @Entity('notes')
 class Note {
@@ -32,8 +35,17 @@ class Note {
   @OneToOne(() => CheckListTaskNote, note => note.note)
   checkListTaskNote: CheckListTaskNote;
 
-  @OneToOne(() => EventTaskNote, note => note.note)
+  @OneToOne(() => EventTaskNote, task => task.note)
   eventTaskNote: EventTaskNote;
+
+  @OneToOne(() => EventSupplierNote, supplier => supplier.note)
+  eventSupplierNotes: EventSupplierNote;
+
+  @OneToOne(() => EventNote, event => event.note)
+  eventNote: EventNote;
+
+  @OneToOne(() => TransactionNote, transaction => transaction.note)
+  transactionNote: TransactionNote;
 }
 
 export default Note;

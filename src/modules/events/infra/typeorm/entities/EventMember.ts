@@ -6,12 +6,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
-import UserEventMemberNote from './UserEventMemberNote';
 
 @Entity('event_members')
 class EventMember {
@@ -44,9 +42,6 @@ class EventMember {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @OneToMany(() => UserEventMemberNote, member => member.memberNote)
-  memberNotes: UserEventMemberNote[];
 }
 
 export default EventMember;

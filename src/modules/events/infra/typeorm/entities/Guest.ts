@@ -13,7 +13,6 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
 import WeplanGuest from './WeplanGuest';
-import UserEventGuestNote from './UserEventGuestNote';
 import GuestContactInfo from './GuestContactInfo';
 import GuestContact from './GuestContact';
 
@@ -59,9 +58,6 @@ class Guest {
 
   @OneToOne(() => WeplanGuest, guest => guest.guest, { eager: true })
   weplanGuest: WeplanGuest;
-
-  @OneToMany(() => UserEventGuestNote, guest => guest.guestNote)
-  guestNotes: UserEventGuestNote[];
 
   @OneToMany(() => GuestContactInfo, guest => guest.guestContactInfo, {
     eager: true,

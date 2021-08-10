@@ -6,12 +6,10 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
-import UserEventOwnerNote from './UserEventOwnerNote';
 
 @Entity('event_owners')
 class EventOwner {
@@ -45,9 +43,6 @@ class EventOwner {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @OneToMany(() => UserEventOwnerNote, owner => owner.ownerNote)
-  ownerNotes: UserEventOwnerNote[];
 }
 
 export default EventOwner;

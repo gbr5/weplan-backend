@@ -38,6 +38,7 @@ class TransactionsRepository implements ITransactionsRepository {
   public async create({
     name,
     amount,
+    category,
     due_date,
     isPaid,
     payee_id,
@@ -50,6 +51,7 @@ class TransactionsRepository implements ITransactionsRepository {
       isPaid,
       payee_id,
       payer_id,
+      category,
       isCancelled: false,
     });
 

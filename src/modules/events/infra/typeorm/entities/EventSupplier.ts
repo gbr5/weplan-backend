@@ -13,8 +13,8 @@ import {
 import Event from '@modules/events/infra/typeorm/entities/Event';
 import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
 import EventSupplierTransactionAgreement from '@modules/transactions/infra/typeorm/entities/EventSupplierTransactionAgreement';
+import EventSupplierNote from '@modules/notes/infra/typeorm/entities/EventSupplierNote';
 import EventWeplanSupplier from './EventWeplanSupplier';
-import EventUserSupplierNote from './EventUserSupplierNote';
 
 @Entity('event_suppliers')
 class EventSupplier {
@@ -71,10 +71,11 @@ class EventSupplier {
   transactionAgreements: EventSupplierTransactionAgreement[];
 
   @OneToMany(
-    () => EventUserSupplierNote,
-    transactionAgreement => transactionAgreement.eventSupplierNote,
+    () => EventSupplierNote,
+    transactionAgreement => transactionAgreement.eventSupplier,
+    { eager: true },
   )
-  eventSupplierNotes: EventUserSupplierNote[];
+  notes: EventSupplierNote[];
 }
 
 export default EventSupplier;

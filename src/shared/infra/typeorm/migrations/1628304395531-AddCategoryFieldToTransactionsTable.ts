@@ -8,7 +8,6 @@ export default class AddCategoryFieldToTransactionsTable1628304395531
       new TableColumn({
         name: 'category',
         type: 'varchar',
-        isNullable: true,
       }),
     );
   }

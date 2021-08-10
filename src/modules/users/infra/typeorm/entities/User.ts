@@ -43,8 +43,6 @@ import UserSupplierCategories from '@modules/suppliers/infra/typeorm/entities/Us
 import CompanyFunnelCardInfoField from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfoField';
 import CompanyFunnelCardInfo from '@modules/suppliers/infra/typeorm/entities/CompanyFunnelCardInfo';
 import EventWeplanSupplier from '@modules/events/infra/typeorm/entities/EventWeplanSupplier';
-import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
-import EventNoteAccess from '@modules/events/infra/typeorm/entities/EventNoteAccess';
 import Guest from '@modules/events/infra/typeorm/entities/Guest';
 import EventDateVote from '@modules/events/infra/typeorm/entities/EventDateVote';
 import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
@@ -288,12 +286,6 @@ class User {
     funnel_card_info => funnel_card_info.author,
   )
   funnel_card_infos: CompanyFunnelCardInfo[];
-
-  @OneToMany(() => EventNote, eventNote => eventNote.userEventNote)
-  userEventNotes: EventNote[];
-
-  @OneToMany(() => EventNoteAccess, eventNote => eventNote.userAccessNote)
-  userAccessNotes: EventNoteAccess[];
 
   @OneToMany(() => UserImage, userImage => userImage.user)
   userImages: UserImage[];

@@ -34,6 +34,12 @@ class CreateEventSupplierTransactionAgreementWithTransactionsService {
     supplier_id,
     transactions,
   }: IRequest): Promise<EventSupplierTransactionAgreement> {
+    console.log({
+      amount,
+      number_of_installments,
+      supplier_id,
+      transactions,
+    });
     const agreement = await this.eventSupplierTransactionAgreementsRepository.create(
       {
         amount,
@@ -41,13 +47,31 @@ class CreateEventSupplierTransactionAgreementWithTransactionsService {
         supplier_id,
       },
     );
-    transactions.map(async transaction => {
-      const response = await this.transactionsRepository.create(transaction);
-      await this.eventSupplierTransactionsRepository.create({
-        agreement_id: agreement.id,
-        transaction_id: response.id,
-      });
-    });
+    transactions.map(
+      async ({
+        amount: transactionAmount,
+        category,
+        due_date,
+        isPaid,
+        name,
+        payee_id,
+        payer_id,
+      }) => {
+        const response = await this.transactionsRepository.create({
+          amount: transactionAmount,
+          category,
+          due_date,
+          isPaid,
+          name,
+          payee_id,
+          payer_id,
+        });
+        await this.eventSupplierTransactionsRepository.create({
+          agreement_id: agreement.id,
+          transaction_id: response.id,
+        });
+      },
+    );
 
     return agreement;
   }

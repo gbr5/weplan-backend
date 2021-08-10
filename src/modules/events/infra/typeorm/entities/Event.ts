@@ -136,8 +136,8 @@ class Event {
   )
   eventServiceOrders: EventServiceOrder[];
 
-  @OneToMany(() => EventNote, note => note.event)
-  eventNotes: EventNote[];
+  @OneToMany(() => EventNote, note => note.event, { eager: true })
+  notes: EventNote[];
 
   @OneToMany(() => EventDate, eventDate => eventDate.event, { eager: true })
   eventDates: EventDate[];

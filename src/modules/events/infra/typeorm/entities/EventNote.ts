@@ -5,18 +5,11 @@ import {
   UpdateDateColumn,
   JoinColumn,
   Column,
-  OneToMany,
   ManyToOne,
 } from 'typeorm';
 
 import Event from '@modules/events/infra/typeorm/entities/Event';
-import User from '@modules/users/infra/typeorm/entities/User';
-import EventUserSupplierNote from './EventUserSupplierNote';
-import UserEventGuestNote from './UserEventGuestNote';
-import UserEventOwnerNote from './UserEventOwnerNote';
-import UserEventMemberNote from './UserEventMemberNote';
-import UserEventTaskNote from './UserEventTaskNote';
-import EventNoteAccess from './EventNoteAccess';
+import Note from '@modules/notes/infra/typeorm/entities/Note';
 
 @Entity('event_notes')
 class EventNote {
@@ -26,61 +19,22 @@ class EventNote {
   @Column('uuid')
   event_id: string;
 
-  @ManyToOne(() => Event, event => event.eventNotes)
+  @ManyToOne(() => Event, event => event.notes)
   @JoinColumn({ name: 'event_id' })
   event: Event;
 
   @Column('uuid')
-  user_id: string;
+  note_id: string;
 
-  @ManyToOne(() => User, user => user.userEventNotes, { eager: true })
-  @JoinColumn({ name: 'user_id' })
-  userEventNote: User;
-
-  @Column()
-  access: string;
-
-  @Column()
-  note: string;
-
-  @Column()
-  color: string;
-
-  @Column('boolean')
-  isActive: boolean;
+  @ManyToOne(() => Note, note => note.eventNote, { eager: true })
+  @JoinColumn({ name: 'note_id' })
+  note: Note;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  @OneToMany(
-    () => EventUserSupplierNote,
-    eventSupplier => eventSupplier.eventUserSupplierNote,
-  )
-  eventUserSupplierNotes: EventUserSupplierNote[];
-
-  @OneToMany(() => UserEventGuestNote, eventGuest => eventGuest.eventGuestNote)
-  eventGuestNotes: UserEventGuestNote[];
-
-  @OneToMany(() => UserEventOwnerNote, eventOwner => eventOwner.eventOwnerNote)
-  eventOwnerNotes: UserEventOwnerNote[];
-
-  @OneToMany(
-    () => UserEventMemberNote,
-    eventMember => eventMember.eventMemberNote,
-  )
-  eventMemberNotes: UserEventMemberNote[];
-
-  @OneToMany(() => UserEventTaskNote, eventTask => eventTask.eventTaskNote)
-  eventTaskNotes: UserEventTaskNote[];
-
-  @OneToMany(
-    () => EventNoteAccess,
-    eventUserAccess => eventUserAccess.eventUserAccessNote,
-  )
-  eventUserAccessNotes: EventNoteAccess[];
 }
 
 export default EventNote;

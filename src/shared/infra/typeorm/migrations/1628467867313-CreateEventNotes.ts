@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserEventMemberNotes1607526486356
+export default class CreateEventNotes1628467867313
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_event_member_notes',
+        name: 'event_notes',
         columns: [
           {
             name: 'id',
@@ -15,11 +15,11 @@ export default class CreateUserEventMemberNotes1607526486356
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_note_id',
+            name: 'note_id',
             type: 'uuid',
           },
           {
-            name: 'member_id',
+            name: 'event_id',
             type: 'uuid',
           },
           {
@@ -35,17 +35,17 @@ export default class CreateUserEventMemberNotes1607526486356
         ],
         foreignKeys: [
           {
-            name: 'MemberEventNote',
-            columnNames: ['event_note_id'],
-            referencedTableName: 'event_notes',
+            name: 'EventNotes',
+            columnNames: ['note_id'],
+            referencedTableName: 'notes',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'EventNoteMember',
-            columnNames: ['member_id'],
-            referencedTableName: 'event_members',
+            name: 'NoteAboutEvent',
+            columnNames: ['event_id'],
+            referencedTableName: 'events',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -56,6 +56,6 @@ export default class CreateUserEventMemberNotes1607526486356
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_event_member_notes');
+    await queryRunner.dropTable('event_notes');
   }
 }

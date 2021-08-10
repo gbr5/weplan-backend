@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateUserEventTaskNotes1607526446867
+export default class CreateTransactionNotes1628543806613
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'user_event_task_notes',
+        name: 'transaction_notes',
         columns: [
           {
             name: 'id',
@@ -15,11 +15,11 @@ export default class CreateUserEventTaskNotes1607526446867
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'event_note_id',
+            name: 'note_id',
             type: 'uuid',
           },
           {
-            name: 'task_id',
+            name: 'transaction_id',
             type: 'uuid',
           },
           {
@@ -35,17 +35,17 @@ export default class CreateUserEventTaskNotes1607526446867
         ],
         foreignKeys: [
           {
-            name: 'TaskEventNote',
-            columnNames: ['event_note_id'],
-            referencedTableName: 'event_notes',
+            name: 'TransactionNotes',
+            columnNames: ['note_id'],
+            referencedTableName: 'notes',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'EventNoteTask',
-            columnNames: ['task_id'],
-            referencedTableName: 'check_list_tasks',
+            name: 'NoteAboutTransaction',
+            columnNames: ['transaction_id'],
+            referencedTableName: 'transactions',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -56,6 +56,6 @@ export default class CreateUserEventTaskNotes1607526446867
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user_event_task_notes');
+    await queryRunner.dropTable('transaction_notes');
   }
 }

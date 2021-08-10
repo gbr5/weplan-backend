@@ -3,8 +3,6 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import IEventNotesRepository from '@modules/events/repositories/IEventNotesRepository';
 
-import EventNote from '@modules/events/infra/typeorm/entities/EventNote';
-
 @injectable()
 class DeleteEventNoteService {
   constructor(
@@ -12,18 +10,14 @@ class DeleteEventNoteService {
     private eventNotesRepository: IEventNotesRepository,
   ) {}
 
-  public async execute(id: string): Promise<EventNote> {
+  public async execute(id: string): Promise<void> {
     const eventNote = await this.eventNotesRepository.findById(id);
 
-    if (!eventNote || !eventNote.isActive) {
+    if (!eventNote) {
       throw new AppError('Event note not found.');
     }
 
-    eventNote.isActive = false;
-
-    const updatedEventNote = await this.eventNotesRepository.save(eventNote);
-
-    return updatedEventNote;
+    await this.eventNotesRepository.delete(eventNote.id);
   }
 }
 
