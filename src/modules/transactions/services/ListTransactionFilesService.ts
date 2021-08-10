@@ -8,14 +8,14 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 class ListTransactionFilesService {
   constructor(
     @inject('TransactionFilesRepository')
-    private eventSupplierTransactionsRepository: ITransactionFilesRepository,
+    private transactionsRepository: ITransactionFilesRepository,
 
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute(transaction_id: string): Promise<TransactionFile[]> {
-    const transactionFiles = await this.eventSupplierTransactionsRepository.findByTransactionId(
+    const transactionFiles = await this.transactionsRepository.findByTransactionId(
       transaction_id,
     );
 

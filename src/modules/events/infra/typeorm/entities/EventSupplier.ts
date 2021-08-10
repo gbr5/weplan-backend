@@ -14,6 +14,7 @@ import Event from '@modules/events/infra/typeorm/entities/Event';
 import SupplierSubCategory from '@modules/suppliers/infra/typeorm/entities/SupplierSubCategory';
 import EventSupplierTransactionAgreement from '@modules/transactions/infra/typeorm/entities/EventSupplierTransactionAgreement';
 import EventSupplierNote from '@modules/notes/infra/typeorm/entities/EventSupplierNote';
+import EventSupplierFile from '@modules/suppliers/infra/typeorm/entities/EventSupplierFile';
 import EventWeplanSupplier from './EventWeplanSupplier';
 
 @Entity('event_suppliers')
@@ -76,6 +77,13 @@ class EventSupplier {
     { eager: true },
   )
   notes: EventSupplierNote[];
+
+  @OneToMany(
+    () => EventSupplierFile,
+    eventSupplier => eventSupplier.eventSupplier,
+    { eager: true },
+  )
+  files: EventSupplierFile[];
 }
 
 export default EventSupplier;
