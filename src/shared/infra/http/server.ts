@@ -16,6 +16,11 @@ import '@shared/container';
 
 const app = express();
 // app.use(rateLimiter);
+
+// Next 2 lines are trying to solve Error 413 - Request Entity Too Large - nginx /1.18.0 (Ubuntu)
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
+
 app.use(
   cors({
     origin: '*',
