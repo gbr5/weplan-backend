@@ -369,6 +369,13 @@ import TransactionFilesRepository from '@modules/transactions/infra/typeorm/repo
 import IEventSupplierFilesRepository from '@modules/suppliers/repositories/IEventSupplierFilesRepository';
 import EventSupplierFilesRepository from '@modules/suppliers/infra/typeorm/repositories/EventSupplierFilesRepository';
 
+import IEventSupplierBudgetsRepository from '@modules/suppliers/repositories/IEventSupplierBudgetsRepository';
+import EventSupplierBudgetsRepository from '@modules/suppliers/infra/typeorm/repositories/EventSupplierBudgetsRepository';
+
+container.registerSingleton<IEventSupplierBudgetsRepository>(
+  'EventSupplierBudgetsRepository',
+  EventSupplierBudgetsRepository,
+);
 container.registerSingleton<IEventSupplierFilesRepository>(
   'EventSupplierFilesRepository',
   EventSupplierFilesRepository,

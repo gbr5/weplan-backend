@@ -152,6 +152,7 @@ import createEventNoteAndTransactionNoteRouter from '@modules/notes/infra/http/r
 import createEventSupplierNoteAndTransactionNoteRouter from '@modules/notes/infra/http/routes/createEventSupplierNoteAndTransactionNote.routes';
 import transactionFilesRouter from '@modules/transactions/infra/http/routes/transactionFiles.routes';
 import eventSupplierFilesRouter from '@modules/suppliers/infra/http/routes/eventSupplierFiles.routes';
+import eventSupplierBudgetsRouter from '@modules/suppliers/infra/http/routes/eventSupplierBudgets.routes';
 
 const routes = Router();
 
@@ -385,6 +386,9 @@ routes.use('/event-supplier-transactions', eventSupplierTransactionsRouter);
 
 // Event Supplier Files
 routes.use('/event-supplier-files', eventSupplierFilesRouter);
+
+// Event Supplier Budgets
+routes.use('/event-supplier-budgets', eventSupplierBudgetsRouter);
 
 // Event Owners
 routes.use('/event-owners', eventOwnersRouter);

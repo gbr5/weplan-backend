@@ -4,7 +4,7 @@ import crypto from 'crypto';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
-const FILE_MAX_SIZE = 100 * 1024 * 1024;
+const FILE_MAX_SIZE = 1000 * 1024 * 1024;
 
 interface IUploadConfig {
   driver: 's3' | 'disk';

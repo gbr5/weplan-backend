@@ -8,22 +8,24 @@ import IStorageProvider from '@shared/container/providers/StorageProvider/models
 class DeleteEventSupplierFileService {
   constructor(
     @inject('EventSupplierFilesRepository')
-    private transactionFilesRepository: IEventSupplierFilesRepository,
+    private eventSupplierFilesRepository: IEventSupplierFilesRepository,
 
     @inject('StorageProvider')
     private storageProvider: IStorageProvider,
   ) {}
 
   public async execute(id: string): Promise<void> {
-    const transactionFile = await this.transactionFilesRepository.findById(id);
-    if (!transactionFile) throw new AppError('EventSupplier not found!');
-    await this.storageProvider.deleteFile(transactionFile.file_name);
+    const eventSupplierFile = await this.eventSupplierFilesRepository.findById(
+      id,
+    );
+    if (!eventSupplierFile) throw new AppError('EventSupplier not found!');
+    await this.storageProvider.deleteFile(eventSupplierFile.file_name);
 
-    if (!transactionFile) {
+    if (!eventSupplierFile) {
       throw new AppError('No confirmation found.');
     }
 
-    await this.transactionFilesRepository.delete(transactionFile);
+    await this.eventSupplierFilesRepository.delete(eventSupplierFile);
   }
 }
 
