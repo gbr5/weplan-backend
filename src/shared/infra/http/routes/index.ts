@@ -154,6 +154,7 @@ import transactionFilesRouter from '@modules/transactions/infra/http/routes/tran
 import eventSupplierFilesRouter from '@modules/suppliers/infra/http/routes/eventSupplierFiles.routes';
 import eventSupplierBudgetsRouter from '@modules/suppliers/infra/http/routes/eventSupplierBudgets.routes';
 import listUserTransactionsRouter from '@modules/transactions/infra/http/routes/listUserTransactions.routes';
+import listEventTransactionsRouter from '@modules/transactions/infra/http/routes/listEventTransactions.routes';
 
 const routes = Router();
 
@@ -362,6 +363,7 @@ routes.use('/transactions', transactionsRouter);
 routes.use('/list-payee-transactions', listPayeeTransactionsRouter);
 routes.use('/list-payer-transactions', listPayerTransactionsRouter);
 routes.use('/list-user-transactions', listUserTransactionsRouter);
+routes.use('/list-event-transactions', listEventTransactionsRouter);
 
 // Transaction Files
 routes.use('/transaction-files', transactionFilesRouter);
