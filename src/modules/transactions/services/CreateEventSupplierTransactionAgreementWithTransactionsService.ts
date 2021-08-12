@@ -88,8 +88,9 @@ class CreateEventSupplierTransactionAgreementWithTransactionsService {
     );
 
     const note = `
-Contrato criado com fornecedor ${supplier.name}.
-No valor de ${formatBrlCurrency(amount)} em ${number_of_installments} vezes.
+Contrato criado com fornecedor '${supplier.name}'.
+
+No valor de '${formatBrlCurrency(amount)}' em ${number_of_installments} vezes.
 `;
     const newNote = await this.notesRepository.create({
       author_id: supplier.event_id,

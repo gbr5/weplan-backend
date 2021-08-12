@@ -70,12 +70,9 @@ Valor do contrato foi alterado de ${formatBrlCurrency(
 
     const note = `
 Contrato com fornecedor ${supplier.name} foi alterado.
-
 ${agreement.amount !== amount ? fromAmout : ''}
-
 ${isCancelled && agreement.isCancelled ? 'Contrato cancelado!' : ''}
-${isCancelled && !agreement.isCancelled ? 'Contrato foi cancelado' : ''}
-`;
+${isCancelled && !agreement.isCancelled ? 'Contrato foi cancelado' : ''}`;
     agreement.amount = amount;
     agreement.number_of_installments = number_of_installments;
     agreement.isCancelled = isCancelled;

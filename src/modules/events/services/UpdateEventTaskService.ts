@@ -41,8 +41,6 @@ class UpdateEventTaskService {
     if (status === 'finnished' && eventTask.status !== 'finnished') {
       const note = `
 Tarefa ${title} concluída!
-
-        Uhull! Parabéns!
 `;
       const newNote = await this.notesRepository.create({
         author_id: eventTask.event_id,
