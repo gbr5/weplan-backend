@@ -12,8 +12,8 @@ personInfoRouter.post(
   celebrate({
     [Segments.BODY]: {
       first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
-      person_id: Joi.string().required(),
+      last_name: Joi.string(),
+      person_id: Joi.string(),
     },
   }),
   personInfoController.create,
@@ -32,9 +32,9 @@ personInfoRouter.put(
   ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
-      person_id: Joi.string().required(),
+      first_name: Joi.string(),
+      last_name: Joi.string(),
+      person_id: Joi.string(),
     },
   }),
   personInfoController.update,
