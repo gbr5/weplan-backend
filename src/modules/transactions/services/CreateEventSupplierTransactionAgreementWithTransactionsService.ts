@@ -96,16 +96,14 @@ No valor de ${formatBrlCurrency(amount)} em ${number_of_installments} vezes.
       isNew: true,
       note,
     });
-    Promise.all([
-      await this.eventNotesRepository.create({
-        event_id: supplier.event_id,
-        note_id: newNote.id,
-      }),
-      await this.eventSupplierNotesRepository.create({
-        supplier_id,
-        note_id: newNote.id,
-      }),
-    ]);
+    await this.eventNotesRepository.create({
+      event_id: supplier.event_id,
+      note_id: newNote.id,
+    });
+    await this.eventSupplierNotesRepository.create({
+      supplier_id,
+      note_id: newNote.id,
+    });
 
     return agreement;
   }

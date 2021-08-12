@@ -65,12 +65,16 @@ class UpdateEventSupplierTransactionAgreementService {
     const fromAmout = `
 Valor do contrato foi alterado de ${formatBrlCurrency(
       agreement?.amount,
-    )} para ${formatBrlCurrency(amount)}`;
+    )} para ${formatBrlCurrency(amount)}
+`;
 
     const note = `
 Contrato com fornecedor ${supplier.name} foi alterado.
-${agreement.amount !== amount && fromAmout}
-${isCancelled && 'Contrato foi cancelado!'}
+
+${agreement.amount !== amount ? fromAmout : ''}
+
+${isCancelled && agreement.isCancelled && 'Contrato cancelado!'}
+${isCancelled && !agreement.isCancelled && 'Contrato foi cancelado'}
 `;
     agreement.amount = amount;
     agreement.number_of_installments = number_of_installments;
@@ -78,28 +82,28 @@ ${isCancelled && 'Contrato foi cancelado!'}
 
     await this.eventSupplierTransactionAgreementsRepository.save(agreement);
 
-    if (transactions)
+    if (transactions) {
       Promise.all([
         transactions.map(transaction => {
           return this.transactionsRepository.save(transaction);
         }),
       ]);
-
+    }
     const newNote = await this.notesRepository.create({
       author_id: supplier.event_id,
       isNew: true,
       note,
     });
-    Promise.all([
-      await this.eventNotesRepository.create({
-        event_id: supplier.event_id,
-        note_id: newNote.id,
-      }),
-      await this.eventSupplierNotesRepository.create({
-        supplier_id: supplier.id,
-        note_id: newNote.id,
-      }),
-    ]);
+
+    await this.eventNotesRepository.create({
+      event_id: supplier.event_id,
+      note_id: newNote.id,
+    });
+    await this.eventSupplierNotesRepository.create({
+      supplier_id: supplier.id,
+      note_id: newNote.id,
+    });
+
     return agreement;
   }
 }
