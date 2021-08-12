@@ -5,8 +5,10 @@ import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepos
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import AppError from '@shared/errors/AppError';
+import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import ICreateEventTaskDTO from '../dtos/ICreateEventTaskDTO';
 import IEventsRepository from '../repositories/IEventsRepository';
+import IEventNotesRepository from '../repositories/IEventNotesRepository';
 
 @injectable()
 class CreateEventTaskService {
@@ -16,6 +18,12 @@ class CreateEventTaskService {
 
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
+
+    @inject('EventNotesRepository')
+    private eventNotesRepository: IEventNotesRepository,
+
+    @inject('NotesRepository')
+    private notesRepository: INotesRepository,
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationRepository,
@@ -43,6 +51,20 @@ class CreateEventTaskService {
       priority,
       status,
       due_date,
+    });
+
+    const note = `
+Nova tarefa: ${title}
+    `;
+
+    const newNote = await this.notesRepository.create({
+      author_id: event_id,
+      isNew: true,
+      note,
+    });
+    await this.eventNotesRepository.create({
+      event_id,
+      note_id: newNote.id,
     });
 
     return eventTask;
