@@ -18,6 +18,11 @@ transactionFilesRouter.post(
   transactionFilesController.create,
 );
 
+transactionFilesRouter.put(
+  '/:id',
+  ensureAuthenticated,
+  transactionFilesController.update,
+);
 transactionFilesRouter.get(
   '/:transaction_id',
   ensureAuthenticated,
