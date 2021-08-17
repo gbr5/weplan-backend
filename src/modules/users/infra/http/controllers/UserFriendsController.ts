@@ -13,7 +13,6 @@ export default class UserFriendsController {
     const user_id = req.user.id;
 
     const createUserFriend = container.resolve(CreateUserFriendService);
-    console.log({ user_id, friend_id });
 
     const user = await createUserFriend.execute({
       user_id,

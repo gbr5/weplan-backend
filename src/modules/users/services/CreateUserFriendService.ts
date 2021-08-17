@@ -31,7 +31,6 @@ class CreateUserFriendService {
       isConfirmed: false,
     });
 
-    console.log({ friend });
     return friend;
   }
 }
