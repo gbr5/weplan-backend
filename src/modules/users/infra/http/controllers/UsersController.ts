@@ -51,28 +51,26 @@ export default class UsersController {
       user.name.includes(userName),
     );
 
-    if (sortedUsersByName.length > 0) {
+    if (userName && userName !== '' && sortedUsersByName.length > 0) {
       return res.json(classToClass(sortedUsersByName));
     }
 
     const filteredUsers = users.filter(user => user.id !== user_id);
 
-    const findUserByEmail = filteredUsers.filter(
-      xUser => xUser.email === email,
-    );
-
-    if (findUserByEmail.length === 1) {
-      return res.json(classToClass(findUserByEmail));
+    if (email && email !== '') {
+      const findUserByEmail = filteredUsers.filter(
+        xUser => xUser.email === email,
+      );
+      if (findUserByEmail.length === 1)
+        return res.json(classToClass(findUserByEmail));
     }
-
-    const findUserByUniqueName = filteredUsers.filter(
-      xUser => xUser.name === uniqueName,
-    );
-
-    if (findUserByUniqueName.length === 1) {
-      return res.json(classToClass(findUserByUniqueName));
+    if (uniqueName && uniqueName !== '') {
+      const findUserByUniqueName = filteredUsers.filter(
+        xUser => xUser.name === uniqueName,
+      );
+      if (findUserByUniqueName.length === 1)
+        return res.json(classToClass(findUserByUniqueName));
     }
-
     return res.json(classToClass(users));
   }
 
