@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import FriendGroup from '@modules/users/infra/typeorm/entities/FriendGroup';
 
 @Entity('user_friends')
 class UserFriend {
@@ -30,14 +29,8 @@ class UserFriend {
   @JoinColumn({ name: 'friend_id' })
   friend: User;
 
-  @Column('uuid')
-  friend_group: string;
-
-  @ManyToOne(() => FriendGroup, group => group.userFriendGroups, {
-    eager: true,
-  })
-  @JoinColumn({ name: 'friend_group' })
-  friendGroup: FriendGroup;
+  @Column('boolean')
+  isConfirmed: boolean;
 
   @CreateDateColumn()
   created_at: Date;

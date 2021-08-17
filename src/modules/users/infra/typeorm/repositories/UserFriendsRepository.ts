@@ -13,45 +13,28 @@ class UserFriendsRepository implements IUserFriendsRepository {
     this.ormRepository = getRepository(UserFriend);
   }
 
-  public async findByUserFriendId(id: string): Promise<UserFriend | undefined> {
+  public async findById(id: string): Promise<UserFriend | undefined> {
     const friend = await this.ormRepository.findOne(id);
 
     return friend;
   }
 
-  public async findByFriendGroupAndFriendId(
-    friend_id: string,
-    friend_group: string,
-  ): Promise<UserFriend | undefined> {
-    const friend = await this.ormRepository.findOne({
-      where: { friend_id, friend_group },
+  public async findByUserId(user_id: string): Promise<UserFriend[]> {
+    const friend = await this.ormRepository.find({
+      where: { user_id },
     });
 
     return friend;
   }
 
-  public async findByGroupId(friend_group: string): Promise<UserFriend[]> {
-    const friends = await this.ormRepository.find({
-      where: { friend_group },
-    });
-
-    return friends;
-  }
-
-  public async findByFriendId(friend_id: string): Promise<UserFriend[]> {
-    const friends = await this.ormRepository.find({
+  public async findByFriendId(
+    friend_id: string,
+  ): Promise<UserFriend | undefined> {
+    const friend = await this.ormRepository.findOne({
       where: { friend_id },
     });
 
-    return friends;
-  }
-
-  public async findAllFriends(user_id: string): Promise<UserFriend[]> {
-    const friends = await this.ormRepository.find({
-      where: { user_id },
-    });
-
-    return friends;
+    return friend;
   }
 
   public async create(userData: ICreateUserFriendDTO): Promise<UserFriend> {

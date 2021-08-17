@@ -5,7 +5,6 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import User from '@modules/users/infra/typeorm/entities/User';
-import IFriendGroupsRepository from '../repositories/IFriendGroupsRepository';
 
 interface IRequest {
   name: string;
@@ -19,9 +18,6 @@ class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-
-    @inject('FriendGroupsRepository')
-    private friendGroupsRepository: IFriendGroupsRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -70,11 +66,6 @@ class CreateUserService {
       email,
       password: hashedPassword,
       isCompany,
-    });
-
-    await this.friendGroupsRepository.create({
-      name: 'All',
-      user_id: user.id,
     });
 
     await this.cacheProvider.invalidatePrefix('providers-list');

@@ -11,7 +11,7 @@ class DeleteContactTypeService {
   ) {}
 
   public async execute(id: string): Promise<void> {
-    const friend = await this.userFriendsRepository.findByUserFriendId(id);
+    const friend = await this.userFriendsRepository.findById(id);
 
     if (!friend) {
       throw new AppError('Friend not found.');

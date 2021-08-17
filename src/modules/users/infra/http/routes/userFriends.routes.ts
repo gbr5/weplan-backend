@@ -14,12 +14,16 @@ userFriendsRouter.post(
   celebrate({
     [Segments.BODY]: {
       friend_id: Joi.string().required(),
-      friend_group: Joi.string().required(),
     },
   }),
   userFriendsController.create,
 );
 userFriendsRouter.get('/', ensureAuthenticated, userFriendsController.list);
+userFriendsRouter.put(
+  '/:id',
+  ensureAuthenticated,
+  userFriendsController.update,
+);
 userFriendsRouter.delete(
   '/:id',
   ensureAuthenticated,

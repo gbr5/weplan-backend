@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateFriendGroups1599405566954
+export default class CreateUserFriends1629185385368
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'friend_groups',
+        name: 'user_friends',
         columns: [
           {
             name: 'id',
@@ -19,8 +19,12 @@ export default class CreateFriendGroups1599405566954
             type: 'uuid',
           },
           {
-            name: 'name',
-            type: 'varchar',
+            name: 'friend_id',
+            type: 'uuid',
+          },
+          {
+            name: 'isConfirmed',
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -35,8 +39,16 @@ export default class CreateFriendGroups1599405566954
         ],
         foreignKeys: [
           {
-            name: 'UserFriendGroup',
+            name: 'UserFriends',
             columnNames: ['user_id'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'FriendUser',
+            columnNames: ['friend_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
@@ -48,6 +60,6 @@ export default class CreateFriendGroups1599405566954
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('friend_groups');
+    await queryRunner.dropTable('user_friends');
   }
 }

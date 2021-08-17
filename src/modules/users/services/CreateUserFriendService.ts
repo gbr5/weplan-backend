@@ -7,7 +7,6 @@ import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
 interface IRequest {
   user_id: string;
   friend_id: string;
-  friend_group: string;
 }
 
 @injectable()
@@ -17,26 +16,22 @@ class CreateUserFriendService {
     private userFriendsRepository: IUserFriendsRepository,
   ) {}
 
-  public async execute({
-    user_id,
-    friend_id,
-    friend_group,
-  }: IRequest): Promise<UserFriend> {
-    const checkUserFriendExits = await this.userFriendsRepository.findByFriendGroupAndFriendId(
+  public async execute({ user_id, friend_id }: IRequest): Promise<UserFriend> {
+    if (user_id === friend_id) throw new AppError('Friend already exists!');
+
+    const checkUserFriendExits = await this.userFriendsRepository.findByFriendId(
       friend_id,
-      friend_group,
     );
 
-    if (checkUserFriendExits?.friendGroup.id === friend_group) {
-      throw new AppError('This user is already registered to this group!');
-    }
+    if (checkUserFriendExits) throw new AppError('Friend already exists!');
 
     const friend = await this.userFriendsRepository.create({
       user_id,
       friend_id,
-      friend_group,
+      isConfirmed: false,
     });
 
+    console.log({ friend });
     return friend;
   }
 }

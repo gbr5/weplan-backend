@@ -24,7 +24,6 @@ import WeplanAppointmentGuest from '@modules/appointments/infra/typeorm/entities
 import WeplanGuest from '@modules/events/infra/typeorm/entities/WeplanGuest';
 import EventOwner from '@modules/events/infra/typeorm/entities/EventOwner';
 import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
-import FriendGroup from '@modules/users/infra/typeorm/entities/FriendGroup';
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
 import NonUserAppointmentGuest from '@modules/appointments/infra/typeorm/entities/NonUserAppointmentGuest';
 import CompanyEmployee from '@modules/suppliers/infra/typeorm/entities/CompanyEmployee';
@@ -202,9 +201,6 @@ class User {
 
   @OneToMany(() => WeplanGuest, guest => guest.weplanUserGuest)
   weplanUserGuests: WeplanGuest[];
-
-  @OneToMany(() => FriendGroup, owner => owner.groupOwner)
-  userFriendGroups: FriendGroup[];
 
   @OneToMany(() => UserFriend, friend => friend.friend)
   friends: UserFriend[];

@@ -177,9 +177,6 @@ import CompanyContactInfosRepository from '@modules/suppliers/infra/typeorm/repo
 import ICompanyContactWeplanUsersRepository from '@modules/suppliers/repositories/ICompanyContactWeplanUsersRepository';
 import CompanyContactWeplanUsersRepository from '@modules/suppliers/infra/typeorm/repositories/CompanyContactWeplanUsersRepository';
 
-import IFriendGroupsRepository from '@modules/users/repositories/IFriendGroupsRepository';
-import FriendGroupsRepository from '@modules/users/infra/typeorm/repositories/FriendGroupsRepository';
-
 import IUserFriendsRepository from '@modules/users/repositories/IUserFriendsRepository';
 import UserFriendsRepository from '@modules/users/infra/typeorm/repositories/UserFriendsRepository';
 
@@ -891,11 +888,6 @@ container.registerSingleton<ISupplierAppointmentDaySchedulesRepository>(
 container.registerSingleton<ISupplierAppointmentDayIntervalsRepository>(
   'SupplierAppointmentDayIntervalsRepository',
   SupplierAppointmentDayIntervalsRepository,
-);
-
-container.registerSingleton<IFriendGroupsRepository>(
-  'FriendGroupsRepository',
-  FriendGroupsRepository,
 );
 
 container.registerSingleton<IUserFriendsRepository>(

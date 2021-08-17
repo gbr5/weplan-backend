@@ -3,21 +3,33 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateUserFriendService from '@modules/users/services/CreateUserFriendService';
+import UpdateUserFriendService from '@modules/users/services/UpdateUserFriendService';
 import DeleteUserFriendService from '@modules/users/services/DeleteUserFriendService';
 import ListUserFriendsService from '@modules/users/services/ListUserFriendsService';
 
 export default class UserFriendsController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { friend_id, friend_group } = req.body;
+    const { friend_id } = req.body;
     const user_id = req.user.id;
 
     const createUserFriend = container.resolve(CreateUserFriendService);
+    console.log({ user_id, friend_id });
 
     const user = await createUserFriend.execute({
       user_id,
       friend_id,
-      friend_group,
     });
+
+    return res.json(classToClass(user));
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const reqParams = req.params;
+    const { id } = reqParams;
+
+    const updateUserFriend = container.resolve(UpdateUserFriendService);
+
+    const user = await updateUserFriend.execute(id);
 
     return res.json(classToClass(user));
   }
