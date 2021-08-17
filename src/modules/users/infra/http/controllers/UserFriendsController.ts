@@ -6,7 +6,7 @@ import CreateUserFriendService from '@modules/users/services/CreateUserFriendSer
 import DeleteUserFriendService from '@modules/users/services/DeleteUserFriendService';
 import ListUserFriendsService from '@modules/users/services/ListUserFriendsService';
 
-export default class UsersController {
+export default class UserFriendsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { friend_id, friend_group } = req.body;
     const user_id = req.user.id;

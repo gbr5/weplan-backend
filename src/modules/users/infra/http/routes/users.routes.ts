@@ -6,7 +6,6 @@ import uploadConfig from '@config/upload';
 
 import UsersController from '@modules/users/infra/http/controllers/UsersController';
 import UserAvatarController from '@modules/users/infra/http/controllers/UserAvatarController';
-import UserFriendsController from '@modules/users/infra/http/controllers/UserFriendsController';
 import FriendGroupsController from '@modules/users/infra/http/controllers/FriendGroupsController';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
@@ -15,7 +14,6 @@ const usersRouter = Router();
 const upload = multer(uploadConfig.multer);
 const usersController = new UsersController();
 const userAvatarController = new UserAvatarController();
-const userFriendsController = new UserFriendsController();
 const friendGroupsController = new FriendGroupsController();
 
 usersRouter.post(
@@ -81,30 +79,6 @@ usersRouter.put(
     },
   }),
   friendGroupsController.update,
-);
-
-// === User Friends === //
-
-usersRouter.post(
-  '/friends',
-  ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      friend_id: Joi.string().required(),
-      friend_group: Joi.string().required(),
-    },
-  }),
-  userFriendsController.create,
-);
-usersRouter.get(
-  '/friends/list',
-  ensureAuthenticated,
-  userFriendsController.list,
-);
-usersRouter.delete(
-  '/friends/:id',
-  ensureAuthenticated,
-  userFriendsController.delete,
 );
 
 export default usersRouter;

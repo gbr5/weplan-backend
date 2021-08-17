@@ -156,11 +156,15 @@ import eventSupplierBudgetsRouter from '@modules/suppliers/infra/http/routes/eve
 import listUserTransactionsRouter from '@modules/transactions/infra/http/routes/listUserTransactions.routes';
 import listEventTransactionsRouter from '@modules/transactions/infra/http/routes/listEventTransactions.routes';
 import findUserByEmailOrUserNameRouter from '@modules/users/infra/http/routes/findUserByEmailOrUserName.routes';
+import userFriendsRouter from '@modules/users/infra/http/routes/userFriends.routes';
 
 const routes = Router();
 
 // ==> Find User By Email or UserName
 routes.use('/find-user-by-email-or-user-name', findUserByEmailOrUserNameRouter);
+
+// ==> User Friends
+routes.use('/user-friends', userFriendsRouter);
 
 // ==> Notes
 routes.use('/notes', notesRouter);
