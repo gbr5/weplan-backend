@@ -24,14 +24,17 @@ class UpdateUserFriendService {
       user_id: friend.friend_id,
     });
 
-    if (findFriend) {
+    if (!findFriend) {
       await this.userFriendsRepository.create({
         friend_id: friend.user_id,
         user_id: friend.friend_id,
         isConfirmed: true,
       });
+      return updatedFriend;
     }
 
+    findFriend.isConfirmed = true;
+    await this.userFriendsRepository.save(findFriend);
     return updatedFriend;
   }
 }
