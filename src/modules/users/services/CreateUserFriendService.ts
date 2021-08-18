@@ -17,7 +17,10 @@ class CreateUserFriendService {
   ) {}
 
   public async execute({ user_id, friend_id }: IRequest): Promise<UserFriend> {
-    if (user_id === friend_id) throw new AppError('Friend already exists!');
+    if (user_id === friend_id)
+      throw new AppError(
+        'Is not possible to create a friend relation with yourself!',
+      );
 
     const checkUserFriendExits = await this.userFriendsRepository.findByFriendAndUserId(
       {
