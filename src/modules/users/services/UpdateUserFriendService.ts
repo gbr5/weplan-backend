@@ -17,14 +17,20 @@ class UpdateUserFriendService {
     if (!friend) throw new AppError('Friend not found!');
 
     friend.isConfirmed = true;
+    const updatedFriend = await this.userFriendsRepository.save(friend);
 
-    await this.userFriendsRepository.create({
+    const findFriend = await this.userFriendsRepository.findByFriendAndUserId({
       friend_id: friend.user_id,
       user_id: friend.friend_id,
-      isConfirmed: true,
     });
 
-    const updatedFriend = await this.userFriendsRepository.save(friend);
+    if (findFriend) {
+      await this.userFriendsRepository.create({
+        friend_id: friend.user_id,
+        user_id: friend.friend_id,
+        isConfirmed: true,
+      });
+    }
 
     return updatedFriend;
   }

@@ -31,6 +31,23 @@ class CreateUserFriendService {
 
     if (checkUserFriendExits) throw new AppError('Friend already exists!');
 
+    const findFriendRequest = await this.userFriendsRepository.findByFriendAndUserId(
+      {
+        friend_id: user_id,
+        user_id: friend_id,
+      },
+    );
+    if (findFriendRequest) {
+      findFriendRequest.isConfirmed = true;
+      await this.userFriendsRepository.save(findFriendRequest);
+      const friend = await this.userFriendsRepository.create({
+        user_id,
+        friend_id,
+        isConfirmed: true,
+      });
+
+      return friend;
+    }
     const friend = await this.userFriendsRepository.create({
       user_id,
       friend_id,
