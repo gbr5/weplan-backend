@@ -19,8 +19,11 @@ class CreateUserFriendService {
   public async execute({ user_id, friend_id }: IRequest): Promise<UserFriend> {
     if (user_id === friend_id) throw new AppError('Friend already exists!');
 
-    const checkUserFriendExits = await this.userFriendsRepository.findByFriendId(
-      friend_id,
+    const checkUserFriendExits = await this.userFriendsRepository.findByFriendAndUserId(
+      {
+        friend_id,
+        user_id,
+      },
     );
 
     if (checkUserFriendExits) throw new AppError('Friend already exists!');

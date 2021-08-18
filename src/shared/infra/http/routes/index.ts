@@ -157,6 +157,7 @@ import listUserTransactionsRouter from '@modules/transactions/infra/http/routes/
 import listEventTransactionsRouter from '@modules/transactions/infra/http/routes/listEventTransactions.routes';
 import findUserByEmailOrUserNameRouter from '@modules/users/infra/http/routes/findUserByEmailOrUserName.routes';
 import userFriendsRouter from '@modules/users/infra/http/routes/userFriends.routes';
+import listUserFriendRequestsRouter from '@modules/users/infra/http/routes/listUserFriendRequests.routes';
 
 const routes = Router();
 
@@ -165,6 +166,9 @@ routes.use('/find-user-by-email-or-user-name', findUserByEmailOrUserNameRouter);
 
 // ==> User Friends
 routes.use('/user-friends', userFriendsRouter);
+
+// ==> List User Friend Requests
+routes.use('/list-user-friend-requests', listUserFriendRequestsRouter);
 
 // ==> Notes
 routes.use('/notes', notesRouter);

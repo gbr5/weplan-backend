@@ -16,6 +16,15 @@ class DeleteContactTypeService {
     if (!friend) {
       throw new AppError('Friend not found.');
     }
+    const userAsFriend = await this.userFriendsRepository.findByFriendAndUserId(
+      {
+        friend_id: friend.user_id,
+        user_id: friend.friend_id,
+      },
+    );
+    if (userAsFriend) {
+      await this.userFriendsRepository.delete(userAsFriend);
+    }
 
     await this.userFriendsRepository.delete(friend);
   }

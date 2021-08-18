@@ -18,6 +18,12 @@ class UpdateUserFriendService {
 
     friend.isConfirmed = true;
 
+    await this.userFriendsRepository.create({
+      friend_id: friend.user_id,
+      user_id: friend.friend_id,
+      isConfirmed: true,
+    });
+
     const updatedFriend = await this.userFriendsRepository.save(friend);
 
     return updatedFriend;

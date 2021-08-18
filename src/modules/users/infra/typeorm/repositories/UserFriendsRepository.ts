@@ -5,6 +5,8 @@ import ICreateUserFriendDTO from '@modules/users/dtos/ICreateUserFriendDTO';
 
 import UserFriend from '@modules/users/infra/typeorm/entities/UserFriend';
 import AppError from '@shared/errors/AppError';
+import IFindByFriendAndUserIdDTO from '@modules/users/dtos/IFindByFriendAnnUserIdDTO';
+import IListUserFriendRequestsDTO from '@modules/users/dtos/IListUserFriendRequestsDTO';
 
 class UserFriendsRepository implements IUserFriendsRepository {
   private ormRepository: Repository<UserFriend>;
@@ -27,11 +29,22 @@ class UserFriendsRepository implements IUserFriendsRepository {
     return friend;
   }
 
-  public async findByFriendId(
-    friend_id: string,
-  ): Promise<UserFriend | undefined> {
+  public async findByFriendAndUserId({
+    friend_id,
+    user_id,
+  }: IFindByFriendAndUserIdDTO): Promise<UserFriend | undefined> {
     const friend = await this.ormRepository.findOne({
-      where: { friend_id },
+      where: { user_id, friend_id },
+    });
+
+    return friend;
+  }
+
+  public async findFriendshipRequests({
+    friend_id,
+  }: IListUserFriendRequestsDTO): Promise<UserFriend[]> {
+    const friend = await this.ormRepository.find({
+      where: { friend_id, isConfirmed: false },
     });
 
     return friend;
