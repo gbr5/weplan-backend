@@ -144,7 +144,7 @@ import createEventSupplierTransactionAgreementWithTransactionsRouter from '@modu
 import deleteEventSupplierTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/deleteEventSupplierTransactionAgreements.routes';
 import eventOwnersRouter from '@modules/events/infra/http/routes/eventOwners.routes';
 import eventMembersRouter from '@modules/events/infra/http/routes/eventMembers.routes';
-import createMultipleGuestsRouter from '@modules/events/infra/http/routes/createMultipleGuests.routes';
+import createMultipleMobileGuestsRouter from '@modules/events/infra/http/routes/createMultipleMobileGuests.routes';
 import eventSupplierNotesRouter from '@modules/notes/infra/http/routes/eventSupplierNotes.routes';
 import createEventNoteAndEventSupplierNoteRouter from '@modules/notes/infra/http/routes/createEventNoteAndEventSupplierNote.routes';
 import transactionNotesRouter from '@modules/notes/infra/http/routes/transactionNotes.routes';
@@ -158,6 +158,7 @@ import listEventTransactionsRouter from '@modules/transactions/infra/http/routes
 import findUserByEmailOrUserNameRouter from '@modules/users/infra/http/routes/findUserByEmailOrUserName.routes';
 import userFriendsRouter from '@modules/users/infra/http/routes/userFriends.routes';
 import listUserFriendRequestsRouter from '@modules/users/infra/http/routes/listUserFriendRequests.routes';
+import createMultipleWePlanGuestsRouter from '@modules/events/infra/http/routes/createMultipleWePlanGuests.routes';
 
 const routes = Router();
 
@@ -412,8 +413,11 @@ routes.use('/event-owners', eventOwnersRouter);
 // Event Owners
 routes.use('/event-members', eventMembersRouter);
 
-// Create Multiple Guests
-routes.use('/create-multiple-guests', createMultipleGuestsRouter);
+// Create Multiple Mobile Guests
+routes.use('/create-multiple-mobile-guests', createMultipleMobileGuestsRouter);
+
+// Create Multiple WePlan Guests
+routes.use('/create-multiple-weplan-guests', createMultipleWePlanGuestsRouter);
 
 routes.use('/list-owner-cards', listOwnerCardsRouter);
 routes.use('/check-lists', checkListRouter);

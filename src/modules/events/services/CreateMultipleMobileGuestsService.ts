@@ -29,7 +29,7 @@ interface IRequest {
 }
 
 @injectable()
-class CreateGuestService {
+class CreateMultipleMobileGuestsService {
   constructor(
     @inject('GuestsRepository')
     private guestsRepository: IGuestsRepository,
@@ -100,4 +100,4 @@ class CreateGuestService {
   }
 }
 
-export default CreateGuestService;
+export default CreateMultipleMobileGuestsService;
