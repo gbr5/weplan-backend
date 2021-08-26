@@ -60,7 +60,7 @@ class UserImage {
   }
 
   @OneToMany(() => EventImage, eventImage => eventImage.image)
-  eventImages: EventImage[];
+  userEventImages: EventImage[];
 
   @OneToMany(
     () => ImageParticipant,

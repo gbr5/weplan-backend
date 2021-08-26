@@ -19,7 +19,7 @@ class EventImage {
   @Column('uuid')
   image_id: string;
 
-  @ManyToOne(() => UserImage, image => image.eventImages, { eager: true })
+  @ManyToOne(() => UserImage, image => image.userEventImages)
   @JoinColumn({ name: 'image_id' })
   image: UserImage;
 
