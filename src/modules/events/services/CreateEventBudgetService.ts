@@ -33,13 +33,20 @@ class CreateEventBudgetService {
     if (!event) {
       throw new AppError('Event not found.');
     }
+    const eventBudget = await this.eventBudgetRepository.findByEventId(
+      event_id,
+    );
 
-    const eventBudget = await this.eventBudgetRepository.create({
+    if (eventBudget) {
+      throw new AppError('Event already have a budget.');
+    }
+
+    const newEventBudget = await this.eventBudgetRepository.create({
       budget,
       event_id,
     });
 
-    return eventBudget;
+    return newEventBudget;
   }
 }
 

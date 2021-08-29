@@ -22,6 +22,7 @@ class UpdateEventBudgetService {
     if (!eventBudget) {
       throw new AppError('Event budget not found.');
     }
+
     eventBudget.budget = budget;
 
     const updatedEventBudget = await this.eventBudgetRepository.save(
