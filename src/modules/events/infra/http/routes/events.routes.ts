@@ -6,7 +6,6 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import HiredSuppliersController from '@modules/events/infra/http/controllers/HiredSuppliersController';
 import EventWeplanSuppliersController from '@modules/events/infra/http/controllers/EventWeplanSuppliersController';
 import UserCheckListsController from '@modules/events/infra/http/controllers/UserCheckListsController';
-import GuestsController from '@modules/events/infra/http/controllers/GuestsController';
 import HostGuestsController from '@modules/events/infra/http/controllers/HostGuestsController';
 import EventPlannersController from '@modules/events/infra/http/controllers/EventPlannersController';
 import EventInfosController from '@modules/events/infra/http/controllers/EventInfosController';
@@ -21,7 +20,6 @@ const eventAvatar = new EventAvatarController();
 const hiredSuppliers = new HiredSuppliersController();
 const eventWeplanSuppliers = new EventWeplanSuppliersController();
 const userCheckLists = new UserCheckListsController();
-const guests = new GuestsController();
 const hostGuests = new HostGuestsController();
 const eventPlanners = new EventPlannersController();
 const eventInfos = new EventInfosController();
@@ -155,47 +153,11 @@ eventsRouter.delete('/check-list/:id', userCheckLists.delete);
 
 // === Guests & Hosts Guests === //
 
-eventsRouter.post(
-  '/:event_id/guests',
-  celebrate({
-    [Segments.BODY]: {
-      first_name: Joi.string().required(),
-      last_name: Joi.string(),
-      description: Joi.string(),
-      confirmed: Joi.boolean().required(),
-      weplanUser: Joi.boolean().required(),
-      user_id: Joi.string(),
-    },
-  }),
-  guests.create,
-);
-
-eventsRouter.post(
-  '/:event_id/guests/import/:number_of_guests_available',
-  upload.single('file'),
-  guests.import,
-);
-
-eventsRouter.put(
-  '/:event_id/guests/:id',
-  celebrate({
-    [Segments.BODY]: {
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
-      description: Joi.string(),
-      confirmed: Joi.boolean().required(),
-    },
-  }),
-  guests.update,
-);
-
 eventsRouter.put(
   '/weplan-user-guest/:id',
   weplanGuestConfirmation.updateWeplanGuest,
 );
 
-eventsRouter.delete('/guests/:id', guests.delete);
-eventsRouter.get('/:event_id/guests/', guests.index);
 eventsRouter.get('/:event_id/guests/:host_id', hostGuests.index);
 
 // === Event Planners === //
