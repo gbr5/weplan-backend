@@ -118,7 +118,7 @@ class Event {
   @OneToMany(() => Guest, guest => guest.event)
   eventGuests: Guest[];
 
-  @OneToOne(() => EventInfo, event_info => event_info.event, { eager: true })
+  @OneToOne(() => EventInfo, event_info => event_info.event)
   eventInfo: EventInfo;
 
   @OneToOne(() => EventCard, card => card.event)
@@ -136,19 +136,19 @@ class Event {
   )
   eventServiceOrders: EventServiceOrder[];
 
-  @OneToMany(() => EventNote, note => note.event, { eager: true })
+  @OneToMany(() => EventNote, note => note.event)
   notes: EventNote[];
 
-  @OneToMany(() => EventDate, eventDate => eventDate.event, { eager: true })
+  @OneToMany(() => EventDate, eventDate => eventDate.event)
   eventDates: EventDate[];
 
-  @OneToMany(() => EventTask, eventTask => eventTask.event, { eager: true })
+  @OneToMany(() => EventTask, eventTask => eventTask.event)
   eventTasks: EventTask[];
 
-  @OneToMany(() => EventFile, eventFile => eventFile.event, { eager: true })
+  @OneToMany(() => EventFile, eventFile => eventFile.event)
   eventFiles: EventFile[];
 
-  @OneToMany(() => EventImage, eventImage => eventImage.event, { eager: true })
+  @OneToMany(() => EventImage, eventImage => eventImage.event)
   eventImages: EventImage[];
 
   @OneToMany(
@@ -157,9 +157,7 @@ class Event {
   )
   eventInspirationImages: EventInspirationImage[];
 
-  @OneToOne(() => EventBudget, eventBudget => eventBudget.event, {
-    eager: true,
-  })
+  @OneToOne(() => EventBudget, eventBudget => eventBudget.event)
   eventBudget: EventBudget;
 }
 
