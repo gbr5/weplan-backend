@@ -13,7 +13,6 @@ import {
 import User from '@modules/users/infra/typeorm/entities/User';
 import Event from './Event';
 import WeplanGuest from './WeplanGuest';
-import GuestContactInfo from './GuestContactInfo';
 import GuestContact from './GuestContact';
 
 @Entity('guests')
@@ -40,7 +39,7 @@ class Guest {
   @Column('uuid')
   host_id: string;
 
-  @ManyToOne(() => User, host => host.hostGuests, { eager: true })
+  @ManyToOne(() => User, host => host.hostGuests)
   @JoinColumn({ name: 'host_id' })
   host: User;
 
@@ -59,10 +58,8 @@ class Guest {
   @OneToOne(() => WeplanGuest, guest => guest.guest, { eager: true })
   weplanGuest: WeplanGuest;
 
-  @OneToMany(() => GuestContactInfo, guest => guest.guestContactInfo, {
-    eager: true,
-  })
-  guestContactInfos: GuestContactInfo[];
+  // @OneToMany(() => GuestContactInfo, guest => guest.guestContactInfo)
+  // guestContactInfos: GuestContactInfo[];
 
   @OneToMany(() => GuestContact, contact => contact.guest, {
     eager: true,

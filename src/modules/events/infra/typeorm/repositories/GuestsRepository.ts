@@ -49,7 +49,6 @@ class GuestRepository implements IGuestsRepository {
   public async findByEvent(event_id: string): Promise<Guest[]> {
     const findGuest = await this.ormRepository.find({
       where: { event_id },
-      order: { first_name: 'ASC', last_name: 'ASC' },
     });
 
     return findGuest;
