@@ -159,6 +159,7 @@ import findUserByEmailOrUserNameRouter from '@modules/users/infra/http/routes/fi
 import userFriendsRouter from '@modules/users/infra/http/routes/userFriends.routes';
 import listUserFriendRequestsRouter from '@modules/users/infra/http/routes/listUserFriendRequests.routes';
 import createMultipleWePlanGuestsRouter from '@modules/events/infra/http/routes/createMultipleWePlanGuests.routes';
+import associateUserToEventGuestRouter from '@modules/events/infra/http/routes/associateUserToEventGuest.routes';
 
 const routes = Router();
 
@@ -238,6 +239,7 @@ routes.use('/user/delete', deleteUserRouter);
 routes.use('/user/terminate', terminateUserRouter);
 
 routes.use('/event-guests', guestsRouter);
+routes.use('/associate-user-to-event-guest', associateUserToEventGuestRouter);
 routes.use('/event/dates', eventDatesRouter);
 routes.use('/event-tasks', eventTasksRouter);
 routes.use('/wedding-tasks', weddingTasksRouter);
