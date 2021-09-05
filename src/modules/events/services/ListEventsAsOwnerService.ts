@@ -4,6 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import IEventOwnersRepository from '@modules/events/repositories/IEventOwnersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 // import { classToClass } from 'class-transformer';
+import { differenceInMilliseconds } from 'date-fns';
 import EventOwner from '../infra/typeorm/entities/EventOwner';
 
 @injectable()
@@ -31,7 +32,25 @@ class ListEventsAsOwnerService {
     //   await this.cacheProvider.save(cacheKey, classToClass(eventsAsOwner));
     // }
 
-    return eventsAsOwner;
+    return eventsAsOwner.sort((a, b) => {
+      if (
+        differenceInMilliseconds(
+          new Date(a.event.date),
+          new Date(b.event.date),
+        ) < 0
+      ) {
+        return -1;
+      }
+      if (
+        differenceInMilliseconds(
+          new Date(a.event.date),
+          new Date(b.event.date),
+        ) > 0
+      ) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }
 

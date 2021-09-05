@@ -4,6 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import IEventMembersRepository from '@modules/events/repositories/IEventMembersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 // import { classToClass } from 'class-transformer';
+import { differenceInMilliseconds } from 'date-fns';
 import EventMember from '../infra/typeorm/entities/EventMember';
 
 @injectable()
@@ -31,7 +32,25 @@ class ListEventsAsMemberService {
     //   await this.cacheProvider.save(cacheKey, classToClass(eventsAsMember));
     // }
 
-    return eventsAsMember;
+    return eventsAsMember.sort((a, b) => {
+      if (
+        differenceInMilliseconds(
+          new Date(a.event.date),
+          new Date(b.event.date),
+        ) < 0
+      ) {
+        return -1;
+      }
+      if (
+        differenceInMilliseconds(
+          new Date(a.event.date),
+          new Date(b.event.date),
+        ) > 0
+      ) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }
 

@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
 import IWeplanGuestsRepository from '@modules/events/repositories/IWeplanGuestsRepository';
+import { differenceInMilliseconds } from 'date-fns';
 import IEventsRepository from '../repositories/IEventsRepository';
 import Event from '../infra/typeorm/entities/Event';
 
@@ -29,7 +30,15 @@ class ListEventsAsGuestService {
       eventIds,
     );
 
-    return eventsAsWeplanGuest;
+    return eventsAsWeplanGuest.sort((a, b) => {
+      if (differenceInMilliseconds(new Date(a.date), new Date(b.date)) < 0) {
+        return -1;
+      }
+      if (differenceInMilliseconds(new Date(a.date), new Date(b.date)) > 0) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }
 
