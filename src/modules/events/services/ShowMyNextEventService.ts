@@ -30,65 +30,19 @@ class ShowMyNextEventService {
 
     const nextEvents: Event[] = [];
 
-    const nextOwnerEvent = eventOwners
-      .sort((a, b) => {
-        if (
-          differenceInDays(new Date(a.event.date), new Date(b.event.date)) < 0
-        ) {
-          return -1;
-        }
-        if (
-          differenceInDays(new Date(a.event.date), new Date(b.event.date)) > 0
-        ) {
-          return 1;
-        }
-        return 0;
-      })
-      .find(e => e);
+    eventOwners.map(e => nextEvents.push(e.event));
 
-    const nextMemberEvent = eventMembers
-      .sort((a, b) => {
-        if (
-          differenceInDays(new Date(a.event.date), new Date(b.event.date)) < 0
-        ) {
-          return -1;
-        }
-        if (
-          differenceInDays(new Date(a.event.date), new Date(b.event.date)) > 0
-        ) {
-          return 1;
-        }
-        return 0;
-      })
-      .find(e => e);
+    eventMembers.map(e => nextEvents.push(e.event));
 
-    if (!nextMemberEvent && nextOwnerEvent) {
-      nextEvents.push(nextOwnerEvent.event);
-    }
-
-    if (nextMemberEvent && !nextOwnerEvent) {
-      nextEvents.push(nextMemberEvent.event);
-    }
-
-    if (nextMemberEvent && nextOwnerEvent) {
-      if (
-        differenceInDays(
-          new Date(nextOwnerEvent.event.date),
-          new Date(nextMemberEvent.event.date),
-        ) < 0
-      ) {
-        nextEvents.push(nextOwnerEvent.event);
+    const event = nextEvents.sort((a, b) => {
+      if (differenceInDays(new Date(a.date), new Date(b.date)) < 0) {
+        return -1;
       }
-      if (
-        differenceInDays(
-          new Date(nextOwnerEvent.event.date),
-          new Date(nextMemberEvent.event.date),
-        ) > 0
-      ) {
-        nextEvents.push(nextMemberEvent.event);
+      if (differenceInDays(new Date(a.date), new Date(b.date)) > 0) {
+        return 1;
       }
-    }
-    const event = nextEvents[0];
+      return 0;
+    })[0];
 
     if (!event) {
       throw new AppError('Event not found');
