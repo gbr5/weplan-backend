@@ -94,7 +94,6 @@ class ShowMyNextEventService {
       throw new AppError('Event not found');
     }
 
-    console.log({ event });
     return event;
   }
 }
