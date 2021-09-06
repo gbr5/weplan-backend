@@ -160,6 +160,7 @@ import userFriendsRouter from '@modules/users/infra/http/routes/userFriends.rout
 import listUserFriendRequestsRouter from '@modules/users/infra/http/routes/listUserFriendRequests.routes';
 import createMultipleWePlanGuestsRouter from '@modules/events/infra/http/routes/createMultipleWePlanGuests.routes';
 import associateUserToEventGuestRouter from '@modules/events/infra/http/routes/associateUserToEventGuest.routes';
+import authenticateUserWithAppleRouter from '@modules/users/infra/http/routes/authenticateUserWithApple.routes';
 
 const routes = Router();
 
@@ -196,6 +197,9 @@ routes.use('/send-form-results', sendFormEmailNotificationsRouter);
 
 // ==> Google Authentication
 routes.use('/google-sessions', authenticateUserWithGoogleRouter);
+
+// ==> Apple Authentication
+routes.use('/apple-sessions', authenticateUserWithAppleRouter);
 
 // EmployeeAthentication
 routes.use('/employee-pro-sessions', employeeSessionsRouter);

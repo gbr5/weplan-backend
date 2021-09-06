@@ -34,6 +34,7 @@
     "ioredis": "^4.17.3",
     "js-beautify": "^1.13.5",
     "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^2.0.4",
     "mime": "^2.4.6",
     "mongodb": "^3.5.9",
     "mongoose": "^5.11.17",
