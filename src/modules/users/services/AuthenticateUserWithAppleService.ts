@@ -5,12 +5,8 @@ import jwksClient from 'jwks-rsa';
 
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import IUserGoogleProfilesRepository from '@modules/googleProfiles/repositories/IUserGoogleProfilesRepository';
-import IGoogleProfilesRepository from '@modules/googleProfiles/repositories/IGoogleProfilesRepository';
-import IUserFileCategoriesRepository from '../repositories/IUserFileCategoriesRepository';
 import IPersonInfoRepository from '../repositories/IPersonInfoRepository';
 
 interface IPayload {
@@ -42,7 +38,7 @@ interface IRequest {
     identityToken: string;
     user: string;
     authorizationCode: string;
-    fullName: {
+    fullName?: {
       givenName: string | null;
       familyName: string | null;
     };
@@ -61,24 +57,13 @@ class AuthenticateUserWithAppleService {
 
     @inject('PersonInfoRepository')
     private personInfoRepository: IPersonInfoRepository,
-
-    @inject('UserFileCategoriesRepository')
-    private userFileCategoriesRepository: IUserFileCategoriesRepository,
-
-    @inject('UserGoogleProfilesRepository')
-    private userGoogleProfilesRepository: IUserGoogleProfilesRepository,
-
-    @inject('GoogleProfilesRepository')
-    private googleProfilesRepository: IGoogleProfilesRepository,
-
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
     appleResponse,
     provider,
   }: IRequest): Promise<IResponse> {
+    // Sign In with aready created user or create user then Sign In
     if (provider !== 'apple') throw new AppError('User not found!');
     const { identityToken } = appleResponse;
     const appleJWT = decode(identityToken, { complete: true }) as IAppleJWT;
@@ -124,9 +109,8 @@ class AuthenticateUserWithAppleService {
     const users: User[] = [];
 
     if (!findUser) {
-      if (fullName.givenName && fullName.familyName) {
-        const { givenName, familyName } = appleResponse.fullName;
-        const nickName = `${givenName} ${familyName}`;
+      if (fullName && fullName.givenName && fullName.familyName) {
+        const nickName = `${fullName.givenName} ${fullName.familyName}`;
         const findUserGivenName = await this.usersRepository.findByTrimmedName(
           nickName,
         );
@@ -136,7 +120,7 @@ class AuthenticateUserWithAppleService {
             isCompany: false,
             name: nickName,
             password: identityToken,
-            trimmed_name: `${givenName}-${familyName}`,
+            trimmed_name: `${fullName.givenName}-${fullName.familyName}`,
           });
           users.push(newUser);
         } else {
