@@ -76,16 +76,18 @@ class AuthenticateUserWithGoogleService {
       });
       newUser = response;
 
-      await this.personInfoRepository.create({
-        first_name: givenName,
-        last_name: familyName,
-        person_id: newUser.id,
-        user_id: newUser.id,
-      });
+      if (givenName && familyName) {
+        await this.personInfoRepository.create({
+          first_name: givenName,
+          last_name: familyName,
+          person_id: newUser.id,
+          user_id: newUser.id,
+        });
+      }
     } else {
       newUser = user;
       const personInfo = await this.personInfoRepository.findByUserId(user.id);
-      if (!personInfo) {
+      if (!personInfo && givenName && familyName) {
         await this.personInfoRepository.create({
           first_name: givenName,
           last_name: familyName,
@@ -112,9 +114,9 @@ class AuthenticateUserWithGoogleService {
     //     googleProfile.id,
     //   );
     // }
-    if (!email || newUser.email !== email) {
-      throw new AppError('Invalid e-mail adress/password combination.', 401);
-    }
+    // if (!email || newUser.email !== email) {
+    //   throw new AppError('Invalid e-mail adress/password combination.', 401);
+    // }
 
     if (!newUser.isActive) {
       newUser.isActive = true;
