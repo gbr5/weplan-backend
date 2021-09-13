@@ -5,12 +5,11 @@ import { OAuth2Client } from 'google-auth-library';
 
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IHashProvider from '@modules/users/providers/hashProviders/models/IHashProvider';
+import IPersonInfoRepository from '@modules/users/repositories/IPersonInfoRepository';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import IUserGoogleProfilesRepository from '@modules/googleProfiles/repositories/IUserGoogleProfilesRepository';
 import IGoogleProfilesRepository from '@modules/googleProfiles/repositories/IGoogleProfilesRepository';
-import IUserFileCategoriesRepository from '../repositories/IUserFileCategoriesRepository';
+// import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
 
 interface IRequest {
   googleEmail: string;
@@ -32,17 +31,11 @@ class AuthenticateUserWithGoogleService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('UserFileCategoriesRepository')
-    private userFileCategoriesRepository: IUserFileCategoriesRepository,
-
-    @inject('UserGoogleProfilesRepository')
-    private userGoogleProfilesRepository: IUserGoogleProfilesRepository,
+    @inject('PersonInfoRepository')
+    private personInfoRepository: IPersonInfoRepository,
 
     @inject('GoogleProfilesRepository')
     private googleProfilesRepository: IGoogleProfilesRepository,
-
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
@@ -52,8 +45,8 @@ class AuthenticateUserWithGoogleService {
     givenName,
     familyName,
     googleId,
-    imageUrl,
-  }: IRequest): Promise<IResponse> {
+  }: // imageUrl,
+  IRequest): Promise<IResponse> {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
       idToken: googleToken,
@@ -70,173 +63,73 @@ class AuthenticateUserWithGoogleService {
 
     const user = await this.usersRepository.findByEmail(googleEmail);
 
+    let newUser = {} as User;
+
     if (!user) {
-      throw new AppError('Invalid e-mail adress/password combination.', 401);
-    }
-
-    const userGoogleProfile = await this.userGoogleProfilesRepository.findByUserId(
-      user.id,
-    );
-
-    if (!userGoogleProfile) {
-      const googleProfile = await this.googleProfilesRepository.create({
-        email: googleEmail,
+      // throw new AppError('Invalid e-mail adress/password combination.', 401);
+      const response = await this.usersRepository.create({
+        email: email ?? googleEmail,
+        isCompany: false,
         name,
-        givenName,
-        familyName,
-        googleId,
-        imageUrl,
+        password: googleId,
+        trimmed_name: givenName,
       });
-      await this.userGoogleProfilesRepository.create(user.id, googleProfile.id);
+      newUser = response;
+
+      await this.personInfoRepository.create({
+        first_name: givenName,
+        last_name: familyName,
+        person_id: newUser.id,
+        user_id: newUser.id,
+      });
+    } else {
+      newUser = user;
+      const personInfo = await this.personInfoRepository.findByUserId(user.id);
+      if (!personInfo) {
+        await this.personInfoRepository.create({
+          first_name: givenName,
+          last_name: familyName,
+          person_id: user.id,
+          user_id: user.id,
+        });
+      }
     }
-    if (!email || user.email !== email) {
+    // const userGoogleProfile = await this.userGoogleProfilesRepository.findByUserId(
+    //   newUser.id,
+    // );
+
+    // if (!userGoogleProfile) {
+    //   const googleProfile = await this.googleProfilesRepository.create({
+    //     email: googleEmail,
+    //     name,
+    //     givenName,
+    //     familyName,
+    //     googleId,
+    //     imageUrl,
+    //   });
+    //   await this.userGoogleProfilesRepository.create(
+    //     newUser.id,
+    //     googleProfile.id,
+    //   );
+    // }
+    if (!email || newUser.email !== email) {
       throw new AppError('Invalid e-mail adress/password combination.', 401);
     }
 
-    if (!user.isActive) {
-      user.isActive = true;
-      await this.usersRepository.save(user);
-    }
-
-    const userFileCategories = await this.userFileCategoriesRepository.findByUserId(
-      user.id,
-    );
-
-    if (!userFileCategories) {
-      Promise.all([
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Transações',
-          description: 'Comprovantes de transações.',
-          color: 'rgba(229, 93, 93, 1)',
-        }),
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Contratos',
-          description: 'Contratos de produtos e serviços.',
-          color: 'rgba(97, 181, 255, 1)',
-        }),
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Orçamentos',
-          description: 'Orçamentos de produtos e serviços.',
-          color: 'rgba(233, 208, 119, 1)',
-        }),
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Convites',
-          description: 'Convites dos seus eventos.',
-          color: 'rgba(151, 233, 119, 1)',
-        }),
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Convites de Amigos',
-          description: 'Convites dos eventos de amigos.',
-          color: 'rgba(233, 172, 119, 1)',
-        }),
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Atas de Reuniões',
-          description: 'Atas de reuniões com fornecedores e/ou parceiros.',
-          color: 'rgba(176, 242, 232, 1)',
-        }),
-        this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Outros',
-          description: 'Demais arquivos.',
-          color: 'rgba(250, 252, 232, 1)',
-        }),
-      ]);
-    } else {
-      const transactionsCategory = userFileCategories.find(
-        category => category.name === 'Transações',
-      );
-      const contractsCategory = userFileCategories.find(
-        category => category.name === 'Contratos',
-      );
-      const budgetsCategory = userFileCategories.find(
-        category => category.name === 'Orçamentos',
-      );
-      const invitationsCategory = userFileCategories.find(
-        category => category.name === 'Convites',
-      );
-      const friendsInvitationsCategory = userFileCategories.find(
-        category => category.name === 'Convites de Amigos',
-      );
-      const minutesOfMeetingsCategory = userFileCategories.find(
-        category => category.name === 'Atas de Reuniões',
-      );
-      const othersCategory = userFileCategories.find(
-        category => category.name === 'Outros',
-      );
-
-      if (!transactionsCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Transações',
-          description: 'Comprovantes de transações.',
-          color: 'rgba(229, 93, 93, 1)',
-        });
-      }
-      if (!contractsCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Contratos',
-          description: 'Contratos de produtos e serviços.',
-          color: 'rgba(97, 181, 255, 1)',
-        });
-      }
-      if (!budgetsCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Orçamentos',
-          description: 'Orçamentos de produtos e serviços.',
-          color: 'rgba(233, 208, 119, 1)',
-        });
-      }
-      if (!invitationsCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Convites',
-          description: 'Convites dos seus eventos.',
-          color: 'rgba(151, 233, 119, 1)',
-        });
-      }
-      if (!friendsInvitationsCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Convites de Amigos',
-          description: 'Convites dos eventos de amigos.',
-          color: 'rgba(233, 172, 119, 1)',
-        });
-      }
-      if (!minutesOfMeetingsCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Atas de Reuniões',
-          description: 'Atas de reuniões com fornecedores e/ou parceiros.',
-          color: 'rgba(176, 242, 232, 1)',
-        });
-      }
-      if (!othersCategory) {
-        await this.userFileCategoriesRepository.create({
-          user_id: user.id,
-          name: 'Outros',
-          description: 'Demais arquivos.',
-          color: 'rgba(250, 252, 232, 1)',
-        });
-      }
+    if (!newUser.isActive) {
+      newUser.isActive = true;
+      await this.usersRepository.save(newUser);
     }
 
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign({}, secret, {
-      subject: user.id,
+      subject: newUser.id,
       expiresIn,
     });
 
     return {
-      user,
+      user: newUser,
       token,
     };
   }
