@@ -369,6 +369,13 @@ import EventSupplierFilesRepository from '@modules/suppliers/infra/typeorm/repos
 import IEventSupplierBudgetsRepository from '@modules/suppliers/repositories/IEventSupplierBudgetsRepository';
 import EventSupplierBudgetsRepository from '@modules/suppliers/infra/typeorm/repositories/EventSupplierBudgetsRepository';
 
+import IEventTaskFollowersRepository from '@modules/events/repositories/IEventTaskFollowersRepository';
+import EventTaskFollowersRepository from '@modules/events/infra/typeorm/repositories/EventTaskFollowersRepository';
+
+container.registerSingleton<IEventTaskFollowersRepository>(
+  'EventTaskFollowersRepository',
+  EventTaskFollowersRepository,
+);
 container.registerSingleton<IEventSupplierBudgetsRepository>(
   'EventSupplierBudgetsRepository',
   EventSupplierBudgetsRepository,

@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 import Event from './Event';
+import EventTaskFollower from './EventTaskFollower';
 import EventTaskNote from './EventTaskNote';
 
 @Entity('event_tasks')
@@ -46,6 +47,15 @@ class EventTask {
     eager: true,
   })
   notes: EventTaskNote[];
+
+  @OneToMany(
+    () => EventTaskFollower,
+    eventTaskFollower => eventTaskFollower.task,
+    {
+      eager: true,
+    },
+  )
+  followers: EventTaskFollower[];
 }
 
 export default EventTask;

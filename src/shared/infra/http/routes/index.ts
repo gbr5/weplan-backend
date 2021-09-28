@@ -161,6 +161,8 @@ import listUserFriendRequestsRouter from '@modules/users/infra/http/routes/listU
 import createMultipleWePlanGuestsRouter from '@modules/events/infra/http/routes/createMultipleWePlanGuests.routes';
 import associateUserToEventGuestRouter from '@modules/events/infra/http/routes/associateUserToEventGuest.routes';
 import authenticateUserWithAppleRouter from '@modules/users/infra/http/routes/authenticateUserWithApple.routes';
+import listEventTasksByUserRouter from '@modules/events/infra/http/routes/listEventTasksByUser.routes';
+import eventTaskFollowersRouter from '@modules/events/infra/http/routes/eventTaskFollowers.routes';
 
 const routes = Router();
 
@@ -248,6 +250,8 @@ routes.use('/event/dates', eventDatesRouter);
 routes.use('/event-tasks', eventTasksRouter);
 routes.use('/wedding-tasks', weddingTasksRouter);
 routes.use('/event-task-notes', eventTaskNotesRouter);
+routes.use('/event-task-followers', eventTaskFollowersRouter);
+routes.use('/list-event-tasks-by-user', listEventTasksByUserRouter);
 routes.use('/event/dates/voting', eventDatesVotingRouter);
 routes.use('/event/date/voting-type', eventDateVotingTypeRouter);
 routes.use('/event/date/vote', eventDateVotesRouter);

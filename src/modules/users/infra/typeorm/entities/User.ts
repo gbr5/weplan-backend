@@ -47,6 +47,7 @@ import EventDateVote from '@modules/events/infra/typeorm/entities/EventDateVote'
 import UserContactPage from '@modules/contactPages/infra/typeorm/entities/UserContactPage';
 import UserGoogleProfile from '@modules/googleProfiles/infra/typeorm/entities/UserGoogleProfile';
 import Note from '@modules/notes/infra/typeorm/entities/Note';
+import EventTaskFollower from '@modules/events/infra/typeorm/entities/EventTaskFollower';
 import CompanyInfo from './CompanyInfo';
 import PersonInfo from './PersonInfo';
 import UserToken from './UserToken';
@@ -303,6 +304,12 @@ class User {
     userInspirationImage => userInspirationImage.user,
   )
   userInspirationImages: InspirationImage[];
+
+  @OneToMany(
+    () => EventTaskFollower,
+    userInspirationImage => userInspirationImage.follower,
+  )
+  eventTaskFollower: InspirationImage;
 
   @OneToMany(() => UserContactPage, userContactPage => userContactPage.user)
   contactPages: UserContactPage[];

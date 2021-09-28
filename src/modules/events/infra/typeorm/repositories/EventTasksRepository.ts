@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepository';
+import IFindAllEventTasksByIdsDTO from '@modules/events/dtos/IFindAllEventTasksByIdsDTO';
 
 import EventTask from '@modules/events/infra/typeorm/entities/EventTask';
 import ICreateEventTaskDTO from '@modules/events/dtos/ICreateEventTaskDTO';
@@ -22,6 +23,14 @@ class EventTasksRepository implements IEventTasksRepository {
     const findEventTask = await this.ormRepository.find({
       where: { event_id },
     });
+
+    return findEventTask;
+  }
+
+  public async findAllByIds(
+    ids: IFindAllEventTasksByIdsDTO[],
+  ): Promise<EventTask[]> {
+    const findEventTask = await this.ormRepository.findByIds(ids);
 
     return findEventTask;
   }
