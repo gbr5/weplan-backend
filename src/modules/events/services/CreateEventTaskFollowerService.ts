@@ -23,6 +23,7 @@ class CreateEventTaskFollowerService {
   public async execute({
     task_id,
     user_id,
+    type,
   }: ICreateEventTaskFollowerDTO): Promise<EventTaskFollower> {
     const user = await this.usersRepository.findById(user_id);
 
@@ -36,9 +37,16 @@ class CreateEventTaskFollowerService {
       throw new AppError('Event task not found.');
     }
 
+    const alreadyExists = eventTask.followers.find(e => e.user_id === user_id);
+
+    if (alreadyExists) {
+      throw new AppError('Event task follower is already registered.');
+    }
+
     const eventTaskFollower = await this.eventTaskFollowersRepository.create({
       task_id,
       user_id,
+      type,
     });
 
     return eventTaskFollower;

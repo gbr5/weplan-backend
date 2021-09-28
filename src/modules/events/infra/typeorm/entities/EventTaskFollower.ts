@@ -32,6 +32,9 @@ class EventTaskFollower {
   @JoinColumn({ name: 'task_id' })
   task: EventTask;
 
+  @Column()
+  type: string;
+
   @CreateDateColumn()
   created_at: Date;
 

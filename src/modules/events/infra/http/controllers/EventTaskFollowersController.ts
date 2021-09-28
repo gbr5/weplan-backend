@@ -8,7 +8,7 @@ import DeleteEventTaskFollowerService from '@modules/events/services/DeleteEvent
 
 export default class EventTaskFollowerController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { task_id, user_id } = req.body;
+    const { task_id, user_id, type } = req.body;
     const createEventTaskFollower = container.resolve(
       CreateEventTaskFollowerService,
     );
@@ -16,6 +16,7 @@ export default class EventTaskFollowerController {
     const eventTaskFollower = await createEventTaskFollower.execute({
       task_id,
       user_id,
+      type,
     });
 
     return res.json(eventTaskFollower);
