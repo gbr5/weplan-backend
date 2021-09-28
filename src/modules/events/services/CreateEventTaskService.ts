@@ -9,6 +9,11 @@ import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import ICreateEventTaskDTO from '../dtos/ICreateEventTaskDTO';
 import IEventsRepository from '../repositories/IEventsRepository';
 import IEventNotesRepository from '../repositories/IEventNotesRepository';
+import IEventTaskFollowersRepository from '../repositories/IEventTaskFollowersRepository';
+
+interface IRequest extends ICreateEventTaskDTO {
+  user_id: string;
+}
 
 @injectable()
 class CreateEventTaskService {
@@ -21,6 +26,9 @@ class CreateEventTaskService {
 
     @inject('EventNotesRepository')
     private eventNotesRepository: IEventNotesRepository,
+
+    @inject('EventTaskFollowersRepository')
+    private eventTaskFollowersRepository: IEventTaskFollowersRepository,
 
     @inject('NotesRepository')
     private notesRepository: INotesRepository,
@@ -38,7 +46,8 @@ class CreateEventTaskService {
     priority,
     status,
     due_date,
-  }: ICreateEventTaskDTO): Promise<EventTask> {
+    user_id,
+  }: IRequest): Promise<EventTask> {
     const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
@@ -62,10 +71,17 @@ Nova tarefa: ${title}
       isNew: true,
       note,
     });
-    await this.eventNotesRepository.create({
-      event_id,
-      note_id: newNote.id,
-    });
+    Promise.all([
+      await this.eventNotesRepository.create({
+        event_id,
+        note_id: newNote.id,
+      }),
+      await this.eventTaskFollowersRepository.create({
+        type: 'owner',
+        task_id: eventTask.id,
+        user_id,
+      }),
+    ]);
 
     return eventTask;
   }

@@ -9,6 +9,7 @@ import DeleteEventTaskService from '@modules/events/services/DeleteEventTaskServ
 
 export default class EventTaskController {
   public async create(req: Request, res: Response): Promise<Response> {
+    const user_id = req.user.id;
     const { event_id, title, priority, status, due_date } = req.body;
     const createEventTask = container.resolve(CreateEventTaskService);
 
@@ -18,6 +19,7 @@ export default class EventTaskController {
       priority,
       status,
       due_date,
+      user_id,
     });
 
     return res.json(eventTask);
