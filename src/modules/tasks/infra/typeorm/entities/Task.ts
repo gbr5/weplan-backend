@@ -53,9 +53,7 @@ class Task {
   })
   followers: TaskFollower[];
 
-  @OneToMany(() => EventTask, eventTask => eventTask.task, {
-    eager: true,
-  })
+  @OneToMany(() => EventTask, eventTask => eventTask.task)
   eventTasks: EventTask[];
 }
 

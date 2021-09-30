@@ -26,7 +26,7 @@ class EventTask {
   @Column()
   task_id: string;
 
-  @ManyToOne(() => Task, task => task.eventTasks)
+  @ManyToOne(() => Task, task => task.eventTasks, { eager: true })
   @JoinColumn({ name: 'task_id' })
   task: Task;
 
