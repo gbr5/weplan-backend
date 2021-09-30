@@ -1,4 +1,3 @@
-import Task from '@modules/tasks/infra/typeorm/entities/Task';
 import {
   Entity,
   Column,
@@ -9,24 +8,25 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Event from './Event';
+import Note from '@modules/notes/infra/typeorm/entities/Note';
+import Task from './Task';
 
-@Entity('event_tasks')
-class EventTask {
+@Entity('task_notes')
+class TaskNote {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  event_id: string;
+  note_id: string;
 
-  @ManyToOne(() => Event, event => event.tasks)
-  @JoinColumn({ name: 'event_id' })
-  event: Event;
+  @ManyToOne(() => Note, note => note.taskNote, { eager: true })
+  @JoinColumn({ name: 'note_id' })
+  note: Note;
 
   @Column()
   task_id: string;
 
-  @ManyToOne(() => Task, task => task.eventTasks)
+  @ManyToOne(() => Task, task => task.notes)
   @JoinColumn({ name: 'task_id' })
   task: Task;
 
@@ -37,4 +37,4 @@ class EventTask {
   updated_at: Date;
 }
 
-export default EventTask;
+export default TaskNote;

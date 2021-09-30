@@ -339,9 +339,6 @@ import GuestContactsRepository from '@modules/events/infra/typeorm/repositories/
 import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepository';
 import EventTasksRepository from '@modules/events/infra/typeorm/repositories/EventTasksRepository';
 
-import IEventTaskNotesRepository from '@modules/events/repositories/IEventTaskNotesRepository';
-import EventTaskNotesRepository from '@modules/events/infra/typeorm/repositories/EventTaskNotesRepository';
-
 import IEventBudgetRepository from '@modules/events/repositories/IEventBudgetRepository';
 import EventBudgetRepository from '@modules/events/infra/typeorm/repositories/EventBudgetRepository';
 
@@ -369,12 +366,26 @@ import EventSupplierFilesRepository from '@modules/suppliers/infra/typeorm/repos
 import IEventSupplierBudgetsRepository from '@modules/suppliers/repositories/IEventSupplierBudgetsRepository';
 import EventSupplierBudgetsRepository from '@modules/suppliers/infra/typeorm/repositories/EventSupplierBudgetsRepository';
 
-import IEventTaskFollowersRepository from '@modules/events/repositories/IEventTaskFollowersRepository';
-import EventTaskFollowersRepository from '@modules/events/infra/typeorm/repositories/EventTaskFollowersRepository';
+import ITasksRepository from '@modules/tasks/repositories/ITasksRepository';
+import TasksRepository from '@modules/tasks/infra/typeorm/repositories/TasksRepository';
 
-container.registerSingleton<IEventTaskFollowersRepository>(
-  'EventTaskFollowersRepository',
-  EventTaskFollowersRepository,
+import ITaskNotesRepository from '@modules/tasks/repositories/ITaskNotesRepository';
+import TaskNotesRepository from '@modules/tasks/infra/typeorm/repositories/TaskNotesRepository';
+
+import ITaskFollowersRepository from '@modules/tasks/repositories/ITaskFollowersRepository';
+import TaskFollowersRepository from '@modules/tasks/infra/typeorm/repositories/TaskFollowersRepository';
+
+container.registerSingleton<ITaskFollowersRepository>(
+  'TaskFollowersRepository',
+  TaskFollowersRepository,
+);
+container.registerSingleton<ITaskNotesRepository>(
+  'TaskNotesRepository',
+  TaskNotesRepository,
+);
+container.registerSingleton<ITasksRepository>(
+  'TasksRepository',
+  TasksRepository,
 );
 container.registerSingleton<IEventSupplierBudgetsRepository>(
   'EventSupplierBudgetsRepository',
@@ -411,10 +422,6 @@ container.registerSingleton<ITransactionsRepository>(
 container.registerSingleton<IEventBudgetRepository>(
   'EventBudgetRepository',
   EventBudgetRepository,
-);
-container.registerSingleton<IEventTaskNotesRepository>(
-  'EventTaskNotesRepository',
-  EventTaskNotesRepository,
 );
 container.registerSingleton<IEventTasksRepository>(
   'EventTasksRepository',

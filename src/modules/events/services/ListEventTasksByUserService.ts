@@ -1,22 +1,22 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
-import IEventTaskFollowersRepository from '@modules/events/repositories/IEventTaskFollowersRepository';
+import ITaskFollowersRepository from '@modules/tasks/repositories/ITaskFollowersRepository';
 import IEventTasksRepository from '../repositories/IEventTasksRepository';
 import EventTask from '../infra/typeorm/entities/EventTask';
 
 @injectable()
 class ListEventTasksByUserService {
   constructor(
-    @inject('EventTaskFollowersRepository')
-    private eventTaskFollowersRepository: IEventTaskFollowersRepository,
+    @inject('TaskFollowersRepository')
+    private taskFollowersRepository: ITaskFollowersRepository,
 
     @inject('EventTasksRepository')
     private eventTasksRepository: IEventTasksRepository,
   ) {}
 
   public async execute(user_id: string): Promise<EventTask[]> {
-    const eventTaskFollowers = await this.eventTaskFollowersRepository.findByUserId(
+    const eventTaskFollowers = await this.taskFollowersRepository.findByUserId(
       user_id,
     );
 

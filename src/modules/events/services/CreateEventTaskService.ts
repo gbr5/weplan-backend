@@ -6,13 +6,14 @@ import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICa
 import INotificationRepository from '@modules/notifications/repositories/INotificationsRepository';
 import AppError from '@shared/errors/AppError';
 import INotesRepository from '@modules/notes/repositories/INotesRepository';
-import ICreateEventTaskDTO from '../dtos/ICreateEventTaskDTO';
+import ICreateTaskDTO from '@modules/tasks/dtos/ICreateTaskDTO';
+import ITasksRepository from '@modules/tasks/repositories/ITasksRepository';
 import IEventsRepository from '../repositories/IEventsRepository';
 import IEventNotesRepository from '../repositories/IEventNotesRepository';
-import IEventTaskFollowersRepository from '../repositories/IEventTaskFollowersRepository';
 
-interface IRequest extends ICreateEventTaskDTO {
+interface IRequest extends ICreateTaskDTO {
   user_id: string;
+  event_id: string;
 }
 
 @injectable()
@@ -21,14 +22,14 @@ class CreateEventTaskService {
     @inject('EventTasksRepository')
     private eventTasksRepository: IEventTasksRepository,
 
+    @inject('TasksRepository')
+    private tasksRepository: ITasksRepository,
+
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
 
     @inject('EventNotesRepository')
     private eventNotesRepository: IEventNotesRepository,
-
-    @inject('EventTaskFollowersRepository')
-    private eventTaskFollowersRepository: IEventTaskFollowersRepository,
 
     @inject('NotesRepository')
     private notesRepository: INotesRepository,
@@ -54,12 +55,17 @@ class CreateEventTaskService {
       throw new AppError('Event not found.');
     }
 
-    const eventTask = await this.eventTasksRepository.create({
-      event_id,
+    const task = await this.tasksRepository.create({
+      user_id,
       title,
       priority,
       status,
       due_date,
+    });
+
+    const eventTask = await this.eventTasksRepository.create({
+      event_id,
+      task_id: task.id,
     });
 
     const note = `
@@ -75,11 +81,6 @@ Nova tarefa: ${title}
       await this.eventNotesRepository.create({
         event_id,
         note_id: newNote.id,
-      }),
-      await this.eventTaskFollowersRepository.create({
-        type: 'owner',
-        task_id: eventTask.id,
-        user_id,
       }),
     ]);
 

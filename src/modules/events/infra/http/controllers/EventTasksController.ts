@@ -3,7 +3,6 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateEventTaskService from '@modules/events/services/CreateEventTaskService';
-import UpdateEventTaskService from '@modules/events/services/UpdateEventTaskService';
 import ListEventTasksService from '@modules/events/services/ListEventTasksService';
 import DeleteEventTaskService from '@modules/events/services/DeleteEventTaskService';
 
@@ -23,24 +22,6 @@ export default class EventTaskController {
     });
 
     return res.json(eventTask);
-  }
-
-  public async update(req: Request, res: Response): Promise<Response> {
-    const dataParams = req.params;
-    const { id } = dataParams;
-    const { title, priority, status, due_date } = req.body;
-
-    const updateEventTask = container.resolve(UpdateEventTaskService);
-
-    const eventTask = await updateEventTask.execute({
-      id,
-      title,
-      priority,
-      status,
-      due_date,
-    });
-
-    return res.json(classToClass(eventTask));
   }
 
   public async list(req: Request, res: Response): Promise<Response> {

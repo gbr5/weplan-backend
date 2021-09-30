@@ -10,7 +10,6 @@ eventTasksRouter.use(ensureAuthenticated);
 
 eventTasksRouter.post('/', eventTasksController.create);
 eventTasksRouter.get('/:event_id', eventTasksController.list);
-eventTasksRouter.put('/:id', eventTasksController.update);
 eventTasksRouter.delete('/:id', eventTasksController.delete);
 
 export default eventTasksRouter;

@@ -143,7 +143,7 @@ class Event {
   eventDates: EventDate[];
 
   @OneToMany(() => EventTask, eventTask => eventTask.event)
-  eventTasks: EventTask[];
+  tasks: EventTask[];
 
   @OneToMany(() => EventFile, eventFile => eventFile.event)
   eventFiles: EventFile[];

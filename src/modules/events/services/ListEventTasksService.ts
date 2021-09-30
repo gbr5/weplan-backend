@@ -15,8 +15,8 @@ class ListEventTasksService {
     const eventTasks = await this.eventTasksRepository.findByEventId(event_id);
 
     const sortedTasks = eventTasks.sort((a, b) => {
-      if (new Date(a.due_date) > new Date(b.due_date)) return 1;
-      if (new Date(a.due_date) < new Date(b.due_date)) return -1;
+      if (new Date(a.task.due_date) > new Date(b.task.due_date)) return 1;
+      if (new Date(a.task.due_date) < new Date(b.task.due_date)) return -1;
       return 0;
     });
 

@@ -3,16 +3,21 @@ import { addDays } from 'date-fns';
 
 import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepository';
 import AppError from '@shared/errors/AppError';
-import ICreateEventTaskDTO from '../dtos/ICreateEventTaskDTO';
+import ICreateTaskDTO from '@modules/tasks/dtos/ICreateTaskDTO';
+import ITasksRepository from '@modules/tasks/repositories/ITasksRepository';
 import IEventsRepository from '../repositories/IEventsRepository';
 
 interface IRequest {
   event_id: string;
+  user_id: string;
 }
 
 @injectable()
 class CreateWeddingTasksService {
   constructor(
+    @inject('TasksRepository')
+    private tasksRepository: ITasksRepository,
+
     @inject('EventTasksRepository')
     private eventTasksRepository: IEventTasksRepository,
 
@@ -20,7 +25,7 @@ class CreateWeddingTasksService {
     private eventsRepository: IEventsRepository,
   ) {}
 
-  public async execute({ event_id }: IRequest): Promise<void> {
+  public async execute({ event_id, user_id }: IRequest): Promise<void> {
     const event = await this.eventsRepository.findById(event_id);
 
     if (!event) {
@@ -29,65 +34,65 @@ class CreateWeddingTasksService {
 
     const today = new Date();
 
-    const weddingTasks: ICreateEventTaskDTO[] = [
+    const weddingTasks: ICreateTaskDTO[] = [
       {
-        event_id,
+        user_id,
         title: 'Definir o tema (Grama, Praia, Cidade, Igreja)',
         priority: 'high',
         status: 'not started',
         due_date: addDays(today, 3),
       },
       {
-        event_id,
+        user_id,
         title: 'Definir o Orçamento',
         priority: 'high',
         status: 'not started',
         due_date: addDays(today, 4),
       },
       {
-        event_id,
+        user_id,
         title: 'Definir o número de pessoas',
         priority: 'neutral',
         status: 'not started',
         due_date: addDays(today, 5),
       },
       {
-        event_id,
+        user_id,
         title: 'Definir a cidade',
         priority: 'neutral',
         status: 'not started',
         due_date: addDays(today, 6),
       },
       {
-        event_id,
+        user_id,
         title: 'Definir a data',
         priority: 'low',
         status: 'not started',
         due_date: addDays(today, 7),
       },
       {
-        event_id,
+        user_id,
         title: 'Pesquisar cerimoniais de confiança que conheçam o local',
         priority: 'low',
         status: 'not started',
         due_date: addDays(today, 8),
       },
       {
-        event_id,
+        user_id,
         title: 'Selecionar o cerimonial',
         priority: 'low',
         status: 'not started',
         due_date: addDays(today, 9),
       },
       {
-        event_id,
+        user_id,
         title: 'Pesquisar locais para a cerimônia e recepção',
         priority: 'low',
         status: 'not started',
         due_date: addDays(today, 10),
       },
       {
-        event_id,
+        user_id,
         title: 'Pesquisar buffets',
         priority: 'low',
         status: 'not started',
@@ -95,7 +100,14 @@ class CreateWeddingTasksService {
       },
     ];
     Promise.all([
-      weddingTasks.map(task => this.eventTasksRepository.create(task)),
+      weddingTasks.map(task =>
+        this.tasksRepository.create(task).then(response => {
+          this.eventTasksRepository.create({
+            event_id,
+            task_id: response.id,
+          });
+        }),
+      ),
     ]);
   }
 }
