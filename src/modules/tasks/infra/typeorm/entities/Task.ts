@@ -21,7 +21,7 @@ class Task {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, user => user.userTasks, { eager: true })
+  @ManyToOne(() => User, user => user.userTasks)
   @JoinColumn({ name: 'user_id' })
   user: User;
 

@@ -30,15 +30,21 @@ class ListEventsAsGuestService {
       eventIds,
     );
 
-    return eventsAsWeplanGuest.sort((a, b) => {
-      if (differenceInMilliseconds(new Date(a.date), new Date(b.date)) < 0) {
-        return -1;
-      }
-      if (differenceInMilliseconds(new Date(a.date), new Date(b.date)) > 0) {
-        return 1;
-      }
-      return 0;
-    });
+    return eventsAsWeplanGuest.length > 0
+      ? eventsAsWeplanGuest.sort((a, b) => {
+          if (
+            differenceInMilliseconds(new Date(a.date), new Date(b.date)) < 0
+          ) {
+            return -1;
+          }
+          if (
+            differenceInMilliseconds(new Date(a.date), new Date(b.date)) > 0
+          ) {
+            return 1;
+          }
+          return 0;
+        })
+      : [];
   }
 }
 

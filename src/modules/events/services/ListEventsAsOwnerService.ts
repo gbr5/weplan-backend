@@ -32,25 +32,27 @@ class ListEventsAsOwnerService {
     //   await this.cacheProvider.save(cacheKey, classToClass(eventsAsOwner));
     // }
 
-    return eventsAsOwner.sort((a, b) => {
-      if (
-        differenceInMilliseconds(
-          new Date(a.event.date),
-          new Date(b.event.date),
-        ) < 0
-      ) {
-        return -1;
-      }
-      if (
-        differenceInMilliseconds(
-          new Date(a.event.date),
-          new Date(b.event.date),
-        ) > 0
-      ) {
-        return 1;
-      }
-      return 0;
-    });
+    return eventsAsOwner.length > 0
+      ? eventsAsOwner.sort((a, b) => {
+          if (
+            differenceInMilliseconds(
+              new Date(a.event.date),
+              new Date(b.event.date),
+            ) < 0
+          ) {
+            return -1;
+          }
+          if (
+            differenceInMilliseconds(
+              new Date(a.event.date),
+              new Date(b.event.date),
+            ) > 0
+          ) {
+            return 1;
+          }
+          return 0;
+        })
+      : [];
   }
 }
 

@@ -38,7 +38,7 @@ export default class EventsController {
     });
 
     if (event_type === 'Wedding') {
-      await createWeddingTasks.execute({ event_id: event.id });
+      await createWeddingTasks.execute({ event_id: event.id, user_id });
     }
     return res.json(classToClass(event));
   }
