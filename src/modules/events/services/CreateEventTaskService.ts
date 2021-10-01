@@ -8,6 +8,7 @@ import AppError from '@shared/errors/AppError';
 import INotesRepository from '@modules/notes/repositories/INotesRepository';
 import ICreateTaskDTO from '@modules/tasks/dtos/ICreateTaskDTO';
 import ITasksRepository from '@modules/tasks/repositories/ITasksRepository';
+import ITaskFollowersRepository from '@modules/tasks/repositories/ITaskFollowersRepository';
 import IEventsRepository from '../repositories/IEventsRepository';
 import IEventNotesRepository from '../repositories/IEventNotesRepository';
 
@@ -24,6 +25,9 @@ class CreateEventTaskService {
 
     @inject('TasksRepository')
     private tasksRepository: ITasksRepository,
+
+    @inject('TaskFollowersRepository')
+    private taskFollowersRepository: ITaskFollowersRepository,
 
     @inject('EventsRepository')
     private eventsRepository: IEventsRepository,
@@ -81,6 +85,11 @@ Nova tarefa: ${title}
       await this.eventNotesRepository.create({
         event_id,
         note_id: newNote.id,
+      }),
+      await this.taskFollowersRepository.create({
+        task_id: task.id,
+        type: 'master',
+        user_id,
       }),
     ]);
 

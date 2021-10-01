@@ -160,11 +160,12 @@ import listUserFriendRequestsRouter from '@modules/users/infra/http/routes/listU
 import createMultipleWePlanGuestsRouter from '@modules/events/infra/http/routes/createMultipleWePlanGuests.routes';
 import associateUserToEventGuestRouter from '@modules/events/infra/http/routes/associateUserToEventGuest.routes';
 import authenticateUserWithAppleRouter from '@modules/users/infra/http/routes/authenticateUserWithApple.routes';
-import listEventTasksByUserRouter from '@modules/events/infra/http/routes/listEventTasksByUser.routes';
+import listTasksByUserRouter from '@modules/tasks/infra/http/routes/listTasksByUser.routes';
 import tasksRouter from '@modules/tasks/infra/http/routes/tasks.routes';
 import taskNotesRouter from '@modules/tasks/infra/http/routes/taskNotes.routes';
 import taskFollowersRouter from '@modules/tasks/infra/http/routes/taskFollowers.routes';
 import createMultipleTaskFollowersRouter from '@modules/tasks/infra/http/routes/createMultipleTaskFollowers.routes';
+import listEventTasksByUserRouter from '@modules/events/infra/http/routes/listEventTasksByUser.routes';
 
 const routes = Router();
 
@@ -258,11 +259,12 @@ routes.use(
   '/create-multiple-task-followers',
   createMultipleTaskFollowersRouter,
 );
+routes.use('/list-user-tasks', listTasksByUserRouter);
 
 routes.use('/event-tasks', eventTasksRouter);
+routes.use('/list-event-tasks-by-user', listEventTasksByUserRouter);
 routes.use('/wedding-tasks', weddingTasksRouter);
 
-routes.use('/list-event-tasks-by-user', listEventTasksByUserRouter);
 routes.use('/event/dates/voting', eventDatesVotingRouter);
 routes.use('/event/date/voting-type', eventDateVotingTypeRouter);
 routes.use('/event/date/vote', eventDateVotesRouter);

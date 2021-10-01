@@ -5,12 +5,16 @@ import ITasksRepository from '@modules/tasks/repositories/ITasksRepository';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateTaskDTO from '../dtos/ICreateTaskDTO';
+import ITaskFollowersRepository from '../repositories/ITaskFollowersRepository';
 
 @injectable()
 class CreateTaskService {
   constructor(
     @inject('TasksRepository')
     private tasksRepository: ITasksRepository,
+
+    @inject('TaskFollowersRepository')
+    private taskFollowersRepository: ITaskFollowersRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -32,6 +36,11 @@ class CreateTaskService {
       priority,
       status,
       title,
+      user_id,
+    });
+    await this.taskFollowersRepository.create({
+      task_id: newTask.id,
+      type: 'master',
       user_id,
     });
     return newTask;

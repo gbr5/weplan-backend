@@ -4,6 +4,7 @@ import ITasksRepository from '@modules/tasks/repositories/ITasksRepository';
 
 import Task from '@modules/tasks/infra/typeorm/entities/Task';
 import ICreateTaskDTO from '@modules/tasks/dtos/ICreateTaskDTO';
+import IFindAllByIdsDTO from '@modules/tasks/dtos/IFindAllByIdsDTO';
 
 class TasksRepository implements ITasksRepository {
   private ormRepository: Repository<Task>;
@@ -22,6 +23,12 @@ class TasksRepository implements ITasksRepository {
     const checkLists = await this.ormRepository.find({
       where: { user_id },
     });
+
+    return checkLists;
+  }
+
+  public async findAllByIds(ids: IFindAllByIdsDTO[]): Promise<Task[]> {
+    const checkLists = await this.ormRepository.findByIds(ids);
 
     return checkLists;
   }

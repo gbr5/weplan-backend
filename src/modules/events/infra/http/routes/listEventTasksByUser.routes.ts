@@ -9,7 +9,7 @@ const listEventTasksByUserController = new ListEventTasksByUserController();
 listEventTasksByUserRouter.use(ensureAuthenticated);
 
 listEventTasksByUserRouter.get(
-  '/:user_id',
+  '/:user_id/:event_id',
   listEventTasksByUserController.index,
 );
 

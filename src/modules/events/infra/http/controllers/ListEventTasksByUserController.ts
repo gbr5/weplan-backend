@@ -7,16 +7,17 @@ import ListEventTasksByUserService from '@modules/events/services/ListEventTasks
 export default class ListEventTasksByUserController {
   public async index(req: Request, res: Response): Promise<Response> {
     const reqParams = req.params;
-    const { user_id } = reqParams;
+    const { user_id, event_id } = reqParams;
 
     const listEventTasksByUserService = container.resolve(
       ListEventTasksByUserService,
     );
 
-    const eventTaskFollower = await listEventTasksByUserService.execute(
+    const eventEventTaskFollower = await listEventTasksByUserService.execute({
       user_id,
-    );
+      event_id,
+    });
 
-    return res.json(classToClass(eventTaskFollower));
+    return res.json(classToClass(eventEventTaskFollower));
   }
 }

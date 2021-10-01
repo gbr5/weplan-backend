@@ -1,34 +1,34 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
 
-import ITaskFollowersRepository from '@modules/tasks/repositories/ITaskFollowersRepository';
-import IEventTasksRepository from '../repositories/IEventTasksRepository';
-import EventTask from '../infra/typeorm/entities/EventTask';
+import IEventTasksRepository from '@modules/events/repositories/IEventTasksRepository';
+import EventTask from '@modules/events/infra/typeorm/entities/EventTask';
+
+interface IRequest {
+  user_id: string;
+  event_id: string;
+}
 
 @injectable()
 class ListEventTasksByUserService {
   constructor(
-    @inject('TaskFollowersRepository')
-    private taskFollowersRepository: ITaskFollowersRepository,
-
     @inject('EventTasksRepository')
     private eventTasksRepository: IEventTasksRepository,
   ) {}
 
-  public async execute(user_id: string): Promise<EventTask[]> {
-    const eventTaskFollowers = await this.taskFollowersRepository.findByUserId(
-      user_id,
-    );
+  public async execute({ event_id, user_id }: IRequest): Promise<EventTask[]> {
+    const eventTasks = await this.eventTasksRepository.findByEventId(event_id);
+    const taskFollowers: EventTask[] = [];
 
-    const ids = eventTaskFollowers.map(task => {
-      return {
-        id: task.task_id,
-      };
+    eventTasks.map(task => {
+      task.task.followers.map(({ follower }) => {
+        if (follower.id === user_id) return taskFollowers.push(task);
+        return follower;
+      });
+      return task;
     });
 
-    const eventTasks = await this.eventTasksRepository.findAllByIds(ids);
-
-    return eventTasks;
+    return taskFollowers;
   }
 }
 
