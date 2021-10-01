@@ -166,6 +166,8 @@ import taskNotesRouter from '@modules/tasks/infra/http/routes/taskNotes.routes';
 import taskFollowersRouter from '@modules/tasks/infra/http/routes/taskFollowers.routes';
 import createMultipleTaskFollowersRouter from '@modules/tasks/infra/http/routes/createMultipleTaskFollowers.routes';
 import listEventTasksByUserRouter from '@modules/events/infra/http/routes/listEventTasksByUser.routes';
+import createMultipleEventOwnersRouter from '@modules/events/infra/http/routes/createMultipleEventOwners.routes';
+import createMultipleEventMembersRouter from '@modules/events/infra/http/routes/createMultipleEventMembers.routes';
 
 const routes = Router();
 
@@ -432,9 +434,11 @@ routes.use('/event-supplier-budgets', eventSupplierBudgetsRouter);
 
 // Event Owners
 routes.use('/event-owners', eventOwnersRouter);
+routes.use('/create-multiple-event-owners', createMultipleEventOwnersRouter);
 
-// Event Owners
+// Event Members
 routes.use('/event-members', eventMembersRouter);
+routes.use('/create-multiple-event-members', createMultipleEventMembersRouter);
 
 // Create Multiple Mobile Guests
 routes.use('/create-multiple-mobile-guests', createMultipleMobileGuestsRouter);

@@ -28,8 +28,6 @@ class ListTasksByUserService {
 
     const tasks = await this.tasksRepository.findAllByIds(ids);
 
-    console.log({ tasks });
-
     return tasks;
   }
 }
