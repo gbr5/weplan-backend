@@ -9,6 +9,8 @@ import {
   OneToOne,
 } from 'typeorm';
 import CheckListTaskNote from './CheckListTaskNote';
+import EventMemberNote from './EventMemberNote';
+import EventOwnerNote from './EventOwnerNote';
 import EventSupplierNote from './EventSupplierNote';
 import TransactionNote from './TransactionNote';
 
@@ -46,6 +48,12 @@ class Note {
 
   @OneToOne(() => TransactionNote, transaction => transaction.note)
   transactionNote: TransactionNote;
+
+  @OneToOne(() => EventOwnerNote, owner => owner.note)
+  eventOwnerNotes: EventOwnerNote;
+
+  @OneToOne(() => EventMemberNote, member => member.note)
+  eventMemberNotes: EventMemberNote;
 }
 
 export default Note;

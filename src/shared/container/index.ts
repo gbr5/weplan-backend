@@ -375,6 +375,48 @@ import TaskNotesRepository from '@modules/tasks/infra/typeorm/repositories/TaskN
 import ITaskFollowersRepository from '@modules/tasks/repositories/ITaskFollowersRepository';
 import TaskFollowersRepository from '@modules/tasks/infra/typeorm/repositories/TaskFollowersRepository';
 
+import IEventMemberTransactionAgreementsRepository from '@modules/transactions/repositories/IEventMemberTransactionAgreementsRepository';
+import EventMemberTransactionAgreementsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberTransactionAgreementsRepository';
+
+import IEventMemberTransactionsRepository from '@modules/transactions/repositories/IEventMemberTransactionsRepository';
+import EventMemberTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventMemberTransactionsRepository';
+
+import IEventOwnerTransactionAgreementsRepository from '@modules/transactions/repositories/IEventOwnerTransactionAgreementsRepository';
+import EventOwnerTransactionAgreementsRepository from '@modules/transactions/infra/typeorm/repositories/EventOwnerTransactionAgreementsRepository';
+
+import IEventOwnerTransactionsRepository from '@modules/transactions/repositories/IEventOwnerTransactionsRepository';
+import EventOwnerTransactionsRepository from '@modules/transactions/infra/typeorm/repositories/EventOwnerTransactionsRepository';
+
+import IEventOwnerNotesRepository from '@modules/notes/repositories/IEventOwnerNotesRepository';
+import EventOwnerNotesRepository from '@modules/notes/infra/typeorm/repositories/EventOwnerNotesRepository';
+
+import IEventMemberNotesRepository from '@modules/notes/repositories/IEventMemberNotesRepository';
+import EventMemberNotesRepository from '@modules/notes/infra/typeorm/repositories/EventMemberNotesRepository';
+
+container.registerSingleton<IEventMemberNotesRepository>(
+  'EventMemberNotesRepository',
+  EventMemberNotesRepository,
+);
+container.registerSingleton<IEventOwnerNotesRepository>(
+  'EventOwnerNotesRepository',
+  EventOwnerNotesRepository,
+);
+container.registerSingleton<IEventOwnerTransactionsRepository>(
+  'EventOwnerTransactionsRepository',
+  EventOwnerTransactionsRepository,
+);
+container.registerSingleton<IEventOwnerTransactionAgreementsRepository>(
+  'EventOwnerTransactionAgreementsRepository',
+  EventOwnerTransactionAgreementsRepository,
+);
+container.registerSingleton<IEventMemberTransactionsRepository>(
+  'EventMemberTransactionsRepository',
+  EventMemberTransactionsRepository,
+);
+container.registerSingleton<IEventMemberTransactionAgreementsRepository>(
+  'EventMemberTransactionAgreementsRepository',
+  EventMemberTransactionAgreementsRepository,
+);
 container.registerSingleton<ITaskFollowersRepository>(
   'TaskFollowersRepository',
   TaskFollowersRepository,

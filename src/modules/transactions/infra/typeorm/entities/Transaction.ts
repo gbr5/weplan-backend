@@ -8,6 +8,8 @@ import {
   OneToOne,
   OneToMany,
 } from 'typeorm';
+import EventMemberTransaction from './EventMemberTransaction';
+import EventOwnerTransaction from './EventOwnerTransaction';
 import EventSupplierTransaction from './EventSupplierTransaction';
 import TransactionFile from './TransactionFile';
 
@@ -65,6 +67,15 @@ class Transaction {
     { eager: true },
   )
   files: TransactionFile;
+
+  @OneToOne(
+    () => EventMemberTransaction,
+    eventMember => eventMember.transaction,
+  )
+  eventMemberTransaction: EventMemberTransaction;
+
+  @OneToOne(() => EventOwnerTransaction, eventOwner => eventOwner.transaction)
+  eventOwnerTransaction: EventOwnerTransaction;
 }
 
 export default Transaction;

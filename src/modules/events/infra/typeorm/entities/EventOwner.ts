@@ -6,9 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EventOwnerTransactionAgreement from '@modules/transactions/infra/typeorm/entities/EventOwnerTransactionAgreement';
+import EventOwnerNote from '@modules/notes/infra/typeorm/entities/EventOwnerNote';
 import Event from './Event';
 
 @Entity('event_owners')
@@ -43,6 +46,20 @@ class EventOwner {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => EventOwnerTransactionAgreement,
+    transactionAgreement => transactionAgreement.eventOwner,
+    { eager: true },
+  )
+  transactionAgreements: EventOwnerTransactionAgreement[];
+
+  @OneToMany(
+    () => EventOwnerNote,
+    transactionAgreement => transactionAgreement.eventOwner,
+    { eager: true },
+  )
+  notes: EventOwnerNote[];
 }
 
 export default EventOwner;

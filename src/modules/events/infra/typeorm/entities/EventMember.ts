@@ -6,9 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
+import EventMemberTransactionAgreement from '@modules/transactions/infra/typeorm/entities/EventMemberTransactionAgreement';
+import EventMemberNote from '@modules/notes/infra/typeorm/entities/EventMemberNote';
 import Event from './Event';
 
 @Entity('event_members')
@@ -42,6 +45,16 @@ class EventMember {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(
+    () => EventMemberTransactionAgreement,
+    transactionAgreement => transactionAgreement.eventMember,
+    { eager: true },
+  )
+  transactionAgreements: EventMemberTransactionAgreement[];
+
+  @OneToMany(() => EventMemberNote, note => note.eventMember, { eager: true })
+  notes: EventMemberNote[];
 }
 
 export default EventMember;

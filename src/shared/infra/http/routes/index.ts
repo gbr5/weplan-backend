@@ -168,6 +168,14 @@ import createMultipleTaskFollowersRouter from '@modules/tasks/infra/http/routes/
 import listEventTasksByUserRouter from '@modules/events/infra/http/routes/listEventTasksByUser.routes';
 import createMultipleEventOwnersRouter from '@modules/events/infra/http/routes/createMultipleEventOwners.routes';
 import createMultipleEventMembersRouter from '@modules/events/infra/http/routes/createMultipleEventMembers.routes';
+import eventMemberTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/eventMemberTransactionAgreements.routes';
+import eventMemberTransactionsRouter from '@modules/transactions/infra/http/routes/eventMemberTransactions.routes';
+import eventOwnerTransactionAgreementsRouter from '@modules/transactions/infra/http/routes/eventOwnerTransactionAgreements.routes';
+import eventOwnerTransactionsRouter from '@modules/transactions/infra/http/routes/eventOwnerTransactions.routes';
+import createEventMemberTransactionAgreementWithTransactionsRouter from '@modules/transactions/infra/http/routes/eventMemberTransactionAgreementWithTransactions.routes';
+import createEventOwnerTransactionAgreementWithTransactionsRouter from '@modules/transactions/infra/http/routes/eventOwnerTransactionAgreementWithTransactions.routes';
+import eventMemberNotesRouter from '@modules/notes/infra/http/routes/eventMemberNotes.routes';
+import eventOwnerNotesRouter from '@modules/notes/infra/http/routes/eventOwnerNotes.routes';
 
 const routes = Router();
 
@@ -406,6 +414,33 @@ routes.use('/list-event-transactions', listEventTransactionsRouter);
 // Transaction Files
 routes.use('/transaction-files', transactionFilesRouter);
 
+// Event Member Notes
+routes.use('/event-member-notes', eventMemberNotesRouter);
+
+// Event Member Transaction Agreements
+routes.use(
+  '/event-member-transaction-agreements',
+  eventMemberTransactionAgreementsRouter,
+);
+routes.use('/event-member-transactions', eventMemberTransactionsRouter);
+routes.use(
+  '/event-member-transaction-agreement-with-transactions',
+  createEventMemberTransactionAgreementWithTransactionsRouter,
+);
+
+// Event Owner Notes
+routes.use('/event-owner-notes', eventOwnerNotesRouter);
+
+// Event Owner Transaction Agreements
+routes.use(
+  '/event-owner-transaction-agreements',
+  eventOwnerTransactionAgreementsRouter,
+);
+routes.use('/event-owner-transactions', eventOwnerTransactionsRouter);
+routes.use(
+  '/event-owner-transaction-agreement-with-transactions',
+  createEventOwnerTransactionAgreementWithTransactionsRouter,
+);
 // Event Supplier Transaction Agreements
 routes.use(
   '/event-supplier-transaction-agreements',
