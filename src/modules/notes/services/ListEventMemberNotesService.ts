@@ -12,11 +12,9 @@ class ListEventMemberNotesService {
   ) {}
 
   public async execute(member_id: string): Promise<EventMemberNote[]> {
-    console.log({ member_id });
     const memberNotes = await this.eventMemberNotesRepository.findByMemberId(
       member_id,
     );
-    console.log(memberNotes);
 
     return memberNotes;
   }

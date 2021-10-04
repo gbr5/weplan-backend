@@ -10,7 +10,6 @@ import ListEventOwnerTransactionAgreementsService from '@modules/transactions/se
 export default class EventOwnerTransactionAgreementsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const { amount, number_of_installments, owner_id } = req.body;
-    console.log({ amount, number_of_installments, owner_id });
 
     const createEventOwnerTransactionAgreementService = container.resolve(
       CreateEventOwnerTransactionAgreementService,
@@ -23,12 +22,6 @@ export default class EventOwnerTransactionAgreementsController {
         owner_id,
       },
     );
-
-    console.log({
-      amount,
-      number_of_installments,
-      owner_id,
-    });
 
     return res.json(classToClass(ownerTransactionAgreement));
   }

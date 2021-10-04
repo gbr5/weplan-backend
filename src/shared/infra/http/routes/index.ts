@@ -176,6 +176,9 @@ import createEventMemberTransactionAgreementWithTransactionsRouter from '@module
 import createEventOwnerTransactionAgreementWithTransactionsRouter from '@modules/transactions/infra/http/routes/eventOwnerTransactionAgreementWithTransactions.routes';
 import eventMemberNotesRouter from '@modules/notes/infra/http/routes/eventMemberNotes.routes';
 import eventOwnerNotesRouter from '@modules/notes/infra/http/routes/eventOwnerNotes.routes';
+import createEventOwnerTaskRouter from '@modules/events/infra/http/routes/createEventOwnerTask.routes';
+import createEventMemberTaskRouter from '@modules/events/infra/http/routes/createEventMemberTask.routes';
+import createEventWePlanSupplierTaskRouter from '@modules/events/infra/http/routes/createEventWePlanSupplierTask.routes';
 
 const routes = Router();
 
@@ -272,6 +275,12 @@ routes.use(
 routes.use('/list-user-tasks', listTasksByUserRouter);
 
 routes.use('/event-tasks', eventTasksRouter);
+routes.use('/create-event-owner-task', createEventOwnerTaskRouter);
+routes.use('/create-event-member-task', createEventMemberTaskRouter);
+routes.use(
+  '/create-event-weplan-supplier-task',
+  createEventWePlanSupplierTaskRouter,
+);
 routes.use('/list-event-tasks-by-user', listEventTasksByUserRouter);
 routes.use('/wedding-tasks', weddingTasksRouter);
 

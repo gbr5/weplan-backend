@@ -21,7 +21,7 @@ export default class EventTaskController {
       user_id,
     });
 
-    return res.json(eventTask);
+    return res.json(classToClass(eventTask));
   }
 
   public async list(req: Request, res: Response): Promise<Response> {
