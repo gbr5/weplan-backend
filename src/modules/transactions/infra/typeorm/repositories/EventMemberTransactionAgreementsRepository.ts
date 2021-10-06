@@ -4,6 +4,7 @@ import IEventMemberTransactionAgreementsRepository from '@modules/transactions/r
 
 import EventMemberTransactionAgreement from '@modules/transactions/infra/typeorm/entities/EventMemberTransactionAgreement';
 import ICreateEventMemberTransactionAgreementDTO from '@modules/transactions/dtos/ICreateEventMemberTransactionAgreementDTO';
+import IFindAllByIds from '@modules/events/dtos/IFindAllEventTasksByIdsDTO';
 
 class EventMemberTransactionAgreementsRepository
   implements IEventMemberTransactionAgreementsRepository {
@@ -21,6 +22,16 @@ class EventMemberTransactionAgreementsRepository
     );
 
     return findEventMemberTransactionAgreement;
+  }
+
+  public async findByAllId(
+    ids: IFindAllByIds[],
+  ): Promise<EventMemberTransactionAgreement[]> {
+    const findEventOwnerTransactionAgreement = await this.ormRepository.findByIds(
+      ids,
+    );
+
+    return findEventOwnerTransactionAgreement;
   }
 
   public async findByMemberId(

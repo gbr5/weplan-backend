@@ -179,6 +179,8 @@ import eventOwnerNotesRouter from '@modules/notes/infra/http/routes/eventOwnerNo
 import createEventOwnerTaskRouter from '@modules/events/infra/http/routes/createEventOwnerTask.routes';
 import createEventMemberTaskRouter from '@modules/events/infra/http/routes/createEventMemberTask.routes';
 import createEventWePlanSupplierTaskRouter from '@modules/events/infra/http/routes/createEventWePlanSupplierTask.routes';
+import createEventParticipantMonthlyPaymentAgreementsRouter from '@modules/events/infra/http/routes/createEventParticipantMonthlyPaymentAgreements.routes';
+import eventMonthlyPaymentAgreementsRouter from '@modules/events/infra/http/routes/eventMonthlyPaymentAgreements.routes';
 
 const routes = Router();
 
@@ -271,6 +273,14 @@ routes.use('/task-followers', taskFollowersRouter);
 routes.use(
   '/create-multiple-task-followers',
   createMultipleTaskFollowersRouter,
+);
+routes.use(
+  '/create-event-participant-monthly-payment-agreements',
+  createEventParticipantMonthlyPaymentAgreementsRouter,
+);
+routes.use(
+  '/event-monthly-payment-agreements',
+  eventMonthlyPaymentAgreementsRouter,
 );
 routes.use('/list-user-tasks', listTasksByUserRouter);
 

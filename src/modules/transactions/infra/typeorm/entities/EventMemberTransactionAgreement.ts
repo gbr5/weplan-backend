@@ -1,4 +1,5 @@
 import EventMember from '@modules/events/infra/typeorm/entities/EventMember';
+import EventMemberMonthlyPaymentAgreement from '@modules/events/infra/typeorm/entities/EventMemberMonthlyPaymentAgreement';
 import {
   Entity,
   Column,
@@ -8,6 +9,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import EventMemberTransaction from './EventMemberTransaction';
 
@@ -45,6 +47,12 @@ class EventMemberTransactionAgreement {
     eager: true,
   })
   transactions: EventMemberTransaction[];
+
+  @OneToOne(
+    () => EventMemberMonthlyPaymentAgreement,
+    agreement => agreement.eventMemberMonthlyAgreement,
+  )
+  memberMonthlyPaymentAgreement: EventMemberMonthlyPaymentAgreement;
 }
 
 export default EventMemberTransactionAgreement;

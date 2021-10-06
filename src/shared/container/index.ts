@@ -393,6 +393,27 @@ import EventOwnerNotesRepository from '@modules/notes/infra/typeorm/repositories
 import IEventMemberNotesRepository from '@modules/notes/repositories/IEventMemberNotesRepository';
 import EventMemberNotesRepository from '@modules/notes/infra/typeorm/repositories/EventMemberNotesRepository';
 
+import IEventMonthlyPaymentAgreementsRepository from '@modules/events/repositories/IEventMonthlyPaymentAgreementsRepository';
+import EventMonthlyPaymentAgreementsRepository from '@modules/events/infra/typeorm/repositories/EventMonthlyPaymentAgreementsRepository';
+
+import IEventOwnerMonthlyPaymentAgreementsRepository from '@modules/events/repositories/IEventOwnerMonthlyPaymentAgreementsRepository';
+import EventOwnerMonthlyPaymentAgreementsRepository from '@modules/events/infra/typeorm/repositories/EventOwnerMonthlyPaymentAgreementsRepository';
+
+import IEventMemberMonthlyPaymentAgreementsRepository from '@modules/events/repositories/IEventMemberMonthlyPaymentAgreementsRepository';
+import EventMemberMonthlyPaymentAgreementsRepository from '@modules/events/infra/typeorm/repositories/EventMemberMonthlyPaymentAgreementsRepository';
+
+container.registerSingleton<IEventMemberMonthlyPaymentAgreementsRepository>(
+  'EventMemberMonthlyPaymentAgreementsRepository',
+  EventMemberMonthlyPaymentAgreementsRepository,
+);
+container.registerSingleton<IEventOwnerMonthlyPaymentAgreementsRepository>(
+  'EventOwnerMonthlyPaymentAgreementsRepository',
+  EventOwnerMonthlyPaymentAgreementsRepository,
+);
+container.registerSingleton<IEventMonthlyPaymentAgreementsRepository>(
+  'EventMonthlyPaymentAgreementsRepository',
+  EventMonthlyPaymentAgreementsRepository,
+);
 container.registerSingleton<IEventMemberNotesRepository>(
   'EventMemberNotesRepository',
   EventMemberNotesRepository,
