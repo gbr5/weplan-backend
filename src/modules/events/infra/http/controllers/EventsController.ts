@@ -77,7 +77,12 @@ export default class EventsController {
     const dataParams = req.params;
     const { event_id } = dataParams;
     const user_id = req.user.id;
-    const { name, date, isNumberOfGuestsRestricted } = req.body;
+    const {
+      name,
+      date,
+      isNumberOfGuestsRestricted,
+      number_of_guests,
+    } = req.body;
 
     const updateEvent = container.resolve(UpdateEventService);
 
@@ -85,6 +90,7 @@ export default class EventsController {
       name,
       date,
       isNumberOfGuestsRestricted,
+      number_of_guests,
       user_id,
       event_id,
     });

@@ -51,6 +51,7 @@ eventsRouter.put(
       name: Joi.string().required(),
       date: Joi.date(),
       isNumberOfGuestsRestricted: Joi.boolean(),
+      number_of_guests: Joi.number(),
     },
   }),
   events.update,

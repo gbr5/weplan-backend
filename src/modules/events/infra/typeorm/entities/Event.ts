@@ -60,6 +60,9 @@ class Event {
   trimmed_name: string;
 
   @Column()
+  number_of_guests: number;
+
+  @Column()
   user_id: string;
 
   @ManyToOne(() => User, user => user.id)

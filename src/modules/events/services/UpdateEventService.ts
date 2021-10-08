@@ -9,6 +9,7 @@ interface IRequest {
   user_id: string;
   event_id: string;
   name: string;
+  number_of_guests: number | null;
   date: Date;
   isNumberOfGuestsRestricted: boolean;
 }
@@ -24,6 +25,7 @@ class UpdateEventService {
     event_id,
     name,
     date,
+    number_of_guests,
     isNumberOfGuestsRestricted,
   }: IRequest): Promise<Event> {
     const event = await this.eventsRepository.findById(event_id);
@@ -52,6 +54,7 @@ class UpdateEventService {
     event.trimmed_name = trimmedName;
     event.date = date;
     event.isNumberOfGuestsRestricted = isNumberOfGuestsRestricted;
+    event.number_of_guests = number_of_guests;
 
     const updatedEvent = await this.eventsRepository.save(event);
 
