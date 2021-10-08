@@ -181,6 +181,8 @@ import createEventMemberTaskRouter from '@modules/events/infra/http/routes/creat
 import createEventWePlanSupplierTaskRouter from '@modules/events/infra/http/routes/createEventWePlanSupplierTask.routes';
 import createEventParticipantMonthlyPaymentAgreementsRouter from '@modules/events/infra/http/routes/createEventParticipantMonthlyPaymentAgreements.routes';
 import eventMonthlyPaymentAgreementsRouter from '@modules/events/infra/http/routes/eventMonthlyPaymentAgreements.routes';
+import eventOwnersNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventOwnersNumberOfGuests.routes';
+import eventMembersNumberOfGuestsRouter from '@modules/events/infra/http/routes/eventMembersNumberOfGuests.routes';
 
 const routes = Router();
 
@@ -350,7 +352,9 @@ routes.use('/event/is-date-defined', eventIsDateDefinedRouter);
 routes.use('/event/weplan-guests', weplanGuestsRouter);
 routes.use('/event/number-of-guests', eventNumberOfGuestsRouter);
 routes.use('/owner/number-of-guests', eventOwnerNumberOfGuestsRouter);
+routes.use('/owners/number-of-guests', eventOwnersNumberOfGuestsRouter);
 routes.use('/member/number-of-guests', eventMemberNumberOfGuestsRouter);
+routes.use('/members/number-of-guests', eventMembersNumberOfGuestsRouter);
 
 // Event Notes
 routes.use('/event-notes', eventNotesRouter);
