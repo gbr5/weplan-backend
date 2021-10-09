@@ -63,6 +63,9 @@ class Event {
   number_of_guests: number;
 
   @Column()
+  members_number_of_guests: number;
+
+  @Column()
   user_id: string;
 
   @ManyToOne(() => User, user => user.id)

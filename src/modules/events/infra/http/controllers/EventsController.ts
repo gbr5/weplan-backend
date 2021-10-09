@@ -82,6 +82,7 @@ export default class EventsController {
       date,
       isNumberOfGuestsRestricted,
       number_of_guests,
+      members_number_of_guests,
     } = req.body;
 
     const updateEvent = container.resolve(UpdateEventService);
@@ -91,6 +92,7 @@ export default class EventsController {
       date,
       isNumberOfGuestsRestricted,
       number_of_guests,
+      members_number_of_guests,
       user_id,
       event_id,
     });
