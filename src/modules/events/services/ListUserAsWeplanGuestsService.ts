@@ -32,10 +32,14 @@ class ListWeplanGuestsService {
       user_id,
     );
 
-    const invitedAsGuest = weplanGuests.filter(
-      guest => guest.userConfirmations.length > 0,
-    );
-    const guestIds = invitedAsGuest.map(guest => guest.guest_id);
+    // ==> Verificar se o users confirmations está sendo usado!!!!! <==
+    // const invitedAsGuest = weplanGuests.filter(
+    //   guest => guest.userConfirmations.length > 0,
+    // );
+    // const guestIds = invitedAsGuest.map(guest => guest.guest_id);
+    const guestIds = weplanGuests
+      .filter(guest => guest.event.isPublished)
+      .map(guest => guest.guest_id);
 
     const eventsAsWeplanGuest = await this.guestsRepository.findByIDs(guestIds);
     //   await this.cacheProvider.save(
