@@ -81,6 +81,7 @@ export default class EventsController {
       name,
       date,
       isNumberOfGuestsRestricted,
+      isPublished,
       number_of_guests,
       members_number_of_guests,
     } = req.body;
@@ -91,6 +92,7 @@ export default class EventsController {
       name,
       date,
       isNumberOfGuestsRestricted,
+      isPublished,
       number_of_guests,
       members_number_of_guests,
       user_id,

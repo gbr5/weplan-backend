@@ -13,6 +13,7 @@ interface IRequest {
   members_number_of_guests: number | null;
   date: Date;
   isNumberOfGuestsRestricted: boolean;
+  isPublished: boolean | null;
 }
 @injectable()
 class UpdateEventService {
@@ -29,6 +30,7 @@ class UpdateEventService {
     number_of_guests,
     members_number_of_guests,
     isNumberOfGuestsRestricted,
+    isPublished,
   }: IRequest): Promise<Event> {
     const event = await this.eventsRepository.findById(event_id);
 
@@ -56,6 +58,9 @@ class UpdateEventService {
     event.trimmed_name = trimmedName;
     event.date = date;
     event.isNumberOfGuestsRestricted = isNumberOfGuestsRestricted;
+    if (isPublished) {
+      event.isPublished = isPublished;
+    }
     if (number_of_guests) {
       event.number_of_guests = number_of_guests;
     }
