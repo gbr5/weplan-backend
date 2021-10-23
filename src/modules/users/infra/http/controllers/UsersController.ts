@@ -20,6 +20,8 @@ export default class UsersController {
       isCompany,
     });
 
+    user.password = '0';
+
     return res.json(classToClass(user));
   }
 
@@ -30,6 +32,8 @@ export default class UsersController {
     const showUser = container.resolve(ShowUserService);
 
     const user = await showUser.execute({ user_id });
+
+    user.password = '0';
 
     return res.json(classToClass(user));
   }
